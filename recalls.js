@@ -67,4 +67,5 @@ foot(b);return R}
 done();
 var sp=document.createElement('script');sp.src='recalls-page.js';document.body.appendChild(sp);
 var sg=document.createElement('script');sg.src='glossary.js';document.body.appendChild(sg);
+var sl=document.createElement('script');sl.src='lab-tested.js';document.body.appendChild(sl);
 })();
