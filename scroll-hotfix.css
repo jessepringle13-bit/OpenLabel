@@ -1,0 +1,7 @@
+/* Product panel scroll hotfix: keep content reachable above the dock. */
+#olPanel{height:66dvh;max-height:100dvh;display:flex;flex-direction:column;overflow:hidden}
+#olPanel.full{height:calc(100dvh - 10px - env(safe-area-inset-top));max-height:calc(100dvh - 10px - env(safe-area-inset-top))}
+#olPanel .olp-head{flex:0 0 auto}
+#olPanel .olp-body{flex:1 1 auto;min-height:0;overflow-x:hidden;overflow-y:auto!important;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;padding-bottom:calc(130px + env(safe-area-inset-bottom))}
+#olPanel:not(.full) .olp-body{overflow-y:auto!important;touch-action:pan-y}
+#olPanel.full .olp-body{overflow-y:auto!important;touch-action:pan-y}

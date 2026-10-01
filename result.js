@@ -132,5 +132,6 @@ $$('.view').forEach(function(v){vo.observe(v,{attributes:true,attributeFilter:['
 new MutationObserver(schedule).observe(res,{subtree:true,childList:true,characterData:true});
 track();schedule();
 if(API&&API.ready)API.ready.then(function(){regReady=true;if(!res.hidden&&panel&&!panel.hidden){var md=mode;render();setMode(md,true)}});else regReady=true;
+var sl=document.createElement('link');sl.rel='stylesheet';sl.href='scroll-hotfix.css';document.head.appendChild(sl);
 ['recalls.js','profile.js','profile-rows.js'].forEach(function(f){var sc=document.createElement('script');sc.src=f;document.body.appendChild(sc)});
 })();
