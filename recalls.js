@@ -66,4 +66,5 @@ foot(b);return R}
 (window.OLPanelPlugins=window.OLPanelPlugins||[]).push(plugin);
 done();
 var sp=document.createElement('script');sp.src='recalls-page.js';document.body.appendChild(sp);
+var sg=document.createElement('script');sg.src='glossary.js';document.body.appendChild(sg);
 })();
