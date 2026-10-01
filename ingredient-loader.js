@@ -1,0 +1,1 @@
+(function(){'use strict';var a=document.createElement('script');a.src='ingredients.js';a.onload=function(){var b=document.createElement('script');b.src='ingredient-integration.js';document.body.appendChild(b)};document.body.appendChild(a)})();
