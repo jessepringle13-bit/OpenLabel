@@ -65,4 +65,5 @@ else{R.color='green';R.chip='None found';b.append(para('We searched FDA recall r
 foot(b);return R}
 (window.OLPanelPlugins=window.OLPanelPlugins||[]).push(plugin);
 done();
+var sp=document.createElement('script');sp.src='recalls-page.js';document.body.appendChild(sp);
 })();

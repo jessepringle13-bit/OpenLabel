@@ -1,0 +1,56 @@
+(function(){
+'use strict';
+var BASE='https://api.fda.gov/food/enforcement.json',TTL=30*60*1000,OFFICIAL='https://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts';
+var sty=document.createElement('style');
+sty.textContent='#olRecalls{position:fixed;z-index:14;inset:0;left:50%;transform:translateX(-50%);width:min(100%,520px);background:var(--oat);overflow-y:auto;overscroll-behavior:contain;padding:calc(14px + env(safe-area-inset-top)) 18px calc(40px + env(safe-area-inset-bottom))}#olRecalls[hidden]{display:none}.rcp-top{display:flex;align-items:center;gap:12px;margin-bottom:6px}.rcp-top button{width:43px;height:43px;border-radius:50%;background:var(--ivory);border:1px solid var(--line);color:var(--forest);font-size:23px}.rcp-top h2{font-size:24px}.rcp-sub{color:var(--muted);font-size:13px;margin:4px 2px 12px}.rcp-q{width:100%;height:48px;border-radius:14px;border:1px solid #b8cec0;background:var(--ivory);color:var(--ink);padding:0 14px;font:inherit}.rcp-chips{display:flex;gap:8px;overflow-x:auto;padding:10px 0 8px;scrollbar-width:none}.rcp-chips::-webkit-scrollbar{display:none}.rcp-chips button{white-space:nowrap;border-radius:99px;padding:9px 14px;background:var(--ivory);border:1px solid var(--line);color:var(--forest);font-size:13px;font-weight:740;min-height:40px}.rcp-chips button.on{background:var(--eucalyptus);color:var(--ivory);border-color:var(--eucalyptus)}.rcp-it{background:var(--ivory);border:1px solid var(--line);border-left-width:5px;border-radius:16px;margin:0 0 10px;overflow:hidden}.rcp-it.k1{border-left-color:#B4412E}.rcp-it.k2{border-left-color:#D77F22}.rcp-it.k3{border-left-color:#C9A814}.rcp-it.k0{border-left-color:#8A948F}.rcp-it>button{width:100%;text-align:left;background:none;padding:13px 14px;display:block}.rcp-f{font-weight:760;color:var(--ink)}.rcp-p{font-size:14px;color:var(--muted);margin-top:3px}.rcp-m{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;align-items:center;font-size:12px;color:var(--muted)}.rcp-c{border-radius:99px;padding:3px 9px;font-weight:780;font-size:11px}.rcp-c.k1{background:#FCE9E4;color:#8F2E1E}.rcp-c.k2{background:#FCEEDB;color:#85470B}.rcp-c.k3{background:#F8F0C6;color:#675300}.rcp-c.k0{background:#ECEFED;color:#4B5651}.rcp-d{padding:0 14px 14px;font-size:14px;color:var(--muted)}.rcp-d div{margin-top:7px;overflow-wrap:anywhere}.rcp-d b{color:var(--ink)}.rcp-note{font-size:12px;color:var(--muted);margin:10px 2px}.rcp-more,.rcp-retry{width:100%;min-height:48px;border-radius:14px;background:var(--sage);color:var(--forest);font-weight:750;margin:6px 0}.rcp-empty{padding:26px 14px;text-align:center;color:var(--muted)}.rcp-a{color:var(--forest);font-weight:700;overflow-wrap:anywhere}.rcp-skel{height:84px;border-radius:16px;background:linear-gradient(90deg,#eef2ee 0,#f8faf8 50%,#eef2ee 100%);background-size:200% 100%;animation:rcsh 1.2s linear infinite;margin-bottom:10px}@keyframes rcsh{to{background-position:-200% 0}}';
+document.head.appendChild(sty);
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+function enc(s){return encodeURIComponent(s).replace(/%20/g,'+')}
+function ymd(d){var m=d.getMonth()+1,x=d.getDate();return d.getFullYear()+(m<10?'0':'')+m+(x<10?'0':'')+x}
+var MO=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function fmt(s){var m=/^([0-9]{4})([0-9]{2})([0-9]{2})$/.exec(s||'');return m?MO[+m[2]-1]+' '+(+m[3])+', '+m[1]:(s||'')}
+function cut(s,n){s=String(s||'').split(String.fromCharCode(10)).join(' ').split(String.fromCharCode(13)).join(' ').split(String.fromCharCode(9)).join(' ').replace(/ +/g,' ').trim();return s.length>n?s.slice(0,n-1)+'…':s}
+var CAT=[['allergen',/undeclared|allergen/i,'Allergen'],['bacteria',/listeria|salmonella|e[.] ?coli|escherichia|clostridium|botulinum|bacillus|campylobacter|norovirus|hepatitis|cronobacter|microbial|pathogen|bacteria|mold|mould/i,'Bacteria or virus'],['foreign',/foreign|metal|plastic|glass|fragment|wood|rubber|stone|bone/i,'Foreign material']];
+function cat(reason){for(var i=0;i<CAT.length;i++){if(CAT[i][1].test(reason))return CAT[i]}return ['other',null,'Other']}
+function sev(c){var m=/Class (I{1,3})(?![A-Za-z])/.exec(c||'');return m?m[1].length:0}
+var data=null,state='idle',shown=20,filter='all',query='',root,listEl,qEl,chipEl;
+function group(rs){var g={},out=[];rs.forEach(function(r){var k=r.event_id||r.recall_number||(r.recalling_firm+r.recall_initiation_date+r.reason_for_recall);var o=g[k];if(!o){o=g[k]={id:k,firm:r.recalling_firm,sev:sev(r.classification),cls:r.classification,reason:r.reason_for_recall,date:r.recall_initiation_date,report:r.report_date,status:r.status,products:[],codes:[],dist:r.distribution_pattern,cat:cat(r.reason_for_recall)};out.push(o)}
+o.products.push(cut(r.product_description,200));if(r.code_info&&o.codes.length<3)o.codes.push(cut(r.code_info,260));var s=sev(r.classification);if(s&&(!o.sev||s<o.sev)){o.sev=s;o.cls=r.classification}});return out}
+function load(force){if(state==='loading')return;if(data&&!force&&Date.now()-data.t<TTL)return;state='loading';render();
+var from=ymd(new Date(Date.now()-90*864e5)),q='report_date:['+from+' TO 20991231]';
+var ctl=new AbortController(),tm=setTimeout(function(){ctl.abort()},12000);
+fetch(BASE+'?search='+enc(q)+'&sort=report_date:desc&limit=100',{signal:ctl.signal}).then(function(r){clearTimeout(tm);if(r.status===404)return {results:[]};if(!r.ok)throw new Error('http '+r.status);return r.json()}).then(function(j){data={t:Date.now(),items:group(j.results||[])};state='done';render()}).catch(function(){clearTimeout(tm);state='error';render()})}
+var CHIPS=[['all','All'],['c1','Class I'],['allergen','Allergens'],['bacteria','Bacteria or virus'],['foreign','Foreign material']];
+function match(it){if(filter==='c1'&&it.sev!==1)return false;if(filter!=='all'&&filter!=='c1'&&it.cat[0]!==filter)return false;if(query){var h=(it.firm+' '+it.products.join(' ')+' '+it.reason).toLowerCase();if(h.indexOf(query)<0)return false}return true}
+function item(it){var d=el('div','rcp-it k'+it.sev),b=el('button');b.setAttribute('aria-expanded','false');
+b.append(el('div','rcp-f',it.firm||'Unknown firm'),el('div','rcp-p',it.products[0]+(it.products.length>1?' (+'+(it.products.length-1)+' more)':'')));
+var m=el('div','rcp-m'),c=el('span','rcp-c k'+it.sev,it.cls||'Class not listed');m.append(c,document.createTextNode(fmt(it.date)+' · '+it.cat[2]));b.append(m);
+var det=el('div','rcp-d');det.hidden=true;
+function row(k,v){if(!v)return;var r=el('div');r.append(el('b',null,k+': '),document.createTextNode(v));det.append(r)}
+row('Reason',cut(it.reason,320));it.products.slice(0,4).forEach(function(p,i){row(i?'Also':'Product',p)});if(it.products.length>4)row('More','+ '+(it.products.length-4)+' other products in this recall');
+it.codes.forEach(function(c){row('Lots or dates listed',cut(c,260))});row('Sold in',cut(it.dist,200));row('Status',it.status);
+var p=el('div'),a=el('a','rcp-a','FDA recalls list (official)');a.href=OFFICIAL;a.target='_blank';a.rel='noopener noreferrer';p.append(a);det.append(p);
+b.onclick=function(){det.hidden=!det.hidden;b.setAttribute('aria-expanded',det.hidden?'false':'true')};d.append(b,det);return d}
+function render(){if(!root)return;listEl.replaceChildren();
+if(state==='loading'||(state==='idle')){for(var i=0;i<4;i++)listEl.append(el('div','rcp-skel'));return}
+if(state==='error'){listEl.append(el('div','rcp-empty','We could not reach the FDA recall database just now. Nothing was learned about current recalls.'));var rb=el('button','rcp-retry','Try again');rb.onclick=function(){load(true)};listEl.append(rb);return}
+var all=data.items.filter(match);
+if(!all.length){listEl.append(el('div','rcp-empty',data.items.length?'No recalls match your search or filter.':'No recalls were returned for the last 90 days.'))}
+all.slice(0,shown).forEach(function(it){listEl.append(item(it))});
+if(all.length>shown){var mb=el('button','rcp-more','Show more ('+(all.length-shown)+' left)');mb.onclick=function(){shown+=20;render()};listEl.append(mb)}
+listEl.append(el('p','rcp-note','Source: FDA food recall enforcement reports (openFDA), last 90 days, newest first. Classes are the FDA’s own: Class I means a reasonable chance of serious harm or death, Class II means temporary or reversible harm or a remote chance of serious harm, and Class III means harm is not likely. USDA meat, poultry and egg recalls are not included yet. Categories are guessed from the reason text.'))}
+function build(){root=el('section');root.id='olRecalls';root.hidden=true;root.setAttribute('role','dialog');root.setAttribute('aria-label','Recent food recalls');
+var top=el('div','rcp-top'),bk=el('button',null,'‹');bk.setAttribute('aria-label','Close recalls');bk.onclick=close;top.append(bk,el('h2',null,'Recent recalls'));
+qEl=el('input','rcp-q');qEl.type='search';qEl.placeholder='Search product, brand or reason';qEl.setAttribute('aria-label','Search recalls');qEl.oninput=function(){query=qEl.value.trim().toLowerCase();shown=20;render()};
+chipEl=el('div','rcp-chips');CHIPS.forEach(function(c){var b=el('button',c[0]===filter?'on':'',c[1]);b.onclick=function(){filter=c[0];shown=20;[].forEach.call(chipEl.children,function(x,i){x.className=CHIPS[i][0]===filter?'on':''});render()};chipEl.append(b)});
+listEl=el('div');root.append(top,el('p','rcp-sub','Food recalls reported to the FDA in the last 90 days.'),qEl,chipEl,listEl);document.body.append(root);
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&root&&!root.hidden)close()})}
+function open(){if(!root)build();root.hidden=false;root.scrollTop=0;load();render();var b=root.querySelector('.rcp-top button');if(b)b.focus()}
+function close(){if(root)root.hidden=true}
+function entry(){var b=el('button','card asbutton row rcp-entry'),th=el('span','thumb','⚠'),g=el('span','grow'),st=el('strong',null,'Recent recalls'),sm=el('small',null,'FDA food recalls, newest first');g.append(st,sm);b.append(th,g,el('span','chevron','›'));b.onclick=open;return b}
+function inject(){var h=document.getElementById('home'),ex=document.getElementById('explore');
+if(h&&!h.querySelector('.rcp-entry')){var cta=h.querySelector('.scan-cta');if(cta)cta.after(entry());else h.prepend(entry())}
+if(ex&&!ex.querySelector('.rcp-entry')){var first=ex.firstElementChild;if(first)first.after(entry())}}
+inject();
+window.OLRecalls={open:open};
+})();
