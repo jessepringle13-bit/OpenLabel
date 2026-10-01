@@ -83,14 +83,14 @@ function buildNutrition(ex){var b=el('div');nodes.nutr=b;var t=ex&&nutrTable(ex)
 function ingSection(ing){var c=el('div','ingcard');if(ing){var h=hl(ing,true),d=el('div','ing');d.append(h.f);c.append(d);var leg=[];if(h.any['m-seed'])leg.push('yellow: seed oils');if(h.any['m-sweet'])leg.push('orange: sweeteners you chose to highlight');if(h.any['m-flav'])leg.push('grey: natural flavors or unreviewed sweeteners');if(leg.length)c.append(el('p','olp-note','Highlights — '+leg.join('; ')+'.'))}else c.append(para('No ingredient list is available for this product.'));return c}
 function buildSources(m,code){var b=el('div');b.append(para(m.hint||''));if(m.src)b.append(para('Product information:'+(m.src.charAt(0)===' '?'':' ')+m.src));if(code)b.append(para('Product photos, when shown, come from Open Food Facts contributors under a CC BY-SA license.'));b.append(para('Personal findings are computed from the product data and preferences saved on this device.'));if(m.unknown)b.append(para('What we do not know: '+m.unknown));b.append(el('p','olp-note','Not medical advice or a product safety assessment. Always check the package.'));return row('src','Sources and unknowns',null,'',b)}
 function mkRow(r){var d=el('details','olr'+(r.color?' c-'+r.color:'')+(r.pin?' pin':''));if(r.open)d.open=true;var s=el('summary');s.append(el('span','t',r.title));if(r.color){var c=el('span','chip2');c.append(el('span','dot'),document.createTextNode(r.chip));s.append(c)}s.append(el('span','cv'));var b=el('div','olr-b');b.append(r.body);d.append(s,b);rowEls[r.type]=d;return d}
-var TAGN={allergen:'Allergens',recall:'Recalls',test:'Testing',seed:'Seed oils',proc:'Processing',sweet:'Sweeteners',add:'Additives',caf:'Caffeine'};
+var TAGN={allergen:'Allergens',recall:'Recalls',test:'Testing',seed:'Seed oils',proc:'Processing',sweet:'Sweeteners',add:'Additives',caf:'Caffeine',diet:'Diets',intol:'Intolerances',gut:'Gut',emul:'Emulsifiers'};
 function openRow(type){var d=rowEls[type];if(!d)return;d.open=true;function go(){d.scrollIntoView({block:'center',behavior:'smooth'})}if(mode!=='full'){setMode('full');setTimeout(go,330)}else go()}
 var SHORT=[[/^No match to your list$/,'no match'],[/^Matches your allergy$/,'matches you'],[/^Trace warning$/,'trace warning'],[/^Not enough data$/,'no data'],[/^On your watch list$/,'watch list'],[/^([0-9]+) listed.*$/,'$1 listed'],[/^Above tester's limit$/,'above limit'],[/^No test found$/,'none found'],[/^Contested evidence$/,'contested'],[/^Category-level only$/,'category only'],[/^Within your limit$/,'within limit'],[/^Above your limit$/,'above limit'],[/^Needs a fresh scan$/,'rescan']];
 function shortTag(c){for(var i=0;i<SHORT.length;i++){if(SHORT[i][0].test(c))return c.replace(SHORT[i][0],SHORT[i][1])}return c.charAt(0).toLowerCase()+c.slice(1)}
 function tagsSection(rows){var w=el('div','tags');rows.filter(function(r){return r.color}).sort(function(a,b){return RANK[b.color]-RANK[a.color]}).forEach(function(r){var t=el('button','tag c-'+r.color);t.append(el('span','dot c-'+r.color),document.createTextNode((TAGN[r.type]||r.title)+': '+shortTag(r.chip)));t.onclick=function(){openRow(r.type)};w.append(t)});return w}
 function render(){var m=scrape();if(!m.name)return;var code=curCode();nodes={};rowEls={};
 var ing=m.facts['Ingredients']||'';var rows=buildRows(m,ing);
-(window.OLPanelPlugins||[]).forEach(function(fn){try{var r=fn(m,{code:code});if(r){var at=r.at==null?rows.length:r.at;delete r.at;rows.splice(at,0,r)}}catch(e){}});
+(window.OLPanelPlugins||[]).forEach(function(fn){try{var r=fn(m,{code:code,rows:rows,ing:ing});if(r){var at=r.at==null?rows.length:r.at;delete r.at;rows.splice(at,0,r)}}catch(e){}});
 var all=rows.concat([buildNutrition(code?undefined:null),buildSources(m,code)]),pinned=rows.filter(function(r){return r.pin}),rest=all.filter(function(r){return !r.pin});
 head.replaceChildren();var top=el('div','olp-top'),img=el('div','olp-img load');nodes.img=img;
 var id=el('div','olp-id');id.append(el('h2',null,m.name),el('div','olp-brand',m.brand),el('div','olp-cat',m.type));
@@ -131,5 +131,5 @@ $$('.view').forEach(function(v){vo.observe(v,{attributes:true,attributeFilter:['
 new MutationObserver(schedule).observe(res,{subtree:true,childList:true,characterData:true});
 track();schedule();
 if(API&&API.ready)API.ready.then(function(){regReady=true;if(!res.hidden&&panel&&!panel.hidden){var md=mode;render();setMode(md,true)}});else regReady=true;
-var sc=document.createElement('script');sc.src='recalls.js';document.body.appendChild(sc);
+['recalls.js','profile.js','profile-rows.js'].forEach(function(f){var sc=document.createElement('script');sc.src=f;document.body.appendChild(sc)});
 })();
