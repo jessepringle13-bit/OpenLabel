@@ -116,7 +116,7 @@ function refresh(){if(!panel||panel.hidden||res.hidden)return;var md=mode,st=bod
 window.OLPanel={refresh:refresh};
 function build(){panel=el('section');panel.id='olPanel';panel.hidden=true;panel.setAttribute('role','region');panel.setAttribute('aria-label','Product details');head=el('div','olp-head');bodyEl=el('div','olp-body');panel.append(head,bodyEl);document.body.append(panel);
 panel.addEventListener('pointerdown',function(e){if(e.target.closest('.olp-act button'))return;if(mode==='full'&&e.target.closest('.olp-body'))return;drag={y:e.clientY,h:panel.offsetHeight,moved:false,id:e.pointerId,tgt:e.target};if(e.pointerType==='touch'&&e.target.closest('.olp-head')&&e.cancelable)e.preventDefault()});
-panel.addEventListener('pointermove',function(e){if(!drag||e.pointerId!==drag.id)return;var dy=e.clientY-drag.y;if(!drag.moved&&Math.abs(dy)>8){drag.moved=true;panel.classList.add('dragging');try{panel.setPointerCapture(drag.id)}catch(x){}}if(drag.moved){if(e.cancelable)e.preventDefault();var mx=window.innerHeight*.95;panel.style.height=Math.min(mx,Math.max(window.innerHeight*.35,drag.h-dy))+'px'}});
+panel.addEventListener('pointermove',function(e){if(!drag||e.pointerId!==drag.id)return;var dy=e.clientY-d.y;if(!drag.moved&&Math.abs(dy)>8){drag.moved=true;panel.classList.add('dragging');try{panel.setPointerCapture(drag.id)}catch(x){}}if(drag.moved){if(e.cancelable)e.preventDefault();var mx=window.innerHeight*.95;panel.style.height=Math.min(mx,Math.max(window.innerHeight*.35,drag.h-dy))+'px'}});
 function end(e){if(!drag||e.pointerId!==drag.id)return;var d=drag;drag=null;panel.classList.remove('dragging');var dy=e.clientY-d.y;if(!d.moved){if(d.tgt.closest('.olp-head')&&!d.tgt.closest('button'))setMode(mode==='full'?'peek':'full');return}
 if(dy<-40)setMode('full');else if(dy>40&&mode==='full')setMode('peek');else setMode(mode)}
 panel.addEventListener('dragstart',function(e){e.preventDefault()});panel.addEventListener('pointerup',end);panel.addEventListener('pointercancel',function(){if(drag){drag=null;panel.classList.remove('dragging');setMode(mode)}});
@@ -133,5 +133,5 @@ new MutationObserver(schedule).observe(res,{subtree:true,childList:true,characte
 track();schedule();
 if(API&&API.ready)API.ready.then(function(){regReady=true;if(!res.hidden&&panel&&!panel.hidden){var md=mode;render();setMode(md,true)}});else regReady=true;
 var sl=document.createElement('link');sl.rel='stylesheet';sl.href='scroll-hotfix.css';document.head.appendChild(sl);
-['recalls.js','profile.js','profile-rows.js'].forEach(function(f){var sc=document.createElement('script');sc.src=f;document.body.appendChild(sc)});
+['recalls.js','profile.js','profile-rows.js','ingredient-loader.js'].forEach(function(f){var sc=document.createElement('script');sc.src=f;document.body.appendChild(sc)});
 })();
