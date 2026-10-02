@@ -59,7 +59,7 @@ return{type:'diet',title:'Diets',color:color,chip:chip,body:b,pin:false,open:fal
 function intolPlugin(m,ctx){var P=prof();if(!P.intol.length)return null;var ing=ctx.ing||'',t=strip(ing,NOTMILK),found=[],lists={lactose:MILK,gluten:GLUTEN,sulfites:SULF,sugaralc:SALC,fructose:FRUC},names={lactose:'Lactose',gluten:'Gluten',sulfites:'Sulfites',sugaralc:'Sugar alcohols',fructose:'Fructose'},b=el('div');
 P.intol.forEach(function(id){var h=ing?hits(t,lists[id]||[]):[];if(h.length)found.push(id);var p=el('p');p.append(el('strong',null,names[id]+': '+(ing?(h.length?'found':'not found'):'can’t tell')),document.createTextNode(h.length?' — '+h.slice(0,5).join(', ')+'.':(ing?' — nothing matching in the ingredient list.':' — no ingredient list.')));b.append(p)});
 b.append(el('p','olp-note','We match words in the ingredient list. Trace amounts and cross-contact are not visible there.'));
-var color=!ing?'grey':(found.length?'orange':'green'),chip=!ing?'Not enough data':(found.length?'Found: '+found.map(function(i){return names[i].toLowerCase()}).join(', '):'No match to your list');
+var color=!ing?'grey':(found.length?'orange':'grey'),chip=!ing?'Not enough data':(found.length?'Found: '+found.map(function(i){return names[i].toLowerCase()}).join(', '):'No match to your list');
 return{type:'intol',title:'Intolerances',color:color,chip:chip,body:b,pin:found.length>0,open:false,at:2}}
 function cafPlugin(m,ctx){var ing=ctx.ing||'',h=hits(ing,CAFW),dec=K(ing).indexOf(' decaffeinated ')>=0||K(ing).indexOf(' decaf ')>=0,fact=m.facts['Caffeine'],ex=null;
 for(var i=0;i<ctx.rows.length;i++)if(ctx.rows[i].type==='caf'){ex=ctx.rows[i];break}
