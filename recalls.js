@@ -18,7 +18,7 @@ function fmt(s){var m=/^([0-9]{4})([0-9]{2})([0-9]{2})$/.exec(s||'');return m?MO
 function cut(s,n){s=String(s||'').split(String.fromCharCode(10)).join(' ').split(String.fromCharCode(13)).join(' ').split(String.fromCharCode(9)).join(' ').replace(/ +/g,' ').trim();return s.length>n?s.slice(0,n-1)+'…':s}
 function ld(){try{return JSON.parse(localStorage.getItem(LK))||{}}catch(e){return {}}}
 function save(k){try{var o=ld();o[k]={t:mem[k].t,recs:mem[k].recs};var ks=Object.keys(o);if(ks.length>8){ks.sort(function(a,b){return o[a].t-o[b].t});delete o[ks[0]]}localStorage.setItem(LK,JSON.stringify(o))}catch(e){}}
-function pickF(r){var o={};['recall_number','classification','reason_for_recall','recall_initiation_date','report_date','recalling_firm','product_description','code_info','more_code_info','distribution_pattern','status'].forEach(function(f){o[f]=cut(r[f],700)});return o}
+function pickF(r){var o={};['recall_number','classification','reason_for_recall','recall_initiation_date','report_date','recalling_firm','product_description','code_info','more_code_info','distribution_pattern','status'].forEach(function(f){o[f]=cut(r[f],700)});o.event_id=r.event_id?String(r.event_id):'';return o}
 function done(){if(window.OLPanel)window.OLPanel.refresh()}
 function fetchBrand(brand){var k=norm(brand),c=mem[k],now=Date.now();
 if(c&&(c.state==='loading'||(c.state==='done'&&now-c.t<TTL)||(c.state==='error'&&now-c.t<60000)))return;
@@ -41,7 +41,7 @@ function card(r){var d=el('div','rc-card');d.append(el('strong',null,(r.classifi
 if(r.reason_for_recall)d.append(el('div','rc-meta','Reason: '+cut(r.reason_for_recall,240)));
 d.append(el('div','rc-meta','Recall started '+fmt(r.recall_initiation_date)+(r.status?' · status: '+r.status:'')+(r.recall_number?' · '+r.recall_number:'')));
 if(r.code_info)d.append(el('div','rc-meta','Lots or dates listed: '+cut(r.code_info,320)));
-if(r.distribution_pattern)d.append(el('div','rc-meta','Sold in: '+cut(r.distribution_pattern,160)));return d}
+if(r.distribution_pattern)d.append(el('div','rc-meta','Sold in: '+cut(r.distribution_pattern,160)));if(r.event_id&&/^[0-9]+$/.test(r.event_id)){var lk=el('a','rc-a','FDA enforcement report for this recall (official)');lk.href='https://www.accessdata.fda.gov/scripts/ires/index.cfm?Event='+r.event_id;lk.target='_blank';lk.rel='noopener noreferrer';var lp=el('div','rc-meta');lp.append(lk);d.append(lp)}return d}
 function foot(b){b.append(el('p','olp-note','Source: FDA food recall reports (openFDA), last 18 months. USDA meat, poultry and egg recalls are not checked yet. Finding no recall does not guarantee a product is safe.'));var p=el('p'),a=el('a','rc-a','FDA recalls list (official)');a.href=OFFICIAL;a.target='_blank';a.rel='noopener noreferrer';p.append(a);b.append(p)}
 function plugin(m,ctx){var R={type:'recall',title:'Recalls',at:1,pin:false,open:false,color:'grey',chip:'Not enough data'},b=el('div');R.body=b;
 if(!ctx.code){R.chip='Sample product';b.append(para('This is a sample product, so we did not search recall reports.'));return R}
@@ -58,7 +58,7 @@ b.append(para(isS?'This barcode appears in an FDA recall report. Recalls often c
 var f=el('div','rc-lot'),inp=el('input');inp.type='text';inp.placeholder='Lot or best-by, as printed';inp.setAttribute('aria-label','Lot or best-by date as printed on the package');inp.value=lot;var go=el('button',null,'Check');go.onclick=function(){lots[lk]=inp.value.trim();done()};f.append(inp,go);b.append(f);
 if(lot){var hit=cand.some(function(x){return lotHit(lot,x.r)}),all=cand.every(function(x){return (x.r.code_info||'').length>3});
 if(hit){R.color='red';R.chip='Lot matches';b.append(el('div','rc-res','Your lot or date appears in the recall list. Read the official notice before you decide.'))}
-else if(all){R.color='green';R.chip='Lot not listed';R.pin=false;b.append(el('div','rc-res','Your entry does not appear in the lots this recall lists. Type it exactly as printed, and read the official notice if unsure.'))}
+else if(all){R.color='grey';R.chip='Lot not listed';R.pin=false;b.append(el('div','rc-res','Your entry does not appear in the lots this report lists. That does not confirm your product is unaffected. Type it exactly as printed, and read the official notice if unsure.'))}
 else{R.chip='Check the notice';b.append(el('div','rc-res','This report does not list lots clearly, so we cannot compare. Read the official notice.'))}}
 else b.append(el('p','olp-note','The check only looks for the same text, so type the lot or date exactly as printed (for example 23-Dec-2026).'))}
 else{R.color='grey';R.chip='No match found';b.append(para('We searched FDA recall reports from the last 18 months for this brand and product and did not find a match. That is not proof that no recall applies.'));list(other,2,'Other recent recalls from this brand')}
