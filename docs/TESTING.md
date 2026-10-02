@@ -32,3 +32,9 @@ Nothing is pushed if any step above fails. A failed step is fixed, or the change
 
 ## Reporting a problem
 Send a screenshot and say which page and what you tapped. The build side reproduces it before changing anything.
+
+## Phase 0 allergy-row hardening (2026-10-02)
+Automated: `node tests/allergy-match.test.js` (needs jsdom). 42 cases, 0 failed. Covers exact names, compound wording (peanut oil, milk powder, sesame seeds), nested parentheses, plant milks and cocoa butter not treated as dairy, eggplant and buckwheat not matched, custom watch words, profile off, and no leakage between allergens.
+Desktop browser (cloud Chrome, live GitHub Pages, seeded test products, not real scans): compound and nested rows show "Allergy word in ingredient"; exact names show "Saved allergy match"; non-matching rows stay uncolored; changing the profile while a panel is open updates the rows; the ingredient sheet shows the matched word and states that an uncolored row is not proof of safety.
+NOT yet tested: real iPhone, installed Home Screen app camera, the full Allergens section on real scans (seeded products lack stored allergen fields), trace statements on real data, Home Screen icon in Safari and Firefox.
+Known limits: word matching can still miss derivatives with unrelated names and misspellings; "coconut milk" is not flagged for tree nuts (FDA no longer lists coconut as a tree nut).

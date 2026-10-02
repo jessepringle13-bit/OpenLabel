@@ -62,6 +62,9 @@ A food transparency app: scan a product, see what the label actually says, and s
 - relationship-registry.json: seed list of 4 documented entries (Sugar Research Foundation, Global Energy Balance Network, ILSI, Coca-Cola), each with source links and tier. Matches against study affiliations, grant agencies, conflict text and Crossref funders produce a "flag for human review" (a lead about the organization, not a finding about the study). Not yet owner-reviewed and not balanced across sides.
 - ingredient-research.js: opening an ingredient sheet searches PubMed for human trials and reviews naming it, then runs standing (PubMed types + Crossref notices) and declared-funding checks on the top three. Declared conflicts are shown verbatim from the PubMed record when present. No claims about what studies show. Status words: checking, studies found not yet reviewed, none found, could not check. Cached 7 days.
 
+### Allergy row cue
+- Matches allergen words inside ingredient wording (compound and nested), shows the matched word, and never treats an uncolored row as safe. Plant milks and cocoa butter are not treated as dairy. See docs/TESTING.md for what was and was not tested.
+
 ### Library and history
 - Saved and recent products, stored locally in the browser (live products keep a trimmed copy).
 - Library markers (library.js): each card shows when the product was last seen and an orange "Label data changed" tag when the Open Food Facts record differs from the last snapshot (ingredients, allergens, traces, additives, sizes). A "Recent changes" list and a "Check saved for changes" button (up to 10 saved products, one lookup every 4.5 s) sit at the top of Library. A change means the database record changed, not necessarily the package.
