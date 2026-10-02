@@ -38,3 +38,19 @@ Automated: `node tests/allergy-match.test.js` (needs jsdom). 42 cases, 0 failed.
 Desktop browser (cloud Chrome, live GitHub Pages, seeded test products, not real scans): compound and nested rows show "Allergy word in ingredient"; exact names show "Saved allergy match"; non-matching rows stay uncolored; changing the profile while a panel is open updates the rows; the ingredient sheet shows the matched word and states that an uncolored row is not proof of safety.
 NOT yet tested: real iPhone, installed Home Screen app camera, the full Allergens section on real scans (seeded products lack stored allergen fields), trace statements on real data, Home Screen icon in Safari and Firefox.
 Known limits: word matching can still miss derivatives with unrelated names and misspellings; "coconut milk" is not flagged for tree nuts (FDA no longer lists coconut as a tree nut).
+
+## Step 4 panel regression (2026-10-02, cloud Chrome, 390x844 mobile emulation, live Pages)
+Tested (emulated, not a real iPhone):
+- Peek and full states, tap on handle toggles, all sections reachable, last row clears the bottom dock (long and real product).
+- Close and return: from Scan, Explore, Home and Library the panel closes to the originating page. Dock tap closes the panel and navigates.
+- Save and unsave from the panel header updates stored saved list.
+- Long ingredient list (70 items): 7 rows shown, Show all ingredients, View label text, last row opens its sheet.
+- Profile change: no allergies gives "Allergens: not set up"; adding milk gives "matches you" on reopen.
+- Real Open Food Facts lookup (Nutella 3017620422003) fills macros, tags, ingredients and rows.
+Bugs found and fixed (commit after aa5c302 deployed):
+- Drag-to-resize threw "d is not defined" on every pointer move, so the sheet only changed state on release. Fixed; height now follows the finger in emulated mouse drag.
+- Recalls and Seed oils showed green "None found". Now grey "No match found" / "None named in list", recall text says it is not proof that no recall applies.
+- Category showed raw tag "fr:Nutella". Language prefix stripped.
+- Camera error sheet could appear on other pages after leaving Scan. Suppressed.
+Not tested: real touch swipe on iPhone, rubber-banding, Safari address-bar resize, live profile edit with the panel visible (dock tap closes the panel, so only reopen was tested), very long names in header.
+Open decision for owner: Processing level uses green/orange for NOVA. That is a health-leaning color on a descriptive field; consider grey until the Phase 3 evidence review.
