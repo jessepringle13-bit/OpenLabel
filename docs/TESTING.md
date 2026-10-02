@@ -103,3 +103,15 @@ Lab tested verified against source pages (Consumer Reports baby food Sep 17 2026
 - Exact publish and update dates added. Company responses checked; all consistent.
 Colors: red only where the tester says to avoid (Naked Nutrition, Huel); other above-limit results are orange; "lead not detected" is grey with scope in the text.
 Not done: USDA meat, poultry and egg recalls; matching by package size and distribution; lab relevance labels (exact product / different lot / brand family) beyond product and category; tester funding and ties (all still "not checked"); recall brand search is capped at 25 records per brand, which large brands can exceed; a real iPhone pass.
+
+## USDA recalls and Phase 3 color slice (2026-10-02, cloud Chrome, mobile emulation, live Pages)
+USDA FSIS feed (fsis.usda.gov/fsis/api/recall/v/1?field_archive_recall=0, about 1 MB, 189 records, reduced and cached 6 hours on the device):
+- Recent recalls page now merges FDA and USDA items, newest first, with source label, USDA notice link, USDA data-modified date, and an error note if USDA cannot be reached (FDA still shows). Verified live: 3 USDA items in the last 90 days, Fontanini pork sausage opened with reason, product, states, status, official link.
+- Product recall check now searches both sources by brand and name. Verified on Lemon Perfect: "No match found", wording says FDA and USDA, both official links shown. A USDA match was not yet exercised on a real meat product barcode (needs owner test).
+- Limits: the feed filter available for current data returns active recalls, public health alerts and unarchived closed recalls; recalls already archived may be missing from the 90-day list. FSIS lacks barcodes, so matching is by brand and name only. Public health alerts are labelled as alerts, not recalls. Direct browser access works (CORS open); the server blocks command-line requests, so this cannot be moved to a script without a proxy.
+Phase 3 audit (color rules in PAGE_ROADMAP Phase 3):
+- Processing level base color was green/yellow/orange by NOVA group. Now grey; orange only if the user put ultra-processed on their watch list.
+- Caffeine: "Within your limit" was green and the over-limit chip also said "Within your limit" (bug). Now orange "Above your limit" or grey "Within your limit".
+- Diets: chip "Fits your diets" changed to "Fits by label" (green kept, since rules are documented and tested, but scoped to label data).
+- Every red, orange, yellow or green row now has a collapsed "Why this color" block with reason, source, scope, who it applies to, limits and review status. Verified for watch-list rows live. Topic orange states it is the user's choice, not an evidence finding.
+- Still open: no structured evidence register yet; green and yellow are not assigned from reviewed dossiers except seed oils (grey by default, contested evidence in the row text); ingredient highlight legend still colors seed oils yellow while the row is grey; test-result rows rely on a hand-set color table.
