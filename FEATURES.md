@@ -59,7 +59,8 @@ A food transparency app: scan a product, see what the label actually says, and s
 - "For you": red items pinned first, then up to three orange or yellow items. A count line states how many findings exist. Breakdown has See all, Findings only and No findings filters. No scores.
 
 ### Ingredient research check (ingredient sheet)
-- ingredient-research.js: opening an ingredient sheet searches PubMed for human trials and reviews naming it, then runs standing (PubMed types + Crossref notices) and declared-funding checks on the top three. Declared conflicts not run yet. No claims about what studies show. Status words: checking, studies found not yet reviewed, none found, could not check. Cached 7 days.
+- relationship-registry.json: seed list of 4 documented entries (Sugar Research Foundation, Global Energy Balance Network, ILSI, Coca-Cola), each with source links and tier. Matches against study affiliations, grant agencies, conflict text and Crossref funders produce a "flag for human review" (a lead about the organization, not a finding about the study). Not yet owner-reviewed and not balanced across sides.
+- ingredient-research.js: opening an ingredient sheet searches PubMed for human trials and reviews naming it, then runs standing (PubMed types + Crossref notices) and declared-funding checks on the top three. Declared conflicts are shown verbatim from the PubMed record when present. No claims about what studies show. Status words: checking, studies found not yet reviewed, none found, could not check. Cached 7 days.
 
 ### Library and history
 - Saved and recent products, stored locally in the browser (live products keep a trimmed copy).

@@ -1,0 +1,55 @@
+{
+  "version": "0.1",
+  "updated": "2026-10-02",
+  "status": "Seed list. Not yet reviewed by a named human owner. Covers three documented cases only and is not balanced across all sides; see docs/SOURCE_CHECK_SPEC.md (symmetry rule).",
+  "entries": [
+    {
+      "id": "sugar-research-foundation",
+      "match": ["sugar research foundation"],
+      "label": "Sugar Research Foundation",
+      "statement": "Linked to commissioned work: according to a historical analysis of internal industry documents, the Sugar Research Foundation sponsored a 1965 literature review on coronary heart disease published in the New England Journal of Medicine, set its objective, contributed articles and received drafts. Its funding and role were not disclosed in that publication.",
+      "type": "commissioned work",
+      "period": "1965-1967",
+      "confidence": "documented",
+      "evidence": [
+        {"tier": 2, "title": "Kearns, Schmidt, Glantz. Sugar Industry and Coronary Heart Disease Research. JAMA Intern Med 2016", "url": "https://pubmed.ncbi.nlm.nih.gov/27617709/"}
+      ]
+    },
+    {
+      "id": "global-energy-balance-network",
+      "match": ["global energy balance network"],
+      "label": "Global Energy Balance Network",
+      "statement": "Linked to direct funding by Coca-Cola: news reporting says the network was created with Coca-Cola funding, the University of Colorado School of Medicine returned a $1 million Coca-Cola grant given to help start it, and emails reported by the Associated Press suggested Coca-Cola helped choose its leaders and draft its mission statement. Its president said Coca-Cola had no say in how the money was spent. The group disbanded in December 2015.",
+      "type": "direct funding",
+      "period": "2014-2015",
+      "confidence": "documented",
+      "evidence": [
+        {"tier": 3, "title": "O'Connor. Research Group Funded by Coca-Cola to Disband. New York Times, 1 Dec 2015", "url": "https://archive.nytimes.com/well.blogs.nytimes.com/2015/12/01/research-group-funded-by-coca-cola-to-disband/"}
+      ]
+    },
+    {
+      "id": "ilsi",
+      "match": ["ilsi", "international life sciences institute"],
+      "label": "International Life Sciences Institute (ILSI)",
+      "statement": "Linked to corporate membership and funding: a peer-reviewed analysis of Freedom of Information documents reports that ILSI was founded in 1978 by a former Coca-Cola executive and receives member support from food and beverage companies, including PepsiCo, Mars, Coca-Cola and Mondelez contributions to ILSI North America listed in a draft 2016 tax return.",
+      "type": "corporate membership",
+      "period": "1978-2016",
+      "confidence": "documented",
+      "evidence": [
+        {"tier": 2, "title": "Steele, Ruskin, Stuckler. Pushing partnerships: corporate influence on research and policy via the International Life Sciences Institute. Public Health Nutrition 2020;23(11):2032-2040", "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/C42EDA188F5E66983D80C8A44E90AB21/S1368980019005184a.pdf/pushing-partnerships-corporate-influence-on-research-and-policy-via-the-international-life-sciences-institute.pdf"}
+      ]
+    },
+    {
+      "id": "coca-cola-research-funding",
+      "match": ["coca-cola", "coca cola", "the coca-cola company"],
+      "label": "The Coca-Cola Company",
+      "statement": "Linked to direct funding of research: a network analysis of Coca-Cola's research funding (2008-2016) examined the company's own published lists of funded investigators and partnerships and compared them with the published literature.",
+      "type": "direct funding",
+      "period": "2008-2016",
+      "confidence": "documented",
+      "evidence": [
+        {"tier": 2, "title": "Serodio, McKee, Stuckler. Coca-Cola: a model of transparency in research partnerships? Public Health Nutrition 2018", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5962884/"}
+      ]
+    }
+  ]
+}
