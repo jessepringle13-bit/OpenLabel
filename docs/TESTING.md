@@ -84,3 +84,22 @@ Found and fixed:
 - Explanation now states three levels: 1 database record changed (what we detect), 2 label may have been reformulated (not claimed), 3 package change confirmed (only the owner can confirm). Marker renamed "Database record changed".
 - Added Dismiss and See current details. Package-size formatting noise (400 g vs 400 g e) no longer counts as a change.
 Not built or not tested: remove control on Library cards (removal is via the star in the panel), automatic background rechecks (none, by design), real iPhone, the 10-product check limit with Open Food Facts rate limits, changes in nutrition values (not compared).
+
+## Keto and per-100 g nutrition (2026-10-02, owner report: Lemon Perfect)
+Owner found keto saying carbs were not listed when the nutrition table showed them. Cause: diet rows used per-serving values only, while the table falls back to per 100 g. Fixed for keto, low-carb, low-sugar and low-sodium, with a clear "per 100 g, no per-serving amount" message and a "database lists no value" message when nothing exists. Verified live on Lemon Perfect (0850003748887). 37 diet test cases pass.
+
+## Steps 9 and 10 review: Recalls and Lab tested (2026-10-02, cloud Chrome, mobile emulation, live Pages)
+Recalls verified: live openFDA data loads (100 records, grouped by event), search and filters present, details show reason, products, lots, distribution, status. The panel check uses UPC (confirmed), name (possible match) and brand (other) levels.
+Fixed:
+- Dates were ambiguous: the list showed the recall start date but was sorted by FDA report date. Now both are shown.
+- No data freshness. Now shows the openFDA last-updated date and when the list was checked, and says recent recalls may lag.
+- All links went to the general FDA list. Each recall now links to its FDA enforcement report (verified to open).
+- "Lot not listed" was green. Now grey, with wording that it does not confirm the product is unaffected.
+- Closing a camera error sheet: sheet is now dismissed when leaving Scan.
+Lab tested verified against source pages (Consumer Reports baby food Sep 17 2026, protein powders Oct 14 2025 updated Jan 8 2026, Clean Label Project Jan 9 2025). Corrections:
+- Clean Label Project: tested 165, analyzed 160 products from 70 brands; the page does not say plant-based and chocolate had the highest lead (it says highest contaminants overall, and chocolate had 110x more cadmium). Rewritten.
+- Mum-Mum: removed an unsupported "heavy metals below concern" claim; the page gives no BPA number.
+- Microplastics: 16 products tested, evidence in each of 15 purées.
+- Exact publish and update dates added. Company responses checked; all consistent.
+Colors: red only where the tester says to avoid (Naked Nutrition, Huel); other above-limit results are orange; "lead not detected" is grey with scope in the text.
+Not done: USDA meat, poultry and egg recalls; matching by package size and distribution; lab relevance labels (exact product / different lot / brand family) beyond product and category; tester funding and ties (all still "not checked"); recall brand search is capped at 25 records per brand, which large brands can exceed; a real iPhone pass.

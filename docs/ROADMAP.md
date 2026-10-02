@@ -12,8 +12,8 @@ Canonical plan: docs/PAGE_ROADMAP.md (page-by-page roadmap, copied from project 
 | 6 For you and Profile | unchanged | not re-tested | Built / needs validation |
 | 7 Explore | live Open Food Facts name search (explore-search.js), debounced, opens panel directly, returns to Explore; emulated test 2026-10-02 | owner iPhone test needed; OFF search can return 503 | Built |
 | 8 Library | library.js: last seen, database-record-changed markers, field-level before/after, three-level explanation, dismiss, recheck (fixed for real off- ids); emulated test with real product 2026-10-02 | owner iPhone test needed; no remove control on cards; nutrition not compared | Built |
-| 9 Recalls | unchanged | live data access not verified | Prototype |
-| 10 Lab tested | unchanged | | Prototype |
+| 9 Recalls | live openFDA verified 2026-10-02; dates, freshness, per-recall FDA link, grey lot-not-listed | USDA missing; brand search capped at 25 records; owner iPhone test | Built (prototype scope) |
+| 10 Lab tested | 10 entries compared with source pages 2026-10-02, corrected; calmer colors | funding/ties unchecked; relevance labels incomplete; tiny set | Prototype |
 | 11 Evidence system | research check (PubMed and Crossref) and relationship registry v0 | simulated page | PARKED behind ?labs=1. Out of sequence. Hidden from normal use until step 11 |
 | 12-13 | not started | | Planned |
 
