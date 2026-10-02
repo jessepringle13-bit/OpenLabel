@@ -45,9 +45,15 @@ if(id==='glutenfree'){if(l.indexOf('en:gluten-free')>=0)return R('yes','Labeled 
 if(id==='dairyfree'){if(milk.length)return R('no','Contains '+milk.slice(0,4).join(', ')+'.');if(l.indexOf('en:dairy-free')>=0||l.indexOf('en:vegan')>=0)return R('yes','Labeled dairy-free or vegan.');if(!ing)return R('unknown','No ingredient list.');return R('maybe','No dairy found in the list.')}
 if(id==='paleo'){var p=[].concat(hits(t,GRAIN),hits(t,LEGUME),milk,hits(t,REFSUG),hits(t,SEEDOIL));if(p.length)return R('no','Contains '+p.slice(0,4).join(', ')+'. Definitions of paleo vary.');if(!ing)return R('unknown','No ingredient list.');return R('maybe','Nothing paleo excludes was found. Definitions of paleo vary.')}
 var c=x&&x.c!=null?x.c:null,s=x&&x.s!=null?x.s:null,na=x&&x.na!=null?x.na*1000:null;
-if(id==='keto'||id==='lowcarb'){if(c==null)return R('unknown','Carbs per serving are not listed.');var tg=Number(prof().carbs),pc=tg>0?' That is '+Math.round(c/tg*100)+'% of your '+tg+' g daily target.':' Set a daily target in Profile to compare.';if(c>=35||(s!=null&&s>10))return R('no','High carb: '+n1(c)+' g carbs'+(s!=null?', '+n1(s)+' g sugar':'')+' per serving.'+pc);return R('maybe',n1(c)+' g carbs per serving.'+pc)}
-if(id==='lowsugar'){if(s==null)return R('unknown','Sugars per serving are not listed.');if(s>10)return R('no',n1(s)+' g sugar per serving.');return R('maybe',n1(s)+' g sugar per serving.')}
-if(id==='lowsodium'){if(na==null)return R('unknown','Sodium per serving is not listed.');return R('maybe',Math.round(na)+' mg sodium per serving. Check it against your own limit.')}
+var c100=x&&x.c100!=null?x.c100:null,s100=x&&x.s100!=null?x.s100:null,na100=x&&x.na100!=null?x.na100*1000:null;
+if(id==='keto'||id==='lowcarb'){var tg=Number(prof().carbs),pc=function(v){return tg>0?' That is '+Math.round(v/tg*100)+'% of your '+tg+' g daily target.':' Set a daily target in Profile to compare.'};
+if(c!=null){if(c>=35||(s!=null&&s>10))return R('no','High carb: '+n1(c)+' g carbs'+(s!=null?', '+n1(s)+' g sugar':'')+' per serving.'+pc(c));return R('maybe',n1(c)+' g carbs per serving.'+pc(c))}
+if(c100!=null){if(c100>=25)return R('no','High carb: '+n1(c100)+' g carbs per 100 g or 100 mL. No per-serving amount is listed.');return R('maybe',n1(c100)+' g carbs per 100 g or 100 mL. No per-serving amount is listed, so check the serving size on the package.')}
+return R('unknown','Open Food Facts lists no carbohydrate value for this product.')}
+if(id==='lowsugar'){if(s!=null){if(s>10)return R('no',n1(s)+' g sugar per serving.');return R('maybe',n1(s)+' g sugar per serving.')}
+if(s100!=null){if(s100>=10)return R('no',n1(s100)+' g sugar per 100 g or 100 mL. No per-serving amount is listed.');return R('maybe',n1(s100)+' g sugar per 100 g or 100 mL. No per-serving amount is listed, so check the serving size on the package.')}
+return R('unknown','Open Food Facts lists no sugar value for this product.')}
+if(id==='lowsodium'){if(na!=null)return R('maybe',Math.round(na)+' mg sodium per serving. Check it against your own limit.');if(na100!=null)return R('maybe',Math.round(na100)+' mg sodium per 100 g or 100 mL. No per-serving amount is listed. Check it against your own limit.');return R('unknown','Open Food Facts lists no sodium value for this product.')}
 return R('unknown','')}
 var DN={vegan:'Vegan',vegetarian:'Vegetarian',pescatarian:'Pescatarian',keto:'Keto','lowcarb':'Low-carb',paleo:'Paleo',glutenfree:'Gluten-free',dairyfree:'Dairy-free',lowsodium:'Low-sodium',lowsugar:'Low-sugar'};
 var WORD={yes:'yes',no:'no',maybe:'maybe',unknown:'can’t tell'};

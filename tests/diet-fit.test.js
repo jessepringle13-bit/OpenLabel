@@ -34,4 +34,11 @@ t('lowsugar','x','no',{a:[],l:[],s:12});
 t('lowsugar','x','maybe',{a:[],l:[],s:3});
 t('lowsugar','x','unknown',{a:[],l:[]});
 t('lowsodium','x','unknown',{a:[],l:[]});
+t('keto','x','maybe',{a:[],l:[],c:null,c100:2});
+t('keto','x','no',{a:[],l:[],c:null,c100:60});
+t('keto','x','unknown',{a:[],l:[],c:null,c100:null});
+t('lowcarb','x','maybe',{a:[],l:[],c100:2});
+t('lowsugar','x','maybe',{a:[],l:[],s100:0});
+t('lowsugar','x','no',{a:[],l:[],s100:12});
+t('lowsodium','x','maybe',{a:[],l:[],na100:0.01});
 console.log(n+' cases, '+fail+' failed');process.exit(fail?1:0)

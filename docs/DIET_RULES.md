@@ -23,6 +23,9 @@ Purpose: define exactly what each yes / no / maybe / can't tell means before mor
 
 Keto and low-carb share one heuristic threshold and show the share of the user's own daily carb target when set. Thresholds are placeholders, not clinical criteria, and are labelled as such in the notes. Halal and kosher are not judged (certification, not ingredients).
 
+## Per-serving versus per 100 g
+Keto, low-carb, low-sugar and low-sodium use the per-serving value when Open Food Facts has one. If only a per 100 g or 100 mL value exists, it is used and labelled that way (keto and low-carb: no at 25 g or more per 100 g; low-sugar: no at 10 g or more per 100 g). If neither exists the result says the database lists no value. A product's nutrition table and the diet row now use the same data.
+
 ## Exceptions (not counted as the animal or dairy word)
 Plant milks, cocoa/shea/peanut/almond/nut/seed/sunflower/apple butter, coconut cream and butter, cream of tartar, cream soda, butter beans, and vegetable, mushroom and seaweed broth or stock.
 
