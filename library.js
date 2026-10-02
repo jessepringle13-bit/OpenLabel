@@ -20,14 +20,15 @@ function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null
 function tagName(t){return String(t).replace(/^[a-z]{2}:/,'').replace(/-/g,' ')}
 function clean(s){return String(s||'').toLowerCase().replace(/\s+/g,' ').trim()}
 function list(a){return (a||[]).map(clean).filter(Boolean).sort().join('|')}
+function nq(v){return clean(v).replace(/\s*[e℮]$/,'').replace(/\s+/g,'')}
 function trim(t){t=String(t);return t.length>160?t.slice(0,157)+'…':t}
 function ago(t){if(!t)return '';var s=Math.max(0,(Date.now()-t)/1000);if(s<90)return 'just now';var m=s/60;if(m<60)return Math.round(m)+' min ago';var h=m/60;if(h<36)return Math.round(h)+' h ago';var d=h/24;if(d<14)return Math.round(d)+' days ago';return new Date(t).toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'})}
 
 /* Label fields compared between snapshots. Built the same way from a stored product or a fresh API record. */
 var LABELS={ing:'Ingredients',alle:'Allergens listed',tr:'May contain (traces)',add:'Additives listed',qty:'Package size',srv:'Serving size'};
 function fromProduct(p){var f={};(p.facts||[]).forEach(function(r){f[r[0]]=r[1]});
-  return {ing:clean(f['Ingredients']),alle:list(String(f['Allergens listed']||'').split(',')),tr:list(String(f['May contain (traces)']||'').split(',')),add:list(String(f['Additives listed']||'').split(',')),qty:clean(f['Package size']),srv:clean(f['Serving size'])}}
-function fromApi(p){return {ing:clean(String(p.ingredients_text_en||p.ingredients_text||'').trim().slice(0,1200)),alle:list((p.allergens_tags||[]).map(tagName)),tr:list((p.traces_tags||[]).map(tagName)),add:list((p.additives_tags||[]).map(function(t){return tagName(t).toUpperCase()})),qty:clean(p.quantity),srv:clean(p.serving_size)}}
+  return {ing:clean(f['Ingredients']),alle:list(String(f['Allergens listed']||'').split(',')),tr:list(String(f['May contain (traces)']||'').split(',')),add:list(String(f['Additives listed']||'').split(',')),qty:nq(f['Package size']),srv:clean(f['Serving size'])}}
+function fromApi(p){return {ing:clean(String(p.ingredients_text_en||p.ingredients_text||'').trim().slice(0,1200)),alle:list((p.allergens_tags||[]).map(tagName)),tr:list((p.traces_tags||[]).map(tagName)),add:list((p.additives_tags||[]).map(function(t){return tagName(t).toUpperCase()})),qty:nq(p.quantity),srv:clean(p.serving_size)}}
 function diff(a,b){if(!a||!b)return [];return Object.keys(LABELS).filter(function(k){return (a[k]||'')!==(b[k]||'')&&(a[k]||b[k])})}
 
 /* Record a sighting of a product. Returns the list of changed fields, if any. */
@@ -50,7 +51,7 @@ function decorate(area){var s=st(),o=ld(),ids=idsFor(area,s),cards=area.querySel
   cards.forEach(function(c,i){var id=ids[i],e=o[id],live=!!(s.live||{})[id],box=c.querySelector('.grow');if(!box||box.querySelector('.lb-meta'))return;
     var m=el('span','lb-meta');if(e&&e.lastSeen)m.append(el('span','lb-tag grey','Seen '+ago(e.lastSeen)));
     var last=e&&e.changes&&e.changes[0];
-    if(last&&(Date.now()-last.at)<30*864e5)m.append(el('span','lb-tag orange','Database record changed '+ago(last.at)));
+    if(last&&!last.dismissed&&(Date.now()-last.at)<30*864e5)m.append(el('span','lb-tag orange','Database record changed '+ago(last.at)));
     box.append(m)})}
 
 var changesHead,changesArea,actions,btn,status;
@@ -61,14 +62,14 @@ function build(){
   var first=lib.querySelector('.section-head');lib.insertBefore(changesHead,first);lib.insertBefore(changesArea,first);lib.insertBefore(actions,first);
   btn.onclick=checkSaved}
 function renderChanges(){var s=st(),o=ld(),keep={};(s.saved||[]).concat(s.history||[]).forEach(function(id){keep[id]=1});
-  var rows=Object.keys(o).filter(function(id){return keep[id]&&o[id].changes&&o[id].changes.length}).map(function(id){return {id:id,e:o[id]}}).sort(function(a,b){return b.e.changes[0].at-a.e.changes[0].at}).slice(0,5);
+  var rows=Object.keys(o).filter(function(id){return keep[id]&&o[id].changes&&o[id].changes.length&&!o[id].changes[0].dismissed}).map(function(id){return {id:id,e:o[id]}}).sort(function(a,b){return b.e.changes[0].at-a.e.changes[0].at}).slice(0,5);
   changesArea.replaceChildren();
   if(!rows.length){var d=el('div','card empty','No changes found yet. When the Open Food Facts record for a saved or recent product changes, it will show here.');changesArea.append(d);return}
   rows.forEach(function(r){var c=r.e.changes[0],box=el('div','lb-change');box.append(el('strong',null,(r.e.brand?r.e.brand+' · ':'')+(r.e.name||'Product')));
     box.append(el('p',null,'Changed in the Open Food Facts record '+ago(c.at)+' ('+(c.via==='check'?'found by a saved-product check':'found when scanned again')+'):'));
     var ul=el('ul');(c.d||c.fields.map(function(k){return {k:k}})).forEach(function(x){var li=el('li');li.append(el('strong',null,LABELS[x.k]||x.k));if(x.from!==undefined){var isList=/^(alle|tr|add)$/.test(x.k);if(isList){var a=x.from?x.from.split('|'):[],b=x.to?x.to.split('|'):[],added=b.filter(function(i){return a.indexOf(i)<0}),removed=a.filter(function(i){return b.indexOf(i)<0});if(added.length)li.append(el('div',null,'Now also listed: '+added.join(', ')));if(removed.length)li.append(el('div',null,'No longer listed: '+removed.join(', ')))}else{li.append(el('div',null,'Before: '+(x.from?trim(x.from):'not listed')));li.append(el('div',null,'Now: '+(x.to?trim(x.to):'not listed')))}}ul.append(li)});box.append(ul);
     box.append(el('p',null,'Level 1 of 3: the database record changed. This is not proof the label or product was reformulated (level 2), and only you can confirm the package in your hand changed (level 3). Old snapshots can also be incomplete.'));
-    var go=el('button','lb-open','See current details');go.type='button';go.onclick=function(){if(window.OLOpenCode){var nav=document.querySelector('.nav-pill[data-go="scan"]');window.OLOpenCode(r.id)}};box.append(go);
+    var go=el('button','lb-open','See current details');go.type='button';go.onclick=function(){if(window.OLOpenCode){var nav=document.querySelector('.nav-pill[data-go="scan"]');window.OLOpenCode(r.id)}};box.append(go);var dm=el('button','lb-open','Dismiss');dm.type='button';dm.style.marginLeft='8px';dm.style.background='var(--sage)';dm.style.color='var(--forest)';dm.onclick=function(){var oo=ld();if(oo[r.id]&&oo[r.id].changes[0]){oo[r.id].changes[0].dismissed=true;sv(oo)}refresh()};box.append(dm);
     changesArea.append(box)})}
 
 var busy=false;
