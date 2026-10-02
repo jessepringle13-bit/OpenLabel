@@ -8,7 +8,8 @@ function para(t){return el('p',null,t)}
 function K(t){return ' '+String(t||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()+' '}
 function hits(text,list){var t=K(text),out=[];list.forEach(function(w){if(t.indexOf(K(w))>=0&&out.indexOf(w)<0)out.push(w)});return out}
 function strip(text,list){var t=String(text||'').toLowerCase();list.forEach(function(s){t=t.split(s).join(' ')});return t}
-var NOTMILK=['coconut milk','almond milk','oat milk','soy milk','soya milk','rice milk','cashew milk','hemp milk','cocoa butter','shea butter','peanut butter','almond butter','nut butter','cream of tartar','butternut'];
+var NOTMILK=['coconut milk','almond milk','oat milk','soy milk','soya milk','rice milk','cashew milk','hemp milk','cocoa butter','shea butter','peanut butter','almond butter','nut butter','cream of tartar','butternut','coconut cream','cream of coconut','coconut butter','apple butter','butter beans','butter bean','cream soda','sunflower seed butter','seed butter','sunflower butter'];
+var NOTMEAT=['vegetable broth','vegetable stock','mushroom broth','veggie broth','seaweed broth','kombu broth','vegan broth','plant based broth'];
 var MILK=['milk','whey','casein','caseinate','lactose','butter','cream','cheese','yogurt','yoghurt','ghee','lactalbumin','lactoglobulin','custard','buttermilk'];
 var EGG=['egg','eggs','albumin','albumen','mayonnaise','meringue','lysozyme','ovalbumin'];
 var MEAT=['beef','pork','chicken','turkey','lamb','veal','bacon','ham','sausage','meat','lard','tallow','gelatin','gelatine','broth','carmine','cochineal'];
@@ -35,7 +36,7 @@ var ctl=new AbortController(),tm=setTimeout(function(){ctl.abort()},9000);
 fetch('https://world.openfoodfacts.org/api/v2/product/'+code+'.json?fields=ingredients_analysis_tags,labels_tags,nutriments,serving_size',{signal:ctl.signal}).then(function(r){return r.ok?r.json():null}).then(function(j){clearTimeout(tm);var p=j&&j.product,n=(p&&p.nutriments)||{},o={a:(p&&p.ingredients_analysis_tags)||[],l:(p&&p.labels_tags)||[],c:n.carbohydrates_serving!=null?n.carbohydrates_serving:null,s:n.sugars_serving!=null?n.sugars_serving:null,na:n.sodium_serving!=null?n.sodium_serving:null,ad:n['added-sugars_serving']!=null?n['added-sugars_serving']:null,c100:n.carbohydrates_100g!=null?n.carbohydrates_100g:null,s100:n.sugars_100g!=null?n.sugars_100g:null,na100:n.sodium_100g!=null?n.sodium_100g:null,sv:(p&&p.serving_size)||''};
 var keys=Object.keys(xc);if(keys.length>30)delete xc[keys[0]];xc[code]=o;try{localStorage.setItem(XK,JSON.stringify(xc))}catch(e){}if(window.OLPanel)window.OLPanel.refresh()}).catch(function(){clearTimeout(tm);xc[code]={a:[],l:[],err:1};if(window.OLPanel)window.OLPanel.refresh()});return null}
 function n1(v){v=Number(v);return String(Math.round(v*(v<10?10:1))/(v<10?10:1))}
-function evalDiet(id,ing,x,facts){var t=strip(ing,NOTMILK),a=(x&&x.a)||[],l=(x&&x.l)||[],R=function(s,w){return{s:s,w:w}};
+function evalDiet(id,ing,x,facts){var t=strip(strip(ing,NOTMILK),NOTMEAT),a=(x&&x.a)||[],l=(x&&x.l)||[],R=function(s,w){return{s:s,w:w}};
 var milk=hits(t,MILK),egg=hits(t,EGG),meat=hits(t,MEAT),fish=hits(t,FISH),ax=hits(t,ANIMALX),glu=hits(t,GLUTEN);
 if(id==='vegan'){if(a.indexOf('en:vegan')>=0||l.indexOf('en:vegan')>=0)return R('yes','Open Food Facts analysis or a label says vegan.');var bad=[].concat(milk,egg,meat,fish,ax);if(bad.length||a.indexOf('en:non-vegan')>=0)return R('no','Contains '+(bad.length?bad.slice(0,4).join(', '):'animal-derived ingredients')+'.');if(!ing)return R('unknown','No ingredient list.');return R('maybe','No animal ingredients found in the list. Lists can hide animal-derived items.')}
 if(id==='vegetarian'){if(a.indexOf('en:vegetarian')>=0||a.indexOf('en:vegan')>=0||l.indexOf('en:vegetarian')>=0||l.indexOf('en:vegan')>=0)return R('yes','Open Food Facts analysis or a label says vegetarian.');var b2=[].concat(meat,fish);if(b2.length||a.indexOf('en:non-vegetarian')>=0)return R('no','Contains '+(b2.length?b2.slice(0,4).join(', '):'meat or fish ingredients')+'.');if(!ing)return R('unknown','No ingredient list.');return R('maybe','No meat or fish found in the list.')}
@@ -98,6 +99,7 @@ if(r.type==='seed'&&r.color==='yellow'){if(T.indexOf('seedoils')>=0){r.color='or
 if(r.type==='sweet'){var on=T.indexOf('sweeteners')>=0;r.color=on?'orange':'grey';r.chip=on?'On your watch list':'Listed'}
 if(r.type==='add'){var on2=T.indexOf('additives')>=0;r.color=on2?'orange':'grey';var mm=/^([0-9]+)/.exec(r.chip);r.chip=(mm?mm[1]+' listed · ':'')+(on2?'on your watch list':'not yet reviewed')}
 if(r.type==='proc'){var u=T.indexOf('ultra')>=0&&r.chip==='Ultra-processed';if(u){r.color='orange';r.chip='On your watch list · ultra-processed'}else if(r.color==='orange'||r.color==='yellow'||r.color==='green')r.color='grey'}});return null}
+window.OLDietEval=evalDiet;
 var P=window.OLPanelPlugins=window.OLPanelPlugins||[];
 [topicMutate,cafPlugin,dietPlugin,intolPlugin,sugarPlugin,flavPlugin,emulPlugin,gutPlugin].forEach(function(f){P.push(f)});
 if(window.OLPanel)window.OLPanel.refresh();

@@ -1,0 +1,37 @@
+// Run: NODE_PATH=/tmp/node_modules node tests/diet-fit.test.js
+const {JSDOM}=require('jsdom'),fs=require('fs');
+const dom=new JSDOM('<!doctype html><body></body>',{runScripts:'outside-only',url:'https://x.test/'});
+dom.window.eval(fs.readFileSync(__dirname+'/../profile-rows.js','utf8'));
+const E=dom.window.OLDietEval;let fail=0,n=0;
+function t(diet,ing,want,x){n++;const r=E(diet,ing,x||{a:[],l:[]},{});if(r.s!==want){fail++;console.log('FAIL',diet,'|',ing,'| want',want,'got',r.s,r.w)}}
+t('vegan','water, sugar, vegetable broth, salt','maybe');
+t('vegan','chicken broth, salt','no');
+t('vegan','coconut cream, sugar','maybe');
+t('vegan','cream, sugar','no');
+t('vegan','honey','no');
+t('vegan','','unknown');
+t('vegan','sugar',"yes",{a:['en:vegan'],l:[]});
+t('vegetarian','beef, salt','no');
+t('vegetarian','milk, sugar','maybe');
+t('pescatarian','tuna, salt','maybe');
+t('pescatarian','pork','no');
+t('dairyfree','apple butter, sugar','maybe');
+t('dairyfree','butter, flour','no');
+t('dairyfree','coconut milk, water','maybe');
+t('dairyfree','cream soda flavor','maybe');
+t('dairyfree','peanut butter','maybe');
+t('glutenfree','wheat flour, sugar','no');
+t('glutenfree','buckwheat flour','maybe');
+t('glutenfree','rice flour','maybe',{a:[],l:[]});
+t('glutenfree','corn','yes',{a:[],l:['en:gluten-free']});
+t('glutenfree','','unknown');
+t('paleo','sugar, oats','no');
+t('paleo','beef, salt','maybe');
+t('keto','x','unknown',{a:[],l:[],c:null});
+t('keto','x','no',{a:[],l:[],c:40,s:5});
+t('keto','x','maybe',{a:[],l:[],c:5,s:1});
+t('lowsugar','x','no',{a:[],l:[],s:12});
+t('lowsugar','x','maybe',{a:[],l:[],s:3});
+t('lowsugar','x','unknown',{a:[],l:[]});
+t('lowsodium','x','unknown',{a:[],l:[]});
+console.log(n+' cases, '+fail+' failed');process.exit(fail?1:0)
