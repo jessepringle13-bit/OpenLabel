@@ -55,6 +55,9 @@ A food transparency app: scan a product, see what the label actually says, and s
 - Daily caffeine limit: compared with the product's caffeine amount when the database lists one.
 - Highlight sweeteners: flags sweeteners found in ingredient text or additive codes.
 
+### Warnings list (result panel)
+- "For you": red items pinned first, then up to three orange or yellow items. A count line states how many findings exist. Breakdown has See all, Findings only and No findings filters. No scores.
+
 ### Library and history
 - Saved and recent products, stored locally in the browser (live products keep a trimmed copy).
 - Library markers (library.js): each card shows when the product was last seen and an orange "Label data changed" tag when the Open Food Facts record differs from the last snapshot (ingredients, allergens, traces, additives, sizes). A "Recent changes" list and a "Check saved for changes" button (up to 10 saved products, one lookup every 4.5 s) sit at the top of Library. A change means the database record changed, not necessarily the package.

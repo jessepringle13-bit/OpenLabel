@@ -43,7 +43,7 @@ Red: a direct match to you, a recall found, or a tested result above the tester'
 1. Profile picker: allergies (full list), intolerances, diets, topics to watch, plus diet fit statements (vegan and vegetarian show yes, no, maybe or can not tell; keto and low-carb compare carbs per serving with the customer's own target; high carb means 35 g or more carbs, or more than 10 g sugar, per serving).
 2. Explore becomes a live search by product name.
 3. Library markers and recent changes.
-4. Warnings list: red items pinned, up to three more, See all.
+4. Warnings list: DONE (red pinned, up to three more, filters). Recall-driven reds depend on the recall matcher.
 5. Live research after each scan with automatic source checks.
 
 ## Content to grow

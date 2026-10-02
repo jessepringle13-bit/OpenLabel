@@ -62,3 +62,5 @@
 .olp-note{font-size:12px;color:var(--muted);margin-top:8px}
 .olp-skel{height:14px;border-radius:8px;background:#e9eee9;margin:8px 0;width:70%}
 @media(prefers-reduced-motion:reduce){#olPanel,.olr .cv{transition:none}}
+
+.olp-cnt{margin:0 2px 10px;font-size:13px;color:var(--muted);line-height:1.4}.olp-flt{display:flex;gap:8px;margin:0 0 10px;overflow:auto}.olp-fb{white-space:nowrap;border-radius:99px;padding:8px 13px;background:var(--ivory);border:1px solid var(--line);color:var(--forest);font-size:12px;font-weight:740;min-height:36px}.olp-fb.on{background:var(--eucalyptus);color:var(--ivory)}

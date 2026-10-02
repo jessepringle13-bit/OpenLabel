@@ -91,7 +91,7 @@ function tagsSection(rows){var w=el('div','tags');rows.filter(function(r){return
 function render(){var m=scrape();if(!m.name)return;var code=curCode();nodes={};rowEls={};
 var ing=m.facts['Ingredients']||'';var rows=buildRows(m,ing);
 (window.OLPanelPlugins||[]).forEach(function(fn){try{var r=fn(m,{code:code,rows:rows,ing:ing});if(r){var at=r.at==null?rows.length:r.at;delete r.at;rows.splice(at,0,r)}}catch(e){}});
-var all=rows.concat([buildNutrition(code?undefined:null),buildSources(m,code)]),pinned=rows.filter(function(r){return r.pin}),rest=all.filter(function(r){return !r.pin});
+var all=rows.concat([buildNutrition(code?undefined:null),buildSources(m,code)]),pinned=rows.filter(function(r){return r.pin||r.color==='red'}),more=rows.filter(function(r){return !r.pin&&r.color!=='red'&&(r.color==='orange'||r.color==='yellow')}).sort(function(a,b){return RANK[b.color]-RANK[a.color]}).slice(0,3),shown=pinned.concat(more),rest=all.filter(function(r){return shown.indexOf(r)<0});var cnt={red:0,orange:0,yellow:0};rows.forEach(function(r){if(cnt[r.color]!=null)cnt[r.color]++});var nFind=cnt.red+cnt.orange+cnt.yellow;
 head.replaceChildren();var top=el('div','olp-top'),img=el('div','olp-img load');nodes.img=img;
 var id=el('div','olp-id');id.append(el('h2',null,m.name),el('div','olp-brand',m.brand),el('div','olp-cat',m.type));
 var act=el('div','olp-act'),sv=el('button',null,m.saved?'★':'☆'),cl=el('button',null,'×');sv.setAttribute('aria-label',m.saved?'Remove saved product':'Save product');cl.setAttribute('aria-label','Close product details');
@@ -103,8 +103,8 @@ bodyEl.replaceChildren();
 bodyEl.append(el('div','olp-h','Macros'));nodes.mac=macroNode(code?undefined:null);bodyEl.append(nodes.mac);
 bodyEl.append(el('div','olp-h','Tags'));bodyEl.append(tagsSection(rows));
 bodyEl.append(el('div','olp-h','Ingredients'));bodyEl.append(ingSection(ing));
-if(pinned.length){bodyEl.append(el('div','olp-h','For you'));pinned.forEach(function(r){bodyEl.append(mkRow(r))})}
-bodyEl.append(el('div','olp-h','Breakdown'));rest.forEach(function(r){bodyEl.append(mkRow(r))});
+if(shown.length){bodyEl.append(el('div','olp-h','For you'));var parts=[];if(cnt.red)parts.push(cnt.red+' red');if(cnt.orange)parts.push(cnt.orange+' orange');if(cnt.yellow)parts.push(cnt.yellow+' yellow');bodyEl.append(el('p','olp-cnt',nFind+' finding'+(nFind===1?'':'s')+' ('+parts.join(', ')+'). Red items are always shown first, then up to three more. Colors never mean good or bad overall.'));shown.forEach(function(r){bodyEl.append(mkRow(r))})}
+bodyEl.append(el('div','olp-h','Breakdown'));var fw=el('div','olp-flt'),brs=[];[['all','See all'],['find','Findings only'],['none','No findings']].forEach(function(f){var b=el('button','olp-fb'+(f[0]==='all'?' on':''),f[1]);b.type='button';b.setAttribute('aria-pressed',f[0]==='all'?'true':'false');b.onclick=function(){brs.forEach(function(x){var on=x===b;x.classList.toggle('on',on);x.setAttribute('aria-pressed',on?'true':'false')});brs2.forEach(function(p){var isF=p.r.color==='red'||p.r.color==='orange'||p.r.color==='yellow';p.d.hidden=!(f[0]==='all'||(f[0]==='find'&&isF)||(f[0]==='none'&&!isF))})};brs.push(b);fw.append(b)});if(rest.length>1)bodyEl.append(fw);var brs2=[];rest.forEach(function(r){var d=mkRow(r);brs2.push({r:r,d:d});bodyEl.append(d)});
 setMode(mode,true);
 getExtra(code).then(function(x){if(tx('#resultName')!==m.name)return;nodes.img.classList.remove('load');if(x&&x.img){var im=document.createElement('img');im.alt='';im.draggable=false;im.decoding='async';im.onerror=function(){nodes.img.replaceChildren(document.createTextNode('▣'))};im.src=x.img;nodes.img.replaceChildren(im)}else{nodes.img.replaceChildren(document.createTextNode('▣'))}
 if(nodes.mac)nodes.mac.replaceWith(nodes.mac=macroNode(x));
