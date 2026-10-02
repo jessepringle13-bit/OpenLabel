@@ -43,8 +43,8 @@ Red: a direct match to you, a recall found, or a tested result above the tester'
 1. Profile picker: allergies (full list), intolerances, diets, topics to watch, plus diet fit statements (vegan and vegetarian show yes, no, maybe or can not tell; keto and low-carb compare carbs per serving with the customer's own target; high carb means 35 g or more carbs, or more than 10 g sugar, per serving).
 2. Explore becomes a live search by product name.
 3. Library markers and recent changes.
-4. Warnings list: DONE (red pinned, up to three more, filters). Recall-driven reds depend on the recall matcher.
-5. Live research: DONE so far: ingredient sheet with C1 standing, C2 funding, C3 conflict text (verbatim), C4 registry flags. Next: owner review of registry, add entries on all sides (e.g. trade associations, supplement and organic industry, advocacy groups), reviewed dossiers feeding status words, scheduled re-checks.
+4. Warnings list: BUILT, not device-tested (red pinned, up to three more, filters). Recall-driven reds depend on the recall matcher.
+5. Live research: BUILT (prototype, tested only in a simulated page against live PubMed and Crossref, not on a phone): ingredient sheet with C1 standing, C2 funding, C3 conflict text (verbatim), C4 registry flags. Next: owner review of registry, add entries on all sides (e.g. trade associations, supplement and organic industry, advocacy groups), reviewed dossiers feeding status words, scheduled re-checks.
 
 ## Content to grow
 - Test register: chocolate and cocoa, bottled water, fruit juice and rice products are the next categories. Each needs the full report read, and the tester's funding and ties checked.
