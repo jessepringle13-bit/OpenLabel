@@ -97,7 +97,7 @@ function topicMutate(m,ctx){var T=prof().topics;ctx.rows.forEach(function(r){
 if(r.type==='seed'&&r.color==='yellow'){if(T.indexOf('seedoils')>=0){r.color='orange';r.chip='On your watch list · contested evidence'}else{r.color='grey';r.chip='Listed · contested evidence'}}
 if(r.type==='sweet'){var on=T.indexOf('sweeteners')>=0;r.color=on?'orange':'grey';r.chip=on?'On your watch list':'Listed'}
 if(r.type==='add'){var on2=T.indexOf('additives')>=0;r.color=on2?'orange':'grey';var mm=/^([0-9]+)/.exec(r.chip);r.chip=(mm?mm[1]+' listed · ':'')+(on2?'on your watch list':'not yet reviewed')}
-if(r.type==='proc'&&T.indexOf('ultra')>=0&&r.chip==='Ultra-processed'){r.chip='On your watch list · ultra-processed'}});return null}
+if(r.type==='proc'){var u=T.indexOf('ultra')>=0&&r.chip==='Ultra-processed';if(u){r.color='orange';r.chip='On your watch list · ultra-processed'}else if(r.color==='orange'||r.color==='yellow'||r.color==='green')r.color='grey'}});return null}
 var P=window.OLPanelPlugins=window.OLPanelPlugins||[];
 [topicMutate,cafPlugin,dietPlugin,intolPlugin,sugarPlugin,flavPlugin,emulPlugin,gutPlugin].forEach(function(f){P.push(f)});
 if(window.OLPanel)window.OLPanel.refresh();
