@@ -54,3 +54,13 @@ Bugs found and fixed (commit after aa5c302 deployed):
 - Camera error sheet could appear on other pages after leaving Scan. Suppressed.
 Not tested: real touch swipe on iPhone, rubber-banding, Safari address-bar resize, live profile edit with the panel visible (dock tap closes the panel, so only reopen was tested), very long names in header.
 Open decision for owner: Processing level uses green/orange for NOVA. That is a health-leaning color on a descriptive field; consider grey until the Phase 3 evidence review.
+
+## Step 6 For you and Profile (2026-10-02, cloud Chrome, mobile emulation, live Pages)
+Tested (emulated, not a real iPhone): saved allergy, watch words, intolerances, diets, topics and caffeine limit each change results on reopen, using a real Open Food Facts product (Coca-Cola Zero Sugar 5449000131805).
+Found and fixed:
+- Daily caffeine limit had no visible control after the Profile redesign (stuck at 150 mg). Added a Caffeine limit group with validation (whole number 0-1000, invalid input reverts).
+- Custom watch words were reported as a red "Matches your allergy" finding. Now a separate orange row "Your watch words" ("Word on your list"), with text that it is a word the user chose, not a medical allergy, and a link to edit. Allergy findings stay red and allergy-only.
+- Allergens "No match" and Intolerances "No match" were green. Now grey.
+- Processing level was orange and counted in For you even when Ultra-processed was not a chosen topic. Now grey unless chosen (matches the Profile promise). This resolves the earlier open decision.
+- Watch words now save while typing, not only on blur.
+Not tested: real iPhone keyboard behavior in Profile inputs, diet-fit correctness across many products (rule definitions still to be written), intolerance word lists.
