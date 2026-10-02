@@ -137,7 +137,7 @@ panel.addEventListener('touchmove',function(e){if(drag&&drag.moved&&e.cancelable
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!res.hidden&&$('#sheetWrap').hidden)closePanel()})}
 function sync(){if(res.hidden){if(panel)panel.hidden=true;sig='';return}
 if(!panel)build();var prev=document.getElementById(lastView);if(prev&&prev.hidden&&prev.id!=='result'){prev.hidden=false}app.classList.toggle('scanning',lastView==='scan');
-var s=tx('#resultName')+'|'+tx('#resultBrand')+'|'+curCode();var fresh=panel.hidden||s!==sig;panel.hidden=false;if(fresh){sig=s;mode='peek';render()}}
+var s=tx('#resultName')+'|'+tx('#resultBrand')+'|'+curCode()+'|'+(window.__olIngSig||'');var fresh=panel.hidden||s!==sig;panel.hidden=false;if(fresh){sig=s;mode='peek';render()}}
 var t0;function schedule(){cancelAnimationFrame(t0);t0=requestAnimationFrame(sync)}
 function track(){if(!res.hidden)return;$$('.view').forEach(function(v){if(v.id!=='result'&&!v.hidden)lastView=v.id})}
 var vo=new MutationObserver(function(){track();schedule()});
