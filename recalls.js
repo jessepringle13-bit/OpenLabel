@@ -61,7 +61,7 @@ if(hit){R.color='red';R.chip='Lot matches';b.append(el('div','rc-res','Your lot 
 else if(all){R.color='green';R.chip='Lot not listed';R.pin=false;b.append(el('div','rc-res','Your entry does not appear in the lots this recall lists. Type it exactly as printed, and read the official notice if unsure.'))}
 else{R.chip='Check the notice';b.append(el('div','rc-res','This report does not list lots clearly, so we cannot compare. Read the official notice.'))}}
 else b.append(el('p','olp-note','The check only looks for the same text, so type the lot or date exactly as printed (for example 23-Dec-2026).'))}
-else{R.color='green';R.chip='None found';b.append(para('We searched FDA recall reports from the last 18 months for this brand and product and did not find a match.'));list(other,2,'Other recent recalls from this brand')}
+else{R.color='grey';R.chip='No match found';b.append(para('We searched FDA recall reports from the last 18 months for this brand and product and did not find a match. That is not proof that no recall applies.'));list(other,2,'Other recent recalls from this brand')}
 foot(b);return R}
 (window.OLPanelPlugins=window.OLPanelPlugins||[]).push(plugin);
 done();

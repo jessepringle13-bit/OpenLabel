@@ -63,7 +63,7 @@ var sb=el('div'),sc='grey',sch='Not enough data';
 if(!ing){sb.append(para('There is no ingredient list for this product, so we cannot tell.'))}
 else if(found.length){sc='yellow';sch='Contested evidence';sb.append(para('Listed: '+found.join(', ')+'.'));sb.append(para('Claims about seed oils are common online. The research is mixed and some of it has industry funding. We show both sides and who paid.'));sb.append(linkBtn('See the evidence',function(){API.openSeedSheet(found,false)}))}
 else if(veg){sch='Type not stated';sb.append(para('The label says vegetable oil without naming the type, so it may or may not be a seed oil.'));sb.append(linkBtn('See the evidence',function(){API.openSeedSheet([],true)}))}
-else{sc='green';sch='None found';sb.append(para('None of the oils we check for appear in the ingredient list. The list can be incomplete, so check the package.'))}
+else{sc='grey';sch='None named in list';sb.append(para('None of the oils we check for are named in the ingredient list. This describes the list only. It can be incomplete, so check the package.'))}
 rows.push(row('seed','Seed oils',sc,sch,sb));
 var nm=/Group ([0-9]) of 4/.exec(fa['NOVA group']||''),pb=el('div'),pc='grey',pch='Not available';
 if(nm){var n=+nm[1],names=['','Unprocessed or minimally processed','Processed culinary ingredient','Processed food','Ultra-processed food'];pc=n<3?'green':n===3?'yellow':'orange';pch=n<3?'Low processing':n===3?'Processed':'Ultra-processed';
@@ -116,7 +116,7 @@ function refresh(){if(!panel||panel.hidden||res.hidden)return;var md=mode,st=bod
 window.OLPanel={refresh:refresh};
 function build(){panel=el('section');panel.id='olPanel';panel.hidden=true;panel.setAttribute('role','region');panel.setAttribute('aria-label','Product details');head=el('div','olp-head');bodyEl=el('div','olp-body');panel.append(head,bodyEl);document.body.append(panel);
 panel.addEventListener('pointerdown',function(e){if(e.target.closest('.olp-act button'))return;if(mode==='full'&&e.target.closest('.olp-body'))return;drag={y:e.clientY,h:panel.offsetHeight,moved:false,id:e.pointerId,tgt:e.target};if(e.pointerType==='touch'&&e.target.closest('.olp-head')&&e.cancelable)e.preventDefault()});
-panel.addEventListener('pointermove',function(e){if(!drag||e.pointerId!==drag.id)return;var dy=e.clientY-d.y;if(!drag.moved&&Math.abs(dy)>8){drag.moved=true;panel.classList.add('dragging');try{panel.setPointerCapture(drag.id)}catch(x){}}if(drag.moved){if(e.cancelable)e.preventDefault();var mx=window.innerHeight*.95;panel.style.height=Math.min(mx,Math.max(window.innerHeight*.35,drag.h-dy))+'px'}});
+panel.addEventListener('pointermove',function(e){if(!drag||e.pointerId!==drag.id)return;var dy=e.clientY-drag.y;if(!drag.moved&&Math.abs(dy)>8){drag.moved=true;panel.classList.add('dragging');try{panel.setPointerCapture(drag.id)}catch(x){}}if(drag.moved){if(e.cancelable)e.preventDefault();var mx=window.innerHeight*.95;panel.style.height=Math.min(mx,Math.max(window.innerHeight*.35,drag.h-dy))+'px'}});
 function end(e){if(!drag||e.pointerId!==drag.id)return;var d=drag;drag=null;panel.classList.remove('dragging');var dy=e.clientY-d.y;if(!d.moved){if(d.tgt.closest('.olp-head')&&!d.tgt.closest('button'))setMode(mode==='full'?'peek':'full');return}
 if(dy<-40)setMode('full');else if(dy>40&&mode==='full')setMode('peek');else setMode(mode)}
 panel.addEventListener('dragstart',function(e){e.preventDefault()});panel.addEventListener('pointerup',end);panel.addEventListener('pointercancel',function(){if(drag){drag=null;panel.classList.remove('dragging');setMode(mode)}});
