@@ -48,7 +48,7 @@ function resolvable(s,id){return !!((s.live||{})[id])||!/^\d+$/.test(id)}
 function idsFor(area,s){var src=area===saved?(s.saved||[]):(s.history||[]);return src.filter(function(id){return resolvable(s,id)})}
 function decorate(area){var s=st(),o=ld(),ids=idsFor(area,s),cards=area.querySelectorAll('button.card');
   if(cards.length!==ids.length)return;
-  cards.forEach(function(c,i){var id=ids[i],e=o[id],live=!!(s.live||{})[id],box=c.querySelector('.grow');if(!box||box.querySelector('.lb-meta'))return;
+  cards.forEach(function(c,i){var id=ids[i],e=o[id],live=!!(s.live||{})[id],box=c.querySelector('.grow');if(!box)return;var oldm=box.querySelector('.lb-meta');if(oldm)oldm.remove();
     var m=el('span','lb-meta');if(e&&e.lastSeen)m.append(el('span','lb-tag grey','Seen '+ago(e.lastSeen)));
     var last=e&&e.changes&&e.changes[0];
     if(last&&!last.dismissed&&(Date.now()-last.at)<30*864e5)m.append(el('span','lb-tag orange','Database record changed '+ago(last.at)));
