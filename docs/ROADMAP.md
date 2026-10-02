@@ -1,3 +1,22 @@
+# OpenLabel roadmap pointer and status ledger
+Canonical plan: docs/PAGE_ROADMAP.md (page-by-page roadmap, copied from project storage 2026-10-02). Follow its section 9 build sequence in order. This file keeps the older tracker below for history and holds the current ledger.
+
+## Status ledger (2026-10-02, statuses use the page roadmap definitions)
+| Build step (section 9) | Work done in repo | Tested | Status |
+|---|---|---|---|
+| 1 Global app shell | unchanged | not re-tested on iPhone | Built / owner testing needed |
+| 2 Scan page | unchanged | not re-tested on iPhone or in Home Screen mode | Built / owner testing needed |
+| 3 Product lookup states | partial-record wording, fetched-at timestamp (2026-10-02) | desktop browser only | Built |
+| 4 Product panel | warnings list: pinned reds, up to three more, count, filters | simulated page only | Built |
+| 5 Ingredients and sheets | compound and nested allergy-word matching, wording unified, 42 automated cases | automated + desktop browser with seeded products | Built, awaiting iPhone confirmation |
+| 6 For you and Profile | unchanged | not re-tested | Built / needs validation |
+| 7 Explore | live Open Food Facts name search in repo (explore-search.js) | not tested by owner | Built |
+| 8 Library | library.js: last seen, label-data changed tags, recent changes, saved-product recheck | desktop browser with seeded data | Built |
+| 9 Recalls | unchanged | live data access not verified | Prototype |
+| 10 Lab tested | unchanged | | Prototype |
+| 11 Evidence system | research check (PubMed and Crossref) and relationship registry v0 | simulated page | PARKED behind ?labs=1. Out of sequence. Hidden from normal use until step 11 |
+| 12-13 | not started | | Planned |
+
 # OpenLabel roadmap and tracker (living document)
 Last updated 2026-10-01. Update this file with every batch.
 
