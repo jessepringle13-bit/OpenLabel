@@ -10,7 +10,7 @@ Canonical plan: docs/PAGE_ROADMAP.md (page-by-page roadmap, copied from project 
 | 4 Product panel | warnings list: pinned reds, up to three more, count, filters | simulated page only | Built |
 | 5 Ingredients and sheets | compound and nested allergy-word matching, wording unified, 42 automated cases | automated + desktop browser with seeded products | Built, awaiting iPhone confirmation |
 | 6 For you and Profile | unchanged | not re-tested | Built / needs validation |
-| 7 Explore | live Open Food Facts name search in repo (explore-search.js) | not tested by owner | Built |
+| 7 Explore | live Open Food Facts name search (explore-search.js), debounced, opens panel directly, returns to Explore; emulated test 2026-10-02 | owner iPhone test needed; OFF search can return 503 | Built |
 | 8 Library | library.js: last seen, label-data changed tags, recent changes, saved-product recheck | desktop browser with seeded data | Built |
 | 9 Recalls | unchanged | live data access not verified | Prototype |
 | 10 Lab tested | unchanged | | Prototype |

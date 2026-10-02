@@ -64,3 +64,14 @@ Found and fixed:
 - Processing level was orange and counted in For you even when Ultra-processed was not a chosen topic. Now grey unless chosen (matches the Profile promise). This resolves the earlier open decision.
 - Watch words now save while typing, not only on blur.
 Not tested: real iPhone keyboard behavior in Profile inputs, diet-fit correctness across many products (rule definitions still to be written), intolerance word lists.
+
+## Step 7 Explore (2026-10-02, cloud Chrome, mobile emulation, live Pages)
+Tested (emulated): live name search on Open Food Facts (oat milk, almond milk), debounce after typing stops, results with image/brand/size/barcode ending, open result in the standard panel, close returns to Explore with query and results kept, sample products, recalls and lab-tested entries.
+Found and fixed:
+- Opening an Explore result detoured through the Scan page; closing the panel left the user on Scan (camera would start). Lookup now runs from Explore directly and returns to Explore.
+- Search required the Search button. Added a debounced search (about 0.9 s after typing, 3+ characters, queued when inside the rate-limit window).
+- Duplicate-looking results (many "oat drink") had no distinguishing info. Subtitle now shows brand, package size and last 4 barcode digits.
+- Intro said three sample products (there are four). Recalls and Lab tested cards had title and subtitle run together.
+- No-result and error wording now says it does not mean the product is missing.
+Observed: Open Food Facts search returned 503 for several minutes during testing, and the error state displayed correctly; the faster search-a-licious endpoint is blocked by CORS in browsers, so it cannot be used directly. Relevance is weak on some queries (Toblerone for "almond milk"). Thumbnail sizing is uneven.
+Not tested: real iPhone keyboard/scroll, offline mode, very slow connections, category filter chips combined with live results.
