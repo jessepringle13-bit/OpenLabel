@@ -44,7 +44,7 @@ Red: a direct match to you, a recall found, or a tested result above the tester'
 2. Explore becomes a live search by product name.
 3. Library markers and recent changes.
 4. Warnings list: DONE (red pinned, up to three more, filters). Recall-driven reds depend on the recall matcher.
-5. Live research after each scan with automatic source checks.
+5. Live research: first slice DONE (ingredient sheet, C1 and C2 checks). Next: C3 conflicts from PubMed text, relationship registry v0, reviewed dossiers feeding status words.
 
 ## Content to grow
 - Test register: chocolate and cocoa, bottled water, fruit juice and rice products are the next categories. Each needs the full report read, and the tester's funding and ties checked.
