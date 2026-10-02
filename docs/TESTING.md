@@ -75,3 +75,12 @@ Found and fixed:
 - No-result and error wording now says it does not mean the product is missing.
 Observed: Open Food Facts search returned 503 for several minutes during testing, and the error state displayed correctly; the faster search-a-licious endpoint is blocked by CORS in browsers, so it cannot be used directly. Relevance is weak on some queries (Toblerone for "almond milk"). Thumbnail sizing is uneven.
 Not tested: real iPhone keyboard/scroll, offline mode, very slow connections, category filter chips combined with live results.
+
+## Step 8 Library (2026-10-02, cloud Chrome, mobile emulation, live Pages, real Open Food Facts product)
+Tested (emulated): saved and recent separation, last-seen tags, "Check saved for changes" against a stale seeded snapshot, field-level before/after (ingredients before/now, allergens and additives added or removed), card marker, See current details (refreshes stored product and returns to Library), Dismiss, unsave via panel star.
+Found and fixed:
+- The saved-product check never ran on real products. Real ids are off-<barcode> but the check only accepted pure digits, so it always said there was nothing to check. Fixed (earlier desktop test used digit-only ids).
+- Changes listed only field names. Now show before/after or added/removed items.
+- Explanation now states three levels: 1 database record changed (what we detect), 2 label may have been reformulated (not claimed), 3 package change confirmed (only the owner can confirm). Marker renamed "Database record changed".
+- Added Dismiss and See current details. Package-size formatting noise (400 g vs 400 g e) no longer counts as a change.
+Not built or not tested: remove control on Library cards (removal is via the star in the panel), automatic background rechecks (none, by design), real iPhone, the 10-product check limit with Open Food Facts rate limits, changes in nutrition values (not compared).
