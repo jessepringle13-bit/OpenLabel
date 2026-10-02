@@ -44,7 +44,7 @@ function onResult(){var id=currentId();if(!id)return;var s=st(),p=(s.live||{})[i
   else{var e=o[id]||{firstSeen:Date.now(),changes:[]};e.lastSeen=Date.now();o[id]=e;sv(o)}}
 
 /* Card decoration. index.html builds cards in the same order as state.saved/state.history, skipping ids it cannot resolve. */
-function resolvable(s,id){return !!((s.live||{})[id])||!/^\d+$/.test(id)}
+function resolvable(s,id){return !!((s.live||{})[id])||!/^(off-)?\d+$/.test(id)}
 function idsFor(area,s){var src=area===saved?(s.saved||[]):(s.history||[]);return src.filter(function(id){return resolvable(s,id)})}
 function decorate(area){var s=st(),o=ld(),ids=idsFor(area,s),cards=area.querySelectorAll('button.card');
   if(cards.length!==ids.length)return;
@@ -69,16 +69,16 @@ function renderChanges(){var s=st(),o=ld(),keep={};(s.saved||[]).concat(s.histor
     box.append(el('p',null,'Changed in the Open Food Facts record '+ago(c.at)+' ('+(c.via==='check'?'found by a saved-product check':'found when scanned again')+'):'));
     var ul=el('ul');(c.d||c.fields.map(function(k){return {k:k}})).forEach(function(x){var li=el('li');li.append(el('strong',null,LABELS[x.k]||x.k));if(x.from!==undefined){var isList=/^(alle|tr|add)$/.test(x.k);if(isList){var a=x.from?x.from.split('|'):[],b=x.to?x.to.split('|'):[],added=b.filter(function(i){return a.indexOf(i)<0}),removed=a.filter(function(i){return b.indexOf(i)<0});if(added.length)li.append(el('div',null,'Now also listed: '+added.join(', ')));if(removed.length)li.append(el('div',null,'No longer listed: '+removed.join(', ')))}else{li.append(el('div',null,'Before: '+(x.from?trim(x.from):'not listed')));li.append(el('div',null,'Now: '+(x.to?trim(x.to):'not listed')))}}ul.append(li)});box.append(ul);
     box.append(el('p',null,'Level 1 of 3: the database record changed. This is not proof the label or product was reformulated (level 2), and only you can confirm the package in your hand changed (level 3). Old snapshots can also be incomplete.'));
-    var go=el('button','lb-open','See current details');go.type='button';go.onclick=function(){if(window.OLOpenCode){var nav=document.querySelector('.nav-pill[data-go="scan"]');window.OLOpenCode(r.id)}};box.append(go);var dm=el('button','lb-open','Dismiss');dm.type='button';dm.style.marginLeft='8px';dm.style.background='var(--sage)';dm.style.color='var(--forest)';dm.onclick=function(){var oo=ld();if(oo[r.id]&&oo[r.id].changes[0]){oo[r.id].changes[0].dismissed=true;sv(oo)}refresh()};box.append(dm);
+    var go=el('button','lb-open','See current details');go.type='button';go.onclick=function(){if(window.OLOpenCode){var nav=document.querySelector('.nav-pill[data-go="scan"]');window.OLOpenCode(String(r.id).replace(/^off-/,''))}};box.append(go);var dm=el('button','lb-open','Dismiss');dm.type='button';dm.style.marginLeft='8px';dm.style.background='var(--sage)';dm.style.color='var(--forest)';dm.onclick=function(){var oo=ld();if(oo[r.id]&&oo[r.id].changes[0]){oo[r.id].changes[0].dismissed=true;sv(oo)}refresh()};box.append(dm);
     changesArea.append(box)})}
 
 var busy=false;
 function sleep(ms){return new Promise(function(r){setTimeout(r,ms)})}
 async function fetchOne(code){var ctl=new AbortController(),t=setTimeout(function(){ctl.abort()},12000);try{var res=await fetch(API+code+'.json?fields='+FIELDS,{signal:ctl.signal});if(!res.ok)return null;var d=await res.json();return d&&d.product&&Object.keys(d.product).length?d.product:null}catch(e){return null}finally{clearTimeout(t)}}
-async function checkSaved(){if(busy)return;var s=st(),ids=(s.saved||[]).filter(function(id){return /^\d+$/.test(id)&&(s.live||{})[id]}).slice(0,MAXCHECK);
+async function checkSaved(){if(busy)return;var s=st(),ids=(s.saved||[]).filter(function(id){return /^(off-)?\d+$/.test(id)&&(s.live||{})[id]}).slice(0,MAXCHECK);
   if(!ids.length){status.textContent='No saved Open Food Facts products to check. Sample products do not change.';return}
   busy=true;btn.disabled=true;var changed=0,failed=0;
-  for(var i=0;i<ids.length;i++){status.textContent='Checking '+(i+1)+' of '+ids.length+'…';var p=await fetchOne(ids[i]);
+  for(var i=0;i<ids.length;i++){status.textContent='Checking '+(i+1)+' of '+ids.length+'…';var p=await fetchOne(ids[i].replace(/^off-/,''));
     if(!p){failed++}else{var lp=s.live[ids[i]],o=ld();if(!o[ids[i]]&&lp&&lp.facts)record(ids[i],fromProduct(lp),lp.name,lp.brand,'check');var ch=record(ids[i],fromApi(p),lp&&lp.name,lp&&lp.brand,'check');if(ch.length)changed++}
     if(i<ids.length-1)await sleep(4500)}
   busy=false;btn.disabled=false;
