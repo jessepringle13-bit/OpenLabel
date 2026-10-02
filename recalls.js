@@ -24,7 +24,7 @@ function fetchBrand(brand){var k=norm(brand),c=mem[k],now=Date.now();
 if(c&&(c.state==='loading'||(c.state==='done'&&now-c.t<TTL)||(c.state==='error'&&now-c.t<60000)))return;
 var d=ld()[k];if(d&&now-d.t<TTL){mem[k]={state:'done',t:d.t,recs:d.recs};return}
 mem[k]={state:'loading',t:now};
-var term='"'+brand.replace(/"/g,' ')+'"',from=ymd(new Date(now-548*864e5));
+var term='"'+brand.replace(/[^A-Za-z0-9&]+/g,' ').trim()+'"',from=ymd(new Date(now-548*864e5));
 var q='(recalling_firm:'+term+' OR product_description:'+term+') AND report_date:['+from+' TO 20991231]';
 var ctl=new AbortController(),tm=setTimeout(function(){ctl.abort()},10000);
 fetch(BASE+'?search='+enc(q)+'&sort=report_date:desc&limit=25',{signal:ctl.signal}).then(function(r){clearTimeout(tm);if(r.status===404)return {results:[]};if(!r.ok)throw new Error('http '+r.status);return r.json()}).then(function(j){mem[k]={state:'done',t:Date.now(),recs:(j.results||[]).map(pickF)};save(k);done()}).catch(function(){clearTimeout(tm);mem[k]={state:'error',t:Date.now()};done()})}
