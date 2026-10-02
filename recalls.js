@@ -28,6 +28,22 @@ var term='"'+brand.replace(/"/g,' ')+'"',from=ymd(new Date(now-548*864e5));
 var q='(recalling_firm:'+term+' OR product_description:'+term+') AND report_date:['+from+' TO 20991231]';
 var ctl=new AbortController(),tm=setTimeout(function(){ctl.abort()},10000);
 fetch(BASE+'?search='+enc(q)+'&sort=report_date:desc&limit=25',{signal:ctl.signal}).then(function(r){clearTimeout(tm);if(r.status===404)return {results:[]};if(!r.ok)throw new Error('http '+r.status);return r.json()}).then(function(j){mem[k]={state:'done',t:Date.now(),recs:(j.results||[]).map(pickF)};save(k);done()}).catch(function(){clearTimeout(tm);mem[k]={state:'error',t:Date.now()};done()})}
+
+var FSURL='https://www.fsis.usda.gov/fsis/api/recall/v/1?field_archive_recall=0',FSK='openlabel-fsis-v1',FSTTL=6*3600*1000;
+var fst={state:'idle',t:0,upd:'',recs:[]},fscb=[];
+function stripH(h){return String(h||'').replace(/<[^>]*>/g,' ').replace(/&nbsp;/g,' ').replace(/&amp;/g,'&').replace(/&quot;|&#039;|&rsquo;|&ldquo;|&rdquo;/g,'"').replace(/\s+/g,' ').trim()}
+function fsFirm(t){var m=/^(.*?)\s+(?:Recalls?|Issues?|Announces?|Expands?|Voluntarily|Establishes|Is Recalling|Recalled)\b/i.exec(t||'');return cut((m&&m[1])||t,90)}
+function fsReduce(j){var cutoff=ymd(new Date(Date.now()-548*864e5)),out=[],upd='';(j||[]).forEach(function(x){var d=String(x.field_recall_date||'').replace(/-/g,'');if(!/^[0-9]{8}$/.test(d)||d<cutoff)return;var lm=String(x.field_last_modified_date||'');if(lm>upd)upd=lm;
+var prods=(x.field_product_items||[]).map(function(s){return cut(stripH(s),200)}).filter(Boolean),states=(x.field_states||[]).join(', '),type=x.field_recall_type||'',summ=stripH(x.field_summary),url=String(x.field_recall_url||'').replace(/^http:/,'https:');
+out.push({src:'USDA',classification:x.field_recall_classification||(/alert/i.test(type)?'Public health alert':''),reason_for_recall:cut((x.field_recall_reason||[]).join('; '),300),cat_text:cut((x.field_recall_reason||[]).join(' ')+' '+summ,600),recall_initiation_date:d,report_date:d,recalling_firm:fsFirm(x.field_title),title:cut(x.field_title,200),product_description:prods.length?prods.join('; '):cut(x.field_title,200),prods:prods,code_info:'',more_code_info:'',distribution_pattern:states,status:type,recall_number:x.field_recall_number||'',event_id:'',url:/^https:\/\/www\.fsis\.usda\.gov\//.test(url)?url:''})});
+out.sort(function(a,b){return a.report_date<b.report_date?1:-1});return {recs:out,upd:upd}}
+function fsisLoad(cb){if(cb)fscb.push(cb);if(fst.state==='loading')return;if(fst.state==='done'&&Date.now()-fst.t<FSTTL){flush();return}
+if(fst.state==='error'&&Date.now()-fst.t<60000){flush();return}
+try{var c=JSON.parse(localStorage.getItem(FSK));if(c&&Date.now()-c.t<FSTTL&&Array.isArray(c.recs)){fst={state:'done',t:c.t,upd:c.upd||'',recs:c.recs};flush();return}}catch(e){}
+fst.state='loading';var ctl=new AbortController(),tm=setTimeout(function(){ctl.abort()},25000);
+fetch(FSURL,{signal:ctl.signal}).then(function(r){clearTimeout(tm);if(!r.ok)throw new Error('http '+r.status);return r.json()}).then(function(j){var o=fsReduce(j);fst={state:'done',t:Date.now(),upd:o.upd,recs:o.recs};try{localStorage.setItem(FSK,JSON.stringify({t:fst.t,upd:fst.upd,recs:fst.recs}))}catch(e){}flush()}).catch(function(){clearTimeout(tm);fst={state:'error',t:Date.now(),upd:'',recs:[]};flush()})}
+function flush(){var a=fscb;fscb=[];a.forEach(function(f){try{f()}catch(e){}})}
+window.OLFsis={load:fsisLoad,get:function(){return fst}};
 function variants(code){var d=String(code||'').replace(/[^0-9]/g,''),v=[];if(d.length>=8)v.push(d);if(d.length===13&&d.charAt(0)==='0')v.push(d.slice(1));if(d.length===12)v.push('0'+d);return v}
 function level(r,p){var dg=(r.product_description+' '+r.code_info+' '+r.more_code_info).replace(/[^0-9]/g,'');
 if(p.variants.some(function(v){return dg.indexOf(v)>=0}))return 3;
@@ -39,17 +55,18 @@ return nt.filter(function(w){return pd.indexOf(' '+w+' ')>=0}).length>=need?2:1}
 function lotHit(lot,r){var u=String(lot||'').toUpperCase().replace(/[^A-Z0-9]/g,'');if(u.length<3)return false;return (r.code_info+' '+r.more_code_info).toUpperCase().replace(/[^A-Z0-9]/g,'').indexOf(u)>=0}
 function card(r){var d=el('div','rc-card');d.append(el('strong',null,(r.classification||'Recall')+' · '+(r.recalling_firm||'Unknown firm')),para(cut(r.product_description,240)));
 if(r.reason_for_recall)d.append(el('div','rc-meta','Reason: '+cut(r.reason_for_recall,240)));
-d.append(el('div','rc-meta','Recall started '+fmt(r.recall_initiation_date)+(r.status?' · status: '+r.status:'')+(r.recall_number?' · '+r.recall_number:'')));
+d.append(el('div','rc-meta',(r.src==='USDA'?'USDA FSIS · announced ':'Recall started ')+fmt(r.recall_initiation_date)+(r.status?' · status: '+r.status:'')+(r.recall_number?' · '+r.recall_number:'')));
 if(r.code_info)d.append(el('div','rc-meta','Lots or dates listed: '+cut(r.code_info,320)));
-if(r.distribution_pattern)d.append(el('div','rc-meta','Sold in: '+cut(r.distribution_pattern,160)));if(r.event_id&&/^[0-9]+$/.test(r.event_id)){var lk=el('a','rc-a','FDA enforcement report for this recall (official)');lk.href='https://www.accessdata.fda.gov/scripts/ires/index.cfm?Event='+r.event_id;lk.target='_blank';lk.rel='noopener noreferrer';var lp=el('div','rc-meta');lp.append(lk);d.append(lp)}return d}
-function foot(b){b.append(el('p','olp-note','Source: FDA food recall reports (openFDA), last 18 months. USDA meat, poultry and egg recalls are not checked yet. Finding no recall does not guarantee a product is safe.'));var p=el('p'),a=el('a','rc-a','FDA recalls list (official)');a.href=OFFICIAL;a.target='_blank';a.rel='noopener noreferrer';p.append(a);b.append(p)}
+if(r.distribution_pattern)d.append(el('div','rc-meta','Sold in: '+cut(r.distribution_pattern,160)));if(r.url){var lu=el('a','rc-a','USDA FSIS notice for this recall (official)');lu.href=r.url;lu.target='_blank';lu.rel='noopener noreferrer';var lq=el('div','rc-meta');lq.append(lu);d.append(lq)}if(r.event_id&&/^[0-9]+$/.test(r.event_id)){var lk=el('a','rc-a','FDA enforcement report for this recall (official)');lk.href='https://www.accessdata.fda.gov/scripts/ires/index.cfm?Event='+r.event_id;lk.target='_blank';lk.rel='noopener noreferrer';var lp=el('div','rc-meta');lp.append(lk);d.append(lp)}return d}
+function foot(b){b.append(el('p','olp-note','Sources: FDA food recall reports (openFDA) and USDA FSIS meat, poultry and egg product recalls and public health alerts, last 18 months.'+(fst.state==='error'?' The USDA check could not be reached just now, so USDA recalls were not searched.':'')+' Matches are by brand and name, so a possible match is not confirmed. Finding no recall does not guarantee a product is safe.'));var p=el('p'),a=el('a','rc-a','FDA recalls list (official)');a.href=OFFICIAL;a.target='_blank';a.rel='noopener noreferrer';p.append(a);b.append(p)}
 function plugin(m,ctx){var R={type:'recall',title:'Recalls',at:1,pin:false,open:false,color:'grey',chip:'Not enough data'},b=el('div');R.body=b;
 if(!ctx.code){R.chip='Sample product';b.append(para('This is a sample product, so we did not search recall reports.'));return R}
 var brand=m.brand;if(!brand||/not listed/i.test(brand)){R.chip='No brand listed';b.append(para('This product has no brand in the database, so we cannot search recall reports.'));return R}
 var k=norm(brand);fetchBrand(brand);var c=mem[k]||{state:'loading'};
 if(c.state==='loading'){R.chip='Checking…';b.append(para('Searching FDA recall reports…'));return R}
 if(c.state==='error'){R.chip="Couldn't check";b.append(para('We could not reach the FDA recall database just now. Nothing was learned about recalls for this product.'));var tb=el('button','link','Try again');tb.onclick=function(){delete mem[k];done()};b.append(tb);foot(b);return R}
-var p={brand:brand,name:m.name,variants:variants(ctx.code)},ms=c.recs.map(function(r){return{r:r,l:level(r,p)}}).filter(function(x){return x.l>0}).sort(function(a,b){return b.l-a.l});
+if(fst.state==='idle'||(fst.state==='done'&&Date.now()-fst.t>FSTTL)||(fst.state==='error'&&Date.now()-fst.t>60000))fsisLoad(done);if(fst.state==='loading'||fst.state==='idle'){R.chip='Checking…';b.append(para('Searching FDA and USDA recall reports…'));return R}
+var p={brand:brand,name:m.name,variants:variants(ctx.code)},ms=c.recs.concat(fst.recs).map(function(r){return{r:r,l:level(r,p)}}).filter(function(x){return x.l>0}).sort(function(a,b){return b.l-a.l});
 var strong=ms.filter(function(x){return x.l===3}),poss=ms.filter(function(x){return x.l===2}),other=ms.filter(function(x){return x.l===1});
 function list(arr,n,label){if(!arr.length)return;if(label)b.append(el('div','rc-sub',label));arr.slice(0,n).forEach(function(x){b.append(card(x.r))});if(arr.length>n)b.append(el('p','olp-note','+ '+(arr.length-n)+' more in the official list.'))}
 var cand=strong.length?strong:poss;
