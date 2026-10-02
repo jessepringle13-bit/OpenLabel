@@ -28,7 +28,7 @@ function ago(t){if(!t)return '';var s=Math.max(0,(Date.now()-t)/1000);if(s<90)re
 var LABELS={ing:'Ingredients',alle:'Allergens listed',tr:'May contain (traces)',add:'Additives listed',qty:'Package size',srv:'Serving size'};
 function fromProduct(p){var f={};(p.facts||[]).forEach(function(r){f[r[0]]=r[1]});
   return {ing:clean(f['Ingredients']),alle:list(String(f['Allergens listed']||'').split(',')),tr:list(String(f['May contain (traces)']||'').split(',')),add:list(String(f['Additives listed']||'').split(',')),qty:nq(f['Package size']),srv:clean(f['Serving size'])}}
-function fromApi(p){return {ing:clean(String(p.ingredients_text_en||p.ingredients_text||'').trim().slice(0,1200)),alle:list((p.allergens_tags||[]).map(tagName)),tr:list((p.traces_tags||[]).map(tagName)),add:list((p.additives_tags||[]).map(function(t){return tagName(t).toUpperCase()})),qty:nq(p.quantity),srv:clean(p.serving_size)}}
+function fromApi(p){return {ing:clean(String(p.ingredients_text_en||p.ingredients_text||'').trim().slice(0,6000)),alle:list((p.allergens_tags||[]).map(tagName)),tr:list((p.traces_tags||[]).map(tagName)),add:list((p.additives_tags||[]).map(function(t){return tagName(t).toUpperCase()})),qty:nq(p.quantity),srv:clean(p.serving_size)}}
 function diff(a,b){if(!a||!b)return [];return Object.keys(LABELS).filter(function(k){return (a[k]||'')!==(b[k]||'')&&(a[k]||b[k])})}
 
 /* Record a sighting of a product. Returns the list of changed fields, if any. */
