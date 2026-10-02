@@ -10,7 +10,7 @@ var API='https://world.openfoodfacts.org/api/v2/product/',FIELDS='code,product_n
 var lib=document.getElementById('library'),saved=document.getElementById('savedArea'),hist=document.getElementById('historyArea'),result=document.getElementById('result');
 if(!lib||!saved||!hist)return;
 var sty=document.createElement('style');
-sty.textContent='.lb-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}.lb-tag{display:inline-block;font-size:11px;font-weight:760;line-height:1.2;padding:4px 8px;border-radius:99px;background:var(--sage);color:var(--forest)}.lb-tag.grey{background:#ECEDEA;color:#4C5753}.lb-tag.orange{background:#FBE3D6;color:#7A3A1B}.lb-changes{display:grid;gap:8px}.lb-change{background:#FFF7F2;border:1px solid #F1C9B3;border-radius:16px;padding:12px 14px}.lb-change strong{display:block;color:var(--ink)}.lb-change p{margin:4px 0 0;font-size:13px;color:var(--muted)}.lb-change ul{margin:6px 0 0;padding-left:18px;font-size:13px;color:var(--ink)}.lb-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.lb-actions button{min-height:44px;border-radius:12px;padding:0 14px;background:var(--eucalyptus);color:var(--ivory);font-weight:750}.lb-actions button[disabled]{opacity:.6}.lb-status{font-size:13px;color:var(--muted);margin:0}';
+sty.textContent='.lb-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}.lb-tag{display:inline-block;font-size:11px;font-weight:760;line-height:1.2;padding:4px 8px;border-radius:99px;background:var(--sage);color:var(--forest)}.lb-tag.grey{background:#ECEDEA;color:#4C5753}.lb-tag.orange{background:#FBE3D6;color:#7A3A1B}.lb-changes{display:grid;gap:8px}.lb-change{background:#FFF7F2;border:1px solid #F1C9B3;border-radius:16px;padding:12px 14px}.lb-change strong{display:block;color:var(--ink)}.lb-change p{margin:4px 0 0;font-size:13px;color:var(--muted)}.lb-change ul{margin:6px 0 0;padding-left:18px;font-size:13px;color:var(--ink)}.lb-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.lb-actions button{min-height:44px;border-radius:12px;padding:0 14px;background:var(--eucalyptus);color:var(--ivory);font-weight:750}.lb-actions button[disabled]{opacity:.6}.lb-open{margin-top:8px;min-height:44px;border-radius:12px;padding:0 14px;background:var(--eucalyptus);color:var(--ivory);font-weight:750}.lb-change li{margin-bottom:6px}.lb-change li div{font-size:12.5px;color:var(--muted);word-break:break-word}.lb-status{font-size:13px;color:var(--muted);margin:0}';
 document.head.appendChild(sty);
 
 function st(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return {}}}
@@ -20,6 +20,7 @@ function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null
 function tagName(t){return String(t).replace(/^[a-z]{2}:/,'').replace(/-/g,' ')}
 function clean(s){return String(s||'').toLowerCase().replace(/\s+/g,' ').trim()}
 function list(a){return (a||[]).map(clean).filter(Boolean).sort().join('|')}
+function trim(t){t=String(t);return t.length>160?t.slice(0,157)+'…':t}
 function ago(t){if(!t)return '';var s=Math.max(0,(Date.now()-t)/1000);if(s<90)return 'just now';var m=s/60;if(m<60)return Math.round(m)+' min ago';var h=m/60;if(h<36)return Math.round(h)+' h ago';var d=h/24;if(d<14)return Math.round(d)+' days ago';return new Date(t).toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'})}
 
 /* Label fields compared between snapshots. Built the same way from a stored product or a fresh API record. */
@@ -33,7 +34,7 @@ function diff(a,b){if(!a||!b)return [];return Object.keys(LABELS).filter(functio
 function record(id,fp,name,brand,via){var o=ld(),now=Date.now(),e=o[id];
   if(!e){o[id]={firstSeen:now,lastSeen:now,name:name,brand:brand,fp:fp,changes:[]};sv(o);return []}
   var ch=diff(e.fp,fp);e.lastSeen=now;e.name=name||e.name;e.brand=brand||e.brand;
-  if(ch.length){e.changes=[{at:now,fields:ch,via:via||'scan'}].concat(e.changes||[]).slice(0,5);e.fp=fp;e.seenChange=false}
+  if(ch.length){var dd=ch.map(function(k){return {k:k,from:String((e.fp||{})[k]||'').slice(0,400),to:String(fp[k]||'').slice(0,400)}});e.changes=[{at:now,fields:ch,d:dd,via:via||'scan'}].concat(e.changes||[]).slice(0,5);e.fp=fp;e.seenChange=false}
   o[id]=e;sv(o);return ch}
 
 function currentId(){var s=st();return (s.history||[])[0]||null}
@@ -49,7 +50,7 @@ function decorate(area){var s=st(),o=ld(),ids=idsFor(area,s),cards=area.querySel
   cards.forEach(function(c,i){var id=ids[i],e=o[id],live=!!(s.live||{})[id],box=c.querySelector('.grow');if(!box||box.querySelector('.lb-meta'))return;
     var m=el('span','lb-meta');if(e&&e.lastSeen)m.append(el('span','lb-tag grey','Seen '+ago(e.lastSeen)));
     var last=e&&e.changes&&e.changes[0];
-    if(last&&(Date.now()-last.at)<30*864e5)m.append(el('span','lb-tag orange','Label data changed '+ago(last.at)));
+    if(last&&(Date.now()-last.at)<30*864e5)m.append(el('span','lb-tag orange','Database record changed '+ago(last.at)));
     box.append(m)})}
 
 var changesHead,changesArea,actions,btn,status;
@@ -65,8 +66,9 @@ function renderChanges(){var s=st(),o=ld(),keep={};(s.saved||[]).concat(s.histor
   if(!rows.length){var d=el('div','card empty','No changes found yet. When the Open Food Facts record for a saved or recent product changes, it will show here.');changesArea.append(d);return}
   rows.forEach(function(r){var c=r.e.changes[0],box=el('div','lb-change');box.append(el('strong',null,(r.e.brand?r.e.brand+' · ':'')+(r.e.name||'Product')));
     box.append(el('p',null,'Changed in the Open Food Facts record '+ago(c.at)+' ('+(c.via==='check'?'found by a saved-product check':'found when scanned again')+'):'));
-    var ul=el('ul');c.fields.forEach(function(f){ul.append(el('li',null,LABELS[f]||f))});box.append(ul);
-    box.append(el('p',null,'This means the community data changed. It does not confirm the package changed. Read the label you have.'));
+    var ul=el('ul');(c.d||c.fields.map(function(k){return {k:k}})).forEach(function(x){var li=el('li');li.append(el('strong',null,LABELS[x.k]||x.k));if(x.from!==undefined){var isList=/^(alle|tr|add)$/.test(x.k);if(isList){var a=x.from?x.from.split('|'):[],b=x.to?x.to.split('|'):[],added=b.filter(function(i){return a.indexOf(i)<0}),removed=a.filter(function(i){return b.indexOf(i)<0});if(added.length)li.append(el('div',null,'Now also listed: '+added.join(', ')));if(removed.length)li.append(el('div',null,'No longer listed: '+removed.join(', ')))}else{li.append(el('div',null,'Before: '+(x.from?trim(x.from):'not listed')));li.append(el('div',null,'Now: '+(x.to?trim(x.to):'not listed')))}}ul.append(li)});box.append(ul);
+    box.append(el('p',null,'Level 1 of 3: the database record changed. This is not proof the label or product was reformulated (level 2), and only you can confirm the package in your hand changed (level 3). Old snapshots can also be incomplete.'));
+    var go=el('button','lb-open','See current details');go.type='button';go.onclick=function(){if(window.OLOpenCode){var nav=document.querySelector('.nav-pill[data-go="scan"]');window.OLOpenCode(r.id)}};box.append(go);
     changesArea.append(box)})}
 
 var busy=false;
