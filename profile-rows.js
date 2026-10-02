@@ -61,7 +61,7 @@ function dietPlugin(m,ctx){var P=prof();if(!P.diets.length)return null;var x=get
 var b=el('div'),no=0,yes=0,res=P.diets.map(function(d){return[d,evalDiet(d,ing,x,m.facts)]});
 res.forEach(function(r){if(r[1].s==='no')no++;if(r[1].s==='yes')yes++;var p=el('p');p.append(el('strong',null,(DN[r[0]]||r[0])+': '+WORD[r[1].s]),document.createTextNode(' — '+r[1].w));b.append(p)});
 b.append(el('p','olp-note','Ingredient lists and database labels can be incomplete or wrong. Always check the package for what matters to you.'));
-var rest=res.length-yes-no,color=no?'orange':(yes===res.length?'green':'grey'),chip=no?(no+' not a fit'):(yes===res.length?'Fits your diets':(yes?yes+' fit · '+rest+' unclear':'Can’t tell'));
+var rest=res.length-yes-no,color=no?'orange':(yes===res.length?'green':'grey'),chip=no?(no+' not a fit'):(yes===res.length?'Fits by label':(yes?yes+' fit · '+rest+' unclear':'Can’t tell'));
 return{type:'diet',title:'Diets',color:color,chip:chip,body:b,pin:false,open:false,at:2}}
 function intolPlugin(m,ctx){var P=prof();if(!P.intol.length)return null;var ing=ctx.ing||'',t=strip(ing,NOTMILK),found=[],lists={lactose:MILK,gluten:GLUTEN,sulfites:SULF,sugaralc:SALC,fructose:FRUC},names={lactose:'Lactose',gluten:'Gluten',sulfites:'Sulfites',sugaralc:'Sugar alcohols',fructose:'Fructose'},b=el('div');
 P.intol.forEach(function(id){var h=ing?hits(t,lists[id]||[]):[];if(h.length)found.push(id);var p=el('p');p.append(el('strong',null,names[id]+': '+(ing?(h.length?'found':'not found'):'can’t tell')),document.createTextNode(h.length?' — '+h.slice(0,5).join(', ')+'.':(ing?' — nothing matching in the ingredient list.':' — no ingredient list.')));b.append(p)});
