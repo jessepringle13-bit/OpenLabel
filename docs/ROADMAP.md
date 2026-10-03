@@ -123,8 +123,8 @@ Red: a direct match to you, a recall found, or a tested result above the tester'
 Phase 3 evidence register: design drafted in docs/EVIDENCE_REGISTER_DESIGN.md (Planned, nothing built). Waiting on owner decisions in section 9.
 
 ## Evidence register: open items (updated 2026-10-03)
-- Read the full IARC Monograph 114 text (Red Meat and Processed Meat, 2018) and the Lancet Oncology summary in full. Only the IARC Q&A, the PubMed record and the publication page were reachable. Needed for: number of studies by design, mechanistic evidence on N-nitroso compounds, the Working Group vote, declarations of interest and meeting funding. Cured meats record stays source check partial until done.
-- Funding and interest statements for WCRF 2025 report, IARC Q&A and Monograph 114 page (none stated on pages read).
+- IARC Monograph 114: evaluation, summary and participant declarations read 2026-10-03. Still to read: Section 2.2 colorectal tables and Section 4 mechanistic chapter line by line, and the Lancet Oncology paper. Meeting funders not itemized in the text read.
+- Funding and interest statements for the WCRF 2025 report and IARC Q&A (none stated on pages read).
 - Retraction check for Arnold 2012 and the OEHHA report.
 - Add source URLs to the seed oils record.
 - Full-text reads of remaining primary papers (2025 meta-analysis, UK Biobank, EPIC, NutriNet-Santé).
