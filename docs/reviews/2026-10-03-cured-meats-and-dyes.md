@@ -52,3 +52,10 @@ Both read: Monograph 114 (Sections 5 and 6, List of Participants) from the IARC 
 - Interests: 22 Working Group scientists. One member was involved in a research project funded by World Cancer Research Fund; all others declared no competing interests, and so did the agency representatives. Industry observers (North American Meat Institute, National Pork Producers Council, Kraft Heinz, National Cattlemen's Beef Association, and a researcher funded by Beef Checkoff) attended without taking part in evaluations.
 - Funding: Monograph imprint says co-funded by the European Union. The Lancet Oncology version read has no funding section. PubMed lists WHO and US National Cancer Institute grants. Meeting funders are not itemized.
 - Still open for IARC: Section 2.2 colorectal tables and the Section 4 mechanistic chapter read line by line; journal PDF of the Lancet Oncology paper.
+
+## Round 5: IARC colorectal and mechanistic chapters (2026-10-03)
+Read the Section 2.2 narrative (cohort, case-control, meta-analyses) and the Section 4 mechanistic chapter including nitroso compounds. Verdict unchanged (orange). Three findings added to the record:
+1. Cohort results were mixed. IARC counted 12 of 18 informative processed-meat cohorts as positive. Large null cohorts include Danish, Swedish Mammography, Netherlands, Miyagi, and the Multiethnic Cohort (1.25 unadjusted, 1.06 after full adjustment). This now sits on the record's "against" side.
+2. Nitrate and nitrite from processed meat: NIH-AARP found nitrate RR 1.16 (1.02 to 1.32) and nitrite 1.11 (0.97 to 1.25, not significant).
+3. Curing is not isolated as the cause: a human trial found nitrite-cured meat raised stool nitroso compounds about as much as fresh red meat; lab fermentation work found nitrite curing did not influence a DNA-adduct marker; a rat diet of salt, nitrite and phosphate alone did not reproduce the effect of ham; the rat lesion studies came from one laboratory.
+Open: meeting funders; journal PDF of the Lancet Oncology paper. Numeric tables were checked against the narrative, not re-derived.
