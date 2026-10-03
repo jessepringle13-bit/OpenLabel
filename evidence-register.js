@@ -191,7 +191,7 @@ function resolve(r,ctx){
  var watched=topics.indexOf(r.topic)>=0;
  if(r.color==='red'||r.color==='grey'){return{color:r.color,chip:r.color==='grey'?'No evidence finding':'See reason',reason:r.color_reason,record:r,problems:[],note:'ok'}}
  if(!watched)return{color:'grey',chip:'Listed',reason:'Not on your watch list, so no color is shown. The evidence is still available below.',record:r,problems:[],note:'unwatched'};
- var chip=r.status==='contested'?'Contested evidence · on your watch list':r.status==='unresolved'?'Unresolved evidence · on your watch list':'On your watch list';
+ var chip=r.status==='contested'?'Contested evidence · on your watch list':r.status==='unresolved'?'Unresolved evidence · on your watch list':r.status==='converging'?'Converging evidence · on your watch list':'On your watch list';
  return{color:r.color,chip:chip,reason:r.color_reason,record:r,problems:[],note:'ok'};
 }
 
