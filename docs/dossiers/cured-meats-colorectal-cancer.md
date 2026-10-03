@@ -75,3 +75,10 @@ Mechanistic chapter (Section 4): NOC evidence is mainly red meat. Joosen 2009: n
 Programme funders: US National Cancer Institute (Cooperative Agreement 5-U01-CA33193), US National Institute of Environmental Health Sciences, European Commission DG for Employment, Social Affairs and Inclusion (IARC Monographs general information page, undated). No industry funding listed. Meeting-specific funding for Volume 114 not itemized.
 Table check: Table 2.2.2 lists 18 processed-meat cohort studies; EPIC (1.42, 1.32, 1.70), Multiethnic Cohort (1.06), NIH-AARP 2010 (1.16), Egeberg and Chao rows match the narrative. GECCO pooled figure appears in the narrative only.
 Journal PDF of Bouvard 2015 could not be retrieved (publisher blocks automated access; no open journal copy found). Author version read.
+
+## 13. Funding and conflicts (2026-10-03)
+- IARC Preamble (2019 edition): Working Group members selected for expertise and absence of conflicts; all complete the WHO Declaration of Interests form; IARC assesses it; names and declared interests published about two months before the meeting and again in the volume; Observers cannot draft text or take part in evaluations and must not lobby.
+- Volume 114 as published: no significant pertinent interests footnoted for any of the 22 Working Group members; Observers included industry (North American Meat Institute, Kraft Heinz, NCBA, NPPC, and the EpidStat Institute, whose epidemiologist declared significant support from Beef Checkoff); they did not take part in evaluations. Lancet Oncology: one member's WCRF-funded project declared.
+- WCRF (grant programmes page): no government funding; most money from public donations via its charities. The 2025 colorectal report and the dietary patterns report state no funding or interest declarations for their authors in the text read.
+- Not found anywhere: funding specific to the Volume 114 meeting. EFSA declarations of interest not read.
+- The Preamble read is the 2019 edition, which postdates the 2015 meeting; the meeting followed the earlier edition. The 2015 edition's text was not compared.

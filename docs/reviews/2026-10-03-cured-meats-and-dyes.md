@@ -64,3 +64,10 @@ Open: meeting funders; journal PDF of the Lancet Oncology paper. Numeric tables 
 - Funding: IARC states the Monographs are funded by the US National Cancer Institute, the US National Institute of Environmental Health Sciences and the European Commission employment and social affairs directorate. No industry funder listed. Volume 114 meeting funding is not itemized separately.
 - Tables: spot-checked EPIC, Multiethnic Cohort, NIH-AARP, Danish and CPS-II values against the narrative (match); Table 2.2.2 lists 18 cohort studies, matching the stated 18. One discrepancy explained: the narrative cites an older NIH-AARP analysis (1.20); the table and record use the later one (1.16).
 - Not closable: the journal PDF of the Lancet Oncology paper could not be retrieved. The author version was read; any difference from print was not compared.
+
+## Round 7: Funding and conflicts (2026-10-03)
+- IARC conflict-of-interest process documented (Preamble 2019 edition, which postdates the 2015 meeting). Volume 114 declarations, the industry observers and their exclusion from evaluations were already read in Round 4.
+- WCRF: no government funding; most money from public donations through its charities. The WCRF 2025 reports state no funding or interest declarations for their authors in the text read.
+- IARC Q&A and Volume 114 news page: no funding or conflict statement.
+- Not stated anywhere found: Volume 114 meeting-specific funding; WCRF report authors' interests. EFSA declarations of interest not read.
+- Verdicts unchanged (cured meats orange, dyes yellow).
