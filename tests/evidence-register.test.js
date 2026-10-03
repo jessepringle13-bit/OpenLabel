@@ -26,4 +26,29 @@ r=clone(base);r.color='purple';t('unknown color invalid',R.validate(r).length>0)
 r=clone(base);r.source_check.state='ok';t('unknown check state invalid',R.validate(r).length>0);
 r=clone(base);r.sources=[];var o=R.resolve(r,{topics:['seedoils'],now:NOW});t('invalid record resolves grey with message',o.color==='grey'&&o.note==='invalid');
 t('not found is not a pass for green',(function(){var g=clone(base);g.color='green';g.status='converging';g.green_scope='x';g.owner_signoff='2026-10-03';g.source_check.state='not found';return R.validate(g).some(function(x){return /complete source check/.test(x)})})());
+
+/* new records and detectors */
+['cured-meats-colorectal','synthetic-dyes-child-behavior'].forEach(function(id){t(id+' valid',R.validate(R.get(id)).length===0)});
+var cm=R.get('cured-meats-colorectal'),dy=R.get('synthetic-dyes-child-behavior');
+t('cured orange when watched',R.resolve(cm,{topics:['curedmeats'],now:NOW}).color==='orange');
+t('cured grey when unwatched',R.resolve(cm,{topics:['dyes'],now:NOW}).color==='grey');
+t('cured grey when not applicable',R.resolve(cm,{topics:['curedmeats'],now:NOW,applies:false}).note==='inapplicable');
+t('dyes yellow when watched',R.resolve(dy,{topics:['dyes'],now:NOW}).color==='yellow');
+t('dyes grey when unwatched',R.resolve(dy,{topics:[],now:NOW}).color==='grey');
+r=clone(dy);delete r.sides;t('contested without sides invalid',R.validate(r).length>0);
+r=clone(dy);r.sides.against=[];t('contested with one side empty invalid',R.validate(r).length>0);
+t('detect nitrite in meat',R.detect('curedmeats','Pork, water, salt, sodium nitrite').found.indexOf('sodium nitrite')>=0);
+t('detect celery with meat',R.detect('curedmeats','Beef, celery powder').found.indexOf('celery powder')>=0);
+t('no celery-only without meat',R.detect('curedmeats','Vegetable broth, celery powder, salt').found.length===0);
+t('celeryOnly flag',R.detect('curedmeats','Uncured bacon, celery powder').celeryOnly===true);
+t('uncured word alone not a hit',R.detect('curedmeats','Uncured bacon, water, salt').found.length===0);
+t('no meat flag',R.detect('curedmeats','Cheese, sodium nitrate').meat===false);
+t('detect red 40',R.detect('dyes','Sugar, FD&C Red No. 40').found.length===1);
+t('detect yellow 5 lake',R.detect('dyes','Yellow 5 Lake').found.length===1);
+t('detect e129',R.detect('dyes','E129').found.length===1);
+t('orange blossom not a dye',R.detect('dyes','Orange blossom water').found.length===0);
+t('annatto and carmine not matched',R.detect('dyes','annatto, carmine, beet juice, turmeric').found.length===0);
+t('red 30 not matched',R.detect('dyes','Red 30').found.length===0);
+t('red 3 note',R.notesFor(dy,['red no. 3']).some(function(x){return /revoked/.test(x)}));
+t('red 40 gets trial note not red 3 note',(function(){var n=R.notesFor(dy,['red 40']);return n.length===1&&/2007/.test(n[0])})());
 console.log(n+' cases, '+f+' failed');process.exit(f?1:0);

@@ -40,7 +40,26 @@ var s=q.v('sugars');w.append(el('p','olp-note',(q.sfx==='_serving'?'Per serving'
 function hl(text,watch){var f=document.createDocumentFragment(),last=0,m,any={};HL.lastIndex=0;while((m=HL.exec(text))){if(m.index>last)f.append(text.slice(last,m.index));var w=m[0].toLowerCase(),c=/oil/.test(w)?'m-seed':/natural/.test(w)?'m-flav':(watch?'m-sweet':'m-flav');any[c]=1;f.append(el('mark',c,m[0]));last=m.index+m[0].length}if(last<text.length)f.append(text.slice(last));return{f:f,any:any}}
 function para(t){return el('p',null,t)}
 function linkBtn(t,fn){var b=el('button','link',t);b.onclick=fn;return b}
-function row(type,title,color,chip,body,o){o=o||{};return{type:type,title:title,color:color,chip:chip,body:body,pin:!!o.pin,open:!!o.open}}
+function row(type,title,color,chip,body,o){o=o||{};return{type:type,title:title,color:color,chip:chip,body:body,pin:!!o.pin,open:!!o.open,rec:o.rec||null}}
+
+function regTopics(){var t=[];try{t=(JSON.parse(localStorage.getItem('openlabel-profile2-v1')||'{}').topics)||[]}catch(e){}return t}
+function openRecSheet(rec,intro){var T=document.getElementById('sheetTitle'),C=document.getElementById('sheetContent'),X=document.getElementById('sheetExtra');if(!T||!C||!X)return;T.textContent=rec.subject+': what the evidence shows';C.textContent=intro;var r=el('div','tx');
+function sec(h,node){r.append(el('h4',null,h));r.append(typeof node==='string'?el('p',null,node):node)}
+function ul(a){var u=el('ul');a.forEach(function(x){u.append(el('li',null,x))});return u}
+sec('Claim',rec.claim);sec('What the evidence shows',ul(rec.shows));sec('What it does not show',ul(rec.does_not_show));
+if(rec.sides){sec('Strongest case that it matters',ul(rec.sides.for));sec('Strongest case against, or for caution',ul(rec.sides.against))}
+sec('Amount',rec.amount);sec('Who it applies to',rec.applies_to);
+var sl=el('ul');rec.sources.forEach(function(x){var li=el('li');if(x.url){var a=el('a',null,x.title);a.href=x.url;a.target='_blank';a.rel='noopener noreferrer';li.append(a)}else li.append(document.createTextNode(x.title));li.append(document.createTextNode(' - '+x.publisher+', '+x.type+', '+x.date+(x.note?'. '+x.note:'')));sl.append(li)});sec('Sources',sl);
+sec('Source check ('+rec.source_check.state+')',rec.source_check.summary);
+sec('Review','Status: '+rec.status+'. '+rec.reviewed_by+', '+rec.reviewed_on+(rec.review_state==='provisional'?' (provisional)':'')+'. Next review due '+rec.next_review+'. Not medical advice.');
+X.replaceChildren(r);document.getElementById('sheetWrap').hidden=false;var cb=document.getElementById('closeSheet');if(cb)cb.focus()}
+/* Fill a row body from a register record. Returns the resolved state (color, chip). */
+function regFill(sb,id,lines,notes,sheetFn,applies){var REG=window.OLRegister,rec=REG&&REG.get(id);
+var rs=rec?REG.resolve(rec,{topics:regTopics(),applies:applies}):{color:'grey',chip:'Evidence register unavailable',reason:'The evidence register did not load, so no color is shown.',record:null};
+lines.forEach(function(t){sb.append(para(t))});sb.append(para(rs.reason));notes.forEach(function(t){sb.append(para(t))});
+if(rs.record){var rr=rs.record;sb.append(para('Applies to: '+rr.applies_to));sb.append(para('Kind of evidence: '+rr.scope_type+'. Amount: '+rr.amount));sb.append(para('Source check: '+rr.source_check.summary));sb.append(para('Review: '+rr.reviewed_by+', '+rr.reviewed_on+(rr.review_state==='provisional'?' (provisional)':'')+'. Next review due '+rr.next_review+'.'));
+sb.append(linkBtn('See the evidence',sheetFn||function(){openRecSheet(rr,'This is what our reviewed record says, what it does not say, and who paid for the research.')}))}
+rs.rec=rs.record;return rs}
 function buildRows(m,ing){var rows=[],F=m.findings,fa=m.facts;
 var allH=F.filter(function(x){return /alert|warn/.test(x.cls)}),hits=allH.filter(function(x){return !/^Your watch word/.test(x.head)}),wh=allH.filter(function(x){return /^Your watch word/.test(x.head)}),info=F.filter(function(x){return x.cls.split(' ').indexOf('info')>=0&&/^(Allergy check|No match for your allergens|Cannot check allergens)/.test(x.head)})[0];
 var b=el('div');
@@ -60,16 +79,17 @@ else tb.append(para('Looking in our register of independent tests…'));
 rows.push(row('test','Independent testing',tc,tch,tb,{pin:tc==='red',open:tc==='red'}));
 var key=API?API.textKey(ing):'',found=[],veg=false;
 if(ing&&API){found=API.seedWords.filter(function(w){return key.indexOf(API.textKey(w))>=0});veg=!found.length&&(key.indexOf(' vegetable oil ')>=0||key.indexOf(' vegetable oils ')>=0)}
-var sb=el('div'),sc='grey',sch='Not enough data';
+var sb=el('div'),sc='grey',sch='Not enough data',seedRec=null;
 if(!ing){sb.append(para('There is no ingredient list for this product, so we cannot tell.'))}
-else if(found.length){var REG=window.OLRegister,rec=REG&&REG.get('seed-oils-inflammation'),tp=[];try{tp=(JSON.parse(localStorage.getItem('openlabel-profile2-v1')||'{}').topics)||[]}catch(e){}
-var rs=rec?REG.resolve(rec,{topics:tp}):{color:'grey',chip:'Evidence register unavailable',reason:'The evidence register did not load, so no color is shown.',record:null};
-sc=rs.color;sch=rs.chip;sb.append(para('Listed: '+found.join(', ')+'.'));sb.append(para(rs.reason));
-if(rs.record){var rr=rs.record;sb.append(para('Applies to: '+rr.applies_to));sb.append(para('Kind of evidence: '+rr.scope_type+'. Amount: '+rr.amount));sb.append(para('Source check: '+rr.source_check.summary));sb.append(para('Reviewed by '+rr.reviewed_by+', '+rr.reviewed_on+(rr.review_state==='provisional'?' (provisional)':'')+'. Next review due '+rr.next_review+'.'))}
-sb.append(linkBtn('See the evidence',function(){API.openSeedSheet(found,false)}))}
+else if(found.length){var rs0=regFill(sb,'seed-oils-inflammation',['Listed: '+found.join(', ')+'.'],[],function(){API.openSeedSheet(found,false)});sc=rs0.color;sch=rs0.chip;seedRec=rs0.rec}
 else if(veg){sch='Type not stated';sb.append(para('The label says vegetable oil without naming the type, so it may or may not be a seed oil.'));sb.append(linkBtn('See the evidence',function(){API.openSeedSheet([],true)}))}
 else{sc='grey';sch='None named in list';sb.append(para('None of the oils we check for are named in the ingredient list. This describes the list only. It can be incomplete, so check the package.'))}
-rows.push(row('seed','Seed oils',sc,sch,sb));
+rows.push(row('seed','Seed oils',sc,sch,sb,{rec:seedRec}));
+if(window.OLRegister&&ing){var REG2=window.OLRegister,cd=REG2.detect('curedmeats',ing);
+if(cd.found.length){var cb2=el('div'),cl=['Listed: '+cd.found.join(', ')+'.'];if(!cd.meat)cl.push('No meat word was found in this ingredient list, and the studies are about meat, so this may not apply.');if(cd.celeryOnly)cl.push('Celery powder or juice is a natural source of nitrite, and labels may say uncured. The research does not tell us whether that changes the risk.');
+var cr=regFill(cb2,'cured-meats-colorectal',cl,[],null,cd.meat);rows.push(row('cured','Cured meats',cr.color,cr.chip,cb2,{rec:cr.rec}))}
+var dd=REG2.detect('dyes',ing);
+if(dd.found.length){var db=el('div'),dr0=REG2.get('synthetic-dyes-child-behavior'),dn=dr0?REG2.notesFor(dr0,dd.found):[];var dr=regFill(db,'synthetic-dyes-child-behavior',['Listed: '+dd.found.join(', ')+'.'],dn,null);rows.push(row('dyes','Food dyes',dr.color,dr.chip,db,{rec:dr.rec}))}}
 var nm=/Group ([0-9]) of 4/.exec(fa['NOVA group']||''),pb=el('div'),pc='grey',pch='Not available';
 if(nm){var n=+nm[1],names=['','Unprocessed or minimally processed','Processed culinary ingredient','Processed food','Ultra-processed food'];pc='grey';pch=n<3?'Low processing':n===3?'Processed':'Ultra-processed';
 pb.append(para(names[n]+' (NOVA group '+n+' of 4).'));var bar=el('div','nova'),mk=el('i');mk.style.left=((n-1)/3*84+8)+'%';bar.append(mk);pb.append(bar);var lab=el('div','nova-l');lab.append(el('span',null,'Unprocessed'),el('span',null,'Ultra-processed'));pb.append(lab);
@@ -97,7 +117,7 @@ caf:['The listed caffeine is above the daily limit you set.','Your saved limit a
 topic:['You put this topic on your watch list, and it appears on the label.','Your saved watch list and the Open Food Facts label.','Listed on the label. Amount is not known.','You.','We have not reviewed the research on this topic, so orange here is your choice, not our judgment.','Not an evidence finding.'],
 seed:['The evidence on this topic is mixed or contested.','Our evidence dossier on seed oils, linked in the row.','General research, not specific to this product or amount.','General reading, not personal advice.','Studies differ, and some have industry funding.','Dossier reviewed by us. Not clinically reviewed.']};
 var WN=['Reason','Source','Scope','Applies to','Limits','Review status'];
-function whyOf(r){if(!r.color||r.color==='grey'||!r.type)return null;var k=r.type;if(k==='intol'||k==='sweet'||k==='add'||k==='emul'||k==='flav'||k==='sugar'||k==='proc')k=r.color==='yellow'?'seed':'topic';if(k==='gut')return null;return WHY[k]||null}
+function whyOf(r){if(r.rec&&r.color&&r.color!=='grey'){var q=r.rec;return[q.color_reason,q.sources.map(function(x){return x.title}).slice(0,3).join('; ')+(q.sources.length>3?' and '+(q.sources.length-3)+' more (see the evidence sheet)':''),'Evidence type: '+q.scope_type+'. Status: '+q.status+'.',q.applies_to,'Does not show: '+q.does_not_show[0],'Reviewer: '+q.reviewed_by+' ('+q.reviewed_on+'). Source check: '+q.source_check.state+'. Next review due '+q.next_review+'.']}if(!r.color||r.color==='grey'||!r.type)return null;var k=r.type;if(k==='intol'||k==='sweet'||k==='add'||k==='emul'||k==='flav'||k==='sugar'||k==='proc')k=r.color==='yellow'?'seed':'topic';if(k==='gut')return null;return WHY[k]||null}
 function whyBlock(r){var w=whyOf(r);if(!w)return null;var d=el('details','olr-why'),s=el('summary',null,'Why this color'),b=el('div');w.forEach(function(x,i){var p=el('p');p.append(el('b',null,WN[i]+': '),document.createTextNode(x));b.append(p)});d.append(s,b);return d}
 function mkRow(r){var d=el('details','olr'+(r.color?' c-'+r.color:'')+(r.pin?' pin':''));if(r.open)d.open=true;var s=el('summary');s.append(el('span','t',r.title));if(r.color){var c=el('span','chip2');c.append(el('span','dot'),document.createTextNode(r.chip));s.append(c)}s.append(el('span','cv'));var b=el('div','olr-b');b.append(r.body);var wb=whyBlock(r);if(wb)b.append(wb);d.append(s,b);rowEls[r.type]=d;return d}
 var TAGN={allergen:'Allergens',recall:'Recalls',test:'Testing',seed:'Seed oils',proc:'Processing',sweet:'Sweeteners',add:'Additives',caf:'Caffeine',diet:'Diets',intol:'Intolerances',gut:'Gut',emul:'Emulsifiers'};

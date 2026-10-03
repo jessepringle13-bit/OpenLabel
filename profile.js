@@ -3,7 +3,7 @@
 var PK='openlabel-profile2-v1',OK='openlabel-calm-dock-v1';
 var INTOL=[['lactose','Lactose'],['gluten','Gluten'],['sulfites','Sulfites'],['sugaralc','Sugar alcohols'],['fructose','Fructose']];
 var DIETS=[['vegan','Vegan'],['vegetarian','Vegetarian'],['pescatarian','Pescatarian'],['keto','Keto'],['lowcarb','Low-carb'],['paleo','Paleo'],['glutenfree','Gluten-free'],['dairyfree','Dairy-free'],['lowsodium','Low-sodium'],['lowsugar','Low-sugar']];
-var TOPICS=[['seedoils','Seed oils'],['sweeteners','Sweeteners'],['addedsugar','Added sugar'],['ultra','Ultra-processed'],['additives','Additives'],['flavors','Natural flavors'],['emulsifiers','Emulsifiers']];
+var TOPICS=[['seedoils','Seed oils'],['sweeteners','Sweeteners'],['addedsugar','Added sugar'],['ultra','Ultra-processed'],['additives','Additives'],['flavors','Natural flavors'],['emulsifiers','Emulsifiers'],['curedmeats','Cured meats'],['dyes','Food dyes']];
 function oldSweet(){try{var v=JSON.parse(localStorage.getItem(OK)||'{}');return v.sweetener!==false}catch(e){return true}}
 function get(){var d={intol:[],diets:[],topics:null,carbs:''};try{var v=JSON.parse(localStorage.getItem(PK));if(v&&typeof v==='object')for(var k in v)d[k]=v[k]}catch(e){}
 if(!Array.isArray(d.topics))d.topics=oldSweet()?['sweeteners']:[];return d}
@@ -35,7 +35,7 @@ var df=el('div');df.append(chipSet(DIETS,'diets',d),carb,el('p','p2n','Each prod
 var cl=document.getElementById('limit'),cin=el('input','search');cin.type='number';cin.min='0';cin.max='1000';cin.step='1';cin.placeholder='Daily caffeine limit in mg';cin.setAttribute('aria-label','Daily caffeine limit in mg');cin.value=cl?cl.value:'';
 cin.onchange=function(){var n=Number(cin.value);if(cin.value===''||!Number.isInteger(n)||n<0||n>1000){cin.value=cl?cl.value:'';return}if(cl){cl.value=String(n);var sp=document.getElementById('savePrefs');if(sp)sp.click()}updAll();if(window.OLPanel)window.OLPanel.refresh()};
 var cf=el('div');cf.append(cin,el('p','p2n','Whole number from 0 to 1000. A product is flagged only when its caffeine amount is listed and above this. If no amount is listed we cannot compare, and that is not the same as zero.'));var cg=group('Caffeine limit','Your own daily limit. This is a personal preference, not medical advice.',cf);cg.upd=function(){cg.querySelector('.chip2').textContent=((cl&&cl.value)||'150')+' mg'};cg.upd();root.append(cg);
-var tf=el('div');tf.append(chipSet(TOPICS,'topics',d),el('p','p2n','Topics you pick turn orange when they appear in a product. Topics you don’t pick stay grey, so the information is still there. Caffeine is always shown when it is present, because many labels don’t say.'));root.append(group('Topics to watch','What matters to you.',tf));
+var tf=el('div');tf.append(chipSet(TOPICS,'topics',d),el('p','p2n','Topics you pick show their evidence color when they appear in a product (orange or yellow, with the reason). Topics you don’t pick stay grey, so the information is still there. Caffeine is always shown when it is present, because many labels don’t say.'));root.append(group('Topics to watch','What matters to you.',tf));
 var first=sec.firstElementChild;first.after(root)}
 build();
 window.OLProfile={get:get,defs:{intol:INTOL,diets:DIETS,topics:TOPICS}};

@@ -134,3 +134,6 @@ Steps 1-5, 8-10 passed. Failures and suggestions, with status:
 
 ## Evidence register slice 1-2 (2026-10-03)
 Built: evidence-register.js (records, validator, resolver) and tests/evidence-register.test.js (23 cases). Seed oils row (no longer recolored orange by the watch-list override) reads from the seed-oils-inflammation record. Behavior change: seed oils shows yellow only for people with Seed oils on their watch list (owner decision 2026-10-03); everyone else sees grey "Listed". Record is provisional: source checks incomplete (2 of 11 checked), source links not yet added, owner sign-off pending. Owner device test needed.
+
+## Cured meats and food dyes records (2026-10-03)
+Built: two draft register records (cured-meats-colorectal orange, synthetic-dyes-child-behavior yellow, both only for users who watch the topic), detectors for curing ingredients and dyes, Profile topics Cured meats and Food dyes, an evidence sheet per record, and dossiers in docs/dossiers. Tests: tests/evidence-register.test.js 46 cases. Not yet owner-tested. Provisional: owner review pending, retraction checks not run, primary IARC and EFSA opinions not read. Limits: word matching only; the cured row also fires on celery powder when a meat word is present, and says so.
