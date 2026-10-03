@@ -53,3 +53,10 @@ Web searches 2026-10-03 on FDA dye actions, Red No. 3, OEHHA 2021, McCann 2007, 
 - OEHHA executive summary read [V]: seven certified dyes assessed; 27 clinical trials; conclusion that synthetic food dyes can affect neurobehavior in some children; most trials tested mixtures; Yellow No. 5 was the only single dye tested in several human studies; ADIs came from older studies not designed to detect these outcomes; Red No. 3 estimates exceeded the ADIs. OEHHA also cautions that hazard comparisons against ADIs may not describe neurobehavioral risk. Record text updated.
 - EU warning: July 2026 trade-press article says the six-colour warning still applies; regulation text not read.
 - Still not done: OEHHA full report; EFSA 2008 opinion beyond its news item; funding statement for Arnold 2012; any post-2021 trials.
+
+## 8. Update search, trials after 2021 (2026-10-03)
+- No original randomized trial or challenge study of synthetic dyes and child behavior published 2021 or later was found in two rounds of searching. Candidate pages (PMC11203549, PMC10444659, PMC9573786, PMC12577863, CSPI 2025) were each checked and cite only the 2022 review and older trials. This is "not found", not proof none exist.
+- Environmental Health 2022 (OEHHA authors) [V]: 27 clinical trials (25 challenge, 2 elimination), 16 of 25 some evidence, 13 statistically significant. Not independent of the 2021 OEHHA report.
+- JAMA news, 2 May 2025 [V]: FDA announced April 22, 2025 a voluntary plan for six dyes; Joel Nigg said effects are small.
+- FDA tracker, current as of 2026-09-15 [V]: Red No. 3 revoked 2025-01-15 (industry encouraged to remove by 2027-01-15); Orange B revocation finalized; Citrus Red No. 2 revocation proposed; six remaining dyes targeted by end of 2027 (earlier announcement said end of 2026).
+- Animal and cell studies on tartrazine appeared after 2021 (not used; not child behavior in humans).

@@ -29,3 +29,8 @@ Owner: Jesse Pringle. Prepared by OpenLabel research. Records: cured-meats-color
 
 ## How to read the sheets before you decide
 Turn on Cured meats and Food dyes in Profile, scan something with sodium nitrite or Red 40, and open See the evidence on each row.
+
+## Round 2 update: newer research (2026-10-03)
+Cured meats, after 2015: a 2025 meta-analysis of 60 studies (HR 1.21), UK Biobank 2020 (HR 1.18 per 20 g/day) and WCRF 2025 all agree on direction. Disputes found: the 2019 NutriRECS guideline (low certainty, continue intake) and Harvard's critique; a 2026 umbrella review rating most evidence low or very low certainty. Mechanism cohorts (EPIC 2025 nitrosyl-heme, NutriNet-Santé 2022 additive nitrite and nitrate) found no colorectal association. No retraction or reversal found. Color recommendation unchanged (orange), with the dispute now listed on the "against" side.
+Food dyes, after 2021: no new original trials found. Only reviews and commentary, led by the 2022 OEHHA-authored review (27 trials). FDA status updated: phase-out target now end of 2027 per its tracker of 2026-09-15. Color recommendation unchanged (yellow).
+Still open: full texts; IARC re-evaluation status; funding for WCRF and EFSA.
