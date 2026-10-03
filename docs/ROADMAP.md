@@ -124,7 +124,7 @@ Phase 3 evidence register: design drafted in docs/EVIDENCE_REGISTER_DESIGN.md (P
 
 ## Evidence register: open items (updated 2026-10-03)
 - IARC Monograph 114: closed 2026-10-03. Programme funders identified (NCI, NIEHS, European Commission); tables spot-checked. Not closable: the journal PDF of the Lancet Oncology paper could not be retrieved, so the author version was used.
-- Funding and conflicts: closed as far as sources allow 2026-10-03. IARC and WCRF organisation-level funding found; IARC conflict policy and Volume 114 declarations read. Not stated anywhere found: Volume 114 meeting-specific funding, and the WCRF 2025 report authors' own interests. EFSA declarations of interest still unread.
+- Funding and conflicts: closed as far as sources allow 2026-10-03. WCRF 2025 companion paper states funding and no author conflicts; EFSA process and 2014-2017 panel roster documented. Not available: Volume 114 meeting-specific funding; individual EFSA panel declarations (request-only, optional email to interestmanagement at efsa.europa.eu).
 - Retraction check for Arnold 2012 and the OEHHA report.
 - Add source URLs to the seed oils record.
 - Full-text reads of remaining primary papers (2025 meta-analysis, UK Biobank, EPIC, NutriNet-Santé).

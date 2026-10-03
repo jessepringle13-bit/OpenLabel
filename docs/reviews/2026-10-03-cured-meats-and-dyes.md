@@ -71,3 +71,8 @@ Open: meeting funders; journal PDF of the Lancet Oncology paper. Numeric tables 
 - IARC Q&A and Volume 114 news page: no funding or conflict statement.
 - Not stated anywhere found: Volume 114 meeting-specific funding; WCRF report authors' interests. EFSA declarations of interest not read.
 - Verdicts unchanged (cured meats orange, dyes yellow).
+
+## Round 8: WCRF and EFSA gaps (2026-10-03)
+- WCRF: the 2025 report PDF states no funding or interests, but the companion peer-reviewed paper states funding by the WCRF network of charities, no funder role in the work, and no author conflicts.
+- EFSA: process documented (every expert's declaration screened; food-industry employees restricted); 2014-2017 panel roster published; individual declarations are request-only and were not requested.
+- Still not stated anywhere: Volume 114 meeting-specific funding.
