@@ -1,0 +1,31 @@
+# Evidence review packet: cured meats and food dyes (round 1, 2026-10-03)
+Owner: Jesse Pringle. Prepared by OpenLabel research. Records: cured-meats-colorectal, synthetic-dyes-child-behavior (evidence-register.js). Dossiers in docs/dossiers.
+
+## What was checked this round
+| Check | Cured meats | Food dyes |
+|---|---|---|
+| Standing (retractions, corrections) | Crossref: none recorded for Chan 2011 and Bouvard 2015 | Crossref: none for Nigg 2012; one Lancet correction for McCann 2007 (mix B composition sentence, results not stated as changed); Arnold 2012 not checked |
+| Primary or fuller sources read | EFSA 2017 opinion abstract; Bouvard 2015 record (no abstract on page) | OEHHA executive summary |
+| Funding and ties | Chan 2011 and Bouvard 2015 stated; IARC Q&A, WCRF, EFSA pages state none | McCann, Nigg, OEHHA stated; Arnold none on page |
+| Current status | USDA uncured rule: 2020 plan, unfinished per a 2026 opinion piece | EU six-colour warning still described as in force (July 2026 trade press); FDA tracker current 2026-09-15 |
+
+## What changed in the records
+- Cured meats: added the EFSA opinion finding that nitrosamines already in meat products had a margin of exposure below 10,000 at high exposure, and that EFSA could not separate them from nitrosamines made from added nitrite. Added its statement of some evidence linking nitrite plus nitrate from processed meat with colorectal cancer. This makes the record more cautious about the additive and keeps the category-level finding.
+- Food dyes: added the seven dyes OEHHA assessed, its caution about ADI comparisons, the McCann correction, and updated the EU warning wording.
+
+## Still open (cannot be closed from web pages alone)
+1. Full texts of IARC Monograph 114, EFSA 2017 opinion and OEHHA report have not been read.
+2. Funding and conflict statements for IARC, WCRF and EFSA are not stated on the pages read.
+3. No new trials after 2021 were searched for dyes. No post-2015 cohort updates were searched for cured meats.
+4. Retraction check for Arnold 2012 and the OEHHA report was not run.
+
+## Decisions for you (my recommendation first)
+1. Cured meats color. Orange for people who watch the topic (current). Alternative: yellow, because the cause is not settled. Recommendation: keep orange, since the category finding is converging and the record says what it does not show.
+2. Dyes color. Yellow for people who watch the topic (current). Recommendation: keep.
+3. Celery powder handling. Current: flagged only when a meat word is in the list, with a note that labels may say uncured. Recommendation: keep.
+4. Red 3 note. Current: shows FDA revocation date and deadline when Red No. 3 is in the list. Recommendation: keep.
+5. Provisional label. Records stay provisional until you sign off. To sign off, reply "approve cured meats" and or "approve dyes" (or list wording changes). On approval I set owner_signoff and the review state, change the displayed text from draft to reviewed, and keep the 12 and 6 month review dates.
+6. Wording you want changed anywhere in the sheets, or any claim you want removed.
+
+## How to read the sheets before you decide
+Turn on Cured meats and Food dyes in Profile, scan something with sodium nitrite or Red 40, and open See the evidence on each row.

@@ -45,3 +45,10 @@ Web searches 2026-10-03 on IARC Volume 114, EFSA nitrite and nitrate re-evaluati
 
 ## 6. Change log
 - 2026-10-03 v0.1: first draft.
+
+## 7. Review round 1 (2026-10-03)
+Added: EFSA 2017 scientific opinion abstract [V] (S8) and the Bouvard 2015 Lancet Oncology record (S9) [V: PubMed lists WHO and US National Cancer Institute grants; abstract not on the page].
+- Standing (C1): Crossref lists no retraction, correction or expression of concern for Chan 2011 or Bouvard 2015. Crossref correction coverage is incomplete, so this is "none recorded", not "none exist".
+- New finding from S8: EFSA's full opinion is less reassuring than its 2017 press summary on one point. Nitrosamines formed in the body from nitrite at the safe limit had a margin of exposure above 10,000, but nitrosamines already present in meat products had a margin below 10,000 at high exposure in all age groups, and EFSA could not separate nitrosamines from added nitrite from those in the food matrix. It also found some evidence linking nitrite plus nitrate from processed meat, and evidence linking preformed NDMA, with colorectal cancer. The record text was updated for this.
+- USDA uncured rule: planned in 2020; a September 2026 opinion piece by a US House member says the rulemaking was never finished. No official 2026 status was confirmed.
+- Still not done: full text of IARC Monograph 114 and the Lancet Oncology paper; EFSA full opinion; funding or conflict statements for IARC, WCRF and EFSA.

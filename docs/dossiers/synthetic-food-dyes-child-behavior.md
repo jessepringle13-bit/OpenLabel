@@ -47,3 +47,9 @@ Web searches 2026-10-03 on FDA dye actions, Red No. 3, OEHHA 2021, McCann 2007, 
 
 ## 6. Change log
 - 2026-10-03 v0.1: first draft.
+
+## 7. Review round 1 (2026-10-03)
+- Standing (C1): Crossref lists no retraction or correction for Nigg 2012. The McCann 2007 trial has one Lancet correction notice (Department of Error, November 2007) that rewrites one sentence describing the composition of active mix B (30 mg of four colours plus 45 mg sodium benzoate). The notice does not say results changed. The Arnold 2012 review was not checked (DOI 10.1007/s13311-012-0133-x identified).
+- OEHHA executive summary read [V]: seven certified dyes assessed; 27 clinical trials; conclusion that synthetic food dyes can affect neurobehavior in some children; most trials tested mixtures; Yellow No. 5 was the only single dye tested in several human studies; ADIs came from older studies not designed to detect these outcomes; Red No. 3 estimates exceeded the ADIs. OEHHA also cautions that hazard comparisons against ADIs may not describe neurobehavioral risk. Record text updated.
+- EU warning: July 2026 trade-press article says the six-colour warning still applies; regulation text not read.
+- Still not done: OEHHA full report; EFSA 2008 opinion beyond its news item; funding statement for Arnold 2012; any post-2021 trials.

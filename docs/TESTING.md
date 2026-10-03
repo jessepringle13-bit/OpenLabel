@@ -140,3 +140,6 @@ Built: two draft register records (cured-meats-colorectal orange, synthetic-dyes
 
 ## Profile-driven tags and saved profiles (2026-10-03, owner request)
 Built: product tags now show only findings (any non-grey color), the allergy check when allergies are set, diets when diets are set, and failed checks. Grey "none found", "not set up", "no match", "listed" and base processing tags are hidden from the tag area; every row is still in Breakdown. If no tag remains the panel says nothing from the profile matched and that this is not a safety statement. Saved profiles (Profile > Saved profiles): save, use, update, delete named sets of allergies, watch words, intolerances, diets, topics, caffeine limit and carb target; stored on the device in openlabel-profile-sets-v1; Use reloads the app; the panel shows the profile in use and "(edited)" when current choices differ. Not yet owner-tested.
+
+## Evidence review round 1 (2026-10-03)
+Records updated after fuller source reading and standing checks; see docs/reviews/2026-10-03-cured-meats-and-dyes.md. Still provisional; owner sign-off pending. Tests 46/46.
