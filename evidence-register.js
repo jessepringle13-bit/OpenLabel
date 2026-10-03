@@ -34,13 +34,13 @@ var RECORDS=[
   {title:'Lee and Kurniawan, Are seed oils the culprit in cardiometabolic and chronic diseases? A narrative review',publisher:'Nutrition Reviews',type:'narrative review',date:'2025',url:'https://academic.oup.com/nutritionreviews/article/83/7/e2106/7958450',verified:true,note:'Read. Two authors, no funding or interests declared. Narrative review with no stated risk-of-bias or certainty rating; used here for the 2017 meta-analysis sub-findings it reports.'}
  ],
  source_check:{state:'partial',summary:'Checked 2026-10-03. Funding and author interests read for 5 of 6 sources (including the two government documents: guidelines text has none to read; disclosures of the evidence-review authors read) (Johnson 2012 has industry ties). Not read: Su 2017 funding and interests (full text unreachable); Lankinen 2019 author disclosures not found. Crossref shows no correction or retraction for Johnson 2012 or Su 2017. Searched 2026-10-03 for newer human studies after 2019; only reviews and one genotype trial found. Not read: the MAHA strategy report (Sept 2025), the Simopoulos 2008 review cited by the MAHA report, most appendices of the government evidence review, and full texts of the 2024 vegetable oil umbrella review and the 2026 linoleic acid review.'},
- reviewed_by:'Draft prepared by OpenLabel research; owner review pending (Jesse Pringle)',
- owner_signoff:null,
- review_state:'provisional',
+ reviewed_by:'Reviewed by Jesse Pringle (owner); research by OpenLabel',
+ owner_signoff:'2026-10-03 Jesse Pringle',
+ review_state:'reviewed',
  reviewed_on:'2026-10-03',
  next_review:'2027-03-30',
  dossier:'docs/dossiers/seed-oils-inflammation.md',
- changelog:[{date:'2026-10-03',change:'Split from the combined seed oils record: this record now covers inflammation only, status unsupported, shown as a gray row with words. Heart outcomes moved to seed-oils-heart-outcomes.',reason:'Owner approved the split.'},{date:'2026-10-03',change:'Moved from a hand-set row into the register.',reason:'Phase 3: every color comes from a record.'},{date:'2026-10-03',change:'Evidence review round 1: 10 sources with links, 2017 meta-analysis of 30 trials added, funding and interests read, source check rerun.',reason:'Owner started the seed oils review.'},{date:'2026-10-03',change:'Added government sources: Dietary Guidelines 2025-2030 and its Scientific Foundation review, with author interests; MAHA report passage noted on the against side.',reason:'Owner asked what sources the public claims rest on.'}]
+ changelog:[{date:'2026-10-03',change:'Owner signed off the record as written.',reason:'Owner approval.'},{date:'2026-10-03',change:'Split from the combined seed oils record: this record now covers inflammation only, status unsupported, shown as a gray row with words. Heart outcomes moved to seed-oils-heart-outcomes.',reason:'Owner approved the split.'},{date:'2026-10-03',change:'Moved from a hand-set row into the register.',reason:'Phase 3: every color comes from a record.'},{date:'2026-10-03',change:'Evidence review round 1: 10 sources with links, 2017 meta-analysis of 30 trials added, funding and interests read, source check rerun.',reason:'Owner started the seed oils review.'},{date:'2026-10-03',change:'Added government sources: Dietary Guidelines 2025-2030 and its Scientific Foundation review, with author interests; MAHA report passage noted on the against side.',reason:'Owner asked what sources the public claims rest on.'}]
 },
 {
  id:'seed-oils-heart-outcomes',
@@ -70,13 +70,13 @@ var RECORDS=[
   {title:'The Scientific Foundation for the Dietary Guidelines for Americans, 2025-2030 (supplemental evidence review) and Appendices',publisher:'US Department of Health and Human Services and US Department of Agriculture',type:'government evidence review',date:'2026-01',url:'https://cdn.realfood.gov/Scientific%20Report_508.pdf',verified:true,note:'Read in part (fats chapter, appendix 2, disclosures). Nine external authors; eight disclosed ties to beef, dairy, grain, pork or food companies, and one (Zamora) is a co-author of the Ramsden 2016 paper the report relies on and disclosed none. Says peer review was coordinated by NIH with two reviewers per review. Relies heavily on Ramsden 2016 and on excluding the Oslo trial; rates certainty of no mortality effect as moderate, where Cochrane rated it low. Frames linoleic acid risk as a concern about concentration and heated oils, calls for trials, and says the net effect at current intake is uncertain.'}
  ],
  source_check:{state:'partial',summary:'Checked 2026-10-03. Funding and author interests read for 8 of 8 sources (including the two government documents: guidelines text has none to read; disclosures of the evidence-review authors read) (Marklund 2019 has industry ties; AHA 2017 has member ties to food and drug bodies). Crossref shows no correction or retraction for Marklund 2019, Ramsden 2013 or 2016, or Hamley 2017; the AHA 2017 advisory has a disclosure-only correction; Cochrane has a newer version with the same main results. Not read: the MAHA strategy report (Sept 2025), the Simopoulos 2008 review cited by the MAHA report, most appendices of the government evidence review, the WHO omega-6 observational review (seen only second-hand), the Ramsden 2016 critiques, and the 2024 vegetable oil umbrella review.'},
- reviewed_by:'Draft prepared by OpenLabel research; owner review pending (Jesse Pringle)',
- owner_signoff:null,
- review_state:'provisional',
+ reviewed_by:'Reviewed by Jesse Pringle (owner); research by OpenLabel',
+ owner_signoff:'2026-10-03 Jesse Pringle',
+ review_state:'reviewed',
  reviewed_on:'2026-10-03',
  next_review:'2027-03-30',
  dossier:'docs/dossiers/seed-oils-inflammation.md',
- changelog:[{date:'2026-10-03',change:'Created by splitting the combined seed oils record: heart and death outcomes only, contested, yellow.',reason:'Owner approved the split.'}]
+ changelog:[{date:'2026-10-03',change:'Owner signed off the record as written.',reason:'Owner approval.'},{date:'2026-10-03',change:'Created by splitting the combined seed oils record: heart and death outcomes only, contested, yellow.',reason:'Owner approved the split.'}]
 },
 {
  id:'cured-meats-colorectal',
