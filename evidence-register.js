@@ -294,8 +294,9 @@ var RECORDS=[
   {
    "date": "2026-10-03",
    "change": "Record created from the sweeteners evidence review (round 1).",
-   "reason": "Owner asked for the artificial sweeteners review."
-  }
+   "reason": "Owner asked for the artificial sweeteners review."},
+  {"date": "2026-10-03", "change": "Owner signed off as written.", "reason": "Owner decision."}
+ 
  ]
 },
 {
@@ -411,8 +412,9 @@ var RECORDS=[
   {
    "date": "2026-10-03",
    "change": "Record created from the sweeteners evidence review (round 1).",
-   "reason": "Owner asked for the artificial sweeteners review."
-  }
+   "reason": "Owner asked for the artificial sweeteners review."},
+  {"date": "2026-10-03", "change": "Owner signed off as written.", "reason": "Owner decision."}
+ 
  ]
 },
 {
@@ -501,8 +503,9 @@ var RECORDS=[
   {
    "date": "2026-10-03",
    "change": "Record created from the added sugar evidence review (round 1).",
-   "reason": "Owner asked for a second topic to be reviewed."
-  }
+   "reason": "Owner asked for a second topic to be reviewed."},
+  {"date": "2026-10-03", "change": "Owner signed off as written.", "reason": "Owner decision."}
+ 
  ]
 },
 {
@@ -627,8 +630,9 @@ var RECORDS=[
   {
    "date": "2026-10-03",
    "change": "Record created from the added sugar evidence review (round 1).",
-   "reason": "Owner asked for a second topic to be reviewed."
-  }
+   "reason": "Owner asked for a second topic to be reviewed."},
+  {"date": "2026-10-03", "change": "Owner signed off as written.", "reason": "Owner decision."}
+ 
  ]
 }
 ];
