@@ -1,15 +1,23 @@
 var R=require('../evidence-register.js');var n=0,f=0;
 function t(name,ok){n++;if(!ok){f++;console.log('FAIL',name)}}
 function clone(o){return JSON.parse(JSON.stringify(o))}
-var base=clone(R.get('seed-oils-inflammation'));
+var base=clone(R.get('seed-oils-heart-outcomes'));
+var infl=clone(R.get('seed-oils-inflammation'));
 var NOW=new Date('2026-10-03');
-t('seed oils record valid',R.validate(base).length===0);
-t('seed oils yellow when watched',R.resolve(base,{topics:['seedoils'],now:NOW}).color==='yellow');
-t('seed oils grey when not watched',R.resolve(base,{topics:[],now:NOW}).color==='grey');
+t('seed oils heart record valid',R.validate(base).length===0);
+t('heart outcomes yellow when watched',R.resolve(base,{topics:['seedoils'],now:NOW}).color==='yellow');
+t('heart outcomes grey when not watched',R.resolve(base,{topics:[],now:NOW}).color==='grey');
 t('unwatched chip says Listed',R.resolve(base,{topics:[],now:NOW}).chip==='Listed');
 t('no ctx is grey',R.resolve(base,{now:NOW}).color==='grey');
 t('overdue goes grey',R.resolve(base,{topics:['seedoils'],now:new Date('2027-04-02')}).note==='overdue');
-var r=clone(base);r.sources=[r.sources[0]];t('yellow with one source invalid',R.validate(r).length>0);
+var r;
+t('inflammation record valid',R.validate(infl).length===0);
+t('inflammation unsupported and grey when watched',R.resolve(infl,{topics:['seedoils'],now:NOW}).color==='grey'&&infl.status==='unsupported');
+t('inflammation chip says not shown in trials',/Not shown in trials/.test(R.resolve(infl,{topics:['seedoils'],now:NOW}).chip));
+t('inflammation chip is Listed when not watched',R.resolve(infl,{topics:[],now:NOW}).chip==='Listed');
+r=clone(infl);r.color='yellow';t('unsupported with a color invalid',R.validate(r).some(function(x){return /unsupported has no color/.test(x)}));
+r=clone(infl);r.sources=[r.sources[0]];t('unsupported with one source invalid',R.validate(r).some(function(x){return /unsupported needs/.test(x)}));
+r=clone(base);r.sources=[r.sources[0]];t('yellow with one source invalid',R.validate(r).length>0);
 r=clone(base);r.status='converging';t('yellow with converging invalid',R.validate(r).some(function(x){return /yellow requires/.test(x)}));
 r=clone(base);r.color='orange';t('orange with contested invalid',R.validate(r).some(function(x){return /orange requires status/.test(x)}));
 r=clone(base);r.color='orange';r.status='converging';t('orange with no amount invalid',R.validate(r).some(function(x){return /amount or context/.test(x)}));
