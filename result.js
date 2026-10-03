@@ -62,7 +62,11 @@ var key=API?API.textKey(ing):'',found=[],veg=false;
 if(ing&&API){found=API.seedWords.filter(function(w){return key.indexOf(API.textKey(w))>=0});veg=!found.length&&(key.indexOf(' vegetable oil ')>=0||key.indexOf(' vegetable oils ')>=0)}
 var sb=el('div'),sc='grey',sch='Not enough data';
 if(!ing){sb.append(para('There is no ingredient list for this product, so we cannot tell.'))}
-else if(found.length){sc='yellow';sch='Contested evidence';sb.append(para('Listed: '+found.join(', ')+'.'));sb.append(para('Claims about seed oils are common online. The research is mixed and some of it has industry funding. We show both sides and who paid.'));sb.append(linkBtn('See the evidence',function(){API.openSeedSheet(found,false)}))}
+else if(found.length){var REG=window.OLRegister,rec=REG&&REG.get('seed-oils-inflammation'),tp=[];try{tp=(JSON.parse(localStorage.getItem('openlabel-profile2-v1')||'{}').topics)||[]}catch(e){}
+var rs=rec?REG.resolve(rec,{topics:tp}):{color:'grey',chip:'Evidence register unavailable',reason:'The evidence register did not load, so no color is shown.',record:null};
+sc=rs.color;sch=rs.chip;sb.append(para('Listed: '+found.join(', ')+'.'));sb.append(para(rs.reason));
+if(rs.record){var rr=rs.record;sb.append(para('Applies to: '+rr.applies_to));sb.append(para('Kind of evidence: '+rr.scope_type+'. Amount: '+rr.amount));sb.append(para('Source check: '+rr.source_check.summary));sb.append(para('Reviewed by '+rr.reviewed_by+', '+rr.reviewed_on+(rr.review_state==='provisional'?' (provisional)':'')+'. Next review due '+rr.next_review+'.'))}
+sb.append(linkBtn('See the evidence',function(){API.openSeedSheet(found,false)}))}
 else if(veg){sch='Type not stated';sb.append(para('The label says vegetable oil without naming the type, so it may or may not be a seed oil.'));sb.append(linkBtn('See the evidence',function(){API.openSeedSheet([],true)}))}
 else{sc='grey';sch='None named in list';sb.append(para('None of the oils we check for are named in the ingredient list. This describes the list only. It can be incomplete, so check the package.'))}
 rows.push(row('seed','Seed oils',sc,sch,sb));

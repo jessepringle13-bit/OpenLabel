@@ -131,3 +131,6 @@ Steps 1-5, 8-10 passed. Failures and suggestions, with status:
 - Step 5: unverified "Form and origin" line removed, "Still unknown" now small print, Sources note smaller. Built; needs iPhone recheck.
 - Step 6: Drizzilicious 857900005174 (21 g carbs per 28 g serving, 75 g per 100 g) did not trip Keto. Rule now also says no when carbs are 25 g or more per 100 g. Verified live: Diets row shows "1 not a fit". Unit tests 40/40.
 - Step 7: Processing level chip overlapped its title. Fixed (title and chip share the row); verified in emulated phone view.
+
+## Evidence register slice 1-2 (2026-10-03)
+Built: evidence-register.js (records, validator, resolver) and tests/evidence-register.test.js (23 cases). Seed oils row now reads from the seed-oils-inflammation record. Behavior change: seed oils shows yellow only for people with Seed oils on their watch list (owner decision 2026-10-03); everyone else sees grey "Listed". Record is provisional: source checks incomplete (2 of 11 checked), source links not yet added, owner sign-off pending. Owner device test needed.
