@@ -124,7 +124,13 @@ var TAGN={allergen:'Allergens',recall:'Recalls',test:'Testing',seed:'Seed oils',
 function openRow(type){var d=rowEls[type];if(!d)return;d.open=true;function go(){d.scrollIntoView({block:'center',behavior:'smooth'})}if(mode!=='full'){setMode('full');setTimeout(go,330)}else go()}
 var SHORT=[[/^No match to your list$/,'no match'],[/^Matches your allergy$/,'matches you'],[/^Word on your list$/,'watch word'],[/^Trace warning$/,'trace warning'],[/^Not enough data$/,'no data'],[/^On your watch list$/,'watch list'],[/^([0-9]+) listed.*$/,'$1 listed'],[/^Above tester's limit$/,'above limit'],[/^Tester advises avoiding$/,'advised to avoid'],[/^Lead not detected in lots tested$/,'lead not detected'],[/^No test found$/,'none found'],[/^Contested evidence$/,'contested'],[/^Category-level only$/,'category only'],[/^Within your limit$/,'within limit'],[/^Above your limit$/,'above limit'],[/^Needs a fresh scan$/,'rescan']];
 function shortTag(c){for(var i=0;i<SHORT.length;i++){if(SHORT[i][0].test(c))return c.replace(SHORT[i][0],SHORT[i][1])}return c.charAt(0).toLowerCase()+c.slice(1)}
-function tagsSection(rows){var w=el('div','tags');rows.filter(function(r){return r.color}).sort(function(a,b){return RANK[b.color]-RANK[a.color]}).forEach(function(r){var t=el('button','tag c-'+r.color);t.append(el('span','dot c-'+r.color),document.createTextNode((TAGN[r.type]||r.title)+': '+shortTag(r.chip)));t.onclick=function(){openRow(r.type)};w.append(t)});return w}
+/* Tags show only what matters for this user: findings (any color but grey), the allergy check when allergies are set, diets when diets are set, and checks that failed. Everything else stays in the breakdown. */
+function tagKeep(r){if(!r.color)return false;if(r.color!=='grey')return true;var c=String(r.chip||'');
+if(r.type==='allergen')return !/not set up/i.test(c);
+if(r.type==='diet')return true;
+if(r.type==='recall')return /couldn.?t|unavailable|failed|error|unknown|not listed|check/i.test(c)&&!/no match/i.test(c);
+return false}
+function tagsSection(rows){var w=el('div','tags'),kept=rows.filter(tagKeep);if(!kept.length){w.append(el('p','tags-none','Nothing from your profile matched. This is not a safety statement. Open Breakdown below to see everything we checked and what we could not tell.'));return w}kept.sort(function(a,b){return RANK[b.color]-RANK[a.color]}).forEach(function(r){var t=el('button','tag c-'+r.color);t.append(el('span','dot c-'+r.color),document.createTextNode((TAGN[r.type]||r.title)+': '+shortTag(r.chip)));t.onclick=function(){openRow(r.type)};w.append(t)});return w}
 function render(){var m=scrape();if(!m.name)return;var code=curCode();nodes={};rowEls={};
 var ing=m.facts['Ingredients']||'';var rows=buildRows(m,ing);
 (window.OLPanelPlugins||[]).forEach(function(fn){try{var r=fn(m,{code:code,rows:rows,ing:ing});if(r){var at=r.at==null?rows.length:r.at;delete r.at;rows.splice(at,0,r)}}catch(e){}});
@@ -138,7 +144,7 @@ handle=el('button','olp-handle');handle.onclick=function(){setMode(mode==='full'
 head.append(handle,top);
 bodyEl.replaceChildren();
 bodyEl.append(el('div','olp-h','Macros'));nodes.mac=macroNode(code?undefined:null);bodyEl.append(nodes.mac);
-bodyEl.append(el('div','olp-h','Tags'));bodyEl.append(tagsSection(rows));
+var ap=window.OLProfile&&window.OLProfile.active&&window.OLProfile.active();bodyEl.append(el('div','olp-h','Tags'+(ap?' · profile: '+ap.name+(ap.changed?' (edited)':''):'')));bodyEl.append(tagsSection(rows));
 bodyEl.append(el('div','olp-h','Ingredients'));bodyEl.append(ingSection(ing));
 if(shown.length){bodyEl.append(el('div','olp-h','For you'));var parts=[];if(cnt.red)parts.push(cnt.red+' red');if(cnt.orange)parts.push(cnt.orange+' orange');if(cnt.yellow)parts.push(cnt.yellow+' yellow');bodyEl.append(el('p','olp-cnt',nFind+' finding'+(nFind===1?'':'s')+' ('+parts.join(', ')+'). Red items are always shown first, then up to three more. Colors never mean good or bad overall.'));shown.forEach(function(r){bodyEl.append(mkRow(r))})}
 bodyEl.append(el('div','olp-h','Breakdown'));var fw=el('div','olp-flt'),brs=[];[['all','See all'],['find','Findings only'],['none','No findings']].forEach(function(f){var b=el('button','olp-fb'+(f[0]==='all'?' on':''),f[1]);b.type='button';b.setAttribute('aria-pressed',f[0]==='all'?'true':'false');b.onclick=function(){brs.forEach(function(x){var on=x===b;x.classList.toggle('on',on);x.setAttribute('aria-pressed',on?'true':'false')});brs2.forEach(function(p){var isF=p.r.color==='red'||p.r.color==='orange'||p.r.color==='yellow';p.d.hidden=!(f[0]==='all'||(f[0]==='find'&&isF)||(f[0]==='none'&&!isF))})};brs.push(b);fw.append(b)});if(rest.length>1)bodyEl.append(fw);var brs2=[];rest.forEach(function(r){var d=mkRow(r);brs2.push({r:r,d:d});bodyEl.append(d)});

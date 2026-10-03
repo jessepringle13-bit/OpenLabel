@@ -12,6 +12,22 @@ function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null
 var sty=document.createElement('style');
 sty.textContent='#profile.p2on>.field,#profile.p2on>#savePrefs{display:none}.p2 .olr-b>p{margin:0 0 12px;color:var(--muted);font-size:13px}.p2 .p2n{font-size:12px;color:var(--muted);margin:10px 0 0}.p2 .search{margin-top:6px}.p2 .olr .chip2{font-weight:700}';
 document.head.appendChild(sty);
+
+var SK='openlabel-profile-sets-v1';
+function sload(){try{var v=JSON.parse(localStorage.getItem(SK));if(v&&typeof v==='object'&&v.sets)return v}catch(e){}return{active:null,sets:{}}}
+function sput(v){try{localStorage.setItem(SK,JSON.stringify(v))}catch(e){}}
+function snapshot(){var o={};try{o=JSON.parse(localStorage.getItem(OK)||'{}')}catch(e){}var d=get();return{p2:{intol:d.intol.slice().sort(),diets:d.diets.slice().sort(),topics:d.topics.slice().sort(),carbs:d.carbs||''},allergies:(o.allergies||[]).slice().sort(),custom:(o.custom||[]).slice(),limit:o.limit==null?150:o.limit,sweetener:o.sweetener!==false}}
+function applySnap(sn){var d=get();d.intol=(sn.p2.intol||[]).slice();d.diets=(sn.p2.diets||[]).slice();d.topics=(sn.p2.topics||[]).slice();d.carbs=sn.p2.carbs||'';put(d);var o={};try{o=JSON.parse(localStorage.getItem(OK)||'{}')}catch(e){}o.allergies=(sn.allergies||[]).slice();o.custom=(sn.custom||[]).slice();o.limit=sn.limit;o.sweetener=sn.sweetener;try{localStorage.setItem(OK,JSON.stringify(o))}catch(e){}}
+function activeInfo(){var s=sload();if(!s.active||!s.sets[s.active])return null;var same=JSON.stringify(s.sets[s.active])===JSON.stringify(snapshot());return{name:s.active,changed:!same}}
+function setsGroup(){var host=el('div'),listEl=el('div');
+var nm=el('input','search');nm.type='text';nm.maxLength=30;nm.placeholder='Name, e.g. Family or Training';nm.setAttribute('aria-label','Name for this profile');
+var sv=el('button','link','Save my current choices as this profile');sv.type='button';
+function render(){listEl.replaceChildren();var s=sload(),names=Object.keys(s.sets);if(!names.length){listEl.append(el('p','p2n','No saved profiles yet.'))}
+names.forEach(function(n){var row=el('div');row.style.cssText='display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:8px 0;border-top:1px solid var(--line)';var t=el('b',null,n+(s.active===n?' (in use)':''));t.style.flex='1 1 100%';
+function btn(txt,fn){var b=el('button','chip',txt);b.type='button';b.onclick=fn;return b}
+row.append(t,btn('Use',function(){var sn=s.sets[n];applySnap(sn);var cur=sload();cur.active=n;sput(cur);location.reload()}),btn('Update with my current choices',function(){var cur=sload();cur.sets[n]=snapshot();cur.active=n;sput(cur);render();updAll();if(window.OLPanel)window.OLPanel.refresh()}),btn('Delete',function(){var cur=sload();delete cur.sets[n];if(cur.active===n)cur.active=null;sput(cur);render();updAll()}));listEl.append(row)})}
+sv.onclick=function(){var n=nm.value.trim();if(!n)return;var cur=sload();cur.sets[n]=snapshot();cur.active=n;sput(cur);nm.value='';render();updAll();if(window.OLPanel)window.OLPanel.refresh()};
+host.append(nm,sv,listEl,el('p','p2n','A profile saves your allergies, watch words, intolerances, diets, topics, caffeine limit and carb target. Using one replaces your current choices and reloads the app. Stored on this device only. Scans show only what matches the profile in use.'));render();return host}
 var groups=[];
 function updAll(){groups.forEach(function(g){g.upd()})}
 function oldChips(){return [].slice.call(document.querySelectorAll('#allergyChips button,#allergyMore button'))}
@@ -24,6 +40,7 @@ function allergySet(){var host=el('div','chips wrap');function sync(){[].forEach
 oldChips().forEach(function(ob){var b=el('button','chip',ob.textContent);b.type='button';b.onclick=function(){var o=oldFor(b.textContent);if(o)o.click();sync();updAll();if(window.OLPanel)window.OLPanel.refresh()};host.append(b)});sync();return host}
 function build(){var sec=document.getElementById('profile');if(!sec||sec.querySelector('.p2'))return;if(!oldChips().length){setTimeout(build,200);return}
 var d=get(),root=el('div','p2');sec.classList.add('p2on');
+root.append(group('Saved profiles','Save sets of choices for different people or goals and switch between them.',setsGroup(),function(){return Object.keys(sload().sets).length}));
 root.append(group('Allergies','Tap the ones that apply. OpenLabel compares them with each product’s declared allergens, its may-contain traces and its ingredient text. A match is a warning. No match never means safe, so always read the package.',allergySet()));
 var words=el('input','search');words.type='text';words.placeholder='e.g. corn, coconut';words.setAttribute('aria-label','Other words to watch for');var cw=document.getElementById('customWords');words.value=cw?cw.value:'';
 words.oninput=function(){if(cw){cw.value=words.value;cw.dispatchEvent(new Event('input'))}updAll()};
@@ -38,5 +55,5 @@ var cf=el('div');cf.append(cin,el('p','p2n','Whole number from 0 to 1000. A prod
 var tf=el('div');tf.append(chipSet(TOPICS,'topics',d),el('p','p2n','Topics you pick show their evidence color when they appear in a product (orange or yellow, with the reason). Topics you don’t pick stay grey, so the information is still there. Caffeine is always shown when it is present, because many labels don’t say.'));root.append(group('Topics to watch','What matters to you.',tf));
 var first=sec.firstElementChild;first.after(root)}
 build();
-window.OLProfile={get:get,defs:{intol:INTOL,diets:DIETS,topics:TOPICS}};
+window.OLProfile={get:get,active:activeInfo,defs:{intol:INTOL,diets:DIETS,topics:TOPICS}};
 })();
