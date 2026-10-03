@@ -101,7 +101,7 @@ b.append(para('We only report what the ingredient list says is present. Whether 
 var a=el('a',null,'ISAPP: consensus definitions of probiotics, prebiotics and fermented foods');a.href='https://isappscience.org/a-roundup-of-the-isapp-consensus-definitions-probiotics-prebiotics-synbiotics-postbiotics-and-fermented-foods/';a.target='_blank';a.rel='noopener noreferrer';a.style.cssText='color:var(--forest);font-weight:700;overflow-wrap:anywhere';var pp=el('p');pp.append(a);b.append(pp);
 return{type:'gut',title:'Gut: live cultures, prebiotics, fermented',color:'grey',chip:'Contains: '+parts.join(', '),body:b,pin:false,open:false}}
 function topicMutate(m,ctx){var T=prof().topics;ctx.rows.forEach(function(r){
-if(r.type==='seed'&&r.color==='yellow'){if(T.indexOf('seedoils')>=0){r.color='orange';r.chip='On your watch list · contested evidence'}else{r.color='grey';r.chip='Listed · contested evidence'}}
+/* seed oils color now comes from the evidence register (evidence-register.js) */
 if(r.type==='sweet'){var on=T.indexOf('sweeteners')>=0;r.color=on?'orange':'grey';r.chip=on?'On your watch list':'Listed'}
 if(r.type==='add'){var on2=T.indexOf('additives')>=0;r.color=on2?'orange':'grey';var mm=/^([0-9]+)/.exec(r.chip);r.chip=(mm?mm[1]+' listed · ':'')+(on2?'on your watch list':'not yet reviewed')}
 if(r.type==='proc'){var u=T.indexOf('ultra')>=0&&r.chip==='Ultra-processed';if(u){r.color='orange';r.chip='On your watch list · ultra-processed'}else if(r.color==='orange'||r.color==='yellow'||r.color==='green')r.color='grey'}});return null}
