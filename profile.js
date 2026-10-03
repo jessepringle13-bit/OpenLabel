@@ -21,12 +21,12 @@ function applySnap(sn){var d=get();d.intol=(sn.p2.intol||[]).slice();d.diets=(sn
 function activeInfo(){var s=sload();if(!s.active||!s.sets[s.active])return null;var same=JSON.stringify(s.sets[s.active])===JSON.stringify(snapshot());return{name:s.active,changed:!same}}
 function setsGroup(){var host=el('div'),listEl=el('div');
 var nm=el('input','search');nm.type='text';nm.maxLength=30;nm.placeholder='Name, e.g. Family or Training';nm.setAttribute('aria-label','Name for this profile');
-var sv=el('button','link','Save my current choices as this profile');sv.type='button';
+var sv=el('button','button','Save my current choices as this profile');sv.style.marginTop='10px';sv.type='button';
 function render(){listEl.replaceChildren();var s=sload(),names=Object.keys(s.sets);if(!names.length){listEl.append(el('p','p2n','No saved profiles yet.'))}
 names.forEach(function(n){var row=el('div');row.style.cssText='display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:8px 0;border-top:1px solid var(--line)';var t=el('b',null,n+(s.active===n?' (in use)':''));t.style.flex='1 1 100%';
 function btn(txt,fn){var b=el('button','chip',txt);b.type='button';b.onclick=fn;return b}
 row.append(t,btn('Use',function(){var sn=s.sets[n];applySnap(sn);var cur=sload();cur.active=n;sput(cur);location.reload()}),btn('Update with my current choices',function(){var cur=sload();cur.sets[n]=snapshot();cur.active=n;sput(cur);render();updAll();if(window.OLPanel)window.OLPanel.refresh()}),btn('Delete',function(){var cur=sload();delete cur.sets[n];if(cur.active===n)cur.active=null;sput(cur);render();updAll()}));listEl.append(row)})}
-sv.onclick=function(){var n=nm.value.trim();if(!n)return;var cur=sload();cur.sets[n]=snapshot();cur.active=n;sput(cur);nm.value='';render();updAll();if(window.OLPanel)window.OLPanel.refresh()};
+sv.onclick=function(){var n=nm.value.trim();if(!n){nm.focus();nm.placeholder='Type a name first, then press Save';nm.style.borderColor='var(--peach)';return}nm.style.borderColor='';var cur=sload();cur.sets[n]=snapshot();cur.active=n;sput(cur);nm.value='';render();updAll();if(window.OLPanel)window.OLPanel.refresh()};
 host.append(nm,sv,listEl,el('p','p2n','A profile saves your allergies, watch words, intolerances, diets, topics, caffeine limit and carb target. Using one replaces your current choices and reloads the app. Stored on this device only. Scans show only what matches the profile in use.'));render();return host}
 var groups=[];
 function updAll(){groups.forEach(function(g){g.upd()})}
