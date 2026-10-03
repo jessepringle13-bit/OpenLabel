@@ -47,7 +47,7 @@ if(id==='paleo'){var p=[].concat(hits(t,GRAIN),hits(t,LEGUME),milk,hits(t,REFSUG
 var c=x&&x.c!=null?x.c:null,s=x&&x.s!=null?x.s:null,na=x&&x.na!=null?x.na*1000:null;
 var c100=x&&x.c100!=null?x.c100:null,s100=x&&x.s100!=null?x.s100:null,na100=x&&x.na100!=null?x.na100*1000:null;
 if(id==='keto'||id==='lowcarb'){var tg=Number(prof().carbs),pc=function(v){return tg>0?' That is '+Math.round(v/tg*100)+'% of your '+tg+' g daily target.':' Set a daily target in Profile to compare.'};
-if(c!=null){if(c>=35||(s!=null&&s>10))return R('no','High carb: '+n1(c)+' g carbs'+(s!=null?', '+n1(s)+' g sugar':'')+' per serving.'+pc(c));return R('maybe',n1(c)+' g carbs per serving.'+pc(c))}
+if(c!=null){if(c>=35||(s!=null&&s>10))return R('no','High carb: '+n1(c)+' g carbs'+(s!=null?', '+n1(s)+' g sugar':'')+' per serving.'+pc(c));if(c100!=null&&c100>=25)return R('no','High carb: '+n1(c)+' g carbs per serving, and '+n1(c100)+' g per 100 g, so about '+Math.round(c100)+'% of this food by weight is carbohydrate.'+pc(c));return R('maybe',n1(c)+' g carbs per serving.'+pc(c))}
 if(c100!=null){if(c100>=25)return R('no','High carb: '+n1(c100)+' g carbs per 100 g or 100 mL. No per-serving amount is listed.');return R('maybe',n1(c100)+' g carbs per 100 g or 100 mL. No per-serving amount is listed, so check the serving size on the package.')}
 return R('unknown','Open Food Facts lists no carbohydrate value for this product.')}
 if(id==='lowsugar'){if(s!=null){if(s>10)return R('no',n1(s)+' g sugar per serving.');return R('maybe',n1(s)+' g sugar per serving.')}

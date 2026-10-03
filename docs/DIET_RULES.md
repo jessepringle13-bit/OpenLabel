@@ -17,7 +17,7 @@ Purpose: define exactly what each yes / no / maybe / can't tell means before mor
 | Dairy-free | milk word (milk, whey, casein, lactose, butter, cream, cheese, yogurt, ghee, and similar) | label dairy-free or vegan | no dairy word |
 | Gluten-free | gluten grain word (wheat, barley, rye, malt, spelt, semolina and similar) | label gluten-free | no gluten word (cross-contact not judged) |
 | Paleo | grain, legume, dairy, refined sugar or seed oil word | never | none found (definitions vary) |
-| Keto, Low-carb | 35 g or more carbs per serving, or more than 10 g sugar per serving | never | carbs listed and below that |
+| Keto, Low-carb | 35 g or more carbs per serving, more than 10 g sugar per serving, or 25 g or more carbs per 100 g (food is mostly carbohydrate by weight, added 2026-10-03 after owner test of Drizzilicious: 21 g per serving, 75 g per 100 g) | never | carbs listed and below that |
 | Low-sugar | more than 10 g sugar per serving | never | sugar listed and at or below 10 g |
 | Low-sodium | never | never | sodium listed (user compares to own limit) |
 
