@@ -6,11 +6,11 @@
 #olPanel:not(.full) .olp-body{overflow-y:auto!important;touch-action:pan-y}
 #olPanel.full .olp-body{overflow-y:auto!important;touch-action:pan-y}
 
-/* Landscape phones: use the full width instead of a narrow centered column. */
+/* Landscape phones: only the camera backdrop fills the screen; dock, tray and sheets keep their normal size. */
 @media (orientation:landscape) and (max-height:520px){
-body{padding:0!important}
-.app{max-width:none!important;border-radius:0!important;min-height:100dvh!important;box-shadow:none!important}
-.nav,.sheet,#olPanel,#olLab,#olRecalls,.ol-ing-sheet{width:min(100%,760px)!important}
-.sheet{max-height:92dvh!important}
-#olPanel:not(.full){height:86dvh!important}
+#scan .scanner{width:100%!important}
+#scan .finder{left:30%;right:30%;top:24%;height:36%}
 }
+/* Small print for disclaimers. */
+.olr-b p.olp-note,.olp-note{font-size:10px!important;line-height:1.35;opacity:.75}
+.ol-ing-fine{font-size:10px!important}
