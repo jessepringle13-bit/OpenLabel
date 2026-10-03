@@ -117,3 +117,7 @@ Red: a direct match to you, a recall found, or a tested result above the tester'
 6. Use the existing calm palette and type sizes. A new color or size needs a reason.
 7. After every batch: screenshot every page, run the checklist in TESTING.md, and update this file.
 8. New features go in their own small file where possible.
+
+
+## Update 2026-10-03
+Phase 3 evidence register: design drafted in docs/EVIDENCE_REGISTER_DESIGN.md (Planned, nothing built). Waiting on owner decisions in section 9.
