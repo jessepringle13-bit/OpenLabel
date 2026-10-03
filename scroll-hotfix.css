@@ -29,3 +29,7 @@
 #scan .manual input{height:30px;font-size:13px}
 #scan .manual button{min-height:30px;padding:4px 10px;font-size:12px}
 }
+@media (orientation:landscape) and (max-height:520px){
+#scan{height:100dvh;box-sizing:border-box;overflow:hidden}
+#scan .tray{padding-bottom:calc(8px + env(safe-area-inset-bottom))}
+}
