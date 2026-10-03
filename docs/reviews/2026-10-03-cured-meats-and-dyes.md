@@ -59,3 +59,8 @@ Read the Section 2.2 narrative (cohort, case-control, meta-analyses) and the Sec
 2. Nitrate and nitrite from processed meat: NIH-AARP found nitrate RR 1.16 (1.02 to 1.32) and nitrite 1.11 (0.97 to 1.25, not significant).
 3. Curing is not isolated as the cause: a human trial found nitrite-cured meat raised stool nitroso compounds about as much as fresh red meat; lab fermentation work found nitrite curing did not influence a DNA-adduct marker; a rat diet of salt, nitrite and phosphate alone did not reproduce the effect of ham; the rat lesion studies came from one laboratory.
 Open: meeting funders; journal PDF of the Lancet Oncology paper. Numeric tables were checked against the narrative, not re-derived.
+
+## Round 6: IARC open items closed (2026-10-03)
+- Funding: IARC states the Monographs are funded by the US National Cancer Institute, the US National Institute of Environmental Health Sciences and the European Commission employment and social affairs directorate. No industry funder listed. Volume 114 meeting funding is not itemized separately.
+- Tables: spot-checked EPIC, Multiethnic Cohort, NIH-AARP, Danish and CPS-II values against the narrative (match); Table 2.2.2 lists 18 cohort studies, matching the stated 18. One discrepancy explained: the narrative cites an older NIH-AARP analysis (1.20); the table and record use the later one (1.16).
+- Not closable: the journal PDF of the Lancet Oncology paper could not be retrieved. The author version was read; any difference from print was not compared.

@@ -123,7 +123,7 @@ Red: a direct match to you, a recall found, or a tested result above the tester'
 Phase 3 evidence register: design drafted in docs/EVIDENCE_REGISTER_DESIGN.md (Planned, nothing built). Waiting on owner decisions in section 9.
 
 ## Evidence register: open items (updated 2026-10-03)
-- IARC Monograph 114: all relevant sections read 2026-10-03 (evaluation, colorectal chapter narrative, mechanistic chapter, participants). Numeric tables were checked against the narrative, not re-derived. Meeting funders are not itemized. Lancet Oncology summary read as the open author version (HAL), not the journal PDF.
+- IARC Monograph 114: closed 2026-10-03. Programme funders identified (NCI, NIEHS, European Commission); tables spot-checked. Not closable: the journal PDF of the Lancet Oncology paper could not be retrieved, so the author version was used.
 - Funding and interest statements for the WCRF 2025 report and IARC Q&A (none stated on pages read).
 - Retraction check for Arnold 2012 and the OEHHA report.
 - Add source URLs to the seed oils record.
