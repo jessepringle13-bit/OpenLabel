@@ -59,4 +59,28 @@ t('annatto and carmine not matched',R.detect('dyes','annatto, carmine, beet juic
 t('red 30 not matched',R.detect('dyes','Red 30').found.length===0);
 t('red 3 note',R.notesFor(dy,['red no. 3']).some(function(x){return /revoked/.test(x)}));
 t('red 40 gets trial note not red 3 note',(function(){var n=R.notesFor(dy,['red 40']);return n.length===1&&/2007/.test(n[0])})());
+
+/* sweeteners and added sugar records */
+var NOW2=new Date('2026-10-03');
+['aspartame-cancer','sweeteners-weight-disease','added-sugar-dental-caries','sugary-drinks-weight-diabetes'].forEach(function(id){
+ var rr=R.get(id);t(id+' valid',!!rr&&R.validate(rr).length===0);
+ t(id+' provisional with no sign-off',rr.review_state==='provisional'&&rr.owner_signoff===null);
+ var topic=rr.topic;
+ t(id+' grey when not watched',R.resolve(rr,{topics:[],now:NOW2}).color==='grey');
+ t(id+' shows color when watched',R.resolve(rr,{topics:[topic],now:NOW2}).color===rr.color);
+ t(id+' grey and Listed-may-not-apply when it does not apply',R.resolve(rr,{topics:[topic],now:NOW2,applies:false}).chip==='Listed \u00b7 may not apply');
+ t(id+' overdue goes grey',R.resolve(rr,{topics:[topic],now:new Date('2028-01-01')}).note==='overdue');
+});
+t('aspartame yellow unresolved',R.get('aspartame-cancer').color==='yellow'&&R.get('aspartame-cancer').status==='unresolved');
+t('sweeteners yellow contested',R.get('sweeteners-weight-disease').color==='yellow'&&R.get('sweeteners-weight-disease').status==='contested');
+t('sugar records orange converging with amount',['added-sugar-dental-caries','sugary-drinks-weight-diabetes'].every(function(i){var x=R.get(i);return x.color==='orange'&&x.status==='converging'&&x.amount.length>20}));
+var d1=R.detect('sweeteners','water, aspartame, acesulfame potassium, erythritol, stevia leaf extract');
+t('detect sweeteners splits sweeteners and polyols',d1.nss.length===3&&d1.polyols[0]==='erythritol'&&d1.aspartame.length===1);
+t('polyol only list has no non-sugar sweetener',R.detect('sweeteners','maltitol, sorbitol').nss.length===0);
+t('detect added sugar finds sugar words',R.detect('addedsugar','wheat flour, cane sugar, salt','Crackers').found.length===1);
+t('detect added sugar marks a cola as a drink',R.detect('addedsugar','Carbonated water, high fructose corn syrup','Cola').drink===true);
+t('cracker is not a drink',R.detect('addedsugar','wheat flour, sugar','Crackers').drink===false);
+t('Pop-Tarts is not a drink',R.detect('addedsugar','flour, sugar','Pop-Tarts').drink===false);
+t('no sugar words means nothing found',R.detect('addedsugar','water, salt','Broth').found.length===0);
+
 console.log(n+' cases, '+f+' failed');process.exit(f?1:0);

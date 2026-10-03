@@ -78,8 +78,12 @@ var a=el('a',null,'USDA Agricultural Research Service: caffeine in botanicals');
 var r={type:'caf',title:'Caffeine',color:'orange',chip:'Caffeine present',body:b,pin:false,open:false};
 if(ex){for(var k in r)ex[k]=r[k];return null}r.at=ctx.rows.length;return r}
 function sugarPlugin(m,ctx){var P=prof(),ing=ctx.ing||'',h=hits(ing,SUGW);if(!h.length)return null;var x=getX(ctx.code),ad=x&&x.ad!=null?x.ad:null;
-var sel=P.topics.indexOf('addedsugar')>=0,b=el('div');b.append(para(ad!=null?'Added sugars: '+n1(ad)+' g per serving.':'Sugar-type ingredients in the list: '+h.slice(0,6).join(', ')+'.'));b.append(para('Open Food Facts does not always list added sugars, so check the nutrition panel.'));
-return{type:'sugar',title:'Added sugar',color:sel?'orange':'grey',chip:sel?'On your watch list':(ad!=null?n1(ad)+' g added':'Listed'),body:b,pin:false,open:false}}
+var line1=ad!=null?'Added sugars: '+n1(ad)+' g per serving.':'Sugar-type ingredients in the list: '+h.slice(0,6).join(', ')+'.',line2='Open Food Facts does not always list added sugars, so check the nutrition panel.';
+var REG=window.OLRegister,fill=window.OLRegFill;
+if(!REG||!fill){var sel=P.topics.indexOf('addedsugar')>=0,b0=el('div');b0.append(para(line1));b0.append(para(line2));return{type:'sugar',title:'Added sugar',color:'grey',chip:'Listed',body:b0,pin:false,open:false}}
+var det=REG.detect('addedsugar',ing,m.name),b=el('div'),rs=fill(b,'added-sugar-dental-caries',[line1,line2],[],null);
+if(det.drink){var b2=el('div'),rs2=fill(b2,'sugary-drinks-weight-diabetes',['This looks like a sweetened drink: the name or ingredient list suggests a drink and sugar-type ingredients are listed. We guess this from the name, so check the package.'],[],null);ctx.rows.push({type:'sugardrink',title:'Added sugar: sweetened drinks',color:rs2.color,chip:rs2.chip,body:b2,rec:rs2.rec,pin:false,open:false})}
+return{type:'sugar',title:det.drink?'Added sugar: tooth decay':'Added sugar',color:rs.color,chip:rs.chip,body:b,rec:rs.rec,pin:false,open:false}}
 function flavPlugin(m,ctx){var ing=ctx.ing||'',h=hits(ing,['natural flavor','natural flavors','natural flavour','natural flavours','natural flavoring']);if(!h.length)return null;var sel=prof().topics.indexOf('flavors')>=0,b=el('div');
 b.append(para('Natural flavor is a flavoring made from a natural source. The ingredient list does not show the individual components.'));
 if(window.OLGloss){var bt=el('button','link','What is this?');bt.onclick=function(){window.OLGloss.open('natural flavors')};b.append(bt)}
