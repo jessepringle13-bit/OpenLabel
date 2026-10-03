@@ -64,7 +64,7 @@ t('red 40 gets trial note not red 3 note',(function(){var n=R.notesFor(dy,['red 
 var NOW2=new Date('2026-10-03');
 ['aspartame-cancer','sweeteners-weight-disease','added-sugar-dental-caries','sugary-drinks-weight-diabetes'].forEach(function(id){
  var rr=R.get(id);t(id+' valid',!!rr&&R.validate(rr).length===0);
- t(id+' provisional with no sign-off',rr.review_state==='provisional'&&rr.owner_signoff===null);
+ t(id+' signed off by owner',rr.review_state==='reviewed'&&/Jesse Pringle/.test(rr.owner_signoff));
  var topic=rr.topic;
  t(id+' grey when not watched',R.resolve(rr,{topics:[],now:NOW2}).color==='grey');
  t(id+' shows color when watched',R.resolve(rr,{topics:[topic],now:NOW2}).color===rr.color);
