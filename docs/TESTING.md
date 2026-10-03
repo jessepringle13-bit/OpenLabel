@@ -124,3 +124,10 @@ Owner supplied the true Kevin's Thai Style Coconut Chicken ingredients. Typed li
 
 ## USDA ingredient fallback (2026-10-02, owner decision)
 Open Food Facts had no ingredient text for either Kevin's Thai coconut chicken record when checked directly; owner saw an unreadable list after searching in Explore (source not reproduced). When the Open Food Facts list is missing or looks garbled (and the user has not entered their own), the app searches USDA FoodData Central branded foods (api key DEMO_KEY, rate limited; replace with a free key before wider use) by barcode, else brand plus name (brand match required, 80% of name words). The list is shown lowercased with a note naming the source, the USDA record name, its last-modified date and the match type, and saying the recipe may have changed. Verified live: the USDA record is dated 2020-06-19 and lacks the cauliflower rice, broccoli and carrots the owner read off the current package, so the note matters. User-entered lists take priority. Gaps: DEMO_KEY limits (about 30 per hour per IP); name-only matching can pick a variant (this one is titled MILD); not yet shown in the Library change detection.
+
+## Owner device test results (2026-10-03, "Test products" file)
+Steps 1-5, 8-10 passed. Failures and suggestions, with status:
+- Step 1 rotate: landscape did not fill the screen. Fixed in CSS (full width under landscape phone sizes); Built, checked in an emulated viewport only, needs iPhone recheck.
+- Step 5: unverified "Form and origin" line removed, "Still unknown" now small print, Sources note smaller. Built; needs iPhone recheck.
+- Step 6: Drizzilicious 857900005174 (21 g carbs per 28 g serving, 75 g per 100 g) did not trip Keto. Rule now also says no when carbs are 25 g or more per 100 g. Verified live: Diets row shows "1 not a fit". Unit tests 40/40.
+- Step 7: Processing level chip overlapped its title. Fixed (title and chip share the row); verified in emulated phone view.
