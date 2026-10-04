@@ -115,6 +115,13 @@ else if(/^E924[AB]?$/.test(u))w='Potassium bromate';
 else if(/^E21[0-3]$/.test(u))w='Benzoates';
 else if(/^E(249|250|251|252)$/.test(u)&&has('cured'))w='Cured meats';
 else if(/^E(950|951|952|954|955|957|959|961|962|969)$/.test(u)&&has('sweet'))w='Sweeteners';
+else if(/^E320$/.test(u))w='BHA';
+else if(/^E321$/.test(u))w='BHT';
+else if(/^E22[0-8]$/.test(u))w='Sulfites';
+else if(/^E21[67]$/.test(u))w='Propylparaben';
+else if(/^E150[CD]$/.test(u))w='Caramel color';
+else if(/^E62[0-5]$/.test(u))w='Glutamates (MSG)';
+else if(/^E(338|339|340|341|343|450|451|452)$/.test(u))w='Phosphates';
 else if(/^E407A?$/.test(u))w='Carrageenan';
 else if(/^E(322|405|410|412|414|415|418|433|461|464|466|471|472[A-F]|481|491)$/.test(u))w='Emulsifiers and stabilizers';
 if(w){(cov[w]=cov[w]||[]).push(c)}else unrev.push(c)});
@@ -127,6 +134,13 @@ function addRow(type,title,id,found,extra){var bb=el('div'),rr=regFill(bb,id,['L
 if(adt.tio2.length)addRow('addtio2','Titanium dioxide','titanium-dioxide-genotoxicity',adt.tio2);
 if(adt.bromate.length)addRow('addbrom','Potassium bromate','potassium-bromate-cancer',adt.bromate);
 if(adt.benzoate.length)addRow('addbenz','Benzoate preservatives','benzoate-preservatives-intake',adt.benzoate,adt.benzene?['Ascorbic acid or a similar ingredient is also listed. That combination can form trace benzene in some drinks, depending on heat and light. The label does not show whether it did.']:[]);
+if(adt.bha&&adt.bha.length)addRow('addbha','BHA','bha-cancer',adt.bha);
+if(adt.bht&&adt.bht.length)addRow('addbht','BHT','bht-intake',adt.bht);
+if(adt.sulfite&&adt.sulfite.length)addRow('addsulf','Sulfites','sulfites-sensitivity',adt.sulfite);
+if(adt.propylparaben&&adt.propylparaben.length)addRow('addpp','Propylparaben','propylparaben-endocrine',adt.propylparaben);
+if(adt.caramel&&adt.caramel.length)addRow('addcar','Caramel color','caramel-color-4mei',adt.caramel,['The label rarely says which caramel class was used. The 4-methylimidazole question applies to the ammonia-process classes (E150c and E150d).']);
+if(adt.msg&&adt.msg.length)addRow('addmsg','MSG and glutamates','msg-glutamate',adt.msg);
+if(adt.phosphate&&adt.phosphate.length)addRow('addpho','Phosphate additives','phosphate-additives',adt.phosphate);
 var cf=fa['Caffeine'],over=F.filter(function(x){return /^Above your caffeine limit/.test(x.head)})[0];
 if(cf){var cb=el('div');cb.append(para(over?over.body:cf+'. No higher than the daily limit you set.'));rows.push(row('caf','Caffeine',over?'orange':'grey',over?'Above your limit':'Within your limit',cb,{pin:!!over}))}
 return rows}
@@ -146,7 +160,7 @@ var WN=['Reason','Source','Scope','Applies to','Limits','Review status'];
 function whyOf(r){if(r.rec&&r.color&&r.color!=='grey'){var q=r.rec;return[q.color_reason,q.sources.map(function(x){return x.title}).slice(0,3).join('; ')+(q.sources.length>3?' and '+(q.sources.length-3)+' more (see the evidence sheet)':''),'Evidence type: '+q.scope_type+'. Status: '+q.status+'.',q.applies_to,'Does not show: '+q.does_not_show[0],'Reviewer: '+q.reviewed_by+' ('+q.reviewed_on+'). Source check: '+q.source_check.state+'. Next review due '+q.next_review+'.']}if(!r.color||r.color==='grey'||!r.type)return null;var k=r.type;if(k==='intol'||k==='sweet'||k==='add'||k==='emul'||k==='flav'||k==='sugar'||k==='proc')k=r.color==='yellow'?'seed':'topic';if(k==='gut')return null;return WHY[k]||null}
 function whyBlock(r){var w=whyOf(r);if(!w)return null;var d=el('details','olr-why'),s=el('summary',null,'Why this color'),b=el('div');w.forEach(function(x,i){var p=el('p');p.append(el('b',null,WN[i]+': '),document.createTextNode(x));b.append(p)});d.append(s,b);return d}
 function mkRow(r){var d=el('details','olr'+(r.color?' c-'+r.color:'')+(r.pin?' pin':''));if(r.open)d.open=true;var s=el('summary');s.append(el('span','t',r.title));if(r.color){var c=el('span','chip2');c.append(el('span','dot'),document.createTextNode(r.chip));s.append(c)}s.append(el('span','cv'));var b=el('div','olr-b');b.append(r.body);var wb=whyBlock(r);if(wb)b.append(wb);d.append(s,b);rowEls[r.type]=d;return d}
-var TAGN={addtio2:'Titanium dioxide',addbrom:'Potassium bromate',addbenz:'Benzoates',allergen:'Allergens',recall:'Recalls',test:'Testing',seed:'Seed oils',proc:'Processing',sweet:'Sweeteners',add:'Additives',caf:'Caffeine',diet:'Diets',intol:'Intolerances',gut:'Gut',emul:'Emulsifiers',carra:'Carrageenan'};
+var TAGN={addtio2:'Titanium dioxide',addbrom:'Potassium bromate',addbenz:'Benzoates',addbha:'BHA',addbht:'BHT',addsulf:'Sulfites',addpp:'Propylparaben',addcar:'Caramel color',addmsg:'MSG',addpho:'Phosphates',allergen:'Allergens',recall:'Recalls',test:'Testing',seed:'Seed oils',proc:'Processing',sweet:'Sweeteners',add:'Additives',caf:'Caffeine',diet:'Diets',intol:'Intolerances',gut:'Gut',emul:'Emulsifiers',carra:'Carrageenan'};
 function openRow(type){var d=rowEls[type];if(!d)return;d.open=true;function go(){d.scrollIntoView({block:'center',behavior:'smooth'})}if(mode!=='full'){setMode('full');setTimeout(go,330)}else go()}
 var SHORT=[[/^No match to your list$/,'no match'],[/^Matches your allergy$/,'matches you'],[/^Word on your list$/,'watch word'],[/^Trace warning$/,'trace warning'],[/^Not enough data$/,'no data'],[/^On your watch list$/,'watch list'],[/^([0-9]+) listed.*$/,'$1 listed'],[/^Above tester's limit$/,'above limit'],[/^Tester advises avoiding$/,'advised to avoid'],[/^Lead not detected in lots tested$/,'lead not detected'],[/^No test found$/,'none found'],[/^Contested evidence$/,'contested'],[/^Category-level only$/,'category only'],[/^Within your limit$/,'within limit'],[/^Above your limit$/,'above limit'],[/^Needs a fresh scan$/,'rescan']];
 function shortTag(c){for(var i=0;i<SHORT.length;i++){if(SHORT[i][0].test(c))return c.replace(SHORT[i][0],SHORT[i][1])}return c.charAt(0).toLowerCase()+c.slice(1)}
@@ -161,7 +175,7 @@ function tagsSection(rows){var w=el('div','tags'),kept=rows.filter(tagKeep);if(!
 function render(){var m=scrape();if(!m.name)return;var code=curCode();nodes={};rowEls={};
 var ing=m.facts['Ingredients']||'';var rows=buildRows(m,ing);
 (window.OLPanelPlugins||[]).forEach(function(fn){try{var r=fn(m,{code:code,rows:rows,ing:ing});if(r){var at=r.at==null?rows.length:r.at;delete r.at;rows.splice(at,0,r)}}catch(e){}});
-var TOPIC_OF={cured:'curedmeats',dyes:'dyes',sweet:'sweeteners',sweetasp:'sweeteners',sugar:'addedsugar',sugardrink:'addedsugar',seed:'seedoils',seedh:'seedoils',proc:'ultra',flav:'flavors',emul:'emulsifiers',carra:'emulsifiers',add:'additives',addtio2:'additives',addbrom:'additives',addbenz:'additives'},wt=regTopics(),hidT={},hid=0;
+var TOPIC_OF={cured:'curedmeats',dyes:'dyes',sweet:'sweeteners',sweetasp:'sweeteners',sugar:'addedsugar',sugardrink:'addedsugar',seed:'seedoils',seedh:'seedoils',proc:'ultra',flav:'flavors',emul:'emulsifiers',carra:'emulsifiers',add:'additives',addtio2:'additives',addbrom:'additives',addbenz:'additives',addbha:'additives',addbht:'additives',addsulf:'additives',addpp:'additives',addcar:'additives',addmsg:'additives',addpho:'additives'},wt=regTopics(),hidT={},hid=0;
 for(var hi=rows.length-1;hi>=0;hi--){var tp=TOPIC_OF[rows[hi].type];if(tp&&wt.indexOf(tp)<0&&rows[hi].color!=='red'){rows.splice(hi,1);hidT[tp]=1}}
 hid=Object.keys(hidT).length;
 window.__olHidden=hid;
