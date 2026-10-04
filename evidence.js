@@ -12,7 +12,7 @@ function list(items){var u=el('ul');items.forEach(function(x){u.append(el('li',n
 function details(summary,small,body){var d=el('details'),s=el('summary'),span=el('span',null,summary);if(small)span.append(el('small',null,small));s.append(span);d.append(s,body);return d}
 function section(root,h,body){root.append(el('h4',null,h));root.append(typeof body==='string'?el('p',null,body):body)}
 function openTestSheet(e){$('#sheetTitle').textContent=e.kind==='product'?'Independent test results':'Testing on this kind of product';
-$('#sheetContent').textContent=e.title+'. Tested by '+e.tester+', published '+e.published+'. We are showing what the tester reported and how they judged it. We have not yet checked the tester.';
+$('#sheetContent').textContent=e.title+'. Tested by '+e.tester+', published '+e.published+'. We are showing what the tester reported and how they judged it. The tester\u2019s funding and ties are described under Who tested it.';
 var r=el('div','tx');section(r,'What they found',e.result);section(r,'How they judged it',e.threshold+(e.serving&&e.serving!=='Not per serving'?' Serving used: '+e.serving+'.':''));section(r,'What this does not show',list(e.kind==='product'?e.caveats.concat(['We matched this test to your product by brand and name only. Check that it is the same product, flavor and size.']):e.caveats));
 if(e.response)section(r,'Company response',e.response);
 section(r,'Who tested it',e.ties+' '+e.check+'.');

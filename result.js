@@ -133,7 +133,7 @@ if(covK.length)ab.append(para('Have their own row: '+covK.map(function(k){return
 if(unrev.length)ab.append(para('Not yet reviewed by us: '+unrev.join(', ')+'. Not yet reviewed does not mean harmful.'));
 var arr=regFill(ab,'additives-label-review',[],[],null),watchedAdd=regTopics().indexOf('additives')>=0;
 rows.push(row('add','Additives','grey',codes.length+' listed · '+(unrev.length?unrev.length+' not yet reviewed':'all have their own row')+(watchedAdd?' · on your watch list':''),ab,{rec:arr.rec}))}
-function addRow(type,title,id,found,extra){var bb=el('div'),rr=regFill(bb,id,['Listed: '+found.join(', ')+'.'].concat(extra||[]),[],null);rows.push(row(type,title,rr.color,rr.chip,bb,{rec:rr.rec}))}
+function addRow(type,title,id,found,extra){var bb=el('div'),rr=regFill(bb,id,['Listed: '+found.join(', ')+'.'].concat(extra||[]),[],null);var chp=rr.chip;if(chp==='No evidence finding'&&regTopics().indexOf('additives')>=0)chp+=' · on your watch list';rows.push(row(type,title,rr.color,chp,bb,{rec:rr.rec}))}
 if(adt.tio2.length)addRow('addtio2','Titanium dioxide','titanium-dioxide-genotoxicity',adt.tio2);
 if(adt.bromate.length)addRow('addbrom','Potassium bromate','potassium-bromate-cancer',adt.bromate);
 if(adt.benzoate.length)addRow('addbenz','Benzoate preservatives','benzoate-preservatives-intake',adt.benzoate,adt.benzene?['Ascorbic acid or a similar ingredient is also listed. That combination can form trace benzene in some drinks, depending on heat and light. The label does not show whether it did.']:[]);

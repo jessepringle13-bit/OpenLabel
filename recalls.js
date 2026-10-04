@@ -17,17 +17,20 @@ var MO=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
 function fmt(s){var m=/^([0-9]{4})([0-9]{2})([0-9]{2})$/.exec(s||'');return m?MO[+m[2]-1]+' '+(+m[3])+', '+m[1]:(s||'')}
 function cut(s,n){s=String(s||'').split(String.fromCharCode(10)).join(' ').split(String.fromCharCode(13)).join(' ').split(String.fromCharCode(9)).join(' ').replace(/ +/g,' ').trim();return s.length>n?s.slice(0,n-1)+'…':s}
 function ld(){try{return JSON.parse(localStorage.getItem(LK))||{}}catch(e){return {}}}
-function save(k){try{var o=ld();o[k]={t:mem[k].t,recs:mem[k].recs};var ks=Object.keys(o);if(ks.length>8){ks.sort(function(a,b){return o[a].t-o[b].t});delete o[ks[0]]}localStorage.setItem(LK,JSON.stringify(o))}catch(e){}}
+function save(k){try{var o=ld();o[k]={t:mem[k].t,recs:mem[k].recs,capped:mem[k].capped};var ks=Object.keys(o);if(ks.length>8){ks.sort(function(a,b){return o[a].t-o[b].t});delete o[ks[0]]}localStorage.setItem(LK,JSON.stringify(o))}catch(e){}}
 function pickF(r){var o={};['recall_number','classification','reason_for_recall','recall_initiation_date','report_date','recalling_firm','product_description','code_info','more_code_info','distribution_pattern','status'].forEach(function(f){o[f]=cut(r[f],700)});o.event_id=r.event_id?String(r.event_id):'';return o}
 function done(){if(window.OLPanel)window.OLPanel.refresh()}
-function fetchBrand(brand){var k=norm(brand),c=mem[k],now=Date.now();
+function fetchBrand(brand,k,codes){var c=mem[k],now=Date.now();
 if(c&&(c.state==='loading'||(c.state==='done'&&now-c.t<TTL)||(c.state==='error'&&now-c.t<60000)))return;
-var d=ld()[k];if(d&&now-d.t<TTL){mem[k]={state:'done',t:d.t,recs:d.recs};return}
+var d=ld()[k];if(d&&now-d.t<TTL){mem[k]={state:'done',t:d.t,recs:d.recs,capped:d.capped};return}
 mem[k]={state:'loading',t:now};
-var term='"'+brand.replace(/[^A-Za-z0-9&]+/g,' ').trim()+'"',from=ymd(new Date(now-548*864e5));
-var q='(recalling_firm:'+term+' OR product_description:'+term+') AND report_date:['+from+' TO 20991231]';
-var ctl=new AbortController(),tm=setTimeout(function(){ctl.abort()},10000);
-fetch(BASE+'?search='+enc(q)+'&sort=report_date:desc&limit=25',{signal:ctl.signal}).then(function(r){clearTimeout(tm);if(r.status===404)return {results:[]};if(!r.ok)throw new Error('http '+r.status);return r.json()}).then(function(j){mem[k]={state:'done',t:Date.now(),recs:(j.results||[]).map(pickF)};save(k);done()}).catch(function(){clearTimeout(tm);mem[k]={state:'error',t:Date.now()};done()})}
+var term='"'+brand.replace(/[^A-Za-z0-9&]+/g,' ').trim()+'"',from=ymd(new Date(now-548*864e5)),rng=' AND report_date:['+from+' TO 20991231]';
+function get(q,n){var ctl=new AbortController(),tm=setTimeout(function(){ctl.abort()},12000);
+return fetch(BASE+'?search='+enc(q)+'&sort=report_date:desc&limit='+n,{signal:ctl.signal}).then(function(r){clearTimeout(tm);if(r.status===404)return {results:[]};if(!r.ok)throw new Error('http '+r.status);return r.json()}).catch(function(e){clearTimeout(tm);throw e})}
+var qs=[get('(recalling_firm:'+term+' OR product_description:'+term+')'+rng,100)];
+if(codes&&codes.length){qs.push(get('('+codes.map(function(v){return 'product_description:"'+v+'" OR code_info:"'+v+'"'}).join(' OR ')+')'+rng,50).catch(function(){return {results:[]}}))}
+Promise.all(qs).then(function(js){var seen={},recs=[];js.forEach(function(j){(j.results||[]).forEach(function(r){var id=(r.recall_number||'')+'|'+cut(r.product_description,60);if(seen[id])return;seen[id]=1;recs.push(pickF(r))})});
+mem[k]={state:'done',t:Date.now(),recs:recs,capped:!!(js[0]&&(js[0].results||[]).length>=100)};save(k);done()}).catch(function(){mem[k]={state:'error',t:Date.now()};done()})}
 
 var FSURL='https://www.fsis.usda.gov/fsis/api/recall/v/1?field_archive_recall=0',FSK='openlabel-fsis-v1',FSTTL=6*3600*1000;
 var fst={state:'idle',t:0,upd:'',recs:[]},fscb=[];
@@ -58,11 +61,11 @@ if(r.reason_for_recall)d.append(el('div','rc-meta','Reason: '+cut(r.reason_for_r
 d.append(el('div','rc-meta',(r.src==='USDA'?'USDA FSIS · announced ':'Recall started ')+fmt(r.recall_initiation_date)+(r.status?' · status: '+r.status:'')+(r.recall_number?' · '+r.recall_number:'')));
 if(r.code_info)d.append(el('div','rc-meta','Lots or dates listed: '+cut(r.code_info,320)));
 if(r.distribution_pattern)d.append(el('div','rc-meta','Sold in: '+cut(r.distribution_pattern,160)));if(r.url){var lu=el('a','rc-a','USDA FSIS notice for this recall (official)');lu.href=r.url;lu.target='_blank';lu.rel='noopener noreferrer';var lq=el('div','rc-meta');lq.append(lu);d.append(lq)}if(r.event_id&&/^[0-9]+$/.test(r.event_id)){var lk=el('a','rc-a','FDA enforcement report for this recall (official)');lk.href='https://www.accessdata.fda.gov/scripts/ires/index.cfm?Event='+r.event_id;lk.target='_blank';lk.rel='noopener noreferrer';var lp=el('div','rc-meta');lp.append(lk);d.append(lp)}return d}
-function foot(b){b.append(el('p','olp-note','Sources: FDA food recall reports (openFDA) and USDA FSIS meat, poultry and egg product recalls and public health alerts, last 18 months.'+(fst.state==='error'?' The USDA check could not be reached just now, so USDA recalls were not searched.':'')+' Matches are by brand and name, so a possible match is not confirmed. Finding no recall does not guarantee a product is safe.'));var p=el('p'),a=el('a','rc-a','FDA recalls list (official)');a.href=OFFICIAL;a.target='_blank';a.rel='noopener noreferrer';p.append(a);p.append(document.createElement('br'));var a2=el('a','rc-a','USDA FSIS recalls and alerts (official)');a2.href='https://www.fsis.usda.gov/recalls';a2.target='_blank';a2.rel='noopener noreferrer';p.append(a2);b.append(p)}
+function foot(b,cap){b.append(el('p','olp-note','Sources: FDA food recall reports (openFDA) and USDA FSIS meat, poultry and egg product recalls and public health alerts, last 18 months.'+(fst.state==='error'?' The USDA check could not be reached just now, so USDA recalls were not searched.':'')+' Matches are by brand and name, so a possible match is not confirmed. Finding no recall does not guarantee a product is safe.'+(cap?' This brand has more than 100 recent FDA reports, so only the newest 100 were read, plus a separate search by barcode.':'')));var p=el('p'),a=el('a','rc-a','FDA recalls list (official)');a.href=OFFICIAL;a.target='_blank';a.rel='noopener noreferrer';p.append(a);p.append(document.createElement('br'));var a2=el('a','rc-a','USDA FSIS recalls and alerts (official)');a2.href='https://www.fsis.usda.gov/recalls';a2.target='_blank';a2.rel='noopener noreferrer';p.append(a2);b.append(p)}
 function plugin(m,ctx){var R={type:'recall',title:'Recalls',at:1,pin:false,open:false,color:'grey',chip:'Not enough data'},b=el('div');R.body=b;
 if(!ctx.code){R.chip='Sample product';b.append(para('This is a sample product, so we did not search recall reports.'));return R}
 var brand=m.brand;if(!brand||/not listed/i.test(brand)){R.chip='No brand listed';b.append(para('This product has no brand in the database, so we cannot search recall reports.'));return R}
-var k=norm(brand);fetchBrand(brand);var c=mem[k]||{state:'loading'};
+var cv=variants(ctx.code),k=norm(brand)+'|'+(cv[0]||'');fetchBrand(brand,k,cv);var c=mem[k]||{state:'loading'};
 if(c.state==='loading'){R.chip='Checking…';b.append(para('Searching FDA recall reports…'));return R}
 if(c.state==='error'){R.chip="Couldn't check";b.append(para('We could not reach the FDA recall database just now. Nothing was learned about recalls for this product.'));var tb=el('button','link','Try again');tb.onclick=function(){delete mem[k];done()};b.append(tb);foot(b);return R}
 if(fst.state==='idle'||(fst.state==='done'&&Date.now()-fst.t>FSTTL)||(fst.state==='error'&&Date.now()-fst.t>60000))fsisLoad(done);if(fst.state==='loading'||fst.state==='idle'){R.chip='Checking…';b.append(para('Searching FDA and USDA recall reports…'));return R}
@@ -79,7 +82,7 @@ else if(all){R.color='grey';R.chip='Lot not listed';R.pin=false;b.append(el('div
 else{R.chip='Check the notice';b.append(el('div','rc-res','This report does not list lots clearly, so we cannot compare. Read the official notice.'))}}
 else b.append(el('p','olp-note','The check only looks for the same text, so type the lot or date exactly as printed (for example 23-Dec-2026).'))}
 else{R.color='grey';R.chip='No match found';b.append(para('We searched FDA and USDA recall reports from the last 18 months for this brand and product and did not find a match. That is not proof that no recall applies.'));list(other,2,'Other recent recalls from this brand')}
-foot(b);return R}
+foot(b,c.capped);return R}
 (window.OLPanelPlugins=window.OLPanelPlugins||[]).push(plugin);
 done();
 var sp=document.createElement('script');sp.src='recalls-page.js';document.body.appendChild(sp);

@@ -1,6 +1,7 @@
 (function(){'use strict';
 var FDA='https://www.fda.gov/food/food-additives-and-gras-ingredients-information-consumers/types-food-ingredients';
 var ODS='https://ods.od.nih.gov/factsheets/';
+var INV='https://www.hfpappexternal.fda.gov/scripts/fdcc/index.cfm?set=FoodSubstances&id=';
 var rules=[
 [/^(?:cyanocobalamin|methylcobalamin|hydroxycobalamin|hydroxocobalamin|adenosylcobalamin|vitamin b12|cobalamin)$/i,'A form of vitamin B12, a nutrient needed for red blood cells and nerve function. When added to food it can increase the B12 content; the label alone does not tell us the manufacturer’s reason.',ODS+'VitaminB12-HealthProfessional/'],
 [/^(?:vitamin d|vitamin d2|vitamin d3|ergocalciferol|cholecalciferol)$/i,'Vitamin D is a nutrient involved in calcium absorption and bone health. In fortified foods it can increase vitamin D content.',ODS+'VitaminD-HealthProfessional/'],
@@ -14,6 +15,20 @@ var rules=[
 [/^(?:xanthan gum|guar gum|carrageenan|pectin|gelatin)$/i,'A stabilizer or thickener commonly used to create or maintain texture.',FDA],
 [/^(?:sodium bicarbonate|baking soda|monocalcium phosphate)$/i,'A leavening ingredient commonly used to help baked goods rise.',FDA],
 [/^(?:silicon dioxide|calcium silicate)$/i,'An anti-caking agent commonly used to keep powdered foods free-flowing.',FDA],
+[/^(?:bht|butylated hydroxytoluene)$/i,'An antioxidant preservative. FDA’s inventory of substances added to food lists its technical effects as antioxidant, flavor enhancer and flavoring agent or adjuvant. In foods it is commonly used to slow rancidity of fats and oils.',INV+'BUTYLATEDHYDROXYTOLUENE'],
+[/^(?:msg|monosodium glutamate)$/i,'The sodium salt of glutamic acid, an amino acid. FDA’s inventory lists its technical effects as flavor enhancer, nutrient supplement, pH control agent and stabilizer or thickener. It is used to add a savory taste.',INV+'MONOSODIUMGLUTAMATE'],
+[/^(?:azodicarbonamide)$/i,'A dough conditioner. FDA’s inventory lists its technical effects as dough strengthener and flour treating agent; it is used in some breads and baked goods.',INV+'AZODICARBONAMIDE'],
+[/^(?:potassium benzoate)$/i,'A preservative. FDA’s inventory lists its technical effect as antimicrobial agent, meaning it helps slow the growth of microbes.',INV+'POTASSIUMBENZOATE'],
+[/^(?:potassium bromate)$/i,'A flour treatment. FDA’s inventory lists its technical effects as dough strengthener, flour treating agent, leavening agent and oxidizing or reducing agent.',INV+'POTASSIUMBROMATE'],
+[/^(?:maltodextrin)$/i,'A carbohydrate made from starch. FDA’s inventory lists many technical effects, including stabilizer or thickener, texturizer, humectant, nutritive sweetener and anticaking agent. The label alone does not show which role it has in this product.',INV+'MALTODEXTRIN'],
+[/^(?:dextrose)$/i,'Another name for glucose, a simple sugar. FDA’s inventory lists technical effects including nutritive sweetener, humectant, flavor enhancer and stabilizer or thickener.',INV+'DEXTROSE'],
+[/^(?:disodium guanylate)$/i,'A flavor enhancer that is often used with monosodium glutamate or other savory ingredients. FDA’s inventory lists its technical effect as flavoring agent or adjuvant.',INV+'DISODIUMGUANYLATE'],
+[/^(?:sodium bisulfite|sulfur dioxide|sulphur dioxide)$/i,'A sulfite. FDA’s inventory lists technical effects including antimicrobial agent, antioxidant and color or coloring adjunct. Sulfites above 10 parts per million must be declared on US labels because some people react to them.',INV+'SODIUMBISULFITE'],
+[/^(?:caffeine)$/i,'A stimulant that occurs naturally in coffee, tea and cacao and is added to some drinks and foods. FDA’s inventory lists its technical effect in food as flavoring agent or adjuvant; the amount per serving is not always printed.',INV+'CAFFEINE'],
+[/^(?:disodium phosphate|sodium phosphate(?: dibasic)?|dipotassium phosphate|trisodium phosphate)$/i,'A phosphate salt. FDA’s inventory lists technical effects for sodium phosphate (dibasic) including pH control agent, emulsifier or emulsifier salt, stabilizer or thickener and texturizer. The role depends on the food.',INV+'SODIUMPHOSPHATEDIBASIC'],
+[/^(?:titanium dioxide)$/i,'A white mineral pigment. FDA’s inventory lists technical effects including color or coloring adjunct and anticaking agent or free-flow agent. It is used to make foods look whiter or brighter.',INV+'TITANIUMDIOXIDE'],
+[/^(?:sodium nitrate)$/i,'A curing ingredient. FDA’s inventory lists technical effects including antimicrobial agent and color or coloring adjunct. In cured meats it helps slow spoilage and keep a pink color.',INV+'SODIUMNITRATE'],
+[/^(?:malic acid)$/i,'An acid found naturally in apples and other fruit. FDA’s inventory lists its technical effects as flavor enhancer, flavoring agent or adjuvant, pH control agent and synergist. It gives a tart taste.',INV+'MALICACID'],
 [/^(?:natural flavou?r(?:s|ing)?|artificial flavou?r(?:s|ing)?|spices)$/i,'A label term for ingredients used to add flavor. It does not disclose every component or the precise source.',FDA],
 [/^(?:sugar|sucrose|glucose|fructose|corn syrup|high fructose corn syrup|honey|maple syrup)$/i,'A sweetening ingredient; some forms also contribute to texture or browning in foods.',FDA],
 [/^(?:sucralose|aspartame|acesulfame(?: potassium| k)?|saccharin|stevia|steviol glycosides|sorbitol|xylitol|erythritol|maltitol)$/i,'A sweetener used to add sweetness. Its effects and suitability depend on the exact substance, amount, and person.',FDA],

@@ -1,6 +1,6 @@
 {
- "updated": "2026-10-02",
- "note": "Small starter set. Every entry still needs the funding and relationship check.",
+ "updated": "2026-10-04",
+ "note": "Small starter set. Funding and relationship checks for Consumer Reports and Clean Label Project are described in each entry's tester section; they are the testers' own statements plus trade press, not an independent audit.",
  "entries": [
   {
    "id": "crb-gerber-rice",
@@ -25,7 +25,7 @@
     "label": "Consumer Reports, baby food tests (Sep 2026)",
     "url": "https://www.consumerreports.org/babies-kids/baby-food/baby-foods-heavy-metals-microplastics-testing-a5925463846/"
    },
-   "ties": "Tester funding and ties: not checked yet.",
+   "ties": "Consumer Reports describes itself as a nonprofit that takes no advertising and no free samples and buys the products it tests; it says its income comes from subscriptions, fees, and noncommercial contributions and grants. These are CR's own statements. We did not find a funding statement for this particular test.",
    "check": "Source check: figures and company responses compared with the source page on 2026-10-02"
   },
   {
@@ -51,7 +51,7 @@
     "label": "Consumer Reports, baby food tests (Sep 2026)",
     "url": "https://www.consumerreports.org/babies-kids/baby-food/baby-foods-heavy-metals-microplastics-testing-a5925463846/"
    },
-   "ties": "Tester funding and ties: not checked yet.",
+   "ties": "Consumer Reports describes itself as a nonprofit that takes no advertising and no free samples and buys the products it tests; it says its income comes from subscriptions, fees, and noncommercial contributions and grants. These are CR's own statements. We did not find a funding statement for this particular test.",
    "check": "Source check: figures and company responses compared with the source page on 2026-10-02"
   },
   {
@@ -77,7 +77,7 @@
     "label": "Consumer Reports, baby food tests (Sep 2026)",
     "url": "https://www.consumerreports.org/babies-kids/baby-food/baby-foods-heavy-metals-microplastics-testing-a5925463846/"
    },
-   "ties": "Tester funding and ties: not checked yet.",
+   "ties": "Consumer Reports describes itself as a nonprofit that takes no advertising and no free samples and buys the products it tests; it says its income comes from subscriptions, fees, and noncommercial contributions and grants. These are CR's own statements. We did not find a funding statement for this particular test.",
    "check": "Source check: figures and company responses compared with the source page on 2026-10-02"
   },
   {
@@ -103,7 +103,7 @@
     "label": "Consumer Reports, protein powder tests (2025)",
     "url": "https://www.consumerreports.org/lead/protein-powders-and-shakes-contain-high-levels-of-lead-a4206364640/"
    },
-   "ties": "Tester funding and ties: not checked yet.",
+   "ties": "Consumer Reports describes itself as a nonprofit that takes no advertising and no free samples and buys the products it tests; it says its income comes from subscriptions, fees, and noncommercial contributions and grants. These are CR's own statements. We did not find a funding statement for this particular test.",
    "check": "Source check: figures and company responses compared with the source page on 2026-10-02"
   },
   {
@@ -129,7 +129,7 @@
     "label": "Consumer Reports, protein powder tests (2025)",
     "url": "https://www.consumerreports.org/lead/protein-powders-and-shakes-contain-high-levels-of-lead-a4206364640/"
    },
-   "ties": "Tester funding and ties: not checked yet.",
+   "ties": "Consumer Reports describes itself as a nonprofit that takes no advertising and no free samples and buys the products it tests; it says its income comes from subscriptions, fees, and noncommercial contributions and grants. These are CR's own statements. We did not find a funding statement for this particular test.",
    "check": "Source check: figures and company responses compared with the source page on 2026-10-02"
   },
   {
@@ -155,7 +155,7 @@
     "label": "Consumer Reports, protein powder tests (2025)",
     "url": "https://www.consumerreports.org/lead/protein-powders-and-shakes-contain-high-levels-of-lead-a4206364640/"
    },
-   "ties": "Tester funding and ties: not checked yet.",
+   "ties": "Consumer Reports describes itself as a nonprofit that takes no advertising and no free samples and buys the products it tests; it says its income comes from subscriptions, fees, and noncommercial contributions and grants. These are CR's own statements. We did not find a funding statement for this particular test.",
    "check": "Source check: figures and company responses compared with the source page on 2026-10-02"
   },
   {
@@ -181,7 +181,7 @@
     "label": "Consumer Reports, protein powder tests (2025)",
     "url": "https://www.consumerreports.org/lead/protein-powders-and-shakes-contain-high-levels-of-lead-a4206364640/"
    },
-   "ties": "Tester funding and ties: not checked yet.",
+   "ties": "Consumer Reports describes itself as a nonprofit that takes no advertising and no free samples and buys the products it tests; it says its income comes from subscriptions, fees, and noncommercial contributions and grants. These are CR's own statements. We did not find a funding statement for this particular test.",
    "check": "Source check: figures and company responses compared with the source page on 2026-10-02"
   },
   {
@@ -207,7 +207,7 @@
     "label": "Consumer Reports, protein powder tests (2025)",
     "url": "https://www.consumerreports.org/lead/protein-powders-and-shakes-contain-high-levels-of-lead-a4206364640/"
    },
-   "ties": "Tester funding and ties: not checked yet.",
+   "ties": "Consumer Reports describes itself as a nonprofit that takes no advertising and no free samples and buys the products it tests; it says its income comes from subscriptions, fees, and noncommercial contributions and grants. These are CR's own statements. We did not find a funding statement for this particular test.",
    "check": "Source check: figures and company responses compared with the source page on 2026-10-02"
   },
   {
@@ -237,7 +237,7 @@
     "label": "Clean Label Project, protein powder study (2025)",
     "url": "https://cleanlabelproject.org/protein-study/"
    },
-   "ties": "Tester ties to check: Clean Label Project also runs a paid-for certification program for brands. Other funding not checked yet.",
+   "ties": "Clean Label Project is a nonprofit (501(c)(3)) that is not required to disclose its donors. In 2020 trade press reported industry critics accusing it of profiting from products it certifies and of unclear methods; its director said its product-ratings data licensing ended and described Amazon charity donations and small individual gifts. It launched a code-of-practice certification in October 2019. Its funding for this study was not found.",
    "check": "Source check: figures and company responses compared with the source page on 2026-10-02"
   },
   {
@@ -268,8 +268,332 @@
     "label": "Consumer Reports, baby food tests (Sep 2026)",
     "url": "https://www.consumerreports.org/babies-kids/baby-food/baby-foods-heavy-metals-microplastics-testing-a5925463846/"
    },
-   "ties": "Tester funding and ties: not checked yet.",
+   "ties": "Consumer Reports describes itself as a nonprofit that takes no advertising and no free samples and buys the products it tests; it says its income comes from subscriptions, fees, and noncommercial contributions and grants. These are CR's own statements. We did not find a funding statement for this particular test.",
    "check": "Source check: figures and company responses compared with the source page on 2026-10-02"
+  },
+  {
+   "kind": "product",
+   "response": "Hershey did not respond to CR's request for comment on this article. CR's food policy director said a Hershey executive had earlier said the company continues to look for ways to remove more metals through additional cleaning and alternate sourcing.",
+   "check": "Source check: figures and company responses compared with the source page on 2026-10-04",
+   "id": "crc-hershey-cocoa",
+   "category": "Chocolate and cocoa",
+   "match": {
+    "brand": "hershey",
+    "name": "cocoa"
+   },
+   "title": "Hershey's Cocoa, Naturally Unsweetened 100% Cacao",
+   "tester": "Consumer Reports",
+   "published": "Oct 25, 2023",
+   "result": "One tablespoon supplied 125% of CR's lead limit, the second-highest lead level of the cocoa powders CR tested. CR says no cocoa powder it tested was high in cadmium.",
+   "threshold": "Consumer Reports compares one serving with California's maximum allowable dose levels, 0.5 micrograms a day for lead and 4.1 for cadmium, because there are no federal limits for most foods. CR says its tests do not assess whether a product breaks California's or any other legal standard.",
+   "serving": "1 tablespoon",
+   "caveats": [
+    "Averages of three samples per product. The article does not name the laboratory.",
+    "Results describe the lots tested in 2023. Other lots may differ.",
+    "CR says its findings are comparisons, not legal judgments."
+   ],
+   "source": {
+    "label": "Consumer Reports, chocolate heavy metals tests (Oct 2023)",
+    "url": "https://www.consumerreports.org/health/food-safety/a-third-of-chocolate-products-are-high-in-heavy-metals-a4844566398/"
+   },
+   "ties": "Consumer Reports describes itself as a nonprofit that takes no advertising and no free samples and buys the products it tests; it says its income comes from subscriptions, fees, and noncommercial contributions and grants. These are CR's own statements. We did not find a funding statement for this particular test."
+  },
+  {
+   "kind": "product",
+   "response": "Droste did not respond to CR's request for comment on this article.",
+   "check": "Source check: figures and company responses compared with the source page on 2026-10-04",
+   "id": "crc-droste",
+   "category": "Chocolate and cocoa",
+   "match": {
+    "brand": "droste",
+    "name": "cacao"
+   },
+   "title": "Droste Cacao Powder (Dutch-processed)",
+   "tester": "Consumer Reports",
+   "published": "Oct 25, 2023",
+   "result": "One tablespoon supplied 324% of CR's lead limit, the highest lead of any product in CR's 48-product chocolate tests. It was the only Dutch-processed cocoa tested.",
+   "threshold": "Consumer Reports compares one serving with California's maximum allowable dose levels, 0.5 micrograms a day for lead and 4.1 for cadmium, because there are no federal limits for most foods. CR says its tests do not assess whether a product breaks California's or any other legal standard.",
+   "serving": "1 tablespoon",
+   "caveats": [
+    "Averages of three samples per product. The article does not name the laboratory.",
+    "One Dutch-processed product cannot show how Dutch-processed cocoa in general compares.",
+    "Results describe the lots tested in 2023."
+   ],
+   "source": {
+    "label": "Consumer Reports, chocolate heavy metals tests (Oct 2023)",
+    "url": "https://www.consumerreports.org/health/food-safety/a-third-of-chocolate-products-are-high-in-heavy-metals-a4844566398/"
+   },
+   "ties": "Consumer Reports describes itself as a nonprofit that takes no advertising and no free samples and buys the products it tests; it says its income comes from subscriptions, fees, and noncommercial contributions and grants. These are CR's own statements. We did not find a funding statement for this particular test."
+  },
+  {
+   "kind": "product",
+   "response": "Hershey did not respond to CR's request for comment on this article.",
+   "check": "Source check: figures and company responses compared with the source page on 2026-10-04",
+   "id": "crc-hershey-milk",
+   "category": "Chocolate and cocoa",
+   "match": {
+    "brand": "hershey",
+    "name": "milk chocolate"
+   },
+   "title": "Hershey's Milk Chocolate bar",
+   "tester": "Consumer Reports",
+   "published": "Oct 25, 2023",
+   "result": "Lead was 67% of CR's limit per serving, the most of the five milk chocolate bars tested, and below the limit. None of the five milk chocolate bars was over CR's limit for lead or cadmium.",
+   "threshold": "Consumer Reports compares one serving with California's maximum allowable dose levels, 0.5 micrograms a day for lead and 4.1 for cadmium, because there are no federal limits for most foods. CR says its tests do not assess whether a product breaks California's or any other legal standard.",
+   "serving": "About 1 ounce",
+   "caveats": [
+    "Below CR's limit means lead was still detected.",
+    "Averages of three samples per product.",
+    "Results describe the lots tested in 2023."
+   ],
+   "source": {
+    "label": "Consumer Reports, chocolate heavy metals tests (Oct 2023)",
+    "url": "https://www.consumerreports.org/health/food-safety/a-third-of-chocolate-products-are-high-in-heavy-metals-a4844566398/"
+   },
+   "ties": "Consumer Reports describes itself as a nonprofit that takes no advertising and no free samples and buys the products it tests; it says its income comes from subscriptions, fees, and noncommercial contributions and grants. These are CR's own statements. We did not find a funding statement for this particular test."
+  },
+  {
+   "kind": "category",
+   "response": "The National Confectioners Association said chocolate and cocoa are safe to eat. FDA told CR chocolate is a minor source of exposure to these contaminants internationally.",
+   "check": "Source check: figures and company responses compared with the source page on 2026-10-04",
+   "id": "crc-category",
+   "category": "Chocolate and cocoa",
+   "match": {
+    "any": [
+     "dark chocolate",
+     "milk chocolate",
+     "cocoa powder",
+     "chocolate chips",
+     "hot chocolate",
+     "brownie mix",
+     "chocolate cake mix"
+    ]
+   },
+   "title": "Chocolate and cocoa products as a category",
+   "tester": "Consumer Reports",
+   "published": "Oct 25, 2023",
+   "result": "CR tested 48 products in seven categories. Sixteen had amounts above CR's levels of concern for at least one heavy metal, in some cases more than twice its limit, and CR found lower options in each category. It says none posed an arsenic or mercury risk. Five of seven dark chocolate bars exceeded CR's level for lead, cadmium or both.",
+   "threshold": "Consumer Reports compares one serving with California's maximum allowable dose levels, 0.5 micrograms a day for lead and 4.1 for cadmium, because there are no federal limits for most foods. CR says its tests do not assess whether a product breaks California's or any other legal standard.",
+   "serving": "Varies; about 1 ounce of chocolate, 1 tablespoon of cocoa",
+   "caveats": [
+    "This describes the category, not the product in front of you.",
+    "Results are a snapshot. Makers can change ingredients, sourcing and processes at any time.",
+    "Results depend on the products and limits the tester chose."
+   ],
+   "source": {
+    "label": "Consumer Reports, chocolate heavy metals tests (Oct 2023)",
+    "url": "https://www.consumerreports.org/health/food-safety/a-third-of-chocolate-products-are-high-in-heavy-metals-a4844566398/"
+   },
+   "ties": "Consumer Reports describes itself as a nonprofit that takes no advertising and no free samples and buys the products it tests; it says its income comes from subscriptions, fees, and noncommercial contributions and grants. These are CR's own statements. We did not find a funding statement for this particular test."
+  },
+  {
+   "kind": "product",
+   "response": "Lundberg said: \"Our arsenic results are less than half the daily No Significant Risk Level (NSRL) established by California's Proposition 65.\" It also said, on spices, that \"global regulatory bodies have concluded that spices remain safe for human consumption.\"",
+   "check": "Source check: figures and company responses compared with the source page on 2026-10-04",
+   "id": "crr-lundberg-cilantro",
+   "category": "Rice",
+   "match": {
+    "brand": "lundberg",
+    "name": "cilantro lime"
+   },
+   "title": "Lundberg Organic Cilantro Lime Rice",
+   "tester": "Consumer Reports",
+   "published": "Jul 8, 2026 (updated Aug 14, 2026)",
+   "result": "Inorganic arsenic was slightly over 100 parts per billion, and a serving had more than 0.5 micrograms of lead, which CR says came mainly from the spice mix. Four of the five Lundberg products CR tested were below 100 ppb.",
+   "threshold": "There is no federal arsenic limit for rice. CR used the FDA's 100 parts per billion action level for infant rice cereal as a reference mark, and its own 0.5 micrograms of lead a day level of concern. It also used a cancer-risk method that the EPA uses to set weekly serving advice.",
+   "serving": "Not stated for this product in the text we could read",
+   "caveats": [
+    "Exact values are in CR's chart, which we could not read, so we cannot give them.",
+    "CR says its findings are a spot-check and should not be used to draw definitive conclusions about specific brands.",
+    "Two to three samples per product, averaged. The article does not name the laboratory."
+   ],
+   "source": {
+    "label": "Consumer Reports, arsenic in rice (Jul 2026, updated Aug 2026)",
+    "url": "https://www.consumerreports.org/health/food-contaminants/arsenic-in-rice-reducing-risk-a8972350937/"
+   },
+   "ties": "Consumer Reports describes itself as a nonprofit that takes no advertising and no free samples and buys the products it tests; it says its income comes from subscriptions, fees, and noncommercial contributions and grants. These are CR's own statements. We did not find a funding statement for this particular test."
+  },
+  {
+   "kind": "category",
+   "response": "The U.S. Rice Federation said the industry has studied arsenic uptake for more than a decade. Walmart and Whole Foods Market gave statements about their testing and standards. Ten companies did not respond, including Mahatma, Goya and Rice-A-Roni.",
+   "check": "Source check: figures and company responses compared with the source page on 2026-10-04",
+   "id": "crr-category",
+   "category": "Rice",
+   "match": {
+    "any": [
+     "white rice",
+     "brown rice",
+     "basmati",
+     "jasmine rice",
+     "arborio",
+     "sushi rice",
+     "rice mix",
+     "microwave rice",
+     "rice pilaf"
+    ]
+   },
+   "title": "Rice and rice products as a category",
+   "tester": "Consumer Reports",
+   "published": "Jul 8, 2026 (updated Aug 14, 2026)",
+   "result": "CR tested 52 rice products (142 samples) and found inorganic arsenic in all of them. Seventeen averaged 100 ppb or more. Category averages ranged from 55 ppb (basmati) to 113 ppb (brown rice). Three of six rice mixes had more than 0.5 micrograms of lead a serving, mostly from the spice mix. CR advises, from its older 2014 tests, a maximum of about 2.75 servings a week for adults for most rice and 5 for white basmati or sushi rice.",
+   "threshold": "There is no federal arsenic limit for rice. CR used the FDA's 100 parts per billion action level for infant rice cereal as a reference mark, and its own 0.5 micrograms of lead a day level of concern. It also used a cancer-risk method that the EPA uses to set weekly serving advice.",
+   "serving": "1/4 cup dry rice, or 1 cup cooked pouch rice",
+   "caveats": [
+    "This describes the category, not the product in front of you.",
+    "Results are a snapshot. Makers can change ingredients, sourcing and processes at any time.",
+    "CR did not have enough data to compare growing regions.",
+    "The weekly serving advice quoted comes from CR's 2014 testing; product-specific advice is in a chart we could not read."
+   ],
+   "source": {
+    "label": "Consumer Reports, arsenic in rice (Jul 2026, updated Aug 2026)",
+    "url": "https://www.consumerreports.org/health/food-contaminants/arsenic-in-rice-reducing-risk-a8972350937/"
+   },
+   "ties": "Consumer Reports describes itself as a nonprofit that takes no advertising and no free samples and buys the products it tests; it says its income comes from subscriptions, fees, and noncommercial contributions and grants. These are CR's own statements. We did not find a funding statement for this particular test."
+  },
+  {
+   "kind": "product",
+   "response": "The press release contains no company response. Statements are from CR staff only.",
+   "check": "Source check: figures and company responses compared with the source page on 2026-10-04",
+   "id": "crj-welch-grape",
+   "category": "Fruit juice",
+   "match": {
+    "brand": "welch",
+    "name": "concord grape"
+   },
+   "title": "Welch's 100% Concord Grape Juice",
+   "tester": "Consumer Reports",
+   "published": "Jan 30, 2019",
+   "result": "Lead exceeded the FDA standard for bottled water (5 ppb). CR's press release does not give the measured level.",
+   "threshold": "CR compared juice with the proposed FDA limit of 10 parts per billion for inorganic arsenic in apple juice (which CR said should be 3 ppb), the 5 ppb lead standard for bottled water, and a cadmium limit of 1 ppb that CR supports.",
+   "serving": "Risk was judged for half a cup or a cup a day",
+   "caveats": [
+    "These tests are from 2019 and juices may have changed since.",
+    "The press release does not give the measured level or the number of samples.",
+    "Grape juice and juice blends had the highest average metal levels in CR's tests."
+   ],
+   "source": {
+    "label": "Consumer Reports, fruit juice heavy metals tests (Jan 2019)",
+    "url": "https://www.consumerreports.org/media-room/press-releases/2019/01/consumer_reports_finds_concerning_levels_of_heavy_metals_in_popular_fruit_juices/"
+   },
+   "ties": "Consumer Reports describes itself as a nonprofit that takes no advertising and no free samples and buys the products it tests; it says its income comes from subscriptions, fees, and noncommercial contributions and grants. These are CR's own statements. We did not find a funding statement for this particular test."
+  },
+  {
+   "kind": "category",
+   "response": "The press release contains no company response.",
+   "check": "Source check: figures and company responses compared with the source page on 2026-10-04",
+   "id": "crj-category",
+   "category": "Fruit juice",
+   "match": {
+    "any": [
+     "apple juice",
+     "grape juice",
+     "pear juice",
+     "fruit juice",
+     "juice blend"
+    ]
+   },
+   "title": "Fruit juice as a category",
+   "tester": "Consumer Reports",
+   "published": "Jan 30, 2019",
+   "result": "CR tested 45 ready-to-drink juices from 24 brands. Every one had a measurable amount of at least one of cadmium, inorganic arsenic, lead or mercury. Twenty-one (47%) had concerning levels of cadmium, arsenic or lead, and none of mercury. Organic juices were not lower than conventional. Levels were lower than in CR's earlier tests.",
+   "threshold": "CR compared juice with the proposed FDA limit of 10 parts per billion for inorganic arsenic in apple juice (which CR said should be 3 ppb), the 5 ppb lead standard for bottled water, and a cadmium limit of 1 ppb that CR supports.",
+   "serving": "Half a cup or one cup a day",
+   "caveats": [
+    "This describes the category, not the product in front of you.",
+    "Results are a snapshot. Makers can change ingredients, sourcing and processes at any time.",
+    "FDA's final guidance for apple juice (June 2023) set 10 ppb for inorganic arsenic. We have not compared these 2019 results with later guidance for lead."
+   ],
+   "source": {
+    "label": "Consumer Reports, fruit juice heavy metals tests (Jan 2019)",
+    "url": "https://www.consumerreports.org/media-room/press-releases/2019/01/consumer_reports_finds_concerning_levels_of_heavy_metals_in_popular_fruit_juices/"
+   },
+   "ties": "Consumer Reports describes itself as a nonprofit that takes no advertising and no free samples and buys the products it tests; it says its income comes from subscriptions, fees, and noncommercial contributions and grants. These are CR's own statements. We did not find a funding statement for this particular test."
+  },
+  {
+   "kind": "product",
+   "response": "Whole Foods said: \"These products meet all FDA requirements and are fully compliant with FDA standards for heavy metals.\"",
+   "check": "Source check: figures and company responses compared with the source page on 2026-10-04",
+   "id": "crw-starkey",
+   "category": "Bottled water",
+   "match": {
+    "brand": "starkey",
+    "name": "spring water"
+   },
+   "title": "Starkey Spring Water (Whole Foods)",
+   "tester": "Consumer Reports",
+   "published": "Sep 24, 2020",
+   "result": "Arsenic was 9.53 ppb, just under the federal 10 ppb limit and more than three times CR's recommended level of 3 ppb. CR says all other noncarbonated waters were well below federal limits for heavy metals.",
+   "threshold": "CR tested for four heavy metals and 30 PFAS chemicals. It compared arsenic with the federal 10 ppb limit and its own recommended 3 ppb, and PFAS with a federal voluntary guidance of 70 parts per trillion for two compounds and a 1 ppt total that some experts suggest.",
+   "serving": "Not applicable",
+   "caveats": [
+    "Two to four samples per product. The article does not name the laboratory or say whether results were averaged.",
+    "These tests are from 2020 and the water may have changed since."
+   ],
+   "source": {
+    "label": "Consumer Reports, bottled water tests (Sep 2020)",
+    "url": "https://www.consumerreports.org/water-quality/whats-really-in-your-bottled-water-a5361150329/"
+   },
+   "ties": "Consumer Reports describes itself as a nonprofit that takes no advertising and no free samples and buys the products it tests; it says its income comes from subscriptions, fees, and noncommercial contributions and grants. These are CR's own statements. We did not find a funding statement for this particular test. CR says the bottled water testing was made possible by the Forsythia Foundation, which it describes as focused on public health and reducing chemical exposure."
+  },
+  {
+   "kind": "product",
+   "response": "Nestlé, which makes Deer Park, said its most recent testing for the brand indicated undetectable levels of PFAS.",
+   "check": "Source check: figures and company responses compared with the source page on 2026-10-04",
+   "id": "crw-deer-park",
+   "category": "Bottled water",
+   "match": {
+    "brand": "deer park",
+    "name": "spring water"
+   },
+   "title": "Deer Park Natural Spring Water",
+   "tester": "Consumer Reports",
+   "published": "Sep 24, 2020",
+   "result": "Total PFAS was 1.21 parts per trillion, one of two noncarbonated waters above 1 ppt. That is far below the 70 ppt federal guidance for two compounds.",
+   "threshold": "CR tested for four heavy metals and 30 PFAS chemicals. It compared arsenic with the federal 10 ppb limit and its own recommended 3 ppb, and PFAS with a federal voluntary guidance of 70 parts per trillion for two compounds and a 1 ppt total that some experts suggest.",
+   "serving": "Not applicable",
+   "caveats": [
+    "The 1 ppt mark is what some experts suggest, not a legal limit.",
+    "These tests are from 2020 and the water may have changed since."
+   ],
+   "source": {
+    "label": "Consumer Reports, bottled water tests (Sep 2020)",
+    "url": "https://www.consumerreports.org/water-quality/whats-really-in-your-bottled-water-a5361150329/"
+   },
+   "ties": "Consumer Reports describes itself as a nonprofit that takes no advertising and no free samples and buys the products it tests; it says its income comes from subscriptions, fees, and noncommercial contributions and grants. These are CR's own statements. We did not find a funding statement for this particular test. CR says the bottled water testing was made possible by the Forsythia Foundation, which it describes as focused on public health and reducing chemical exposure."
+  },
+  {
+   "kind": "category",
+   "response": "IBWA said it supports federal PFAS limits and that bottled water should be under 5 ppt for any single compound. Tourmaline Spring said its levels were below those set by IBWA and all states. CR heard back from all companies above 1 ppt except Bubly.",
+   "check": "Source check: figures and company responses compared with the source page on 2026-10-04",
+   "id": "crw-category",
+   "category": "Bottled water",
+   "match": {
+    "any": [
+     "bottled water",
+     "spring water",
+     "sparkling water",
+     "mineral water",
+     "purified water",
+     "seltzer"
+    ]
+   },
+   "title": "Bottled water as a category",
+   "tester": "Consumer Reports",
+   "published": "Sep 24, 2020",
+   "result": "CR tested 47 bottled waters (35 noncarbonated, 12 carbonated). Most noncarbonated waters had detectable PFAS but only two exceeded 1 ppt. Among carbonated waters, total PFAS ranged from not detected to 9.76 ppt (Topo Chico), and Polar Natural Seltzer was 6.41 ppt. Heavy metals were below federal limits except for one arsenic result.",
+   "threshold": "CR tested for four heavy metals and 30 PFAS chemicals. It compared arsenic with the federal 10 ppb limit and its own recommended 3 ppb, and PFAS with a federal voluntary guidance of 70 parts per trillion for two compounds and a 1 ppt total that some experts suggest.",
+   "serving": "Not applicable",
+   "caveats": [
+    "This describes the category, not the product in front of you.",
+    "Results are a snapshot. Makers can change ingredients, sourcing and processes at any time.",
+    "CR later published a retest of Topo Chico (February 2021) that we have not read.",
+    "The article says LaCroix and Polar challenged how CR arrived at its total PFAS amounts."
+   ],
+   "source": {
+    "label": "Consumer Reports, bottled water tests (Sep 2020)",
+    "url": "https://www.consumerreports.org/water-quality/whats-really-in-your-bottled-water-a5361150329/"
+   },
+   "ties": "Consumer Reports describes itself as a nonprofit that takes no advertising and no free samples and buys the products it tests; it says its income comes from subscriptions, fees, and noncommercial contributions and grants. These are CR's own statements. We did not find a funding statement for this particular test. CR says the bottled water testing was made possible by the Forsythia Foundation, which it describes as focused on public health and reducing chemical exposure."
   }
  ]
 }
