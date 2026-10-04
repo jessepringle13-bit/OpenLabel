@@ -91,3 +91,4 @@
 #recentArea strong,#exploreResults strong{font-size:14px}
 #recentArea small,#exploreResults small{font-size:12px}
 #recentArea .chevron,#exploreResults .chevron{font-size:20px}
+.ol-tiles .ol-tile{justify-content:flex-start;padding:18px 16px}.ol-tiles .ol-tile strong{color:var(--forest)}
