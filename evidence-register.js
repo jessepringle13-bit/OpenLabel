@@ -1207,6 +1207,223 @@ var RECORDS=[
    "reason": "Owner asked to wire additives and natural flavors into the register."
   }
  ]
+},
+{
+ "scope_type": "general research",
+ "reviewed_by": "Draft prepared by OpenLabel research; owner review pending (Jesse Pringle)",
+ "owner_signoff": null,
+ "review_state": "provisional",
+ "reviewed_on": "2026-10-03",
+ "topic": "additives",
+ "id": "titanium-dioxide-genotoxicity",
+ "subject": "Titanium dioxide (E171, CI 77891) as a food color",
+ "claim": "Titanium dioxide used as a food color can damage DNA or raise cancer risk when eaten.",
+ "applies_to": "People who put additives on their watch list, for products that list titanium dioxide, E171 or CI 77891. Evidence is about the particles in the food additive form. Not a medical recommendation.",
+ "amount": "FDA allows up to 1 percent titanium by weight of the food. EFSA said it could not set a safe daily intake. JECFA kept its intake limit as not specified. The label does not state the amount.",
+ "color": "yellow",
+ "status": "contested",
+ "color_reason": "Two expert bodies reached opposite conclusions on the same question. EFSA could not rule out DNA damage and set no safe intake; JECFA found no convincing evidence of DNA damage. No human studies link dietary titanium dioxide to disease. The question is contested, so no direction is claimed.",
+ "shows": [
+  "EFSA (2021) concluded titanium dioxide can no longer be considered safe as a food additive because it could not exclude genotoxicity concerns from the particles, and it set no acceptable daily intake.",
+  "JECFA (2023) kept the intake limit as not specified and found no convincing evidence of genotoxicity, while noting limitations in the data.",
+  "FDA allows its use up to 1 percent and has been reviewing a petition to repeal that permission since April 2023."
+ ],
+ "does_not_show": [
+  "That titanium dioxide in this product harms you. Neither body claims it has been shown to cause cancer in people.",
+  "Whether the particles in a given food are the nanoscale kind that worried EFSA. The label does not say.",
+  "What FDA decided on the petition after March 2024. We did not check.",
+  "Anything about titanium dioxide as a whitener in sunscreens or toothpaste."
+ ],
+ "sides": {
+  "for": [
+   "EFSA Panel (2021): could not exclude genotoxicity concerns, noted particles can accumulate in the body, and could not set a safe intake.",
+   "A petition asked FDA in 2023 to repeal the food-use permission, and FDA is reviewing it."
+  ],
+  "against": [
+   "JECFA (2023): kept the intake limit as not specified, found it poorly absorbed, and found no convincing evidence of genotoxicity, with no human studies linking it to health effects.",
+   "FDA says it did not identify genotoxicity concerns in the available data and that National Toxicology Program studies found no cancer."
+  ]
+ },
+ "sources": [
+  {
+   "title": "Titanium dioxide: E171 no longer considered safe when used as a food additive",
+   "publisher": "European Food Safety Authority",
+   "type": "regulator news release",
+   "date": "2021-05-06",
+   "url": "https://www.efsa.europa.eu/en/news/titanium-dioxide-e171-no-longer-considered-safe-when-used-food-additive",
+   "verified": true,
+   "note": "Read. The EFSA Panel concluded titanium dioxide can no longer be considered safe as a food additive because it could not exclude genotoxicity concerns after consumption of particles. Absorption is low but particles can accumulate. EFSA could not establish a safe daily intake, so no ADI. Panel members' declarations not read."
+  },
+  {
+   "title": "Assessment of the health impacts of the food colour additive titanium dioxide",
+   "publisher": "Joint FAO/WHO Expert Committee on Food Additives (JECFA)",
+   "type": "international expert committee",
+   "date": "2023-11-24",
+   "url": "https://cdn.who.int/media/docs/default-source/food-safety/jecfa/summary-and-conclusions/jecfa-riskassemsent-of-titanium-dioxide-released.pdf",
+   "verified": true,
+   "note": "Read. JECFA kept the acceptable daily intake as not specified. It found titanium dioxide poorly absorbed, saw limitations and some equivocal findings in genotoxicity data but no convincing evidence of genotoxicity, and said no epidemiological studies allow conclusions about human health effects. It attributes the difference with EFSA to how particle data were weighed. Committee members' declarations not read."
+  },
+  {
+   "title": "Titanium dioxide as a color additive in foods",
+   "publisher": "US Food and Drug Administration",
+   "type": "regulator web page",
+   "date": "2024-03-04",
+   "url": "https://www.fda.gov/industry/color-additives/titanium-dioxide-color-additive-foods",
+   "verified": true,
+   "note": "Read. FDA allows titanium dioxide in food up to 1 percent titanium by weight of the food, says it did not identify genotoxicity concerns in the available data and notes no cancer in National Toxicology Program studies. FDA is reviewing a petition filed 14 April 2023 to repeal the permission. Page is dated March 2024; later action was not checked."
+  }
+ ],
+ "source_check": {
+  "state": "partial",
+  "summary": "Checked 2026-10-03. Three regulator documents read. Panel and committee member declarations not read. Not read: the full EFSA opinion, the primary genotoxicity studies, the EU law that removed the additive, French ANSES opinions, and FDA action after March 2024. No retraction check run."
+ },
+ "next_review": "2027-04-03",
+ "dossier": "docs/dossiers/additives-health.md",
+ "changelog": [
+  {
+   "date": "2026-10-03",
+   "change": "Record created for the additives health evidence round.",
+   "reason": "Owner asked that additives relate to health."
+  }
+ ]
+},
+{
+ "scope_type": "general research",
+ "reviewed_by": "Draft prepared by OpenLabel research; owner review pending (Jesse Pringle)",
+ "owner_signoff": null,
+ "review_state": "provisional",
+ "reviewed_on": "2026-10-03",
+ "topic": "additives",
+ "id": "potassium-bromate-cancer",
+ "subject": "Potassium bromate (E924) used in flour",
+ "claim": "Potassium bromate used to treat flour can cause cancer when eaten.",
+ "applies_to": "People who put additives on their watch list, for products that list potassium bromate, bromated flour or E924. The evidence is from animal studies. Not a medical recommendation.",
+ "amount": "No safe amount is set. JECFA withdrew its earlier acceptable flour-treatment level after finding bromate in bread even at formerly acceptable levels. The label does not state the amount.",
+ "color": "yellow",
+ "status": "unresolved",
+ "color_reason": "Rats and hamsters developed kidney and other tumors, and two international bodies acted on that: IARC classed it as possibly carcinogenic and JECFA withdrew its acceptable flour-treatment level. There are no human studies, and the US still permits it. Whether risk exists at the residues in bread is unresolved, so no direction is claimed.",
+ "shows": [
+  "IARC (1999) found sufficient evidence in experimental animals and inadequate evidence in humans, and classified potassium bromate as possibly carcinogenic to humans (Group 2B).",
+  "JECFA reported kidney, thyroid and peritoneal tumors in rats and kidney tumors in hamsters, found bromate in bread at formerly acceptable treatment levels, and concluded the use was not appropriate.",
+  "California's Food Safety Act bans it in foods from 1 January 2027, per a law-firm summary; the same summary reports no federal action."
+ ],
+ "does_not_show": [
+  "That bread with potassium bromate has caused cancer in anyone. No human data were available.",
+  "How much bromate remains in a given loaf. Residues depend on baking and are not on the label.",
+  "The current US federal position. We did not find an FDA statement in this review.",
+  "Whether other countries' bans were based on the same rat studies. They likely were, so these are not fully independent."
+ ],
+ "sources": [
+  {
+   "title": "IARC Monographs Volume 73: potassium bromate",
+   "publisher": "International Agency for Research on Cancer",
+   "type": "expert hazard classification",
+   "date": "1999",
+   "url": "https://publications.iarc.who.int/_publications/media/download/2459/19686c49c92f5a7541f1fa0aaba78c54f0c03c5b.pdf",
+   "verified": true,
+   "note": "Read. Inadequate evidence in humans and sufficient evidence in experimental animals; overall Group 2B, possibly carcinogenic to humans. Rats developed kidney tumors; no human data were available to the Working Group. A hazard classification, not a risk estimate. Working Group members' declarations not read."
+  },
+  {
+   "title": "Potassium bromate (WHO Food Additives Series 30)",
+   "publisher": "Joint FAO/WHO Expert Committee on Food Additives (JECFA)",
+   "type": "international expert committee monograph",
+   "date": "1990s (year not stated on the page)",
+   "url": "https://inchem.org/documents/jecfa/jecmono/v30je17.htm",
+   "verified": true,
+   "note": "Read. Reports kidney, thyroid and peritoneal tumors in rats and kidney tumors in hamsters; bromate was still found in bread at formerly acceptable flour-treatment levels. The Committee concluded use as a flour-treatment agent was not appropriate and withdrew the earlier acceptable level. Committee members' declarations not read."
+  },
+  {
+   "title": "Food and color additives: is the patchwork here?",
+   "publisher": "Venable LLP (law firm client alert)",
+   "type": "legal commentary",
+   "date": "2024-08",
+   "url": "https://www.venable.com/insights/publications/2024/08/food-and-color-additives-is-the-patchwork-here",
+   "verified": true,
+   "note": "Read. California's Food Safety Act (AB 418) bans potassium bromate, brominated vegetable oil, propylparaben and FD&C Red No. 3 in foods, effective 1 January 2027; several other states have pending bills; the article reports no federal action on potassium bromate. Law-firm summary, secondary source; the bill text was not read."
+  }
+ ],
+ "source_check": {
+  "state": "partial",
+  "summary": "Checked 2026-10-03. IARC monograph and the JECFA monograph read; neither member declarations nor the JECFA meeting year were found on the pages. California commentary is a law-firm summary; the bill text was not read. Not read: the original rat studies, the FDA position, EU and UK status documents, and recent residue surveys. No retraction check run."
+ },
+ "next_review": "2027-04-03",
+ "dossier": "docs/dossiers/additives-health.md",
+ "changelog": [
+  {
+   "date": "2026-10-03",
+   "change": "Record created for the additives health evidence round.",
+   "reason": "Owner asked that additives relate to health."
+  }
+ ]
+},
+{
+ "scope_type": "general research",
+ "reviewed_by": "Draft prepared by OpenLabel research; owner review pending (Jesse Pringle)",
+ "owner_signoff": null,
+ "review_state": "provisional",
+ "reviewed_on": "2026-10-03",
+ "topic": "additives",
+ "id": "benzoate-preservatives-intake",
+ "subject": "Benzoate preservatives (E210 to E213) in drinks and foods",
+ "claim": "Benzoate preservatives in drinks and foods harm health at usual intakes.",
+ "applies_to": "People who put additives on their watch list, for products that list benzoic acid, sodium benzoate, potassium benzoate, calcium benzoate or E210 to E213. Benzene formation applies only when ascorbic acid or erythorbic acid is also present. Not a medical recommendation.",
+ "amount": "EFSA's group acceptable daily intake is 5 mg per kg body weight a day as benzoic acid, about 350 mg for a 70 kg adult (our arithmetic). EFSA estimated heavy, brand-loyal consumers, especially toddlers and children who often drink flavoured drinks, can exceed it. The label does not state the amount.",
+ "color": "yellow",
+ "status": "unresolved",
+ "color_reason": "EFSA judged benzoates low in toxicity with no genotoxicity or cancer concern, but estimated that some children's intake can exceed the safe-intake figure. FDA found trace benzene in a few drinks that combine benzoate with vitamin C and judged it no safety concern. A child behavior trial used benzoate together with dyes and cannot separate them. The question is unresolved, so no direction is claimed.",
+ "shows": [
+  "EFSA (2016, via a trade press report): group intake limit 5 mg per kg a day; in brand-loyal scenarios the limit was exceeded, mainly for toddlers and children drinking flavoured drinks; toxicity low; no genotoxicity or carcinogenicity concern.",
+  "FDA's 2005 to 2007 survey found benzene above 5 parts per billion in 10 of almost 200 drinks, 9 with both added benzoate and ascorbic acid; FDA said the levels did not pose a safety concern.",
+  "In the Southampton trial, a drink mixture that included sodium benzoate with dyes increased hyperactivity scores in some children, but the trial cannot say which ingredient was responsible."
+ ],
+ "does_not_show": [
+  "That the benzoate in this product harms you. The EFSA exceedance is a modeled scenario for heavy consumers of certain drinks.",
+  "Whether this product forms benzene. It depends on formulation, heat, light and storage, and the label does not say. The survey is from 2005 to 2007; current levels were not checked.",
+  "That benzoate alone affects behavior. The trial combined it with dyes.",
+  "Anything about benzoates naturally present in some fruits."
+ ],
+ "sources": [
+  {
+   "title": "EFSA pronounces on benzoates (news report of the 2016 re-evaluation of benzoic acid and its salts)",
+   "publisher": "Ingredients Network (trade press) reporting EFSA ANS Panel opinion, April 2016",
+   "type": "trade press report of regulator opinion",
+   "date": "2016-04-13",
+   "url": "https://www.ingredientsnetwork.com/efsa-pronounces-on-benzoates-news039964.html",
+   "verified": true,
+   "note": "Read (secondary report; the EFSA opinion itself was not read). Group ADI 5 mg per kg body weight a day as benzoic acid, from a rat study with no effect at the highest dose. Brand-loyal exposure exceeded the ADI, especially for toddlers and children who regularly drink flavoured drinks. Toxicity judged low; no genotoxicity concern or carcinogenic potential indicated."
+  },
+  {
+   "title": "Questions and answers on the occurrence of benzene in soft drinks and other beverages",
+   "publisher": "US Food and Drug Administration",
+   "type": "regulator web page",
+   "date": "2007 survey; page undated",
+   "url": "https://www.fda.gov/food/environmental-contaminants-food/questions-and-answers-occurrence-benzene-soft-drinks-and-other-beverages",
+   "verified": true,
+   "note": "Read. Benzene can form at very low levels in some drinks containing benzoate salts and ascorbic acid or erythorbic acid, stimulated by heat and light. In FDA's 2005 to 2007 survey of almost 200 drinks, 10 had benzene above 5 parts per billion, 9 of them with both added benzoate and ascorbic acid. FDA said the levels found did not pose a safety concern. Current product levels were not checked."
+  },
+  {
+   "title": "McCann et al., Food additives and hyperactive behaviour in 3-year-old and 8/9-year-old children in the community",
+   "publisher": "The Lancet (copy hosted by CSPI)",
+   "type": "randomized trial",
+   "date": "2007-09-06",
+   "url": "https://www.cspinet.org/sites/default/files/attachment/mccann.pdf",
+   "verified": true,
+   "note": "Read in the dyes record (see that dossier for design and funding). Used here because one of the two tested drink mixtures included sodium benzoate along with dyes, so it cannot separate benzoate from the dyes."
+  }
+ ],
+ "source_check": {
+  "state": "partial",
+  "summary": "Checked 2026-10-03. The EFSA opinion itself was not read, only a trade press report of it. FDA page read; its date is not on the page. McCann 2007 read in the dyes record. Not read: the full EFSA opinion, current FDA or Health Canada benzene data, studies of benzoate and asthma or skin reactions, and the 2022 EFSA update if one exists. No retraction check run."
+ },
+ "next_review": "2027-04-03",
+ "dossier": "docs/dossiers/additives-health.md",
+ "changelog": [
+  {
+   "date": "2026-10-03",
+   "change": "Record created for the additives health evidence round.",
+   "reason": "Owner asked that additives relate to health."
+  }
+ ]
 }
 ];
 
@@ -1284,6 +1501,7 @@ var SUGAR=/\b(?:cane\s+sugar|brown\s+sugar|invert\s+sugar|raw\s+sugar|powdered\s
 var DRINK=/\b(?:sodas?|colas?|lemonades?|soft\s+drinks?|soda\s+pop|energy\s+drinks?|sports?\s+drinks?|fruit\s+drinks?|juice\s+drinks?|punch|iced\s+teas?|sweet(?:ened)?\s+teas?|teas?|drinks?|beverages?|juices?|smoothies?|kombucha|carbonated\s+drinks?)\b/i;
 var DYE=/\b(?:fd&c\s*)?(?:red|yellow|blue|green)\s*(?:no\.?\s*|number\s*|#\s*)?(?:40|3|5|6|1|2)\b(?:\s*lake)?|\ballura\s+red\b|\btartrazine\b|\bsunset\s+yellow\b|\bbrilliant\s+blue\b|\bindigotine\b|\bindigo\s+carmine\b|\bfast\s+green\b|\berythrosine\b|\bcitrus\s+red\b|\borange\s+b\b|\bquinoline\s+yellow\b|\bcarmoisine\b|\bazorubine\b|\bponceau\s+4r\b|\be(?:102|104|110|122|124|127|129|132|133|143)\b|\bartificial\s+colou?rs?\b/gi;
 function uniq(a){var o=[];a.forEach(function(x){x=x.toLowerCase().replace(/\s+/g,' ');if(o.indexOf(x)<0)o.push(x)});return o}
+var TIO2=/\btitanium\s+dioxide\b|\be171\b|\bci\s*77891\b/gi,BROMATE=/\bpotassium\s+bromate\b|\bbromated\s+flour\b|\be924[ab]?\b/gi,BENZOATE=/\b(?:sodium|potassium|calcium)\s+benzoate\b|\bbenzoic\s+acid\b|\be21[0-3]\b/gi,ASCORB=/\bascorbic\s+acid\b|\bvitamin\s+c\b|\berythorbic\s+acid\b|\bsodium\s+(?:erythorbate|ascorbate)\b|\be(?:300|301|315|316)\b/i;
 function detect(topic,text,ctxName){
  text=String(text||'');var m;
  if(topic==='curedmeats'){
@@ -1294,6 +1512,7 @@ function detect(topic,text,ctxName){
  if(topic==='dyes'){var d=uniq(text.match(DYE)||[]);return{found:d}}
  if(topic==='sweeteners'){var sw=uniq(text.match(NSS)||[]),po=uniq(text.match(POLYOL)||[]);var asp=uniq(text.match(ASP)||[]);return{found:sw.concat(po),nss:sw,polyols:po,aspartame:asp}}
  if(topic==='addedsugar'){var sg=uniq(text.match(SUGAR)||[]);return{found:sg,drink:DRINK.test(String(ctxName||''))||/^\s*carbonated\s+water\b/i.test(text)}}
+ if(topic==='additives'){var tio=uniq(text.match(TIO2)||[]),brm=uniq(text.match(BROMATE)||[]),bzo=uniq(text.match(BENZOATE)||[]),asc=ASCORB.test(text);return{found:tio.concat(brm,bzo),tio2:tio,bromate:brm,benzoate:bzo,benzene:bzo.length>0&&asc}}
  return{found:[]};
 }
 function notesFor(r,found){

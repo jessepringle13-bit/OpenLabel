@@ -101,5 +101,18 @@ t(id+' chip says no evidence finding',R.resolve(x,{topics:[x.topic],now:NOW}).ch
 t(id+' reason says not a finding of safety or harm',/not (a finding|yet reviewed)|does not mean harmful/i.test(x.color_reason));
 t(id+' overdue goes grey',R.resolve(x,{topics:[x.topic],now:new Date('2027-04-05')}).note==='overdue');
 t(id+' has 5+ sources',x.sources.length>=5)});
+['titanium-dioxide-genotoxicity','potassium-bromate-cancer','benzoate-preservatives-intake'].forEach(function(id){var x=clone(R.get(id));
+t(id+' valid',R.validate(x).length===0);
+t(id+' provisional, no signoff',x.review_state==='provisional'&&x.owner_signoff===null);
+t(id+' yellow',x.color==='yellow'&&x.topic==='additives');
+t(id+' grey when additives not watched',R.resolve(x,{topics:[],now:NOW}).color==='grey');
+t(id+' yellow when watched',R.resolve(x,{topics:['additives'],now:NOW}).color==='yellow');
+t(id+' overdue grey',R.resolve(x,{topics:['additives'],now:new Date('2027-04-05')}).note==='overdue')});
+var ad1=R.detect('additives','Carbonated water, sodium benzoate, erythorbic acid, titanium dioxide, E924');
+t('detect additives finds titanium dioxide',ad1.tio2.length===1);
+t('detect additives finds bromate code',ad1.bromate.length===1);
+t('detect benzene flag needs benzoate and ascorbate',ad1.benzene===true&&R.detect('additives','sodium benzoate, water').benzene===false);
+t('detect additives ignores plain list',R.detect('additives','water, salt, flour').found.length===0);
+t('toxicity record about titanium oxide not matching zinc oxide',R.detect('additives','zinc oxide').tio2.length===0);
 
 console.log(n+' cases, '+f+' failed');process.exit(f?1:0);

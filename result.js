@@ -105,10 +105,14 @@ if(hasSweet){var swb=el('div'),r2=el('div','chiprow'),swNames=(ing.match(new Reg
 var RG=window.OLRegister,sdt=RG?RG.detect('sweeteners',ing):{nss:[],aspartame:[]},nssCode=codes.some(function(c){return /^E9(50|51|52|54|55|56|57|59|6[0-2])$/i.test(c)}),aspCode=codes.some(function(c){return /^E9(51|62)$/i.test(c)}),nssApplies=sdt.nss.length>0||nssCode;
 var sr=regFill(swb,'sweeteners-weight-disease',[],[],null,nssApplies);rows.push(row('sweet','Sweeteners',sr.color,sr.chip,swb,{rec:sr.rec}));
 if(sdt.aspartame.length||aspCode){var ab2=el('div'),ar2=regFill(ab2,'aspartame-cancer',['Listed: aspartame.'],[],null);rows.push(row('sweetasp','Aspartame and cancer',ar2.color,ar2.chip,ab2,{rec:ar2.rec}))}}
+var adt=window.OLRegister?window.OLRegister.detect('additives',ing+' '+codes.join(' ')):{tio2:[],bromate:[],benzoate:[],benzene:false};
 if(codes.length){var ab=el('div'),ar=el('div','chiprow');codes.forEach(function(c){var nmn=ECODE[String(c).toLowerCase()];ar.append(el('span',null,c+(nmn?' · '+nmn:'')))});ab.append(ar);
 var has=function(t){return rows.some(function(x){return x.type===t})},cov={},unrev=[];
 codes.forEach(function(c){var u=String(c).toUpperCase(),w=null;
 if(/^E(102|104|110|122|124|127|129|132|133|143)$/.test(u)&&has('dyes'))w='Food dyes';
+else if(/^E171$/.test(u))w='Titanium dioxide';
+else if(/^E924[AB]?$/.test(u))w='Potassium bromate';
+else if(/^E21[0-3]$/.test(u))w='Benzoates';
 else if(/^E(249|250|251|252)$/.test(u)&&has('cured'))w='Cured meats';
 else if(/^E(950|951|952|954|955|957|959|961|962|969)$/.test(u)&&has('sweet'))w='Sweeteners';
 else if(/^E407A?$/.test(u))w='Carrageenan';
@@ -119,6 +123,10 @@ if(covK.length)ab.append(para('Have their own row: '+covK.map(function(k){return
 if(unrev.length)ab.append(para('Not yet reviewed by us: '+unrev.join(', ')+'. Not yet reviewed does not mean harmful.'));
 var arr=regFill(ab,'additives-label-review',[],[],null),watchedAdd=regTopics().indexOf('additives')>=0;
 rows.push(row('add','Additives','grey',codes.length+' listed · '+(unrev.length?unrev.length+' not yet reviewed':'all have their own row')+(watchedAdd?' · on your watch list':''),ab,{rec:arr.rec}))}
+function addRow(type,title,id,found,extra){var bb=el('div'),rr=regFill(bb,id,['Listed: '+found.join(', ')+'.'].concat(extra||[]),[],null);rows.push(row(type,title,rr.color,rr.chip,bb,{rec:rr.rec}))}
+if(adt.tio2.length)addRow('addtio2','Titanium dioxide','titanium-dioxide-genotoxicity',adt.tio2);
+if(adt.bromate.length)addRow('addbrom','Potassium bromate','potassium-bromate-cancer',adt.bromate);
+if(adt.benzoate.length)addRow('addbenz','Benzoate preservatives','benzoate-preservatives-intake',adt.benzoate,adt.benzene?['Ascorbic acid or a similar ingredient is also listed. That combination can form trace benzene in some drinks, depending on heat and light. The label does not show whether it did.']:[]);
 var cf=fa['Caffeine'],over=F.filter(function(x){return /^Above your caffeine limit/.test(x.head)})[0];
 if(cf){var cb=el('div');cb.append(para(over?over.body:cf+'. No higher than the daily limit you set.'));rows.push(row('caf','Caffeine',over?'orange':'grey',over?'Above your limit':'Within your limit',cb,{pin:!!over}))}
 return rows}
@@ -138,7 +146,7 @@ var WN=['Reason','Source','Scope','Applies to','Limits','Review status'];
 function whyOf(r){if(r.rec&&r.color&&r.color!=='grey'){var q=r.rec;return[q.color_reason,q.sources.map(function(x){return x.title}).slice(0,3).join('; ')+(q.sources.length>3?' and '+(q.sources.length-3)+' more (see the evidence sheet)':''),'Evidence type: '+q.scope_type+'. Status: '+q.status+'.',q.applies_to,'Does not show: '+q.does_not_show[0],'Reviewer: '+q.reviewed_by+' ('+q.reviewed_on+'). Source check: '+q.source_check.state+'. Next review due '+q.next_review+'.']}if(!r.color||r.color==='grey'||!r.type)return null;var k=r.type;if(k==='intol'||k==='sweet'||k==='add'||k==='emul'||k==='flav'||k==='sugar'||k==='proc')k=r.color==='yellow'?'seed':'topic';if(k==='gut')return null;return WHY[k]||null}
 function whyBlock(r){var w=whyOf(r);if(!w)return null;var d=el('details','olr-why'),s=el('summary',null,'Why this color'),b=el('div');w.forEach(function(x,i){var p=el('p');p.append(el('b',null,WN[i]+': '),document.createTextNode(x));b.append(p)});d.append(s,b);return d}
 function mkRow(r){var d=el('details','olr'+(r.color?' c-'+r.color:'')+(r.pin?' pin':''));if(r.open)d.open=true;var s=el('summary');s.append(el('span','t',r.title));if(r.color){var c=el('span','chip2');c.append(el('span','dot'),document.createTextNode(r.chip));s.append(c)}s.append(el('span','cv'));var b=el('div','olr-b');b.append(r.body);var wb=whyBlock(r);if(wb)b.append(wb);d.append(s,b);rowEls[r.type]=d;return d}
-var TAGN={allergen:'Allergens',recall:'Recalls',test:'Testing',seed:'Seed oils',proc:'Processing',sweet:'Sweeteners',add:'Additives',caf:'Caffeine',diet:'Diets',intol:'Intolerances',gut:'Gut',emul:'Emulsifiers',carra:'Carrageenan'};
+var TAGN={addtio2:'Titanium dioxide',addbrom:'Potassium bromate',addbenz:'Benzoates',allergen:'Allergens',recall:'Recalls',test:'Testing',seed:'Seed oils',proc:'Processing',sweet:'Sweeteners',add:'Additives',caf:'Caffeine',diet:'Diets',intol:'Intolerances',gut:'Gut',emul:'Emulsifiers',carra:'Carrageenan'};
 function openRow(type){var d=rowEls[type];if(!d)return;d.open=true;function go(){d.scrollIntoView({block:'center',behavior:'smooth'})}if(mode!=='full'){setMode('full');setTimeout(go,330)}else go()}
 var SHORT=[[/^No match to your list$/,'no match'],[/^Matches your allergy$/,'matches you'],[/^Word on your list$/,'watch word'],[/^Trace warning$/,'trace warning'],[/^Not enough data$/,'no data'],[/^On your watch list$/,'watch list'],[/^([0-9]+) listed.*$/,'$1 listed'],[/^Above tester's limit$/,'above limit'],[/^Tester advises avoiding$/,'advised to avoid'],[/^Lead not detected in lots tested$/,'lead not detected'],[/^No test found$/,'none found'],[/^Contested evidence$/,'contested'],[/^Category-level only$/,'category only'],[/^Within your limit$/,'within limit'],[/^Above your limit$/,'above limit'],[/^Needs a fresh scan$/,'rescan']];
 function shortTag(c){for(var i=0;i<SHORT.length;i++){if(SHORT[i][0].test(c))return c.replace(SHORT[i][0],SHORT[i][1])}return c.charAt(0).toLowerCase()+c.slice(1)}
@@ -149,9 +157,14 @@ if(r.type==='diet')return true;
 if(r.type==='recall')return /couldn.?t|unavailable|failed|error|unknown|not listed|check/i.test(c)&&!/no match/i.test(c);
 return false}
 function tagsSection(rows){var w=el('div','tags'),kept=rows.filter(tagKeep);if(!kept.length){w.append(el('p','tags-none','Nothing from your profile matched. This is not a safety statement. Open Breakdown below to see everything we checked and what we could not tell.'));return w}kept.sort(function(a,b){return RANK[b.color]-RANK[a.color]}).forEach(function(r){var t=el('button','tag c-'+r.color);t.append(el('span','dot c-'+r.color),document.createTextNode((TAGN[r.type]||r.title)+': '+shortTag(r.chip)));t.onclick=function(){openRow(r.type)};w.append(t)});return w}
+(function(){var _ts=tagsSection;tagsSection=function(r){var w=_ts(r);if(window.__olHidden>0)w.append(el('p','tags-none',window.__olHidden+(window.__olHidden===1?' topic is':' topics are')+' hidden because '+(window.__olHidden===1?'it is':'they are')+' not on your watch list. You can add topics in Profile. Hidden does not mean nothing was found.'));return w}})();
 function render(){var m=scrape();if(!m.name)return;var code=curCode();nodes={};rowEls={};
 var ing=m.facts['Ingredients']||'';var rows=buildRows(m,ing);
 (window.OLPanelPlugins||[]).forEach(function(fn){try{var r=fn(m,{code:code,rows:rows,ing:ing});if(r){var at=r.at==null?rows.length:r.at;delete r.at;rows.splice(at,0,r)}}catch(e){}});
+var TOPIC_OF={cured:'curedmeats',dyes:'dyes',sweet:'sweeteners',sweetasp:'sweeteners',sugar:'addedsugar',sugardrink:'addedsugar',seed:'seedoils',seedh:'seedoils',proc:'ultra',flav:'flavors',emul:'emulsifiers',carra:'emulsifiers',add:'additives',addtio2:'additives',addbrom:'additives',addbenz:'additives'},wt=regTopics(),hidT={},hid=0;
+for(var hi=rows.length-1;hi>=0;hi--){var tp=TOPIC_OF[rows[hi].type];if(tp&&wt.indexOf(tp)<0&&rows[hi].color!=='red'){rows.splice(hi,1);hidT[tp]=1}}
+hid=Object.keys(hidT).length;
+window.__olHidden=hid;
 var all=rows.concat([buildNutrition(code?undefined:null),buildSources(m,code)]),pinned=rows.filter(function(r){return r.pin||r.color==='red'}),more=rows.filter(function(r){return !r.pin&&r.color!=='red'&&(r.color==='orange'||r.color==='yellow')}).sort(function(a,b){return RANK[b.color]-RANK[a.color]}).slice(0,3),shown=pinned.concat(more),rest=all.filter(function(r){return shown.indexOf(r)<0});var cnt={red:0,orange:0,yellow:0};rows.forEach(function(r){if(cnt[r.color]!=null)cnt[r.color]++});var nFind=cnt.red+cnt.orange+cnt.yellow;
 head.replaceChildren();var top=el('div','olp-top'),img=el('div','olp-img load');nodes.img=img;
 var id=el('div','olp-id');id.append(el('h2',null,m.name),el('div','olp-brand',m.brand),el('div','olp-cat',m.type));
