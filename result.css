@@ -8,7 +8,7 @@
 .olp-top{display:flex;gap:14px;align-items:flex-start}
 .olp-img{flex:none;width:84px;height:96px;border-radius:16px;background:#fff;border:1px solid var(--line);display:grid;place-items:center;overflow:hidden;color:var(--forest);font-size:30px}
 .olp-img img{width:100%;height:100%;object-fit:contain;display:block;pointer-events:none;-webkit-user-drag:none}
-.olp-img.load{background:linear-gradient(90deg,#EEF1F6 0,#F7F9FC 50%,#EEF1F6 100%);background-size:200% 100%;animation:olsh 1.2s linear infinite}
+.olp-img.load{background:linear-gradient(90deg,#F5EFE8 0,#FAF6F1 50%,#F5EFE8 100%);background-size:200% 100%;animation:olsh 1.2s linear infinite}
 @keyframes olsh{to{background-position:-200% 0}}
 .olp-id{flex:1;min-width:0}
 .olp-id h2{font-size:19px;line-height:1.2;letter-spacing:-.025em;color:var(--ink);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
@@ -24,7 +24,7 @@
 .mc{background:var(--ivory);border:1px solid var(--line);border-radius:16px;padding:10px 6px;text-align:center;min-width:0}
 .mc b{display:block;font-size:19px;letter-spacing:-.02em;color:var(--ink)}
 .mc span{display:block;font-size:12px;color:var(--muted);margin-top:2px}
-.mc.skel{height:62px;background:linear-gradient(90deg,#EEF1F6 0,#F7F9FC 50%,#EEF1F6 100%);background-size:200% 100%;animation:olsh 1.2s linear infinite}
+.mc.skel{height:62px;background:linear-gradient(90deg,#F5EFE8 0,#FAF6F1 50%,#F5EFE8 100%);background-size:200% 100%;animation:olsh 1.2s linear infinite}
 .tags{display:grid;grid-template-columns:1fr 1fr;gap:7px}
 .tag{display:flex;align-items:center;gap:6px;border-radius:14px;padding:7px 10px;font-size:12px;font-weight:760;text-align:left;line-height:1.2;min-height:36px;min-width:0}
 .ingcard{background:var(--ivory);border:1px solid var(--line);border-radius:18px;padding:14px}
