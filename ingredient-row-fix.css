@@ -1,1 +1,3 @@
 .ol-ing-row.ol-ing-neutral{border-left:4px solid #9ba9a4}.ol-ing-evidence-note{font-size:12px;color:#526862;border-top:1px solid #e2ebe7;padding-top:12px}.ol-ing-row[data-evidence=green]{border-left-color:#2b9469}.ol-ing-row[data-evidence=yellow]{border-left-color:#b29b25}.ol-ing-row[data-evidence=orange]{border-left-color:#d68137}.ol-ing-row[data-evidence=red]{border-left-color:#c54c50}
+
+.ol-ing-list{gap:4px}.ol-ing-row{min-height:36px;padding:6px 11px;border:0;border-left:3px solid #8fb3a4;border-radius:9px;background:#eaf2ee;font-size:13px}.ol-ing-row-name{font-weight:600;font-size:13px;text-transform:none}.ol-ing-row-meta{font-size:11px;color:#46675d}.ol-ing-row:focus-visible{outline:3px solid #2f5d4b;outline-offset:2px}
