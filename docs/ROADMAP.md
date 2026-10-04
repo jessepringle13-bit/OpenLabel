@@ -170,3 +170,4 @@ Phase 3 evidence register: design drafted in docs/EVIDENCE_REGISTER_DESIGN.md (P
 - 2026-10-04 (Built; cloud-checked after deploy, not phone tested): Text on buttons is centered (action buttons, tabs, chips). Row-style buttons, link-style buttons and the Show all ingredients and View label text controls keep their layout.
 - 2026-10-04 (Built; cloud-checked after deploy, not phone tested): Row buttons (Recent, Saved, Explore results, profile On and Off rows) and the Recalls and Lab tested tiles now have centered text.
 - 2026-10-04 (Built; cloud-checked after deploy, not phone tested): Profile On and Off rows go back to left-aligned text; every other row and tile stays centered.
+- 2026-10-04 (Built; cloud-checked after deploy, not phone tested): Home heading is now In the Spotlight, In focus! (small line above it removed).
