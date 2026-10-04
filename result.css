@@ -116,3 +116,6 @@ button.card small{color:var(--muted);-webkit-text-fill-color:var(--muted)}
 .ol-tiles .ol-tile .thumb{width:34px;height:34px;border-radius:11px;font-size:17px}
 .ol-tiles .ol-tile strong{font-size:14.5px}
 .ol-tiles .ol-tile small{font-size:11.5px;margin-top:2px;line-height:1.25}
+button:not(.card):not(.asbutton):not(.pl-row):not(.scan-cta):not(.link):not([class*="ol-ing"]):not(.lb-act){text-align:center;justify-content:center}
+.button,.lb-actions button,.lb-clear,.lb-open{display:flex;align-items:center;justify-content:center;text-align:center}
+.lb-actions button{display:inline-flex}
