@@ -103,3 +103,7 @@
 #savedArea .chevron,#historyArea .chevron{font-size:20px}
 #savedArea .lb-meta,#historyArea .lb-meta{margin-top:3px;gap:4px}
 #savedArea .lb-tag,#historyArea .lb-tag{font-size:10.5px;padding:2px 7px}
+button.card,button.card strong,button.card small{font-family:inherit}
+button.card{color:var(--ink);-webkit-text-fill-color:currentColor}
+button.card strong{color:var(--forest);-webkit-text-fill-color:var(--forest)}
+button.card small{color:var(--muted);-webkit-text-fill-color:var(--muted)}
