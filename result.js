@@ -178,6 +178,7 @@ if(r.type==='recall')return /couldn.?t|unavailable|failed|error|unknown|not list
 return false}
 function tagsSection(rows){var w=el('div','tags'),kept=rows.filter(tagKeep);if(!kept.length){w.append(el('p','tags-none','Nothing from your profile matched. This is not a safety statement. Open Breakdown below to see everything we checked and what we could not tell.'));return w}kept.sort(function(a,b){return RANK[b.color]-RANK[a.color]}).forEach(function(r){var t=el('button','tag c-'+r.color);t.append(el('span','dot c-'+r.color),document.createTextNode(TAGN[r.type]||r.title));t.setAttribute('aria-label',(TAGN[r.type]||r.title)+': '+shortTag(r.chip));t.onclick=function(){openRow(r.type)};w.append(t)});return w}
 
+function hd(t,sub){var w=el('div','olp-hw');w.append(el('div','olp-h',t));if(sub)w.append(el('div','olp-hs',sub));return w}
 function render(){var m=scrape();if(!m.name)return;var code=curCode();nodes={};rowEls={};
 var ing=m.facts['Ingredients']||'';var rows=buildRows(m,ing);
 (window.OLPanelPlugins||[]).forEach(function(fn){try{var r=fn(m,{code:code,rows:rows,ing:ing});if(r){var at=r.at==null?rows.length:r.at;delete r.at;rows.splice(at,0,r)}}catch(e){}});
@@ -195,11 +196,11 @@ cl.onclick=closePanel;act.append(sv,cl);top.append(img,id,act);
 handle=el('button','olp-handle');handle.onclick=function(){setMode(mode==='full'?'peek':'full')};
 head.append(handle,top);
 bodyEl.replaceChildren();
-bodyEl.append(el('div','olp-h','Macros'));nodes.mac=macroNode(code?undefined:null);bodyEl.append(nodes.mac);
+bodyEl.append(hd('Macros','Calories and main nutrients'));nodes.mac=macroNode(code?undefined:null);bodyEl.append(nodes.mac);
 var ap=window.OLProfile&&window.OLProfile.active&&window.OLProfile.active();bodyEl.append(tagsSection(rows));bodyEl.append(mkRow(nutR));
-bodyEl.append(el('div','olp-h','Ingredients'));bodyEl.append(ingSection(ing));
-if(shown.length){shown.forEach(function(r){bodyEl.append(mkRow(r,true))})}
-bodyEl.append(el('div','olp-h','Breakdown'));var fw=el('div','olp-flt'),brs=[];[['all','See all'],['find','Findings only'],['none','No findings']].forEach(function(f){var b=el('button','olp-fb'+(f[0]==='all'?' on':''),f[1]);b.type='button';b.setAttribute('aria-pressed',f[0]==='all'?'true':'false');b.onclick=function(){brs.forEach(function(x){var on=x===b;x.classList.toggle('on',on);x.setAttribute('aria-pressed',on?'true':'false')});brs2.forEach(function(p){var isF=p.r.color==='red'||p.r.color==='orange'||p.r.color==='yellow';p.d.hidden=!(f[0]==='all'||(f[0]==='find'&&isF)||(f[0]==='none'&&!isF))})};brs.push(b);fw.append(b)});if(rest.length>1)bodyEl.append(fw);var brs2=[];rest.forEach(function(r){var d=mkRow(r);brs2.push({r:r,d:d});bodyEl.append(d)});
+bodyEl.append(hd('Ingredients','As listed on the label'));bodyEl.append(ingSection(ing));
+if(shown.length){bodyEl.append(hd('Topics','Why each tag appeared'));shown.forEach(function(r){bodyEl.append(mkRow(r,true))})}
+bodyEl.append(hd('Breakdown','Everything else we checked'));var fw=el('div','olp-flt'),brs=[];[['all','See all'],['find','Findings only'],['none','No findings']].forEach(function(f){var b=el('button','olp-fb'+(f[0]==='all'?' on':''),f[1]);b.type='button';b.setAttribute('aria-pressed',f[0]==='all'?'true':'false');b.onclick=function(){brs.forEach(function(x){var on=x===b;x.classList.toggle('on',on);x.setAttribute('aria-pressed',on?'true':'false')});brs2.forEach(function(p){var isF=p.r.color==='red'||p.r.color==='orange'||p.r.color==='yellow';p.d.hidden=!(f[0]==='all'||(f[0]==='find'&&isF)||(f[0]==='none'&&!isF))})};brs.push(b);fw.append(b)});if(rest.length>1)bodyEl.append(fw);var brs2=[];rest.forEach(function(r){var d=mkRow(r);brs2.push({r:r,d:d});bodyEl.append(d)});
 setMode(mode,true);
 getExtra(code).then(function(x){if(tx('#resultName')!==m.name)return;nodes.img.classList.remove('load');if(x&&x.img){var im=document.createElement('img');im.alt='';im.draggable=false;im.decoding='async';im.onerror=function(){nodes.img.replaceChildren(document.createTextNode('▣'))};im.src=x.img;nodes.img.replaceChildren(im)}else{nodes.img.replaceChildren(document.createTextNode('▣'))}
 if(nodes.mac)nodes.mac.replaceWith(nodes.mac=macroNode(x));
@@ -227,6 +228,6 @@ $$('.view').forEach(function(v){vo.observe(v,{attributes:true,attributeFilter:['
 new MutationObserver(schedule).observe(res,{subtree:true,childList:true,characterData:true});
 track();schedule();
 if(API&&API.ready)API.ready.then(function(){regReady=true;if(!res.hidden&&panel&&!panel.hidden){var md=mode;render();setMode(md,true)}});else regReady=true;
-var sl=document.createElement('link');sl.rel='stylesheet';sl.href='scroll-hotfix.css';document.head.appendChild(sl);
-['recalls.js','profile.js','profile-rows.js','ingredient-loader.js','library.js','library-remove.js'].forEach(function(f){var sc=document.createElement('script');sc.src=f;document.body.appendChild(sc)});
+var sl=document.createElement('link');sl.rel='stylesheet';sl.href='scroll-hotfix.css?v=20261004c';document.head.appendChild(sl);
+['recalls.js','profile.js','profile-rows.js','ingredient-loader.js','library.js','library-remove.js'].forEach(function(f){var sc=document.createElement('script');sc.src=f+'?v=20261004c';document.body.appendChild(sc)});
 })();

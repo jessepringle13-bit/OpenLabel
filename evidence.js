@@ -21,6 +21,6 @@ $('#sheetExtra').replaceChildren(r);$('#sheetWrap').hidden=false;$('#closeSheet'
 function matchEntries(p){var out={prod:[],cat:[]};if(!REG||!REG.entries)return out;var t=textKey([p.brand,p.name,p.category].join(' '));
 REG.entries.forEach(function(e){var m=e.match||{};if(e.kind==='product'){if(m.brand&&m.name&&t.indexOf(textKey(m.brand))>=0&&t.indexOf(textKey(m.name))>=0)out.prod.push(e)}else if(m.any&&m.any.some(function(w){return t.indexOf(textKey(w))>=0}))out.cat.push(e)});return out}
 window.OLEvidence={renderGeneral:function(){},api:{ready:READY,matchEntries:matchEntries,openTestSheet:openTestSheet,seedWords:SEED_OIL_WORDS,textKey:textKey}};
-var lk=document.createElement('link');lk.rel='stylesheet';lk.href='result.css';document.head.appendChild(lk);
-var sc=document.createElement('script');sc.src='result.js';document.body.appendChild(sc);
+var lk=document.createElement('link');lk.rel='stylesheet';lk.href='result.css?v=20261004c';document.head.appendChild(lk);
+var sc=document.createElement('script');sc.src='result.js?v=20261004c';document.body.appendChild(sc);
 })();

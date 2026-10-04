@@ -85,7 +85,7 @@ else{R.color='grey';R.chip='No match found';b.append(para('We searched FDA and U
 foot(b,c.capped);return R}
 (window.OLPanelPlugins=window.OLPanelPlugins||[]).push(plugin);
 done();
-var sp=document.createElement('script');sp.src='recalls-page.js';document.body.appendChild(sp);
-var sg=document.createElement('script');sg.src='glossary.js';document.body.appendChild(sg);
-var sl=document.createElement('script');sl.src='lab-tested.js';document.body.appendChild(sl);
+var sp=document.createElement('script');sp.src='recalls-page.js?v=20261004c';document.body.appendChild(sp);
+var sg=document.createElement('script');sg.src='glossary.js?v=20261004c';document.body.appendChild(sg);
+var sl=document.createElement('script');sl.src='lab-tested.js?v=20261004c';document.body.appendChild(sl);
 })();
