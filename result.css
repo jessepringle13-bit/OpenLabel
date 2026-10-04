@@ -92,3 +92,4 @@
 #recentArea small,#exploreResults small{font-size:12px}
 #recentArea .chevron,#exploreResults .chevron{font-size:20px}
 .ol-tiles .ol-tile{justify-content:flex-start;padding:18px 16px}.ol-tiles .ol-tile strong{color:var(--forest)}
+#recentArea .grow strong,#recentArea .grow small,#exploreResults .grow strong,#exploreResults .grow small{display:block}#recentArea .grow small,#exploreResults .grow small{margin-top:1px;color:var(--muted)}
