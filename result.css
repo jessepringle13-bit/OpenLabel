@@ -109,3 +109,5 @@ button.card strong{color:var(--forest);-webkit-text-fill-color:var(--forest)}
 button.card small{color:var(--muted);-webkit-text-fill-color:var(--muted)}
 .pl-row.on{background:#fff;border-color:var(--orange);box-shadow:inset 0 0 0 1px var(--orange)}
 .pl-row.on .pl-s{background:var(--orange);color:var(--orange-ink)}
+.p2 .pl-list .pl-row.on{background:#fff;border-color:var(--orange);box-shadow:inset 0 0 0 1px var(--orange)}
+.p2 .pl-list .pl-row.on .pl-s{background:var(--orange);color:var(--orange-ink)}
