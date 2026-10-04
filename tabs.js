@@ -18,5 +18,6 @@ function counts(){var v={saved:sv.querySelectorAll('button.card').length,recent:
 var busy=false;function sched(){if(busy)return;busy=true;requestAnimationFrame(function(){busy=false;counts()})}
 new MutationObserver(sched).observe(lib,{childList:true,subtree:true});
 show('recent');counts();
+document.addEventListener('click',function(e){var g=e.target.closest&&e.target.closest('[data-go=library]');if(g)show('recent')},true);
 window.OLLibraryTabs={show:show};
 })();
