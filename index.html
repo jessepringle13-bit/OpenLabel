@@ -90,7 +90,7 @@ $('#manualCode').onkeydown=e=>{if(e.key==='Enter')$('#lookupCode').click()};
 $('#customWords').oninput=()=>{state.custom=parseWords($('#customWords').value);persist()};
 $('#limit').value=state.limit;$('#sweetener').checked=state.sweetener;
 $('#savePrefs').onclick=()=>{let raw=$('#limit').value.trim(),n=Number(raw);if(raw===''||!Number.isInteger(n)||n<0||n>1000){toast('Enter a whole number between 0 and 1000.');return}state.limit=n;state.sweetener=$('#sweetener').checked;state.custom=parseWords($('#customWords').value);persist();toast('Preferences saved on this device.')};
-window.OLOpenCode=function(code){return lookup(String(code||''),false)};
+window.OLOpenCode=function(code){return lookup(String(code||''),false)};window.OLLibraryApi={ids:function(which){return (which==='saved'?state.saved:state.history).filter(function(id){return !!getProduct(id)})},remove:function(which,id){if(which==='saved')state.saved=state.saved.filter(function(x){return x!==id});else state.history=state.history.filter(function(x){return x!==id});persist();renderLibrary();renderHome()},clearRecent:function(){state.history=[];persist();renderLibrary();renderHome()},toast:function(t){toast(t)}};
 $('#closeSheet').onclick=closeSheet;$('#sheetWrap').onclick=e=>{if(e.target===$('#sheetWrap'))closeSheet()};document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet()});
 renderHome();renderExplore();renderLibrary();renderProfile();$('#customWords').value=state.custom.join(', ');go('scan')})();
 </script></body></html>
