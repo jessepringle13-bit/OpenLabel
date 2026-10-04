@@ -28,7 +28,7 @@ Round 3, 2026-10-03. Three provisional records, all recommended yellow. Status: 
 ## Decisions for Jesse
 
 1. Ultra-processed food color. Recommended yellow because certainty ratings disagree between reviews, the trials are small, and the cause (processing versus nutrients) is disputed. The earlier app behavior was orange. Orange is defensible if you want the diet-pattern association alone to count as a reason to limit.
-2. Emulsifiers: confirm the row is hidden from the research (grey, Listed, may not apply) when only lecithin is found.
+2. Emulsifiers: confirm the row shows grey with the chip "Listed · may not apply" when only lecithin is found.
 3. Carrageenan: confirm a separate row, shown only when carrageenan, E407 or E407a is listed.
 4. Review interval: 6 months (regulator-linked: EFSA temporary carrageenan limit, pending US definition of ultra-processed food). Next review 2027-04-03.
 5. Sign-off: say 'sign off' for any record and it will be marked reviewed under your name.
