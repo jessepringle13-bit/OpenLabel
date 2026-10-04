@@ -119,3 +119,9 @@ button.card small{color:var(--muted);-webkit-text-fill-color:var(--muted)}
 button:not(.card):not(.asbutton):not(.pl-row):not(.scan-cta):not(.link):not([class*="ol-ing"]):not(.lb-act){text-align:center;justify-content:center}
 .button,.lb-actions button,.lb-clear,.lb-open{display:flex;align-items:center;justify-content:center;text-align:center}
 .lb-actions button{display:inline-flex}
+button.card .grow,button.card .grow strong,button.card .grow small{text-align:center}
+button.card .lb-meta{justify-content:center}
+.ol-tiles .ol-tile{align-items:center;text-align:center}
+.ol-tiles .ol-tile .grow{text-align:center}
+.pl-row .pl-t{flex:1;text-align:center}
+.pl-row{padding-left:70px}

@@ -168,3 +168,4 @@ Phase 3 evidence register: design drafted in docs/EVIDENCE_REGISTER_DESIGN.md (P
 - 2026-10-04 (Built; cloud-checked after deploy, not phone tested): Recalls and Lab tested tiles on Home and Explore are smaller and tighter (no longer square).
 - 2026-10-04 (Built; not yet confirmed on a phone): Home screen icon files renamed to icon-180/192/512.png with the green magnifier and orange check, linked from the page and the manifest. An already-installed home screen icon must be removed and added again to pick it up.
 - 2026-10-04 (Built; cloud-checked after deploy, not phone tested): Text on buttons is centered (action buttons, tabs, chips). Row-style buttons, link-style buttons and the Show all ingredients and View label text controls keep their layout.
+- 2026-10-04 (Built; cloud-checked after deploy, not phone tested): Row buttons (Recent, Saved, Explore results, profile On and Off rows) and the Recalls and Lab tested tiles now have centered text.
