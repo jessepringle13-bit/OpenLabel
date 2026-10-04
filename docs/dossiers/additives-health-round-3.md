@@ -62,7 +62,7 @@ Sources:
 Source check (partial): Checked 2026-10-03. JECFA entry, FDA exposure document, WHO assessment and EU paper read. The cancer classifications for semicarbazide and ethyl carbamate come from an advocacy group's page and were not checked at IARC or NTP. The JECFA safety concern was not described. Not read: the full 21 CFR 172.806 text, FDA's review list entry, any human or bread-specific study. No retraction check run.
 
 ## Sorbic acid and sorbates (E200 to E203)
-Color: grey (unsupported). Record id: sorbates-intake.
+Color: grey (unresolved, shown as no evidence finding). Record id: sorbates-intake.
 
 Claim: Sorbic acid and potassium sorbate used as preservatives harm health at usual intakes.
 
@@ -92,7 +92,7 @@ Sources:
 Source check (partial): Checked 2026-10-03. JECFA entry, EFSA 2015 abstract record, EU regulation and one cell study read. EFSA's 2019 follow-up opinion was read only through the EU regulation. Panel declarations not read. A 2025 systematic review of preservative cell studies mostly concerns benzoate and was not used. No retraction check run.
 
 ## Artificial flavors
-Color: grey (unsupported). Record id: artificial-flavors-health.
+Color: grey (unresolved, shown as no evidence finding). Record id: artificial-flavors-health.
 
 Claim: Artificial flavors, as a listed ingredient, affect health for better or worse.
 

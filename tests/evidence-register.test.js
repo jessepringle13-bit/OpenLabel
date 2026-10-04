@@ -124,7 +124,7 @@ t(id+' 4+ sources',x.sources.length>=4);
 t(id+' grey when topic not watched',R.resolve(x,{topics:[],now:NOW}).color==='grey');
 t(id+' own color when watched',R.resolve(x,{topics:[x.topic],now:NOW}).color===x.color);
 t(id+' overdue grey',R.resolve(x,{topics:[x.topic],now:new Date('2027-04-05')}).note==='overdue')});
-t('sorbates and artificial flavors grey unsupported, never green',['sorbates-intake','artificial-flavors-health'].every(function(i){var x=R.get(i);return x.color==='grey'&&x.status==='unsupported'}));
+t('sorbates and artificial flavors grey, no evidence finding, never green',['sorbates-intake','artificial-flavors-health'].every(function(i){var x=R.get(i);return x.color==='grey'&&x.status==='unresolved'&&R.resolve(x,{topics:[x.topic],now:NOW}).chip==='No evidence finding'}));
 t('tbhq and ada yellow unresolved',['tbhq-intake','azodicarbonamide-safety'].every(function(i){var x=R.get(i);return x.color==='yellow'&&x.status==='unresolved'}));
 t('artificial flavors topic is flavors',R.get('artificial-flavors-health').topic==='flavors');
 var D2=R.detect('additives','TBHQ, azodicarbonamide, potassium sorbate, E202','');

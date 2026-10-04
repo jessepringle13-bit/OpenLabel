@@ -2134,7 +2134,7 @@ var RECORDS=[
  "applies_to": "People who put additives on their watch list, for products that list sorbic acid, potassium sorbate, calcium sorbate, sodium sorbate or E200 to E203. Not a medical recommendation.",
  "amount": "EFSA's group acceptable daily intake for sorbic acid and potassium sorbate is 11 mg per kg body weight a day (2019), about 770 mg for a 70 kg adult (our arithmetic); it was 3 in 2015 and JECFA's older figure is 25. The label does not state the amount.",
  "color": "grey",
- "status": "unsupported",
+ "status": "unresolved",
  "color_reason": "Regulators have set intake limits and say usual intake is below them, but the limits moved from 25 to 3 to 11 mg per kg as new data arrived, and some cell-culture studies of sorbates found DNA damage markers. We found no human studies of health outcomes. No evidence finding is not a finding of safety, and it is not a finding of harm. No color is shown.",
  "shows": [
   "JECFA (1973) set a group acceptable daily intake of 0 to 25 mg per kg a day.",
@@ -2212,7 +2212,7 @@ var RECORDS=[
  "applies_to": "People who put flavors on their watch list, for products that list artificial flavor, artificial flavors or artificial flavoring. Does not cover any single flavor chemical. Not a medical recommendation.",
  "amount": "Not stated on labels. Artificial flavors are listed as one ingredient without their components or amounts.",
  "color": "grey",
- "status": "unsupported",
+ "status": "unresolved",
  "color_reason": "Artificial flavor covers many different chemicals that the label does not itemize, and we found no studies of artificial flavors as a group. FDA has removed individual flavoring chemicals when animal cancer data were presented, which shows that individual chemicals can matter but says nothing about this product. No evidence finding is not a finding of safety, and it is not a finding of harm. No color is shown.",
  "shows": [
   "US rules define artificial flavor as flavoring that does not come from the plant and animal sources listed for natural flavor.",
