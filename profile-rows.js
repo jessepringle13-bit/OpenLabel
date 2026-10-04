@@ -84,10 +84,12 @@ if(!REG||!fill){var sel=P.topics.indexOf('addedsugar')>=0,b0=el('div');b0.append
 var at0=ctx.rows.length,det=REG.detect('addedsugar',ing,(m.name||'')+' '+(m.category||'')),b=el('div'),rs=fill(b,'added-sugar-dental-caries',[line1,line2],[],null);
 if(det.drink){var b2=el('div'),rs2=fill(b2,'sugary-drinks-weight-diabetes',['This looks like a sweetened drink: the name or ingredient list suggests a drink and sugar-type ingredients are listed. We guess this from the name, so check the package.'],[],null);ctx.rows.push({type:'sugardrink',title:'Added sugar: sweetened drinks',color:rs2.color,chip:rs2.chip,body:b2,rec:rs2.rec,pin:false,open:false})}
 return{type:'sugar',title:det.drink?'Added sugar: tooth decay':'Added sugar',color:rs.color,chip:rs.chip,body:b,rec:rs.rec,pin:false,open:false,at:at0}}
-function flavPlugin(m,ctx){var ing=ctx.ing||'',h=hits(ing,['natural flavor','natural flavors','natural flavour','natural flavours','natural flavoring']);if(!h.length)return null;var sel=prof().topics.indexOf('flavors')>=0,b=el('div');
-b.append(para('Natural flavor is a flavoring made from a natural source. The ingredient list does not show the individual components.'));
+function flavPlugin(m,ctx){var ing=ctx.ing||'',h=hits(ing,['natural flavor','natural flavors','natural flavour','natural flavours','natural flavoring']);if(!h.length)return null;var sel=prof().topics.indexOf('flavors')>=0,b=el('div'),REG=window.OLRegister,fill=window.OLRegFill;
+var def='Natural flavor is a flavoring made from a natural source. The ingredient list does not show the individual components.';
+if(!REG||!fill){b.append(para(def));return{type:'flav',title:'Natural flavors',color:'grey',chip:'Listed',body:b,pin:false,open:false}}
+var rs=fill(b,'natural-flavors-health',[def],[],null);
 if(window.OLGloss){var bt=el('button','link','What is this?');bt.onclick=function(){window.OLGloss.open('natural flavors')};b.append(bt)}
-return{type:'flav',title:'Natural flavors',color:sel?'orange':'grey',chip:sel?'On your watch list':'Listed',body:b,pin:false,open:false}}
+return{type:'flav',title:'Natural flavors',color:rs.color,chip:sel||rs.note==='overdue'||rs.note==='invalid'?rs.chip+(sel&&rs.note==='ok'?' · on your watch list':''):'Listed',body:b,rec:rs.rec,pin:false,open:false}}
 function emulPlugin(m,ctx){var ing=ctx.ing||'',codes=(m.facts['Additives listed']||'').toLowerCase();var h=hits(ing+' '+codes,EMUL);if(!h.length)return null;
 var REG=window.OLRegister,fill=window.OLRegFill,lecOnly=h.every(function(w){return /lecithin|^e322$/.test(w)}),carra=h.some(function(w){return /carrageenan|^e407/.test(w)});
 var what='What they are: additives that help oil and water mix, or that thicken and stabilize, used to improve texture and extend shelf life. Some of the items found are gums and thickeners that researchers group with emulsifiers.';
@@ -106,7 +108,7 @@ return{type:'gut',title:'Gut: live cultures, prebiotics, fermented',color:'grey'
 function topicMutate(m,ctx){var T=prof().topics;ctx.rows.forEach(function(r){
 /* seed oils color now comes from the evidence register (evidence-register.js) */
 if(r.type==='sweet'&&!r.rec){var on=T.indexOf('sweeteners')>=0;r.color=on?'orange':'grey';r.chip=on?'On your watch list':'Listed'}
-if(r.type==='add'){var on2=T.indexOf('additives')>=0;r.color=on2?'orange':'grey';var mm=/^([0-9]+)/.exec(r.chip);r.chip=(mm?mm[1]+' listed · ':'')+(on2?'on your watch list':'not yet reviewed')}
+if(r.type==='add'&&!r.rec){var on2=T.indexOf('additives')>=0;r.color=on2?'orange':'grey';var mm=/^([0-9]+)/.exec(r.chip);r.chip=(mm?mm[1]+' listed · ':'')+(on2?'on your watch list':'not yet reviewed')}
 if(r.type==='proc'&&!r.rec){var u=T.indexOf('ultra')>=0&&r.chip==='Ultra-processed';if(u){r.color='orange';r.chip='On your watch list · ultra-processed'}else if(r.color==='orange'||r.color==='yellow'||r.color==='green')r.color='grey'}});return null}
 window.OLDietEval=evalDiet;
 var P=window.OLPanelPlugins=window.OLPanelPlugins||[];

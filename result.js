@@ -105,7 +105,20 @@ if(hasSweet){var swb=el('div'),r2=el('div','chiprow'),swNames=(ing.match(new Reg
 var RG=window.OLRegister,sdt=RG?RG.detect('sweeteners',ing):{nss:[],aspartame:[]},nssCode=codes.some(function(c){return /^E9(50|51|52|54|55|56|57|59|6[0-2])$/i.test(c)}),aspCode=codes.some(function(c){return /^E9(51|62)$/i.test(c)}),nssApplies=sdt.nss.length>0||nssCode;
 var sr=regFill(swb,'sweeteners-weight-disease',[],[],null,nssApplies);rows.push(row('sweet','Sweeteners',sr.color,sr.chip,swb,{rec:sr.rec}));
 if(sdt.aspartame.length||aspCode){var ab2=el('div'),ar2=regFill(ab2,'aspartame-cancer',['Listed: aspartame.'],[],null);rows.push(row('sweetasp','Aspartame and cancer',ar2.color,ar2.chip,ab2,{rec:ar2.rec}))}}
-if(codes.length){var ab=el('div'),ar=el('div','chiprow');codes.forEach(function(c){var nmn=ECODE[String(c).toLowerCase()];ar.append(el('span',null,c+(nmn?' · '+nmn:'')))});ab.append(ar,para('We have not yet reviewed the evidence on these additives. Listed does not mean harmful.'));rows.push(row('add','Additives','grey',codes.length+' listed · not yet reviewed',ab))}
+if(codes.length){var ab=el('div'),ar=el('div','chiprow');codes.forEach(function(c){var nmn=ECODE[String(c).toLowerCase()];ar.append(el('span',null,c+(nmn?' · '+nmn:'')))});ab.append(ar);
+var has=function(t){return rows.some(function(x){return x.type===t})},cov={},unrev=[];
+codes.forEach(function(c){var u=String(c).toUpperCase(),w=null;
+if(/^E(102|104|110|122|124|127|129|132|133|143)$/.test(u)&&has('dyes'))w='Food dyes';
+else if(/^E(249|250|251|252)$/.test(u)&&has('cured'))w='Cured meats';
+else if(/^E(950|951|952|954|955|957|959|961|962|969)$/.test(u)&&has('sweet'))w='Sweeteners';
+else if(/^E407A?$/.test(u))w='Carrageenan';
+else if(/^E(322|405|410|412|414|415|418|433|461|464|466|471|472[A-F]|481|491)$/.test(u))w='Emulsifiers and stabilizers';
+if(w){(cov[w]=cov[w]||[]).push(c)}else unrev.push(c)});
+var covN=codes.length-unrev.length,covK=Object.keys(cov);
+if(covK.length)ab.append(para('Have their own row: '+covK.map(function(k){return cov[k].join(', ')+' ('+k+')'}).join('; ')+'.'));
+if(unrev.length)ab.append(para('Not yet reviewed by us: '+unrev.join(', ')+'. Not yet reviewed does not mean harmful.'));
+var arr=regFill(ab,'additives-label-review',[],[],null),watchedAdd=regTopics().indexOf('additives')>=0;
+rows.push(row('add','Additives','grey',codes.length+' listed · '+(unrev.length?unrev.length+' not yet reviewed':'all have their own row')+(watchedAdd?' · on your watch list':''),ab,{rec:arr.rec}))}
 var cf=fa['Caffeine'],over=F.filter(function(x){return /^Above your caffeine limit/.test(x.head)})[0];
 if(cf){var cb=el('div');cb.append(para(over?over.body:cf+'. No higher than the daily limit you set.'));rows.push(row('caf','Caffeine',over?'orange':'grey',over?'Above your limit':'Within your limit',cb,{pin:!!over}))}
 return rows}

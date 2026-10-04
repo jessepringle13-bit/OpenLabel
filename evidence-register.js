@@ -1022,6 +1022,191 @@ var RECORDS=[
    "reason": "Owner approval."
   }
  ]
+},
+{
+ "scope_type": "general research",
+ "reviewed_by": "Draft prepared by OpenLabel research; owner review pending (Jesse Pringle)",
+ "owner_signoff": null,
+ "review_state": "provisional",
+ "reviewed_on": "2026-10-03",
+ "id": "natural-flavors-health",
+ "topic": "flavors",
+ "subject": "Natural flavors named in the ingredient list",
+ "claim": "Natural flavors, as a listed ingredient, affect health for better or worse.",
+ "applies_to": "People who put natural flavors on their watch list, for products listing natural flavor, natural flavors or natural flavoring. The term covers many different mixtures, so no single finding can apply to all of them. Not a medical or allergy recommendation.",
+ "amount": "Not applicable. The label gives neither the amount of natural flavor nor what is in it.",
+ "color": "grey",
+ "status": "unresolved",
+ "color_reason": "We found no studies of natural flavors as a group, and the term covers many different mixtures that the label does not itemize. No color is shown. No evidence finding is not a finding of safety, and it is not a finding of harm.",
+ "shows": [
+  "US rules define natural flavor by where its flavoring constituents come from (plant or animal sources) and allow extraction, heating or enzyme processing, with the function being flavor rather than nutrition.",
+  "Consumer Reports' scientist says natural and artificial flavors are not nutritionally different and are probably safe for most people, but that specific ingredients are generally not reviewed by FDA and companies usually do not have to list them.",
+  "In the EU, about 2,000 chemically defined flavouring substances have been assessed in groups by EFSA."
+ ],
+ "does_not_show": [
+  "What is in the natural flavor in this product. The label does not say.",
+  "That natural flavors are safe, or that they are harmful. We found no trials or cohort studies of natural flavors as a class.",
+  "That natural is healthier than artificial. The sources read say there is no nutritional difference, and the Dietary Guidelines list artificial flavors, not natural ones, among things to limit.",
+  "Anything about allergies. A flavor can contain an allergen source, and anyone with an allergy should check the allergen statement and the maker.",
+  "Anything from inhalation studies of flavor chemicals (for example in vaping), which do not describe eating."
+ ],
+ "sources": [
+  {
+   "title": "21 CFR 101.22: Foods; labeling of spices, flavorings, colorings and chemical preservatives",
+   "publisher": "US Code of Federal Regulations (eCFR / GovInfo 2025 edition)",
+   "type": "regulation",
+   "date": "2025",
+   "url": "https://www.govinfo.gov/content/pkg/CFR-2025-title21-vol2/pdf/CFR-2025-title21-vol2-sec101-22.pdf",
+   "verified": true,
+   "note": "Read, paragraph (a)(3) only. Defines natural flavor as an essential oil, oleoresin, essence or extractive, protein hydrolysate, distillate, or any product of roasting, heating or enzymolysis containing flavoring constituents derived from a spice, fruit, vegetable, edible yeast, herb, bark, bud, root, leaf or similar plant material, meat, seafood, poultry, eggs, dairy products or fermentation products of these, whose significant function in food is flavoring rather than nutritional. The labeling paragraphs on how flavors may be declared were not retrieved verbatim."
+  },
+  {
+   "title": "Are 'natural flavors' healthier than artificial flavors?",
+   "publisher": "Consumer Reports",
+   "type": "consumer journalism",
+   "date": "2022-05-10",
+   "url": "https://www.consumerreports.org/health/food-additives/are-natural-flavors-healthier-than-artificial-flavors-a6393690728/",
+   "verified": true,
+   "note": "Read. Quotes Consumer Reports senior scientist Michael Hansen: no real nutritional difference between natural and artificial flavors, and both are probably safe for most people. Says the specific ingredients generally are not reviewed by FDA, companies are usually not required to list what is in a flavor, and people with food allergies should be careful. Secondary source; funding not applicable (Consumer Reports takes no advertising)."
+  },
+  {
+   "title": "Flavourings",
+   "publisher": "European Food Safety Authority",
+   "type": "regulator web page",
+   "date": "2026",
+   "url": "https://www.efsa.europa.eu/en/topics/topic/flavourings",
+   "verified": true,
+   "note": "Read. EFSA advises the European Commission on flavourings. Chemically defined flavouring substances are assessed in groups (about 2,000 substances through Flavouring Group Evaluations). The page names flavouring preparations such as orange oil and vanilla extract as a type of flavouring but does not say whether each is assessed individually."
+  },
+  {
+   "title": "Substances Generally Recognized as Safe (proposed rule)",
+   "publisher": "US Food and Drug Administration, with HHS fact sheet of 10 August 2026",
+   "type": "regulatory proposal",
+   "date": "2026-08-11",
+   "url": "https://www.fda.gov/about-fda/economic-impact-analyses-fda-regulations/substances-generally-recognized-safe-proposed-rule",
+   "verified": true,
+   "note": "Read, with the HHS fact sheet (https://www.hhs.gov/press-room/fact-sheet-hhs-announces-proposed-gras-rule.html). Proposed 11 August 2026: GRAS notices to FDA would become mandatory for certain uses of food substances, with a time-limited streamlined submission pathway for substances already on the market under earlier self-GRAS conclusions. HHS says manufacturers have not been required to notify FDA of such conclusions. Comments are open until 9 December 2026. It is a proposal, not a final rule."
+  },
+  {
+   "title": "Dietary Guidelines for Americans, 2025-2030",
+   "publisher": "US Department of Health and Human Services and US Department of Agriculture",
+   "type": "government guidance",
+   "date": "2026-01",
+   "url": "https://cdn.realfood.gov/DGA.pdf",
+   "verified": true,
+   "note": "Read. Tells people to limit foods and beverages that include artificial flavors, petroleum-based dyes, artificial preservatives and low-calorie non-nutritive sweeteners, and to avoid highly processed packaged foods. Does not name natural flavors. Gives no definition of highly processed foods and cites no study beside those lines."
+  },
+  {
+   "title": "Mechanisms of toxicity and biomarkers of flavoring and flavor-enhancing chemicals in emerging tobacco and non-tobacco products",
+   "publisher": "PubMed Central (review)",
+   "type": "review",
+   "date": "2019",
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6549714/",
+   "verified": false,
+   "note": "Search snippet only; full text not read. Covers inhalation of flavoring chemicals in e-cigarettes and similar products and says the flavorings are believed safe for ingestion but little is known about lung effects. Included only to show that inhalation findings should not be applied to eating."
+  }
+ ],
+ "source_check": {
+  "state": "partial",
+  "summary": "Checked 2026-10-03. Regulation paragraph (a)(3) read; labeling paragraphs not retrieved verbatim. Consumer Reports and EFSA pages read. Not read: FEMA expert panel process and publications (industry-run), FDA flavor guidance, studies of specific flavor compounds (for example diacetyl and benzene formation), solvent residues in extracts, EWG or other advocacy positions, and any EU review of flavouring preparations. The inhalation review was seen as a snippet only. No retraction check run."
+ },
+ "next_review": "2027-04-03",
+ "dossier": "docs/dossiers/additives-and-natural-flavors.md",
+ "changelog": [
+  {
+   "date": "2026-10-03",
+   "change": "Record created. Replaces the hand-set orange color shown when natural flavors were on the watch list.",
+   "reason": "Owner asked to wire additives and natural flavors into the register."
+  }
+ ]
+},
+{
+ "scope_type": "general research",
+ "reviewed_by": "Draft prepared by OpenLabel research; owner review pending (Jesse Pringle)",
+ "owner_signoff": null,
+ "review_state": "provisional",
+ "reviewed_on": "2026-10-03",
+ "id": "additives-label-review",
+ "topic": "additives",
+ "subject": "Food additives listed by E-number or name",
+ "claim": "An additive on the ingredient list has been shown safe, at the amount in this product, by an independent regulator review.",
+ "applies_to": "People who put additives on their watch list, for any product with additives listed in Open Food Facts. This is about the review process, not about any single additive. Additives with their own row (food dyes, sweeteners, cured meat ingredients, emulsifiers, carrageenan) have separate records.",
+ "amount": "Not applicable. Labels do not give additive amounts; regulators set limits per additive and per food category, and a product's actual amount is not on the label.",
+ "color": "grey",
+ "status": "unresolved",
+ "color_reason": "Review practice differs. In the EU every authorised additive needs an EFSA assessment, but 70 older additives were still awaiting re-evaluation as of 10 September 2026. In the US, a company can conclude on its own that an ingredient is generally recognized as safe, and FDA has proposed making notification mandatory but has not finalized it. Whether any one additive was reviewed is not on the label, so no color is shown. Not yet reviewed does not mean harmful.",
+ "shows": [
+  "EU: additives permitted before 2009 must be re-assessed by EFSA. As of 10 September 2026 the European Commission reports 137 opinions covering 245 of the additives in scope and 70 still to be re-evaluated.",
+  "US: companies have been able to conclude on their own that a substance is generally recognized as safe without notifying FDA. FDA published a proposed rule on 11 August 2026 that would make notices mandatory for certain uses, with a streamlined route for existing uses. Comments close 9 December 2026.",
+  "A 2013 analysis of 451 GRAS notices sent to FDA found most determinations were made by manufacturer employees, manufacturer-hired consultants or panels they chose, and judged conflicts of interest likely."
+ ],
+ "does_not_show": [
+  "That an additive on this label is unsafe, or that it is safe. Review status and health evidence are different questions.",
+  "Whether FDA reviewed a given US additive. Some are approved by regulation, some have FDA no-questions letters, and some rest on a company's own conclusion; the label does not say which.",
+  "That the 2013 analysis showed any decision was biased or wrong. Its authors did not test that, and it covers only notices companies sent voluntarily.",
+  "Anything about amounts or combinations of additives.",
+  "What happens after the US proposal is finalized, or the outcome of the remaining EU re-evaluations."
+ ],
+ "sources": [
+  {
+   "title": "Re-evaluation of food additives permitted before 20 January 2009",
+   "publisher": "European Commission, Food Safety",
+   "type": "regulator web page",
+   "date": "2026-09-10",
+   "url": "https://food.ec.europa.eu/food-safety/food-improvement-agents/additives/re-evaluation_en",
+   "verified": true,
+   "note": "Read. EU additives permitted before 20 January 2009 must be re-assessed by EFSA. As of 10 September 2026 the page reports 315 additives in scope, 137 opinions covering 245 additives, and 70 still to be re-evaluated; the deadline for other additives was the end of 2018 and for other sweeteners the end of 2020, both listed as ongoing."
+  },
+  {
+   "title": "HHS Secretary Kennedy directs FDA to explore rulemaking to eliminate the self-affirmed GRAS pathway",
+   "publisher": "US Department of Health and Human Services",
+   "type": "government press release",
+   "date": "2025-03-10",
+   "url": "https://www.hhs.gov/press-room/revising-gras-pathway.html",
+   "verified": true,
+   "note": "Read. Says that under the existing process companies can self-affirm that a substance is generally recognized as safe without notifying FDA, and that this let new ingredients with often unknown safety data enter the food supply without notice to FDA or the public. This is HHS's characterization, not a finding by a neutral reviewer."
+  },
+  {
+   "title": "Substances Generally Recognized as Safe (proposed rule)",
+   "publisher": "US Food and Drug Administration, with HHS fact sheet of 10 August 2026",
+   "type": "regulatory proposal",
+   "date": "2026-08-11",
+   "url": "https://www.fda.gov/about-fda/economic-impact-analyses-fda-regulations/substances-generally-recognized-safe-proposed-rule",
+   "verified": true,
+   "note": "Read, with the HHS fact sheet (https://www.hhs.gov/press-room/fact-sheet-hhs-announces-proposed-gras-rule.html). Proposed 11 August 2026: GRAS notices to FDA would become mandatory for certain uses of food substances, with a time-limited streamlined submission pathway for substances already on the market under earlier self-GRAS conclusions. HHS says manufacturers have not been required to notify FDA of such conclusions. Comments are open until 9 December 2026. It is a proposal, not a final rule."
+  },
+  {
+   "title": "Neltner et al., Conflicts of interest in approvals of additives to food determined to be generally recognized as safe: out of balance",
+   "publisher": "JAMA Internal Medicine",
+   "type": "cross-sectional analysis of FDA records",
+   "date": "2013",
+   "url": "https://bpb-us-e1.wpmucdn.com/sites.tufts.edu/dist/7/4288/files/2018/05/pub2013ConflictsofInterestinApprovalsofAdditives.pdf",
+   "verified": true,
+   "note": "Read. Of 451 voluntarily submitted GRAS notices (1997 to 2012), 22.4 percent were decided by an employee of the additive's manufacturer, 13.3 percent by a consulting-firm employee chosen by the manufacturer and 64.3 percent by an expert panel chosen by a consulting firm or the manufacturer; none by a standing panel chosen by a third party. Authors judged conflicts of interest as likely but did not show that any decision was actually biased or harmful. Covers only notices companies chose to send FDA, and is dated. Funding and author disclosures not captured. Challenged by some food safety experts, per a trade press report."
+  },
+  {
+   "title": "Dietary Guidelines for Americans, 2025-2030",
+   "publisher": "US Department of Health and Human Services and US Department of Agriculture",
+   "type": "government guidance",
+   "date": "2026-01",
+   "url": "https://cdn.realfood.gov/DGA.pdf",
+   "verified": true,
+   "note": "Read. Tells people to limit foods and beverages that include artificial flavors, petroleum-based dyes, artificial preservatives and low-calorie non-nutritive sweeteners, and to avoid highly processed packaged foods. Does not name natural flavors. Gives no definition of highly processed foods and cites no study beside those lines."
+  }
+ ],
+ "source_check": {
+  "state": "partial",
+  "summary": "Checked 2026-10-03. EU and US regulator pages read. Neltner 2013 read; funding and author disclosures not captured, and the paper dates from before recent FDA changes. Not read: FDA's inventory of GRAS notices, the Federal Register proposed rule in full, EFSA opinions on individual additives, industry rebuttals of the 2013 analysis, and which of the 70 outstanding EU additives are common in US products. No retraction check run."
+ },
+ "next_review": "2027-04-03",
+ "dossier": "docs/dossiers/additives-and-natural-flavors.md",
+ "changelog": [
+  {
+   "date": "2026-10-03",
+   "change": "Record created. Replaces the hand-set orange color shown when additives were on the watch list.",
+   "reason": "Owner asked to wire additives and natural flavors into the register."
+  }
+ ]
 }
 ];
 
