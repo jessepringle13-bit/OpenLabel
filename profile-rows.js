@@ -109,7 +109,7 @@ if(pre.length)item('prebiotic fiber','Possible prebiotic fiber',pre,'A prebiotic
 if(fer.length)item('fermented','Fermented',fer,'Fermented foods are made through desired microbial growth. They are not the same as probiotics: they need not contain live microbes at the strain level or show a health benefit.');
 b.append(para('We only report what the ingredient list says is present. Whether it helps your gut depends on the specific microbe or fiber and the amount, which labels rarely give.'));
 var a=el('a',null,'ISAPP: consensus definitions of probiotics, prebiotics and fermented foods');a.href='https://isappscience.org/a-roundup-of-the-isapp-consensus-definitions-probiotics-prebiotics-synbiotics-postbiotics-and-fermented-foods/';a.target='_blank';a.rel='noopener noreferrer';a.style.cssText='color:var(--forest);font-weight:700;overflow-wrap:anywhere';var pp=el('p');pp.append(a);b.append(pp);
-return{type:'gut',title:'Gut: live cultures, prebiotics, fermented',color:'grey',chip:'Contains: '+parts.join(', '),body:b,pin:false,open:false}}
+return{type:'gut',title:'Gut effect',color:'grey',chip:'Contains: '+parts.join(', '),body:b,pin:false,open:false}}
 function topicMutate(m,ctx){var T=prof().topics;ctx.rows.forEach(function(r){
 /* seed oils color now comes from the evidence register (evidence-register.js) */
 if(r.type==='sweet'&&!r.rec){var on=T.indexOf('sweeteners')>=0;r.color=on?'orange':'grey';r.chip=on?'On your watch list':'Listed'}
