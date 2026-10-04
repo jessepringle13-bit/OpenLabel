@@ -229,5 +229,5 @@ new MutationObserver(schedule).observe(res,{subtree:true,childList:true,characte
 track();schedule();
 if(API&&API.ready)API.ready.then(function(){regReady=true;if(!res.hidden&&panel&&!panel.hidden){var md=mode;render();setMode(md,true)}});else regReady=true;
 var sl=document.createElement('link');sl.rel='stylesheet';sl.href='scroll-hotfix.css?v=20261004c';document.head.appendChild(sl);
-['recalls.js','profile.js','profile-rows.js','ingredient-loader.js','library.js','library-remove.js'].forEach(function(f){var sc=document.createElement('script');sc.src=f+'?v=20261004c';document.body.appendChild(sc)});
+['recalls.js','profile.js','profile-rows.js','ingredient-loader.js','library.js','library-remove.js','tiles.js'].forEach(function(f){var sc=document.createElement('script');sc.src=f+'?v=20261004c';document.body.appendChild(sc)});
 })();
