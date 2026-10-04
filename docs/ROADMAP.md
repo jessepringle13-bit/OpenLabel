@@ -139,3 +139,5 @@ Phase 3 evidence register: design drafted in docs/EVIDENCE_REGISTER_DESIGN.md (P
 - Seed oils record (before split): round 1 review done 2026-10-03 (12 sources with links, funding read for 11; round 2 added the 2025-2030 Dietary Guidelines, its Scientific Foundation review and author interests; MAHA report passage noted). Validator passes, 46 cases; not yet checked on a phone. Open: color decision (see docs/reviews/2026-10-03-seed-oils.md), Su 2017 full text, MAHA strategy report (Sept 2025), Simopoulos 2008, WHO omega-6 review, Ramsden 2016 critiques; owner sign-off pending.
 - Full-text reads of remaining primary papers (2025 meta-analysis, UK Biobank, EPIC, NutriNet-Santé).
 - Re-run the search for dye trials after 2021 and the IARC priorities page at each review date.
+
+- Additive records sign-off (2026-10-04): owner signed off all additive records: bha-cancer, bht-intake, sulfites-sensitivity, propylparaben-endocrine, tbhq-intake, azodicarbonamide-safety (kept yellow), sorbates-intake (kept grey), artificial-flavors-health. Rows built but not phone tested.

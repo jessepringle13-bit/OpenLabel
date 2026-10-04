@@ -1452,9 +1452,9 @@ var RECORDS=[
 },
 {
  "scope_type": "general research",
- "reviewed_by": "Draft prepared by OpenLabel research; owner review pending (Jesse Pringle)",
- "owner_signoff": null,
- "review_state": "provisional",
+ "reviewed_by": "Reviewed by Jesse Pringle (owner); research by OpenLabel",
+ "owner_signoff": "2026-10-04 Jesse Pringle",
+ "review_state": "reviewed",
  "reviewed_on": "2026-10-03",
  "topic": "additives",
  "next_review": "2027-04-03",
@@ -1516,14 +1516,19 @@ var RECORDS=[
    "date": "2026-10-03",
    "change": "Record created for the additives health evidence round 2.",
    "reason": "Owner asked for more additives."
+  },
+  {
+   "date": "2026-10-04",
+   "change": "Owner signed off the record and its color as written.",
+   "reason": "Owner approval."
   }
  ]
 },
 {
  "scope_type": "general research",
- "reviewed_by": "Draft prepared by OpenLabel research; owner review pending (Jesse Pringle)",
- "owner_signoff": null,
- "review_state": "provisional",
+ "reviewed_by": "Reviewed by Jesse Pringle (owner); research by OpenLabel",
+ "owner_signoff": "2026-10-04 Jesse Pringle",
+ "review_state": "reviewed",
  "reviewed_on": "2026-10-03",
  "topic": "additives",
  "next_review": "2027-04-03",
@@ -1576,14 +1581,19 @@ var RECORDS=[
    "date": "2026-10-03",
    "change": "Record created for the additives health evidence round 2.",
    "reason": "Owner asked for more additives."
+  },
+  {
+   "date": "2026-10-04",
+   "change": "Owner signed off the record and its color as written.",
+   "reason": "Owner approval."
   }
  ]
 },
 {
  "scope_type": "general research",
- "reviewed_by": "Draft prepared by OpenLabel research; owner review pending (Jesse Pringle)",
- "owner_signoff": null,
- "review_state": "provisional",
+ "reviewed_by": "Reviewed by Jesse Pringle (owner); research by OpenLabel",
+ "owner_signoff": "2026-10-04 Jesse Pringle",
+ "review_state": "reviewed",
  "reviewed_on": "2026-10-03",
  "topic": "additives",
  "next_review": "2027-04-03",
@@ -1636,14 +1646,19 @@ var RECORDS=[
    "date": "2026-10-03",
    "change": "Record created for the additives health evidence round 2.",
    "reason": "Owner asked for more additives."
+  },
+  {
+   "date": "2026-10-04",
+   "change": "Owner signed off the record and its color as written.",
+   "reason": "Owner approval."
   }
  ]
 },
 {
  "scope_type": "general research",
- "reviewed_by": "Draft prepared by OpenLabel research; owner review pending (Jesse Pringle)",
- "owner_signoff": null,
- "review_state": "provisional",
+ "reviewed_by": "Reviewed by Jesse Pringle (owner); research by OpenLabel",
+ "owner_signoff": "2026-10-04 Jesse Pringle",
+ "review_state": "reviewed",
  "reviewed_on": "2026-10-03",
  "topic": "additives",
  "next_review": "2027-04-03",
@@ -1705,6 +1720,11 @@ var RECORDS=[
    "date": "2026-10-03",
    "change": "Record created for the additives health evidence round 2.",
    "reason": "Owner asked for more additives."
+  },
+  {
+   "date": "2026-10-04",
+   "change": "Owner signed off the record and its color as written.",
+   "reason": "Owner approval."
   }
  ]
 },
@@ -1956,9 +1976,9 @@ var RECORDS=[
 },
 {
  "scope_type": "general research",
- "reviewed_by": "Draft prepared by OpenLabel research; owner review pending (Jesse Pringle)",
- "owner_signoff": null,
- "review_state": "provisional",
+ "reviewed_by": "Reviewed by Jesse Pringle (owner); research by OpenLabel",
+ "owner_signoff": "2026-10-04 Jesse Pringle",
+ "review_state": "reviewed",
  "reviewed_on": "2026-10-03",
  "topic": "additives",
  "next_review": "2027-04-03",
@@ -2029,14 +2049,19 @@ var RECORDS=[
    "date": "2026-10-03",
    "change": "Record created for the additives health evidence round 3.",
    "reason": "Owner asked for TBHQ, azodicarbonamide, sorbates and artificial flavors."
+  },
+  {
+   "date": "2026-10-04",
+   "change": "Owner signed off the record and its color as written.",
+   "reason": "Owner approval."
   }
  ]
 },
 {
  "scope_type": "general research",
- "reviewed_by": "Draft prepared by OpenLabel research; owner review pending (Jesse Pringle)",
- "owner_signoff": null,
- "review_state": "provisional",
+ "reviewed_by": "Reviewed by Jesse Pringle (owner); research by OpenLabel",
+ "owner_signoff": "2026-10-04 Jesse Pringle",
+ "review_state": "reviewed",
  "reviewed_on": "2026-10-03",
  "topic": "additives",
  "next_review": "2027-04-03",
@@ -2116,14 +2141,19 @@ var RECORDS=[
    "date": "2026-10-03",
    "change": "Record created for the additives health evidence round 3.",
    "reason": "Owner asked for TBHQ, azodicarbonamide, sorbates and artificial flavors."
+  },
+  {
+   "date": "2026-10-04",
+   "change": "Owner signed off the record and its color as written.",
+   "reason": "Owner approval."
   }
  ]
 },
 {
  "scope_type": "general research",
- "reviewed_by": "Draft prepared by OpenLabel research; owner review pending (Jesse Pringle)",
- "owner_signoff": null,
- "review_state": "provisional",
+ "reviewed_by": "Reviewed by Jesse Pringle (owner); research by OpenLabel",
+ "owner_signoff": "2026-10-04 Jesse Pringle",
+ "review_state": "reviewed",
  "reviewed_on": "2026-10-03",
  "topic": "additives",
  "next_review": "2027-04-03",
@@ -2194,14 +2224,19 @@ var RECORDS=[
    "date": "2026-10-03",
    "change": "Record created for the additives health evidence round 3.",
    "reason": "Owner asked for TBHQ, azodicarbonamide, sorbates and artificial flavors."
+  },
+  {
+   "date": "2026-10-04",
+   "change": "Owner signed off the record and its color as written.",
+   "reason": "Owner approval."
   }
  ]
 },
 {
  "scope_type": "general research",
- "reviewed_by": "Draft prepared by OpenLabel research; owner review pending (Jesse Pringle)",
- "owner_signoff": null,
- "review_state": "provisional",
+ "reviewed_by": "Reviewed by Jesse Pringle (owner); research by OpenLabel",
+ "owner_signoff": "2026-10-04 Jesse Pringle",
+ "review_state": "reviewed",
  "reviewed_on": "2026-10-03",
  "topic": "flavors",
  "next_review": "2027-04-03",
@@ -2272,6 +2307,11 @@ var RECORDS=[
    "date": "2026-10-03",
    "change": "Record created for the additives health evidence round 3.",
    "reason": "Owner asked for TBHQ, azodicarbonamide, sorbates and artificial flavors."
+  },
+  {
+   "date": "2026-10-04",
+   "change": "Owner signed off the record and its color as written.",
+   "reason": "Owner approval."
   }
  ]
 }

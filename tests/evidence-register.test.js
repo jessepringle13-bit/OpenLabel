@@ -103,7 +103,7 @@ t(id+' overdue goes grey',R.resolve(x,{topics:[x.topic],now:new Date('2027-04-05
 t(id+' has 5+ sources',x.sources.length>=5)});
 ['bha-cancer','bht-intake','sulfites-sensitivity','propylparaben-endocrine'].forEach(function(id){var x=clone(R.get(id));
 t(id+' valid',R.validate(x).length===0);
-t(id+' provisional, no signoff',x.review_state==='provisional'&&x.owner_signoff===null);
+t(id+' owner signed off 2026-10-04',x.review_state==='reviewed'&&x.owner_signoff==='2026-10-04 Jesse Pringle');
 t(id+' additives topic, 2+ sources',x.topic==='additives'&&x.sources.length>=2);
 t(id+' grey when additives not watched',R.resolve(x,{topics:[],now:NOW}).color==='grey');
 t(id+' own color when watched',R.resolve(x,{topics:['additives'],now:NOW}).color===x.color);
@@ -119,7 +119,7 @@ t(id+' owner signed off 2026-10-04',x.review_state==='reviewed'&&x.owner_signoff
 t(id+' yellow when watched',R.resolve(x,{topics:['additives'],now:NOW}).color==='yellow')});
 ['tbhq-intake','azodicarbonamide-safety','sorbates-intake','artificial-flavors-health'].forEach(function(id){var x=clone(R.get(id));
 t(id+' valid',R.validate(x).length===0);
-t(id+' provisional, no signoff',x.review_state==='provisional'&&x.owner_signoff===null);
+t(id+' owner signed off 2026-10-04',x.review_state==='reviewed'&&x.owner_signoff==='2026-10-04 Jesse Pringle');
 t(id+' 4+ sources',x.sources.length>=4);
 t(id+' grey when topic not watched',R.resolve(x,{topics:[],now:NOW}).color==='grey');
 t(id+' own color when watched',R.resolve(x,{topics:[x.topic],now:NOW}).color===x.color);
