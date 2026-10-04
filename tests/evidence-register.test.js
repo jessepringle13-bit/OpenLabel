@@ -86,7 +86,7 @@ t('drink detected from category',R.detect('addedsugar','water, sugar','Mountain 
 t('snack category is not a drink',R.detect('addedsugar','flour, sugar','Pop-Tarts Snacks').drink===false);
 ['emulsifiers-gut-disease','carrageenan-gut-disease','ultra-processed-health'].forEach(function(id){var x=clone(R.get(id));
 t(id+' valid',R.validate(x).length===0);
-t(id+' provisional, no signoff',x.review_state==='provisional'&&x.owner_signoff===null);
+t(id+' signed off by owner',x.review_state==='reviewed'&&x.owner_signoff==='2026-10-03 Jesse Pringle');
 t(id+' yellow, not orange',x.color==='yellow');
 t(id+' grey when not watched',R.resolve(x,{topics:[],now:NOW}).color==='grey');
 t(id+' yellow when watched',R.resolve(x,{topics:[x.topic],now:NOW}).color==='yellow');

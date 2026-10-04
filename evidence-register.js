@@ -638,9 +638,9 @@ var RECORDS=[
 },
 {
  "scope_type": "general research",
- "reviewed_by": "Draft prepared by OpenLabel research; owner review pending (Jesse Pringle)",
- "owner_signoff": null,
- "review_state": "provisional",
+ "reviewed_by": "Reviewed by Jesse Pringle (owner); research by OpenLabel",
+ "owner_signoff": "2026-10-03 Jesse Pringle",
+ "review_state": "reviewed",
  "reviewed_on": "2026-10-03",
  "id": "emulsifiers-gut-disease",
  "topic": "emulsifiers",
@@ -751,14 +751,19 @@ var RECORDS=[
    "date": "2026-10-03",
    "change": "Record created from the emulsifiers and carrageenan evidence review (round 1). Replaces the hand-written orange row.",
    "reason": "Owner asked for a third review round."
+  },
+  {
+   "date": "2026-10-03",
+   "change": "Owner signed off the record and the yellow color after testing on his phone.",
+   "reason": "Owner approval."
   }
  ]
 },
 {
  "scope_type": "general research",
- "reviewed_by": "Draft prepared by OpenLabel research; owner review pending (Jesse Pringle)",
- "owner_signoff": null,
- "review_state": "provisional",
+ "reviewed_by": "Reviewed by Jesse Pringle (owner); research by OpenLabel",
+ "owner_signoff": "2026-10-03 Jesse Pringle",
+ "review_state": "reviewed",
  "reviewed_on": "2026-10-03",
  "id": "carrageenan-gut-disease",
  "topic": "emulsifiers",
@@ -860,14 +865,19 @@ var RECORDS=[
    "date": "2026-10-03",
    "change": "Record created from the emulsifiers and carrageenan evidence review (round 1).",
    "reason": "Owner asked for a third review round."
+  },
+  {
+   "date": "2026-10-03",
+   "change": "Owner signed off the record and the yellow color after testing on his phone.",
+   "reason": "Owner approval."
   }
  ]
 },
 {
  "scope_type": "general research",
- "reviewed_by": "Draft prepared by OpenLabel research; owner review pending (Jesse Pringle)",
- "owner_signoff": null,
- "review_state": "provisional",
+ "reviewed_by": "Reviewed by Jesse Pringle (owner); research by OpenLabel",
+ "owner_signoff": "2026-10-03 Jesse Pringle",
+ "review_state": "reviewed",
  "reviewed_on": "2026-10-03",
  "id": "ultra-processed-health",
  "topic": "ultra",
@@ -1005,6 +1015,11 @@ var RECORDS=[
    "date": "2026-10-03",
    "change": "Record created from the ultra-processed food evidence review (round 1). Replaces the hand-set orange color on the Processing level row.",
    "reason": "Owner asked for a third review round."
+  },
+  {
+   "date": "2026-10-03",
+   "change": "Owner signed off the record and the yellow color after testing on his phone.",
+   "reason": "Owner approval."
   }
  ]
 }

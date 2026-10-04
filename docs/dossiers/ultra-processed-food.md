@@ -1,4 +1,4 @@
-# Dossier: Ultra-processed food - DRAFT v0.1 (PROVISIONAL)
+# Dossier: Ultra-processed food - v0.1 (OWNER SIGNED OFF 2026-10-03)
 
 Prepared 2026-10-03 by OpenLabel research. Owner review pending (Jesse Pringle). No score, no good or bad verdict. Missing data is never reassuring.
 

@@ -1,4 +1,4 @@
-# Dossier: Emulsifiers and carrageenan - DRAFT v0.1 (PROVISIONAL)
+# Dossier: Emulsifiers and carrageenan - v0.1 (OWNER SIGNED OFF 2026-10-03)
 
 Prepared 2026-10-03 by OpenLabel research. Owner review pending (Jesse Pringle). No score, no good or bad verdict. Missing data is never reassuring.
 

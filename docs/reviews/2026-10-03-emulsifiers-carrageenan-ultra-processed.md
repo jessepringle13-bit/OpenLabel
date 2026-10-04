@@ -1,6 +1,6 @@
 # Evidence review: emulsifiers, carrageenan and ultra-processed food
 
-Round 3, 2026-10-03. Three provisional records, all recommended yellow. Status: Built, not Confirmed. Not signed off.
+Round 3, 2026-10-03. Three provisional records, all recommended yellow. Status: owner signed off 2026-10-03 (colors approved after phone test).
 
 ## Records and recommended colors
 
