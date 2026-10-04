@@ -90,6 +90,11 @@ if(!REG||!fill){b.append(para(def));return{type:'flav',title:'Natural flavors',c
 var rs=fill(b,'natural-flavors-health',[def],[],null);
 if(window.OLGloss){var bt=el('button','link','What is this?');bt.onclick=function(){window.OLGloss.open('natural flavors')};b.append(bt)}
 return{type:'flav',title:'Natural flavors',color:rs.color,chip:sel||rs.note==='overdue'||rs.note==='invalid'?rs.chip+(sel&&rs.note==='ok'?' · on your watch list':''):'Listed',body:b,rec:rs.rec,pin:false,open:false}}
+function artFlavPlugin(m,ctx){var ing=ctx.ing||'',h=hits(ing,['artificial flavor','artificial flavors','artificial flavour','artificial flavours','artificial flavoring','artificial flavorings']);if(!h.length)return null;var sel=prof().topics.indexOf('flavors')>=0,b=el('div'),REG=window.OLRegister,fill=window.OLRegFill;
+var def='Artificial flavor is a flavoring that does not come from the plant and animal sources allowed for natural flavor. The ingredient list does not show the individual components.';
+if(!REG||!fill){b.append(para(def));return{type:'flavart',title:'Artificial flavors',color:'grey',chip:'Listed',body:b,pin:false,open:false}}
+var rs=fill(b,'artificial-flavors-health',[def],[],null);
+return{type:'flavart',title:'Artificial flavors',color:rs.color,chip:sel||rs.note==='overdue'||rs.note==='invalid'?rs.chip+(sel&&rs.note==='ok'?' · on your watch list':''):'Listed',body:b,rec:rs.rec,pin:false,open:false}}
 function emulPlugin(m,ctx){var ing=ctx.ing||'',codes=(m.facts['Additives listed']||'').toLowerCase();var h=hits(ing+' '+codes,EMUL);if(!h.length)return null;
 var REG=window.OLRegister,fill=window.OLRegFill,lecOnly=h.every(function(w){return /lecithin|^e322$/.test(w)}),carra=h.some(function(w){return /carrageenan|^e407/.test(w)});
 var what='What they are: additives that help oil and water mix, or that thicken and stabilize, used to improve texture and extend shelf life. Some of the items found are gums and thickeners that researchers group with emulsifiers.';
@@ -112,6 +117,6 @@ if(r.type==='add'&&!r.rec){var on2=T.indexOf('additives')>=0;r.color=on2?'orange
 if(r.type==='proc'&&!r.rec){var u=T.indexOf('ultra')>=0&&r.chip==='Ultra-processed';if(u){r.color='orange';r.chip='On your watch list · ultra-processed'}else if(r.color==='orange'||r.color==='yellow'||r.color==='green')r.color='grey'}});return null}
 window.OLDietEval=evalDiet;
 var P=window.OLPanelPlugins=window.OLPanelPlugins||[];
-[topicMutate,cafPlugin,dietPlugin,intolPlugin,sugarPlugin,flavPlugin,emulPlugin,gutPlugin].forEach(function(f){P.push(f)});
+[topicMutate,cafPlugin,dietPlugin,intolPlugin,sugarPlugin,flavPlugin,artFlavPlugin,emulPlugin,gutPlugin].forEach(function(f){P.push(f)});
 if(window.OLPanel)window.OLPanel.refresh();
 })();

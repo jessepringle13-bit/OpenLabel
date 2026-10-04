@@ -3,7 +3,7 @@
 var PK='openlabel-profile2-v1',OK='openlabel-calm-dock-v1';
 var INTOL=[['lactose','Lactose'],['gluten','Gluten'],['sulfites','Sulfites'],['sugaralc','Sugar alcohols'],['fructose','Fructose']];
 var DIETS=[['vegan','Vegan'],['vegetarian','Vegetarian'],['pescatarian','Pescatarian'],['keto','Keto'],['lowcarb','Low-carb'],['paleo','Paleo'],['glutenfree','Gluten-free'],['dairyfree','Dairy-free'],['lowsodium','Low-sodium'],['lowsugar','Low-sugar']];
-var TOPICS=[['seedoils','Seed oils'],['sweeteners','Sweeteners'],['addedsugar','Added sugar'],['ultra','Ultra-processed'],['additives','Additives'],['flavors','Natural flavors'],['emulsifiers','Emulsifiers'],['curedmeats','Cured meats'],['dyes','Food dyes']];
+var TOPICS=[['seedoils','Seed oils'],['sweeteners','Sweeteners'],['addedsugar','Added sugar'],['ultra','Ultra-processed'],['additives','Additives'],['flavors','Flavors'],['emulsifiers','Emulsifiers'],['curedmeats','Cured meats'],['dyes','Food dyes']];
 function oldSweet(){try{var v=JSON.parse(localStorage.getItem(OK)||'{}');return v.sweetener!==false}catch(e){return true}}
 function get(){var d={intol:[],diets:[],topics:null,carbs:''};try{var v=JSON.parse(localStorage.getItem(PK));if(v&&typeof v==='object')for(var k in v)d[k]=v[k]}catch(e){}
 if(!Array.isArray(d.topics))d.topics=oldSweet()?['sweeteners']:[];return d}
