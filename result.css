@@ -93,3 +93,13 @@
 #recentArea .chevron,#exploreResults .chevron{font-size:20px}
 .ol-tiles .ol-tile{justify-content:flex-start;padding:18px 16px}.ol-tiles .ol-tile strong{color:var(--forest)}
 #recentArea .grow strong,#recentArea .grow small,#exploreResults .grow strong,#exploreResults .grow small{display:block}#recentArea .grow small,#exploreResults .grow small{margin-top:1px;color:var(--muted)}
+
+#savedArea,#historyArea{gap:6px}
+#savedArea .card,#historyArea .card{padding:8px 12px;border-radius:14px;gap:10px;min-height:0}
+#savedArea .thumb,#historyArea .thumb{width:36px;height:36px;border-radius:11px;font-size:17px}
+#savedArea strong,#historyArea strong{font-size:14px}
+#savedArea .grow strong,#savedArea .grow small,#historyArea .grow strong,#historyArea .grow small{display:block}
+#savedArea small,#historyArea small{font-size:12px}
+#savedArea .chevron,#historyArea .chevron{font-size:20px}
+#savedArea .lb-meta,#historyArea .lb-meta{margin-top:3px;gap:4px}
+#savedArea .lb-tag,#historyArea .lb-tag{font-size:10.5px;padding:2px 7px}
