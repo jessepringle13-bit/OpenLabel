@@ -82,8 +82,8 @@ var key=API?API.textKey(ing):'',found=[],veg=false;
 if(ing&&API){found=API.seedWords.filter(function(w){return key.indexOf(API.textKey(w))>=0});veg=!found.length&&(key.indexOf(' vegetable oil ')>=0||key.indexOf(' vegetable oils ')>=0)}
 var sb=el('div'),sc='grey',sch='Not enough data',seedRec=null,seedRow2=null;
 if(!ing){sb.append(para('There is no ingredient list for this product, so we cannot tell.'))}
-else if(found.length){var rs0=regFill(sb,'seed-oils-inflammation',['Listed: '+found.join(', ')+'.'],[],function(){API.openSeedSheet(found,false)});sc=rs0.color;sch=rs0.chip;seedRec=rs0.rec;var sb2=el('div'),rs1=regFill(sb2,'seed-oils-heart-outcomes',['Listed: '+found.join(', ')+'.'],[],null);seedRow2=row('seedh','Seed oils: heart outcomes',rs1.color,rs1.chip,sb2,{rec:rs1.rec})}
-else if(veg){sch='Type not stated';sb.append(para('The label says vegetable oil without naming the type, so it may or may not be a seed oil.'));sb.append(linkBtn('See the evidence',function(){API.openSeedSheet([],true)}))}
+else if(found.length){var rs0=regFill(sb,'seed-oils-inflammation',['Listed: '+found.join(', ')+'.'],[],null);sc=rs0.color;sch=rs0.chip;seedRec=rs0.rec;var sb2=el('div'),rs1=regFill(sb2,'seed-oils-heart-outcomes',['Listed: '+found.join(', ')+'.'],[],null);seedRow2=row('seedh','Seed oils: heart outcomes',rs1.color,rs1.chip,sb2,{rec:rs1.rec})}
+else if(veg){sch='Type not stated';sb.append(para('The label says vegetable oil without naming the type, so it may or may not be a seed oil.'));sb.append(linkBtn('See the evidence',function(){var q=window.OLRegister&&window.OLRegister.get('seed-oils-inflammation');if(q)openRecSheet(q,'This product lists vegetable oil without naming the type, so it may or may not be a seed oil.')}))}
 else{sc='grey';sch='None named in list';sb.append(para('None of the oils we check for are named in the ingredient list. This describes the list only. It can be incomplete, so check the package.'))}
 rows.push(row('seed',seedRow2?'Seed oils: inflammation':'Seed oils',sc,sch,sb,{rec:seedRec}));if(seedRow2)rows.push(seedRow2);
 if(window.OLRegister&&ing){var REG2=window.OLRegister,cd=REG2.detect('curedmeats',ing);

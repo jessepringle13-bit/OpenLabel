@@ -7,40 +7,9 @@ function textKey(s){return ' '+String(s||'').toLowerCase().replace(/[^a-z0-9]+/g
 var REG=null;
 var READY=fetch('registry.json').then(function(r){return r.ok?r.json():null}).then(function(j){REG=j}).catch(function(){});
 var SEED_OIL_WORDS=['sunflower oil','sunflower seed oil','safflower oil','canola oil','rapeseed oil','soybean oil','soya oil','corn oil','cottonseed oil','grapeseed oil','rice bran oil'];
-var SEED_EC={
-claims:[
-{q:'Do seed oils raise inflammation?',status:'No good evidence for it. Not disproven.',
-supports:['Mechanism argument: linoleic acid, the main fat in seed oils, can convert to arachidonic acid, which the body uses to make inflammation signals. This is a lab-level idea, not a measured human outcome.'],
-against:['Small, short trials in healthy adults found no rise in blood inflammation markers. The main review was funded by an industry-linked committee.','Pooled studies of 30 groups of people link higher blood linoleic acid levels to fewer heart-disease deaths. Part of that work had a restricted company grant.'],
-limits:'The trials measured blood markers, not disease, and lasted days to weeks. Longer-term effects are unknown.'},
-{q:'Do linoleic-acid-rich oils help or harm the heart?',status:'Contested.',
-supports:['Re-analyses of two old diet trials raised questions about whether these oils help, and possibly about harm (figures not yet verified against the papers).'],
-against:['Large observational studies point toward benefit, though they cannot prove cause and have funding flags.'],
-limits:'Critiques of the re-analyses have not been read yet, and some old-trial design issues are unverified.'}],
-other:'Also under review: a report, seen only through a university article, linking omega-6 fats to a higher breast-cancer risk after menopause and to other outcomes. The primary source has not been checked.',
-sources:[
-{n:'Trial review of inflammation markers (2012)',f:'Grant from an industry-linked lipids committee. One author reported consulting for two agribusiness companies.',s:'Checked',flag:1},
-{n:'Pooled analysis of 30 cohorts (2019)',f:'Part supported by a restricted company grant. The paper says the company had no role in the design, analysis, or writing.',s:'Checked',flag:1},
-{n:'Sydney diet trial re-analysis (2013)',f:'An Australian life-insurance research fund is named. Other disclosures not read.',s:'Partly checked'},
-{n:'Minnesota diet trial re-analysis (2016)',f:'Original trial was publicly funded. Funding of the re-analysis not found yet.',s:'Partly checked'},
-{n:'Systematic review (2022)',f:'Authors declare no competing interests. Funding statement not found yet.',s:'Partly checked'},
-{n:'6 more sources (commentaries, news, and a WHO review seen secondhand)',f:'Funding and ties not checked yet.',s:'Not checked'}],
-counts:{checked:2,partial:3,none:6,total:11}};
 function el(tag,cls,text){var e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
 function list(items){var u=el('ul');items.forEach(function(x){u.append(el('li',null,x))});return u}
 function details(summary,small,body){var d=el('details'),s=el('summary'),span=el('span',null,summary);if(small)span.append(el('small',null,small));s.append(span);d.append(s,body);return d}
-function buildSeedEc(){var e=SEED_EC,c=e.counts,pending=c.checked<c.total,root=el('div','ec'),st=el('div','ec-status');
-st.append(el('span','ec-badge',pending?'Outcome pending checks':'Evidence check: complete'));root.append(st);
-root.append(el('p','small',(pending?'We show the arguments and the sources now, and will state an outcome only after every source has been checked. ':'')+'Funding and conflict checks: '+c.checked+' of '+c.total+' sources fully checked, '+c.partial+' partly, '+c.none+' not yet.'));
-e.claims.forEach(function(cl){var b=el('div','ec-body');b.append(el('h4',null,'What supports the concern'),list(cl.supports),el('h4',null,'What argues against it'),list(cl.against),el('h4',null,'Limits'),list([cl.limits]));root.append(details(cl.q,pending?'Outcome pending checks':cl.status,b))});
-var sb=el('div','ec-body');e.sources.forEach(function(s){var d=el('div','ec-src');d.append(el('strong',null,s.n),el('span','t',s.f),el('span','ec-chip'+(s.flag?' flag':(s.s==='Partly checked'?' part':'')),s.s+(s.flag?' - flag':'')));sb.append(d)});
-root.append(details('Sources and funding',c.checked+' checked, '+c.partial+' partly, '+c.none+' not yet',sb));
-var ob=el('div','ec-body');ob.append(el('p',null,e.other));root.append(details('Also under review',null,ob));
-root.append(el('div','ec-stance','OpenLabel favors whole, minimally processed foods. That is our stance, not a research finding, and we keep it separate from the evidence above. Seed oil is an informal term, and lists of which oils count vary.'));
-return root}
-function openSeedSheet(found,vegOnly){$('#sheetTitle').textContent='Seed oils: what the evidence shows';
-$('#sheetContent').textContent=(vegOnly?'This product lists vegetable oil without naming the type, so it may or may not be a seed oil. ':'This product lists '+found.join(', ')+'. ')+'Claims about seed oils are common online. Here is what the research shows, what it does not, and who paid for it.';
-$('#sheetExtra').replaceChildren(buildSeedEc());$('#sheetWrap').hidden=false;$('#closeSheet').focus()}
 function section(root,h,body){root.append(el('h4',null,h));root.append(typeof body==='string'?el('p',null,body):body)}
 function openTestSheet(e){$('#sheetTitle').textContent=e.kind==='product'?'Independent test results':'Testing on this kind of product';
 $('#sheetContent').textContent=e.title+'. Tested by '+e.tester+', published '+e.published+'. We are showing what the tester reported and how they judged it. We have not yet checked the tester.';
@@ -51,7 +20,7 @@ var a=el('a',null,e.source.label);a.href=e.source.url;a.target='_blank';a.rel='n
 $('#sheetExtra').replaceChildren(r);$('#sheetWrap').hidden=false;$('#closeSheet').focus()}
 function matchEntries(p){var out={prod:[],cat:[]};if(!REG||!REG.entries)return out;var t=textKey([p.brand,p.name,p.category].join(' '));
 REG.entries.forEach(function(e){var m=e.match||{};if(e.kind==='product'){if(m.brand&&m.name&&t.indexOf(textKey(m.brand))>=0&&t.indexOf(textKey(m.name))>=0)out.prod.push(e)}else if(m.any&&m.any.some(function(w){return t.indexOf(textKey(w))>=0}))out.cat.push(e)});return out}
-window.OLEvidence={renderGeneral:function(){},api:{ready:READY,matchEntries:matchEntries,openTestSheet:openTestSheet,openSeedSheet:openSeedSheet,seedWords:SEED_OIL_WORDS,textKey:textKey}};
+window.OLEvidence={renderGeneral:function(){},api:{ready:READY,matchEntries:matchEntries,openTestSheet:openTestSheet,seedWords:SEED_OIL_WORDS,textKey:textKey}};
 var lk=document.createElement('link');lk.rel='stylesheet';lk.href='result.css';document.head.appendChild(lk);
 var sc=document.createElement('script');sc.src='result.js';document.body.appendChild(sc);
 })();

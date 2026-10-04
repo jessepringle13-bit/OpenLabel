@@ -709,7 +709,7 @@ var NSS=/\b(?:aspartame|acesulfame(?:\s+(?:potassium|k))?|ace-k|sucralose|saccha
 var POLYOL=/\b(?:erythritol|xylitol|sorbitol|maltitol|mannitol|isomalt|lactitol|allulose|e42[01]|e96[5-9])\b/gi;
 var ASP=/\baspartame\b|\be951\b/gi;
 var SUGAR=/\b(?:cane\s+sugar|brown\s+sugar|invert\s+sugar|raw\s+sugar|powdered\s+sugar|coconut\s+sugar|beet\s+sugar|turbinado\s+sugar|sugar|(?:high[- ]fructose\s+)?corn\s+syrup|glucose[- ]fructose(?:\s+syrup)?|glucose\s+syrup|rice\s+syrup|maple\s+syrup|agave(?:\s+(?:syrup|nectar))?|fructose|dextrose|sucrose|maltose|molasses|fruit\s+juice\s+concentrate|cane\s+juice|honey)\b/gi;
-var DRINK=/\b(?:soda|cola|lemonade|soft\s+drink|soda\s+pop|energy\s+drink|sports?\s+drink|fruit\s+drink|juice\s+drink|punch|iced\s+tea|sweet(?:ened)?\s+tea|tea|drink|beverage|juice|smoothie|kombucha)\b/i;
+var DRINK=/\b(?:sodas?|colas?|lemonades?|soft\s+drinks?|soda\s+pop|energy\s+drinks?|sports?\s+drinks?|fruit\s+drinks?|juice\s+drinks?|punch|iced\s+teas?|sweet(?:ened)?\s+teas?|teas?|drinks?|beverages?|juices?|smoothies?|kombucha|carbonated\s+drinks?)\b/i;
 var DYE=/\b(?:fd&c\s*)?(?:red|yellow|blue|green)\s*(?:no\.?\s*|number\s*|#\s*)?(?:40|3|5|6|1|2)\b(?:\s*lake)?|\ballura\s+red\b|\btartrazine\b|\bsunset\s+yellow\b|\bbrilliant\s+blue\b|\bindigotine\b|\bindigo\s+carmine\b|\bfast\s+green\b|\berythrosine\b|\bcitrus\s+red\b|\borange\s+b\b|\bquinoline\s+yellow\b|\bcarmoisine\b|\bazorubine\b|\bponceau\s+4r\b|\be(?:102|104|110|122|124|127|129|132|133|143)\b|\bartificial\s+colou?rs?\b/gi;
 function uniq(a){var o=[];a.forEach(function(x){x=x.toLowerCase().replace(/\s+/g,' ');if(o.indexOf(x)<0)o.push(x)});return o}
 function detect(topic,text,ctxName){
