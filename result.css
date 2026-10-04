@@ -70,3 +70,4 @@
 .tags-none{grid-column:1/-1;margin:0;font-size:13px;color:var(--muted)}
 .olr-stat{margin:0 0 8px;font-size:13px}.olr summary .dot{margin-right:8px}
 .olr .chip2.cnt{min-width:26px;justify-content:center;padding:4px 9px}.chip2.cnt.c-red{background:var(--rb);color:var(--rt)}.chip2.cnt.c-orange{background:var(--ob);color:var(--ot)}.chip2.cnt.c-yellow{background:var(--yb);color:var(--yt)}.chip2.cnt.c-green{background:var(--gb);color:var(--gt)}.chip2.cnt.c-grey{background:var(--nb);color:var(--nt)}.olr-stat2{margin:10px 0 4px;font-size:13px;font-weight:760;color:var(--forest)}
+.tags{margin-top:14px}
