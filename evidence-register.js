@@ -635,6 +635,378 @@ var RECORDS=[
   {"date": "2026-10-03", "change": "Owner signed off as written.", "reason": "Owner decision."}
  
  ]
+},
+{
+ "scope_type": "general research",
+ "reviewed_by": "Draft prepared by OpenLabel research; owner review pending (Jesse Pringle)",
+ "owner_signoff": null,
+ "review_state": "provisional",
+ "reviewed_on": "2026-10-03",
+ "id": "emulsifiers-gut-disease",
+ "topic": "emulsifiers",
+ "subject": "Emulsifiers and thickeners named in the ingredient list",
+ "claim": "Emulsifiers and thickeners added to processed food harm gut health or raise the risk of chronic disease in people at usual intakes.",
+ "applies_to": "People who put emulsifiers on their watch list, for products that name an emulsifier or thickener other than lecithin alone. The evidence is about specific additives (carboxymethylcellulose, polysorbate 80, carrageenan, mono- and diglycerides and some gums), not the whole group. Not a medical recommendation.",
+ "amount": "No harmful or safe amount is established for the group. The human feeding trial gave 15 g a day of carboxymethylcellulose for 11 to 14 days; the Belgian trial used doses its authors say approximate or exceed typical dietary exposure; the cohort studies compare higher with lower estimated intakes. The label does not state how much of any emulsifier is in the product.",
+ "color": "yellow",
+ "status": "contested",
+ "color_reason": "Mouse studies and one small human feeding trial point to gut effects, and one large French cohort links several emulsifiers to heart disease, diabetes and cancer. A placebo-controlled trial found lower gut microbial metabolites but no rise in inflammation markers. The cohort evidence comes from a single volunteer group and cannot show cause. The question is unresolved, so no direction is claimed.",
+ "shows": [
+  "In a Belgian placebo-controlled trial of about 60 healthy adults, 4 weeks of brownies with carboxymethylcellulose, polysorbate 80, carrageenan or soy lecithin lowered stool short-chain fatty acids (made by gut microbes) compared with placebo, with no difference in fecal calprotectin, C-reactive protein or inflammatory proteins.",
+  "In a 16-person feeding trial, 15 g a day of carboxymethylcellulose for 11 to 14 days changed the gut microbiota and stool metabolites and increased postprandial abdominal pain compared with the control diet.",
+  "In the French NutriNet-Sante cohort, higher estimated intake of several emulsifiers (carboxymethylcellulose, mono- and diglycerides, celluloses; guar and xanthan gum for diabetes; E471 for cancer) was linked to modestly higher rates of cardiovascular disease, type 2 diabetes or cancer."
+ ],
+ "does_not_show": [
+  "That any emulsifier in this product harms you. The trials were short, in healthy people, and tested single additives at set doses.",
+  "Cause. The cohort findings come from one group of French volunteers (about 79 percent women, more health-conscious than average), intake was estimated from food records, and there are no biomarkers; the authors say causality cannot be established, and some associations did not hold after multiple-testing correction.",
+  "Anything about lecithin. In the Belgian trial it was one of the tested emulsifiers with no difference in inflammation, and none of the cohort papers read flagged it.",
+  "Long-term effects in people, effects in people with bowel disease (not tested), or effects of the mixtures found in real foods.",
+  "Which products contain which amounts. Labels list ingredients, not quantities."
+ ],
+ "sides": {
+  "for": [
+   "Mouse studies: carboxymethylcellulose and polysorbate 80 caused low-grade inflammation and metabolic syndrome in normal mice and colitis in susceptible mice, and transplanting their microbes transferred the inflammation (NIH-funded, no declared competing interests).",
+   "Human feeding trial (16 adults): carboxymethylcellulose shifted the microbiota, depleted stool short-chain fatty acids and increased abdominal pain.",
+   "NutriNet-Sante cohort: carboxymethylcellulose, mono- and diglycerides and celluloses linked to cardiovascular disease (for example mono- and diglycerides hazard ratio 1.07, 1.04 to 1.11, per standard deviation); E471 linked to overall cancer (1.15, 1.04 to 1.27); several gums linked to type 2 diabetes."
+  ],
+  "against": [
+   "The Belgian placebo-controlled trial found no rise in intestinal or systemic inflammation markers after 4 weeks, and its authors conclude the results only point to potential benefits of limiting emulsifiers that need further investigation.",
+   "Both human trials were small and short, tested single additives, and used healthy volunteers. The feeding trial's stool changes were reported to resolve after the diet ended.",
+   "The cohort associations are small, come from the same research group and volunteer cohort across three papers, depend on estimated intakes, and some lost significance after correction for multiple tests. Emulsifiers travel with ultra-processed foods, so the cohort authors say it is hard to separate them from other ingredients."
+  ]
+ },
+ "sources": [
+  {
+   "title": "Chassaing et al., Dietary emulsifiers impact the mouse gut microbiota promoting colitis and metabolic syndrome",
+   "publisher": "Nature",
+   "type": "animal study",
+   "date": "2015",
+   "url": "https://www.nature.com/articles/nature14232",
+   "verified": true,
+   "note": "Read. Mice given 1 percent carboxymethylcellulose or polysorbate 80 in drinking water for 12 weeks (several other designs, small groups). Reported low-grade inflammation and metabolic syndrome in normal mice and colitis in mice prone to it; germ-free and transplant experiments suggest the gut microbes carried the effect. Funded by NIH grants and a Crohns and Colitis Foundation fellowship; authors declare no competing financial interests. Mouse doses and routes do not map directly onto human diets."
+  },
+  {
+   "title": "Chassaing et al., Randomized controlled-feeding study of dietary emulsifier carboxymethylcellulose reveals detrimental impacts on the gut microbiota and metabolome",
+   "publisher": "Gastroenterology",
+   "type": "randomized controlled feeding trial",
+   "date": "2022",
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9639366/",
+   "verified": true,
+   "note": "Read. 16 healthy adults (9 control, 7 carboxymethylcellulose), 15 g a day for 11 to 14 days in a controlled diet. Carboxymethylcellulose group had more postprandial abdominal pain (P = 0.019), a shift in microbiota composition at day 14 (P = 0.002) and lower short-chain fatty acids and amino acids in stool; no confidence intervals given on the page read. Funded by NIH, Max Planck Society, European Research Council and others, with funders stating no role. One author (Lewis) reports consulting for or advisory roles with many drug companies and Nestle Health Science and research funding from Nestle Health Science, Takeda, Janssen and AbbVie; others declare none. Authors state this was a short-term study."
+  },
+  {
+   "title": "Effect of five dietary emulsifiers on inflammation, permeability and the gut microbiome: a placebo-controlled randomized trial (Belgium)",
+   "publisher": "Clinical Gastroenterology and Hepatology (citation 2026;24(4):1092-1101); reported by the American Gastroenterological Association",
+   "type": "randomized controlled trial",
+   "date": "2026",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/40816342/",
+   "verified": true,
+   "note": "Abstract and the AGA news summary read; full text not read. 58 to 60 healthy adults followed a 2-week emulsifier-free diet, then 4 weeks of brownies with carboxymethylcellulose, polysorbate 80, carrageenan, soy lecithin, rice starch or placebo. Emulsifier groups had lower short-chain fatty acids; no between-group differences in fecal calprotectin, C-reactive protein or inflammatory proteins; carrageenan raised one permeability measure versus baseline but not versus placebo. Confidence intervals not on the pages read. Funding reported as Research Foundation Flanders and other academic sources; several authors report consulting fees, research support or honoraria from pharmaceutical and nutrition-related companies. Authors list small size, short duration, healthy participants, self-reported adherence and single emulsifiers rather than mixtures."
+  },
+  {
+   "title": "Sellem et al., Food additive emulsifiers and risk of cardiovascular disease in the NutriNet-Sante cohort",
+   "publisher": "BMJ",
+   "type": "prospective cohort",
+   "date": "2023",
+   "url": "https://www.bmj.com/content/bmj/382/bmj-2023-076058.full.pdf",
+   "verified": true,
+   "note": "Read. 95,442 French adults, 79 percent women, mean follow-up 7 years, 1,995 cardiovascular events. Per standard-deviation rise in intake: carboxymethylcellulose hazard ratio 1.03 (1.01 to 1.05) for cardiovascular disease; mono- and diglycerides 1.07 (1.04 to 1.11); celluloses 1.05 (1.02 to 1.09). Some associations lost significance after multiple-testing correction. Publicly funded; authors report no financial relationships with interested organisations; researchers independent from funders. Observational, volunteers, intake estimated from 24-hour records matched to product databases."
+  },
+  {
+   "title": "Salame et al., Food additive emulsifiers and the risk of type 2 diabetes: analysis of data from the NutriNet-Sante prospective cohort study",
+   "publisher": "The Lancet Diabetes and Endocrinology",
+   "type": "prospective cohort",
+   "date": "2024",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/38663950/",
+   "verified": true,
+   "note": "Abstract and funding read. 104,139 adults, 1,056 type 2 diabetes cases, mean follow-up 6.8 years. Total carrageenans hazard ratio 1.03 (1.01 to 1.05) per 100 mg a day; guar gum 1.11 (1.06 to 1.17) per 500 mg; xanthan gum 1.08 (1.02 to 1.14) per 500 mg; several other additives positive. Funders include the European Research Council, French cancer institute and ministry of health; authors declare no competing interests. A companion commentary lists limits: measurement error, other additives in ultra-processed foods, need for corroboration."
+  },
+  {
+   "title": "Sellem et al., Food additive emulsifiers and cancer risk: results from the French prospective NutriNet-Sante cohort",
+   "publisher": "PLOS Medicine",
+   "type": "prospective cohort",
+   "date": "2024",
+   "url": "https://journals.plos.org/plosmedicine/article?id=10.1371/journal.pmed.1004338",
+   "verified": true,
+   "note": "Read. 92,000 adults, 2,604 cancers, mean follow-up 6.7 years. Mono- and diglycerides (E471) and overall cancer hazard ratio 1.15 (1.04 to 1.27); total carrageenans and breast cancer 1.32 (1.09 to 1.60). For a 60-year-old woman the authors give absolute breast cancer risk of 4.1 percent (none to low carrageenan) versus 5.2 percent (highest). No link for colorectal cancer; several other associations not robust. Public funding; authors declare no competing interests; limitations include no biomarkers, a volunteer sample with higher education and 78.8 percent women, and residual confounding."
+  },
+  {
+   "title": "Dietary Guidelines for Americans, 2025-2030",
+   "publisher": "US Department of Health and Human Services and US Department of Agriculture",
+   "type": "government guidance",
+   "date": "2026-01",
+   "url": "https://cdn.realfood.gov/DGA.pdf",
+   "verified": true,
+   "note": "Read. Does not use the words ultra-processed, emulsifier or carrageenan. Tells people to limit highly processed foods and foods with artificial flavors, petroleum-based dyes, artificial preservatives and low-calorie non-nutritive sweeteners, and to avoid highly processed packaged foods that are salty or sweet. Gives no definition of highly processed foods and cites no study beside those lines."
+  }
+ ],
+ "source_check": {
+  "state": "partial",
+  "summary": "Checked 2026-10-03. Funding and author interests read for 7 of 7 sources (Chassaing 2022: one author with drug and Nestle Health Science ties; Belgian trial: several authors with pharmaceutical and nutrition-company consulting; NutriNet-Sante papers: public funding, no declared interests; Nature 2015: NIH, none declared). Not read: the Belgian trial full text and exact doses, EFSA opinions on individual emulsifiers (mono- and diglycerides, polysorbate 80, celluloses), independent cohorts outside France, the 2021 Microbiome lab study cited in the app, and critiques of the NutriNet-Sante papers. No retraction check run."
+ },
+ "next_review": "2027-04-03",
+ "dossier": "docs/dossiers/emulsifiers-carrageenan.md",
+ "changelog": [
+  {
+   "date": "2026-10-03",
+   "change": "Record created from the emulsifiers and carrageenan evidence review (round 1). Replaces the hand-written orange row.",
+   "reason": "Owner asked for a third review round."
+  }
+ ]
+},
+{
+ "scope_type": "general research",
+ "reviewed_by": "Draft prepared by OpenLabel research; owner review pending (Jesse Pringle)",
+ "owner_signoff": null,
+ "review_state": "provisional",
+ "reviewed_on": "2026-10-03",
+ "id": "carrageenan-gut-disease",
+ "topic": "emulsifiers",
+ "subject": "Carrageenan (E407, E407a) named in the ingredient list",
+ "claim": "Carrageenan in food harms digestive health or raises disease risk at usual intakes.",
+ "applies_to": "People who put emulsifiers on their watch list, for products that name carrageenan, E407 or E407a. Does not apply to poligeenan (degraded carrageenan), which is not allowed in food. Not a medical recommendation or advice for people with bowel disease.",
+ "amount": "EFSA keeps a temporary group acceptable daily intake of 75 mg per kg body weight a day, which is about 5,250 mg for a 70 kg adult (our arithmetic). EFSA's refined brand-loyal exposure estimates reached up to about 10 times that at the 95th percentile in some groups. Human studies used about 100 to 500 mg a day. The label does not state the amount in a product.",
+ "color": "yellow",
+ "status": "unresolved",
+ "color_reason": "EFSA found no cancer or gene-damage concern in animal studies but called its safe-intake figure temporary because of data gaps. A very small human trial in ulcerative colitis, a French cohort and short lab and feeding studies point in different directions. No large human trial exists, so no direction is claimed.",
+ "shows": [
+  "EFSA (2018) concluded animal studies showed no concern about cancer or gene damage and no adverse effects up to the highest doses tested, but treated the 75 mg per kg a day intake limit as temporary, asking for better data within 5 years, because of uncertainties in the chemistry, exposure and toxicology.",
+  "In a trial of 12 evaluable people with ulcerative colitis in remission, 3 of 5 given carrageenan capsules relapsed versus 0 of 7 on placebo (P = 0.046); the trial stopped early.",
+  "In the French NutriNet-Sante cohort, higher total carrageenan intake was linked to breast cancer (hazard ratio 1.32, 1.09 to 1.60; for a 60-year-old woman about 4.1 percent at none-to-low versus 5.2 percent at highest intake) and type 2 diabetes (1.03 per 100 mg a day, 1.01 to 1.05)."
+ ],
+ "does_not_show": [
+  "That the carrageenan in this product harms you. Food-grade carrageenan is not the degraded form (poligeenan) that causes ulcers in animals and is not allowed in food, although EFSA notes the low molecular weight fraction of carrageenan has not been shown to be identical to it and that some marketed material may not meet the EU limit.",
+  "Cause. The cohort is observational and the colitis trial had 12 people, no confidence intervals in the paper read, and a last author known for campaigning on carrageenan; its funding was not stated.",
+  "Effects on healthy people in short trials: the Belgian trial found carrageenan raised one permeability measure versus baseline but not versus placebo, and a 2-week crossover in 20 men found no clear difference in insulin sensitivity (as summarized by USDA).",
+  "Whether EFSA completed the follow-up it requested. We did not find a newer opinion in one search.",
+  "Anything about infant formula, which EFSA treats separately."
+ ],
+ "sides": {
+  "for": [
+   "Human trial in ulcerative colitis remission: relapse in 3 of 5 on carrageenan versus 0 of 7 on placebo, with a rise in the inflammation marker IL-6 in the carrageenan group.",
+   "NutriNet-Sante cohort: breast cancer hazard ratio 1.32 (1.09 to 1.60) and type 2 diabetes 1.03 per 100 mg a day (1.01 to 1.05) for total carrageenans.",
+   "EFSA: uncertainties remain, the ADI is only temporary, and exposure estimates in the brand-loyal scenario exceeded it by up to about 10-fold in some groups."
+  ],
+  "against": [
+   "EFSA found no carcinogenicity or genotoxicity concern and no adverse effects in rats up to 7,500 mg per kg a day in chronic studies, and says carrageenan is not absorbed intact.",
+   "The colitis trial had 12 evaluable patients, stopped early, and its t-test comparison was not significant; the Belgian placebo-controlled trial found no inflammation signal versus placebo, and a 2-week crossover in men found no clear insulin sensitivity change.",
+   "The cohort findings come from one volunteer group, intake is estimated, and the same authors found several other additives positive, so confounding by overall ultra-processed food intake cannot be ruled out."
+  ]
+ },
+ "sources": [
+  {
+   "title": "Re-evaluation of carrageenan (E 407) and processed Eucheuma seaweed (E 407a) as food additives",
+   "publisher": "EFSA Journal (European Food Safety Authority)",
+   "type": "regulatory re-evaluation",
+   "date": "2018",
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7009739/",
+   "verified": true,
+   "note": "Read (abstract, conclusions, exposure tables). No concern about carcinogenicity or genotoxicity; rat NOAEL 3,400 to 3,900 mg/kg bw a day (highest dose tested). Panel noted uncertainties in chemistry, exposure and toxicology and said the existing group ADI of 75 mg/kg bw a day should be treated as temporary while the database is improved within 5 years. Refined brand-loyal exposure estimates exceeded the ADI up to about 10-fold in some groups. Panel members' declarations of interest were not read; the Panel noted one interested party said marketed material may not meet the EU limit on the low molecular weight fraction."
+  },
+  {
+   "title": "Bhattacharyya et al., A randomized trial of the effects of the no-carrageenan diet on ulcerative colitis disease activity",
+   "publisher": "Nutrition and Healthy Aging",
+   "type": "randomized placebo-controlled pilot trial",
+   "date": "2017",
+   "url": "https://journals.sagepub.com/doi/10.3233/NHA-170023",
+   "verified": true,
+   "note": "Read. Patients with ulcerative colitis in remission followed a no-carrageenan diet and took capsules with carrageenan or placebo. 3 of 5 on carrageenan relapsed versus 0 of 7 on placebo (log-rank P = 0.046); the study stopped early and had 12 evaluable patients. No funding or conflict statement on the page read; Joanne Tobacman, a long-time carrageenan researcher and critic, is the last author. No confidence intervals reported."
+  },
+  {
+   "title": "Effect of five dietary emulsifiers on inflammation, permeability and the gut microbiome: a placebo-controlled randomized trial (Belgium)",
+   "publisher": "Clinical Gastroenterology and Hepatology (citation 2026;24(4):1092-1101); reported by the American Gastroenterological Association",
+   "type": "randomized controlled trial",
+   "date": "2026",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/40816342/",
+   "verified": true,
+   "note": "Abstract and the AGA news summary read; full text not read. 58 to 60 healthy adults followed a 2-week emulsifier-free diet, then 4 weeks of brownies with carboxymethylcellulose, polysorbate 80, carrageenan, soy lecithin, rice starch or placebo. Emulsifier groups had lower short-chain fatty acids; no between-group differences in fecal calprotectin, C-reactive protein or inflammatory proteins; carrageenan raised one permeability measure versus baseline but not versus placebo. Confidence intervals not on the pages read. Funding reported as Research Foundation Flanders and other academic sources; several authors report consulting fees, research support or honoraria from pharmaceutical and nutrition-related companies. Authors list small size, short duration, healthy participants, self-reported adherence and single emulsifiers rather than mixtures."
+  },
+  {
+   "title": "Sellem et al., Food additive emulsifiers and cancer risk: results from the French prospective NutriNet-Sante cohort",
+   "publisher": "PLOS Medicine",
+   "type": "prospective cohort",
+   "date": "2024",
+   "url": "https://journals.plos.org/plosmedicine/article?id=10.1371/journal.pmed.1004338",
+   "verified": true,
+   "note": "Read. 92,000 adults, 2,604 cancers, mean follow-up 6.7 years. Mono- and diglycerides (E471) and overall cancer hazard ratio 1.15 (1.04 to 1.27); total carrageenans and breast cancer 1.32 (1.09 to 1.60). For a 60-year-old woman the authors give absolute breast cancer risk of 4.1 percent (none to low carrageenan) versus 5.2 percent (highest). No link for colorectal cancer; several other associations not robust. Public funding; authors declare no competing interests; limitations include no biomarkers, a volunteer sample with higher education and 78.8 percent women, and residual confounding."
+  },
+  {
+   "title": "Salame et al., Food additive emulsifiers and the risk of type 2 diabetes: analysis of data from the NutriNet-Sante prospective cohort study",
+   "publisher": "The Lancet Diabetes and Endocrinology",
+   "type": "prospective cohort",
+   "date": "2024",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/38663950/",
+   "verified": true,
+   "note": "Abstract and funding read. 104,139 adults, 1,056 type 2 diabetes cases, mean follow-up 6.8 years. Total carrageenans hazard ratio 1.03 (1.01 to 1.05) per 100 mg a day; guar gum 1.11 (1.06 to 1.17) per 500 mg; xanthan gum 1.08 (1.02 to 1.14) per 500 mg; several other additives positive. Funders include the European Research Council, French cancer institute and ministry of health; authors declare no competing interests. A companion commentary lists limits: measurement error, other additives in ultra-processed foods, need for corroboration."
+  },
+  {
+   "title": "Carrageenan: Handling, limited scope technical report (summary of human studies)",
+   "publisher": "US Department of Agriculture, Agricultural Marketing Service",
+   "type": "government technical report",
+   "date": "2026",
+   "url": "https://www.ams.usda.gov/sites/default/files/media/2026-LimitedScopeTechnicalReport-Carrageenan-Handling.pdf",
+   "verified": true,
+   "note": "Read only for its summaries of human studies, secondary to the original papers. Reports two small trials: 13 adults with prediabetes for 12 weeks (better HbA1c and HOMA-IR on a no-carrageenan diet) and a 2-week crossover in 20 men with 250 mg twice daily (insulin sensitivity did not differ significantly). The report's own conclusions were not read."
+  }
+ ],
+ "source_check": {
+  "state": "partial",
+  "summary": "Checked 2026-10-03. Funding and interests read for EFSA (panel declarations not read), NutriNet-Sante papers (public funding, none declared), the Belgian trial (academic funding, authors with pharma and nutrition-company ties). Bhattacharyya 2017: no funding or conflict statement on the page read, last author Joanne Tobacman. USDA report read only as a secondary summary of two small trials. Not read: the original prediabetes and 2-week crossover trial papers, the JECFA carrageenan evaluation, FDA's position, any EFSA follow-up after 2018 (one search found none), industry-funded safety reviews and Tobacman's earlier papers. No retraction check run."
+ },
+ "next_review": "2027-04-03",
+ "dossier": "docs/dossiers/emulsifiers-carrageenan.md",
+ "changelog": [
+  {
+   "date": "2026-10-03",
+   "change": "Record created from the emulsifiers and carrageenan evidence review (round 1).",
+   "reason": "Owner asked for a third review round."
+  }
+ ]
+},
+{
+ "scope_type": "general research",
+ "reviewed_by": "Draft prepared by OpenLabel research; owner review pending (Jesse Pringle)",
+ "owner_signoff": null,
+ "review_state": "provisional",
+ "reviewed_on": "2026-10-03",
+ "id": "ultra-processed-health",
+ "topic": "ultra",
+ "subject": "Ultra-processed food (NOVA group 4) as a share of the diet",
+ "claim": "Eating more ultra-processed food raises the risk of obesity, type 2 diabetes, heart disease and early death.",
+ "applies_to": "People who put ultra-processed food on their watch list, for products Open Food Facts puts in NOVA group 4. NOVA is a research classification calculated from the ingredient list, and group boundaries are partly subjective. This is about a person's overall diet, not one product. Not a medical recommendation.",
+ "amount": "The research compares higher with lower shares of the diet, not single products. Examples: each 10 percentage points more of the diet from ultra-processed food went with cardiovascular disease hazard ratio 1.12 (1.05 to 1.20) in one French cohort; the highest versus lowest quarter went with all-cause mortality hazard ratio 1.04 (1.01 to 1.07) in two US cohorts. The Scientific Foundation reports highly processed foods make up about 60 percent of energy for US adults. A single product's group does not tell you your share.",
+ "color": "yellow",
+ "status": "contested",
+ "color_reason": "Cohort studies consistently link more ultra-processed food to worse outcomes, and two small trials found more eating or less weight loss on ultra-processed diets. But the evidence certainty is rated very low to low in one major review and moderate to high in another, the US cohort effect is small and fades within diet-quality groups, the trial critics dispute whether processing is the cause, and the federal definition is still being written. The question is contested, so no direction is claimed.",
+ "shows": [
+  "An umbrella review of 14 meta-analyses (about 9.9 million people) found higher ultra-processed food intake linked to higher risk in 32 of 45 pooled analyses, graded convincing for cardiovascular death and type 2 diabetes, but GRADE certainty was mostly low or very low.",
+  "In a 28-day inpatient trial of 20 adults, people ate about 508 kcal a day more and gained 0.9 kg on an ultra-processed diet versus lost 0.9 kg on an unprocessed one, with meals matched on presented sugar, fat, sodium and fiber.",
+  "In the 8-week UPDATE trial (55 adults) both diets led to weight loss, with a larger loss on the minimally processed diet (-2.06 percent versus -1.05 percent), both following UK dietary guidance."
+ ],
+ "does_not_show": [
+  "That this product raises your risk. NOVA group 4 spans very different foods, and in the US cohort the mortality signal came mainly from meat-based ready-to-eat products, sweetened drinks and dairy desserts.",
+  "That processing itself, rather than sugar, salt, fat, calories or overall diet quality, is the cause. In the US cohort there was no consistent link within each quarter of diet quality.",
+  "Long-term effects from trials. The two trials lasted 2 and 8 weeks with 20 and 55 people.",
+  "A single agreed definition. The Dietary Guidelines evidence review says there is no consensus definition and calls its own category provisional, and the federal definition effort had not produced one as of December 2025.",
+  "Anything about children beyond what cohort studies suggest. The evidence review notes it found no meta-analyses focused on childhood outcomes."
+ ],
+ "sides": {
+  "for": [
+   "Umbrella review (BMJ 2024): 32 of 45 pooled analyses positive, including type 2 diabetes dose-response risk ratio 1.12 (1.11 to 1.13, moderate certainty) and cardiovascular death 1.50 (1.37 to 1.63, very low certainty).",
+   "Dietary Guidelines evidence review (Appendix 4.1, 27 meta-analyses of highly processed foods): all-cause mortality 1.15, cardiovascular disease 1.35, obesity 1.55 (all moderate) and type 2 diabetes 1.48 (high), though the category combines NOVA groups 2 and 4 and its author has disclosed industry advisory roles in the main report.",
+   "Randomized trials: Hall 2019 (NIH, 20 adults) and Dicken 2025 (55 adults) both found more eating or less weight loss on ultra-processed diets. The 2025 Lancet Series argues the evidence warrants immediate action, but it is led by the people who created NOVA."
+  ],
+  "against": [
+   "Most pooled analyses in the BMJ umbrella review were rated low or very low certainty; the review is observational and cannot rule out confounding, and its authors disclose university-centre funding from food companies.",
+   "US cohort (114,064 people): all-cause mortality hazard ratio only 1.04, no association with cancer or cardiovascular death, and no consistent link within each quarter of diet quality, which suggests diet quality, not just processing, explains part of the signal.",
+   "Critics of the 2025 UPDATE trial cite order effects, uneven dropout, recognizable foods and confounding by energy density; the British Nutrition Foundation (partly food-industry funded) and, per its statement, the UK Scientific Advisory Committee on Nutrition say ultra-processed food does not yet warrant a place in national guidelines because there is no agreed definition and the mechanism is unclear."
+  ]
+ },
+ "sources": [
+  {
+   "title": "Lane et al., Ultra-processed food exposure and adverse health outcomes: umbrella review of epidemiological meta-analyses",
+   "publisher": "BMJ",
+   "type": "umbrella review",
+   "date": "2024",
+   "url": "https://www.bmj.com/content/bmj/384/bmj-2023-077310.full.pdf",
+   "verified": true,
+   "note": "Read. 14 meta-analyses, 45 pooled analyses, 9,888,373 participants; higher ultra-processed food intake was associated with higher risk in 32 of 45 analyses. Convincing (class I) evidence for cardiovascular disease mortality (relative risk 1.50, 1.37 to 1.63, GRADE very low), type 2 diabetes (dose-response 1.12, 1.11 to 1.13, GRADE moderate) and common mental disorders (odds ratio 1.53, GRADE low); all-cause mortality 1.21 (1.15 to 1.27, highly suggestive, low). 22 analyses GRADE low, 19 very low, 4 moderate. Not funded. Authors from Deakin University's Food and Mood Centre disclose that it has received research support from Be Fit Food, Bega Dairy and Drinks and a2 Milk Company, and several are investigators on the MicroFit study partly funded by Be Fit Food."
+  },
+  {
+   "title": "Srour et al., Ultra-processed food intake and risk of cardiovascular disease: prospective cohort study (NutriNet-Sante)",
+   "publisher": "BMJ",
+   "type": "prospective cohort",
+   "date": "2019",
+   "url": "https://www.bmj.com/content/365/bmj.l1451",
+   "verified": true,
+   "note": "Read. 105,159 French adults, median follow-up 5.2 years. A 10 percentage point rise in the share of the diet that was ultra-processed went with cardiovascular disease hazard ratio 1.12 (1.05 to 1.20), coronary heart disease 1.13 (1.02 to 1.24), cerebrovascular disease 1.11 (1.01 to 1.21). Authors state causality is not established and note misclassification of NOVA groups and volunteer selection. Public funding; researchers independent from funders."
+  },
+  {
+   "title": "Fang et al., Association of ultraprocessed food consumption with all cause and cause specific mortality: population based cohort study",
+   "publisher": "BMJ",
+   "type": "prospective cohort",
+   "date": "2024",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/38719536/",
+   "verified": true,
+   "note": "Abstract read. 114,064 US health professionals followed about 31 to 34 years. Highest versus lowest quarter: all-cause mortality hazard ratio 1.04 (1.01 to 1.07); deaths not from cancer or cardiovascular disease 1.09 (1.05 to 1.13); no association with cancer or cardiovascular mortality. Meat-based ready-to-eat products, sweetened beverages and dairy desserts drove the signal; within each quarter of overall diet quality there was no consistent UPF association. NIH funded; one author consulted for the Pan American Health Organization; no industry ties stated."
+  },
+  {
+   "title": "Hall et al., Ultra-processed diets cause excess calorie intake and weight gain: an inpatient randomized controlled trial of ad libitum food intake",
+   "publisher": "Cell Metabolism",
+   "type": "randomized crossover feeding trial",
+   "date": "2019",
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7946062/",
+   "verified": true,
+   "note": "Read. 20 adults lived in a research ward for 28 days, 14 days on each diet in random order, with meals matched for presented calories, sugar, fat, sodium and fiber. Intake was 508 kcal a day higher on the ultra-processed diet (P = 0.0001) and weight rose 0.9 kg versus fell 0.9 kg. Confidence intervals not on the page read. Funded by the NIH intramural program; one author (Forde) discloses speaking reimbursement, an advisory role at Kerry Taste and Nutrition and consortium funding from Abbott, Nestle and Danone; others none. Limits: 2 weeks per diet, no washout, free meals, inpatient setting."
+  },
+  {
+   "title": "Dicken et al., Ultraprocessed or minimally processed diets following UK dietary guidance on health outcomes (UPDATE trial)",
+   "publisher": "Nature Medicine",
+   "type": "randomized crossover trial",
+   "date": "2025",
+   "url": "https://www.nature.com/articles/s41591-025-03842-0",
+   "verified": true,
+   "note": "Read. 55 adults with overweight or obesity ate 8 weeks of an ultra-processed diet and 8 weeks of a minimally processed diet, both following the UK Eatwell Guide, with a 4-week washout. Both diets led to weight loss: minimally processed -2.06 percent (-2.99 to -1.13), ultra-processed -1.05 percent (-1.98 to -0.13); difference -1.01 percentage points (-1.87 to -0.14, P = 0.024). A diet-order effect was found. Funded by a medical charity; the page says without industry influence; author declarations not on the page read. Two published letters in the same journal criticize attributing the difference to processing (attrition and order effects, recognizability of foods, confounding by energy density and packaging) and say any benefit has limited public health importance."
+  },
+  {
+   "title": "The Scientific Foundation for the Dietary Guidelines for Americans, 2025-2030, and Appendix 4.1 (umbrella review of highly processed foods)",
+   "publisher": "US Department of Health and Human Services and US Department of Agriculture",
+   "type": "government evidence review",
+   "date": "2026-01",
+   "url": "https://cdn.realfood.gov/Scientific%20Report%20Appendices.pdf",
+   "verified": true,
+   "note": "Read. Appendix 4.1, credited to Michael Goran, is an umbrella review of 27 observational meta-analyses (high versus low highly processed food intake): all-cause mortality relative risk 1.15 (1.09 to 1.22, moderate certainty), cardiovascular disease 1.35 (1.18 to 1.54, moderate), cancer 1.12 (1.06 to 1.19, moderate), obesity 1.55 (1.36 to 1.77, moderate), type 2 diabetes 1.48 (1.36 to 1.61, high). Defines highly processed foods as Nova groups 2 and 4 together and says the definition is provisional pending the USDA and FDA effort. Notes no large randomized trials, confounding, misclassification and no accepted definition. No author-specific disclosure on the page read; Goran's disclosed advisory roles in the main report are in the sweeteners dossier. NIH Office of Nutrition Research coordinated peer review."
+  },
+  {
+   "title": "Dietary Guidelines for Americans, 2025-2030",
+   "publisher": "US Department of Health and Human Services and US Department of Agriculture",
+   "type": "government guidance",
+   "date": "2026-01",
+   "url": "https://cdn.realfood.gov/DGA.pdf",
+   "verified": true,
+   "note": "Read. Does not use the words ultra-processed, emulsifier or carrageenan. Tells people to limit highly processed foods and foods with artificial flavors, petroleum-based dyes, artificial preservatives and low-calorie non-nutritive sweeteners, and to avoid highly processed packaged foods that are salty or sweet. Gives no definition of highly processed foods and cites no study beside those lines."
+  },
+  {
+   "title": "Monteiro et al., Ultra-processed foods and human health: the main thesis and the evidence",
+   "publisher": "The Lancet",
+   "type": "narrative and systematic review with original analyses",
+   "date": "2025-11",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/41270766/",
+   "verified": true,
+   "note": "Abstract page and press release read; full text, funding and author interests not read. 20 authors, led by Carlos Monteiro, who developed the NOVA classification. Argues ultra-processed foods displace whole-food diets and drive chronic disease, and the three-paper Series calls for policy action. Because the lead authors created the classification being evaluated, it is not independent evidence about NOVA."
+  },
+  {
+   "title": "The concept of ultra-processed foods (UPF): position statement (updated May 2024)",
+   "publisher": "British Nutrition Foundation",
+   "type": "position statement",
+   "date": "2024-05",
+   "url": "https://www.nutrition.org.uk/media/3ylbwf3s/british-nutrition-foundation-upf-position-statement_updated-may-2024.pdf",
+   "verified": true,
+   "note": "Read. Accepts consistent observational links but says they do not show processing itself is the cause; says, in agreement with the UK Scientific Advisory Committee on Nutrition's 2023 position, that UPF does not warrant inclusion in national dietary guidelines at present because there is no agreed definition and mechanisms are not understood. The SACN statement itself was not read. BNF says it is funded by membership subscriptions, grants, charities and industry projects and works with food industry members; individual funders were not identified on the pages read."
+  },
+  {
+   "title": "Request for information: ultra-processed foods",
+   "publisher": "US Food and Drug Administration and US Department of Agriculture",
+   "type": "regulatory notice",
+   "date": "2025-07",
+   "url": "https://www.fna.usda.gov/usda/fr-072525",
+   "verified": true,
+   "note": "Read. Published 25 July 2025 to develop a uniform federal definition; comment period extended to 23 October 2025. As of the page's last update (9 December 2025) no definition had been proposed or adopted. Later action not checked."
+  }
+ ],
+ "source_check": {
+  "state": "partial",
+  "summary": "Checked 2026-10-03. Funding and interests read for Lane (not funded; centre receives food-company funding), Hall (NIH; one author with Kerry, Abbott, Nestle and Danone ties), Fang (NIH; no industry ties), Srour (public funding) and the Dietary Guidelines documents (author disclosures for Appendix 4.1 not on the page read). Dicken: funded by a medical charity, author declarations not read. Not read: the Lancet Series full text, funding and author interests; the UK SACN 2023 statement itself; the Dietary Guidelines Appendix 4.1 full text; the letters criticizing the UPDATE trial in full; 2025 Hall follow-up trials; the Fang BMJ rapid responses; any federal definition after December 2025. No retraction check run."
+ },
+ "next_review": "2027-04-03",
+ "dossier": "docs/dossiers/ultra-processed-food.md",
+ "changelog": [
+  {
+   "date": "2026-10-03",
+   "change": "Record created from the ultra-processed food evidence review (round 1). Replaces the hand-set orange color on the Processing level row.",
+   "reason": "Owner asked for a third review round."
+  }
+ ]
 }
 ];
 

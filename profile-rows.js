@@ -88,14 +88,13 @@ function flavPlugin(m,ctx){var ing=ctx.ing||'',h=hits(ing,['natural flavor','nat
 b.append(para('Natural flavor is a flavoring made from a natural source. The ingredient list does not show the individual components.'));
 if(window.OLGloss){var bt=el('button','link','What is this?');bt.onclick=function(){window.OLGloss.open('natural flavors')};b.append(bt)}
 return{type:'flav',title:'Natural flavors',color:sel?'orange':'grey',chip:sel?'On your watch list':'Listed',body:b,pin:false,open:false}}
-function emulPlugin(m,ctx){var ing=ctx.ing||'',codes=(m.facts['Additives listed']||'').toLowerCase();var h=hits(ing+' '+codes,EMUL);if(!h.length)return null;var sel=prof().topics.indexOf('emulsifiers')>=0,b=el('div');
-b.append(para('Found: '+h.slice(0,6).join(', ')+'.'));
-b.append(para('What they are: additives that help oil and water mix, or that thicken and stabilize, used to improve texture and extend shelf life. Some of the items above are gums and thickeners that researchers group with emulsifiers.'));
-var f=el('p');f.append(el('strong',null,'What we found: mixed evidence.'));b.append(f);
-var ul=el('ul');['In a lab model using one healthy donor’s gut microbes, many of the 20 emulsifiers tested changed the microbes, including carboxymethylcellulose, polysorbate 80, carrageenans and several gums. Lecithin did not significantly. This was a lab model, not people.','The same research group reports that carboxymethylcellulose and polysorbate 80 promoted gut inflammation in mice.','In a randomized, placebo-controlled trial of 58 healthy adults in Belgium, four weeks of brownies containing one of five emulsifiers (carboxymethyl cellulose, polysorbate 80, carrageenan, soy lecithin or rice starch) lowered short-chain fatty acids made by gut microbes, but did not raise inflammation markers. The authors noted the trial was small and short and tested single emulsifiers, not the mixtures in real foods.'].forEach(function(t){ul.append(el('li',null,t))});ul.style.cssText='margin:0 0 9px;padding-left:18px';b.append(ul);
-b.append(para('Who paid: the trial reports academic funding, and several authors reported consulting fees or honoraria from pharmaceutical and nutrition-related companies. Funding for the lab study has not been checked yet.'));
-var p=el('p');[['Lab study (Microbiome, 2021)','https://pmc.ncbi.nlm.nih.gov/articles/PMC7986288/'],['Trial report (AGA, April 2026)','https://news.gastro.org/issues/2026/april-2026/emulsifiers-found-to-lower-gut-metabolites-not-inflammation/']].forEach(function(s,i){if(i)p.append(document.createElement('br'));var a=el('a',null,s[0]);a.href=s[1];a.target='_blank';a.rel='noopener noreferrer';a.style.cssText='color:var(--forest);font-weight:700;overflow-wrap:anywhere';p.append(a)});b.append(p);
-return{type:'emul',title:'Emulsifiers and stabilizers',color:sel?'orange':'grey',chip:sel?'On your watch list · mixed evidence':'Mixed evidence',body:b,pin:false,open:false}}
+function emulPlugin(m,ctx){var ing=ctx.ing||'',codes=(m.facts['Additives listed']||'').toLowerCase();var h=hits(ing+' '+codes,EMUL);if(!h.length)return null;
+var REG=window.OLRegister,fill=window.OLRegFill,lecOnly=h.every(function(w){return /lecithin|^e322$/.test(w)}),carra=h.some(function(w){return /carrageenan|^e407/.test(w)});
+var what='What they are: additives that help oil and water mix, or that thicken and stabilize, used to improve texture and extend shelf life. Some of the items found are gums and thickeners that researchers group with emulsifiers.';
+if(!REG||!fill){var b0=el('div');b0.append(para('Found: '+h.slice(0,6).join(', ')+'.'));b0.append(para(what));return{type:'emul',title:'Emulsifiers and stabilizers',color:'grey',chip:'Listed',body:b0,pin:false,open:false}}
+var at0=ctx.rows.length,b=el('div'),rs=fill(b,'emulsifiers-gut-disease',['Found: '+h.slice(0,6).join(', ')+'.',what],lecOnly?['Only lecithin was found. The research in this record is about other emulsifiers and gums, so it may not apply here.']:[],null,!lecOnly);
+if(carra){var b2=el('div'),rs2=fill(b2,'carrageenan-gut-disease',['Carrageenan, E407 or E407a is listed.'],[],null);ctx.rows.push({type:'carra',title:'Carrageenan',color:rs2.color,chip:rs2.chip,body:b2,rec:rs2.rec,pin:false,open:false})}
+return{type:'emul',title:'Emulsifiers and stabilizers',color:rs.color,chip:rs.chip,body:b,rec:rs.rec,pin:false,open:false,at:at0}}
 function gutPlugin(m,ctx){var ing=ctx.ing||'',live=hits(ing,LIVE),pre=hits(ing,PREB),fer=hits(ing,FERM);if(!live.length&&!pre.length&&!fer.length)return null;var b=el('div'),parts=[];
 function item(h,name,list,txt){var p=el('p');p.append(el('strong',null,name+': '),document.createTextNode(txt+' Found: '+list.slice(0,4).join(', ')+'.'));b.append(p);parts.push(h)}
 if(live.length)item('live cultures','Live cultures listed',live,'A probiotic is defined by scientists as live microorganisms that, when given in adequate amounts, give a health benefit. A label that says live cultures does not tell us the strain or the amount.');
@@ -106,9 +105,9 @@ var a=el('a',null,'ISAPP: consensus definitions of probiotics, prebiotics and fe
 return{type:'gut',title:'Gut: live cultures, prebiotics, fermented',color:'grey',chip:'Contains: '+parts.join(', '),body:b,pin:false,open:false}}
 function topicMutate(m,ctx){var T=prof().topics;ctx.rows.forEach(function(r){
 /* seed oils color now comes from the evidence register (evidence-register.js) */
-if(r.type==='sweet'){var on=T.indexOf('sweeteners')>=0;r.color=on?'orange':'grey';r.chip=on?'On your watch list':'Listed'}
+if(r.type==='sweet'&&!r.rec){var on=T.indexOf('sweeteners')>=0;r.color=on?'orange':'grey';r.chip=on?'On your watch list':'Listed'}
 if(r.type==='add'){var on2=T.indexOf('additives')>=0;r.color=on2?'orange':'grey';var mm=/^([0-9]+)/.exec(r.chip);r.chip=(mm?mm[1]+' listed · ':'')+(on2?'on your watch list':'not yet reviewed')}
-if(r.type==='proc'){var u=T.indexOf('ultra')>=0&&r.chip==='Ultra-processed';if(u){r.color='orange';r.chip='On your watch list · ultra-processed'}else if(r.color==='orange'||r.color==='yellow'||r.color==='green')r.color='grey'}});return null}
+if(r.type==='proc'&&!r.rec){var u=T.indexOf('ultra')>=0&&r.chip==='Ultra-processed';if(u){r.color='orange';r.chip='On your watch list · ultra-processed'}else if(r.color==='orange'||r.color==='yellow'||r.color==='green')r.color='grey'}});return null}
 window.OLDietEval=evalDiet;
 var P=window.OLPanelPlugins=window.OLPanelPlugins||[];
 [topicMutate,cafPlugin,dietPlugin,intolPlugin,sugarPlugin,flavPlugin,emulPlugin,gutPlugin].forEach(function(f){P.push(f)});

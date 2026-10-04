@@ -82,5 +82,16 @@ t('detect added sugar marks a cola as a drink',R.detect('addedsugar','Carbonated
 t('cracker is not a drink',R.detect('addedsugar','wheat flour, sugar','Crackers').drink===false);
 t('Pop-Tarts is not a drink',R.detect('addedsugar','flour, sugar','Pop-Tarts').drink===false);
 t('no sugar words means nothing found',R.detect('addedsugar','water, salt','Broth').found.length===0);
+t('drink detected from category',R.detect('addedsugar','water, sugar','Mountain Dew Sodas').drink===true);
+t('snack category is not a drink',R.detect('addedsugar','flour, sugar','Pop-Tarts Snacks').drink===false);
+['emulsifiers-gut-disease','carrageenan-gut-disease','ultra-processed-health'].forEach(function(id){var x=clone(R.get(id));
+t(id+' valid',R.validate(x).length===0);
+t(id+' provisional, no signoff',x.review_state==='provisional'&&x.owner_signoff===null);
+t(id+' yellow, not orange',x.color==='yellow');
+t(id+' grey when not watched',R.resolve(x,{topics:[],now:NOW}).color==='grey');
+t(id+' yellow when watched',R.resolve(x,{topics:[x.topic],now:NOW}).color==='yellow');
+t(id+' not-apply chip',R.resolve(x,{topics:[x.topic],now:NOW,applies:false}).chip==='Listed \u00b7 may not apply');
+t(id+' overdue grey',R.resolve(x,{topics:[x.topic],now:new Date('2027-04-05')}).note==='overdue');
+t(id+' has sources on both sides',x.sides['for'].length>=2&&x.sides.against.length>=2&&x.sources.length>=5)});
 
 console.log(n+' cases, '+f+' failed');process.exit(f?1:0);
