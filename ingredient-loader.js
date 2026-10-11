@@ -1,5 +1,5 @@
-(function(){'use strict';var V='20261011-cm1';function script(name,done,failed){var s=document.createElement('script');s.src=name+'?v='+V;if(done)s.onload=done;if(failed)s.onerror=failed;document.body.appendChild(s)}
+(function(){'use strict';var V='20261011-mg1';function script(name,done,failed){var s=document.createElement('script');s.src=name+'?v='+V;if(done)s.onload=done;if(failed)s.onerror=failed;document.body.appendChild(s)}
 function expansion(name,done){var started=false;function continueOnce(){if(started)return;started=true;done()}script(name,continueOnce,function(){window.__olIngredientExpansionUnavailable=true;continueOnce()})}
 function rest(){script('ingredient-integration.js',function(){script('ingredient-purpose.js',function(){script('ingredient-row-fix.js',function(){var css=document.createElement('link');css.rel='stylesheet';css.href='ingredient-row-fix.css?v='+V;document.head.appendChild(css);script('ingredient-evidence.js')})})})}
-script('ingredients.js',function(){expansion('ingredient-iodine-selenium.js',function(){expansion('ingredient-copper-manganese.js',rest)})});
+script('ingredients.js',function(){expansion('ingredient-iodine-selenium.js',function(){expansion('ingredient-copper-manganese.js',function(){expansion('ingredient-magnesium-expansion.js',rest)})})});
 script('explore-search.js');if(/[?&]labs=1/.test(location.search)||localStorage.getItem('openlabel-labs')==='1')script('ingredient-research.js');})();
