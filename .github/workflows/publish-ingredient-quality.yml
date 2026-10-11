@@ -1,0 +1,77 @@
+name: Publish prepared ingredient text-quality fix
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/publish-ingredient-quality.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: publish-ingredient-quality
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.repository == 'jessepringle13-bit/OpenLabel' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Apply only the byte-verified prepared patch
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 <<'PY'
+          from pathlib import Path
+          import hashlib,re,subprocess,tempfile
+          def blob(b): return hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()
+          bases={'index.html': '469c72d9a4d870487641eb141c7989bc3db58c31', 'ingredient-loader.js': 'bafcaf553cec4a980d036c0ad59f9b6e5af1045e'}
+          for name,sha in bases.items():
+              assert blob(Path(name).read_bytes())==sha, 'Base changed: '+name
+          assert not Path('ingredient-text-quality.js').exists(), 'New module already exists'
+          quality=r"""const QUALITY_NOTICE='This ingredient text has unusual character patterns. Some text may be unreadable; compare it with the current package. This is not an ingredient safety finding.';
+          function textQuality(raw){const text=String(raw||''),t=text.toLowerCase().replace(/[\u2010-\u2015\u2212]/g,'-').replace(/[\u2018\u2019\u2032]/g,"'");const allowed=new Set(['of','or','to','in','as','a','e','b','c','d','k','l','r','s','dl','b1','b2','b3','b5','b6','b7','b9','b12','d2','d3','k1','k2','mg','mcg','g','ml','iu','oz','no','ph','hcl','plp','mthf','fmn','fad','dna','rna','msg','bht','bha','tbhq','edta','usp','fda','tm']);const words=t.match(/[a-z][a-z0-9]*(?:[-'][a-z0-9]+)*/g)||[];const bad=words.filter(w=>!allowed.has(w)&&! /^(?:l-)?5-?mthf$/.test(w)&&!/[aeiouy]/.test(w));const short=bad.filter(w=>w.length<=2).length,long=bad.filter(w=>/^[bcdfghjklmnpqrstvwxz]{3,}$/.test(w)).length;const symbols=(text.match(/[^\p{L}\p{N}\s(),.;:%+\-\/\[\]'’′*&®™]/gu)||[]).length;const reasons=[];if(symbols>=3&&symbols/Math.max(1,text.replace(/\s/g,'').length)>=0.15)reasons.push('Dense unexpected symbols');if(words.length>=4&&bad.length>=3&&short>=2&&long>=1&&bad.length/words.length>=0.4)reasons.push('Several short fragments alongside consonant-only fragments');return {version:'20261011-quality1',needsCheck:reasons.length>0,reasons:reasons,tokenCount:words.length}}
+          function refreshIngredientQuality(p){if(!p.live)return;let text=p.ingText||'';if(!text){const f=(p.facts||[]).find(x=>x[0]==='Ingredients');if(f)text=f[1]}const q=textQuality(text),legacy='This ingredient list looks garbled, probably read from a photo by software. Words may be wrong or missing, so matching can miss things. Check the package.';const note=String(p.ingNote||'').split(legacy).join('').split(QUALITY_NOTICE).join('').replace(/\s+/g,' ').trim();p.ingQuality=q;p.ingNote=[note,q.needsCheck?QUALITY_NOTICE:''].filter(Boolean).join(' ')}
+          window.OLTextQuality={analyse:textQuality,version:'20261011-quality1'};
+          """
+          rowmodule=r"""(function(){'use strict';var api=window.OLIngredients,Q=window.OLTextQuality;if(!api||!api.render||!Q||api.__textQuality)return;
+          function update(row){var name=row.querySelector('.ol-ing-row-name'),meta=row.querySelector('.ol-ing-row-meta');if(!name||!meta)return;var label=name.textContent,hit=api.lookup?api.lookup(label):null,q=hit?{needsCheck:false,reasons:[]}:Q.analyse(label);var note=row.querySelector('.ol-ing-readability-note'),legacy=!!row.dataset.olGarbled;delete row.dataset.olGarbled;row.classList.remove('ol-ing-garbled');if(legacy&&!row.dataset.evidence&&!row.dataset.watchWord&&row.dataset.olBaseMeta)meta.textContent=row.dataset.olBaseMeta;
+          if(!q.needsCheck){delete row.dataset.olReadability;if(note)note.remove();return}row.dataset.olReadability='check';var text='Unusual text pattern · compare with the package';if(!note){note=document.createElement('span');note.className='ol-ing-readability-note';note.setAttribute('role','note');note.style.cssText='display:block;font-size:12px;font-weight:400;margin-top:3px';note.textContent=text;row.append(note)}else if(note.textContent!==text)note.textContent=text}
+          function scanRoot(root){var group=root.querySelector('.ol-ing-bad'),raw=root.querySelector('.ol-ing-rawtext');if(group&&raw&&root.parentNode){var fresh=next.render(raw.textContent);if(!fresh.querySelector('.ol-ing-bad')){root.replaceWith(fresh);return}}root.querySelectorAll('.ol-ing-row').forEach(update)}
+          var next=Object.assign({},api);next.__textQuality=true;next.render=function(text){var note=window.__olIngNote,root;window.__olIngNote='';try{root=api.render(text)}finally{window.__olIngNote=note}scanRoot(root);return root};window.OLIngredients=next;var pending=false;function scan(){pending=false;var panel=document.getElementById('olPanel');if(!panel||panel.hidden)return;panel.querySelectorAll('.ol-ing-explore').forEach(scanRoot)}new MutationObserver(function(){if(!pending){pending=true;requestAnimationFrame(scan)}}).observe(document.body,{childList:true,subtree:true});scan();window.OLIngredientReadability={refresh:scanRoot,version:'20261011-quality1'};
+          })();
+          """
+          loader=r"""(function(){'use strict';var V='20261011-quality1';function script(name,done,failed){var s=document.createElement('script');s.src=name+'?v='+V;if(done)s.onload=done;if(failed)s.onerror=failed;document.body.appendChild(s)}
+          function expansion(name,done){var started=false;function continueOnce(){if(started)return;started=true;done()}script(name,continueOnce,function(){window.__olIngredientExpansionUnavailable=true;continueOnce()})}
+          function rest(){script('ingredient-integration.js',function(){script('ingredient-purpose.js',function(){script('ingredient-row-fix.js',function(){var css=document.createElement('link');css.rel='stylesheet';css.href='ingredient-row-fix.css?v='+V;document.head.appendChild(css);script('ingredient-evidence.js')})})})}
+          script('ingredients.js',function(){expansion('ingredient-iodine-selenium.js',function(){expansion('ingredient-copper-manganese.js',function(){expansion('ingredient-magnesium-expansion.js',function(){expansion('ingredient-chromium-expansion.js',function(){expansion('ingredient-zinc-expansion.js',function(){expansion('ingredient-coverage-expansion.js',function(){expansion('ingredient-annotated-labels.js',function(){expansion('ingredient-text-quality.js',rest)})})})})})})})});
+          script('explore-search.js');if(/[?&]labs=1/.test(location.search)||localStorage.getItem('openlabel-labs')==='1')script('ingredient-research.js');})();
+          """
+          html=Path('index.html').read_bytes().decode()
+          a=html.index('function cleanIng(');b=html.index('function normOff(',a);old=html[a:b]
+          newclean=old[:old.index('const OK2=')]+"const q=textQuality(t);if(q.needsCheck)notes.push(QUALITY_NOTICE);t=t.replace(/[.\\s]+$/,'');return{text:t,note:notes.join(' '),quality:q}}\n"
+          html=html[:a]+quality+newclean+html[b:]
+          needle="if(!p.ingOver&&(!p.ingText||/garbled/.test(p.ingNote||'')))"
+          assert html.count(needle)==1
+          html=html.replace(needle,'if(!p.ingOver&&!p.ingText)')
+          needle='function renderResult(){let p=getProduct(current)||products[0];'
+          assert html.count(needle)==1
+          html=html.replace(needle,needle+'refreshIngredientQuality(p);')
+          outputs={'index.html':html,'ingredient-loader.js':loader,'ingredient-text-quality.js':rowmodule}
+          expected={'index.html': '2c48133eed72ec1a4238fe7f4783816ae147a55d', 'ingredient-loader.js': 'dee16f11ac1840a230bb16eed536d8725ddcc680', 'ingredient-text-quality.js': '6663ffe541c005ad91b90d332b63082e476e916c'}
+          for name,text in outputs.items():
+              assert blob(text.encode())==expected[name], 'Candidate mismatch: '+name
+          for name,text in outputs.items(): Path(name).write_bytes(text.encode())
+          for name in ['ingredient-loader.js','ingredient-text-quality.js']: subprocess.run(['node','--check',name],check=True)
+          app=next(s for s in re.findall(r'<script(?:\s[^>]*)?>(.*?)</script>',html,re.S) if s.strip())
+          with tempfile.TemporaryDirectory() as d:
+              p=Path(d)/'app.js';p.write_text(app);subprocess.run(['node','--check',str(p)],check=True)
+          print('Verified the three candidate hashes and JavaScript syntax. Full regression remains blocked; no browser or phone tests.')
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- index.html ingredient-loader.js ingredient-text-quality.js
+          git diff --cached --stat
+          git commit -m 'Fix ingredient text-quality checks together; full regression blocked'
+          git push origin HEAD:main
