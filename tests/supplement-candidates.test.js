@@ -1,0 +1,10 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const html=fs.readFileSync(require('node:path').join(__dirname,'../supplements/dev.html'),'utf8');
+const start=html.indexOf('function candidates(raw)'),end=html.indexOf('function renderCandidates(',start);assert.ok(start>=0&&end>start);
+const context={};vm.createContext(context);vm.runInContext(html.slice(start,end),context);
+const candidates=context.candidates,barcodeComparison=context.barcodeComparison;
+const raw={hits:[{_id:'278390',_source:{brandName:'Pure Encapsulations',fullName:'PreNatal Nutrients',netContents:[{display:'120 Capsule(s)'}],entryDate:'2023-01-23'}}],stats:{count:1}};
+assert.deepEqual(JSON.parse(JSON.stringify(candidates(raw))),[{id:'278390',name:'PreNatal Nutrients',brand:'Pure Encapsulations',contents:'120 Capsule(s)',entryDate:'2023-01-23'}]);
+assert.equal(candidates({hits:[]}).length,0);assert.equal(candidates({hits:[null]}).length,0);assert.equal(candidates({hits:[{_id:'bad',_source:{fullName:'x'}}]}).length,0);assert.equal(candidates({hits:[{_id:'1',_source:{id:2,fullName:'x'}}]}).length,0);assert.equal(candidates([{id:3,fullName:'x'}])[0].id,'3');
+assert.equal(barcodeComparison({upcSku:'7 66298 02484 4'},'766298024844'),'exact-source-barcode');assert.equal(barcodeComparison({upcSku:'123456789012'},'766298024844'),'barcode-mismatch');assert.equal(barcodeComparison({},'766298024844'),'unresolved');assert.equal(barcodeComparison({upcSku:'UPC 766298024844'},'766298024844'),'unresolved');assert.equal(barcodeComparison({upcSku:766298024844},'766298024844'),'unresolved');
+console.log('11 candidate and barcode-comparison assertions passed');
