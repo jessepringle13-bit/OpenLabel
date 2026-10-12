@@ -1,0 +1,14 @@
+(function(){'use strict';
+if(window.__olBotanicalGroup5Added)return;
+var api=window.OLIngredients,entries=window.OLIngredientEntries;
+if(!api||!api.lookup||!entries)throw new Error('Group 5 requires ingredient entry extension');
+var batch=[
+{names:['panax ginseng extract'],role:'Panax ginseng extract / preparation unspecified',use:'Botanical extract',form:'An extract labeled as Panax ginseng, also called Asian ginseng. It is not species-unspecified ginseng extract or American ginseng. Plant part, solvent, extraction ratio, carriers, ginsenoside levels and amount are unspecified.',purpose:'A botanical ingredient used in supplements and formulations. The label does not establish manufacturer intent or a health benefit.',difference:'NCCIH describes limited, outcome-specific research, medication interactions and safety uncertainties. Insomnia is a commonly reported side effect; blood-sugar, blood-clotting, autoimmune and pregnancy concerns require clinical context. Findings for particular preparations do not establish an energy, cognition or other benefit, or a personal safety verdict, from this product. Existing health reviews remain unchanged.',source:'https://www.nccih.nih.gov/health/asian-ginseng',sourceLabel:'NCCIH: Asian ginseng (Panax ginseng)',formUnspecified:true,reviewed:'2026-10-12'},
+{names:['guayusa extract'],role:'Guayusa extract / preparation unspecified',use:'Botanical extract / possible caffeine source',form:'An extract associated with Ilex guayusa. The generic label does not establish plant part, solvent, extraction ratio, carrier ingredients, caffeine concentration or amount. It is not automatically identical to brewed guayusa tea or the specified aqueous leaf extract in FDA GRN 883.',purpose:'May contribute botanical constituents including caffeine. Actual composition, amount and manufacturer intent are unknown.',difference:'FDA GRN 883 concerns a specified aqueous Ilex guayusa leaf extract containing caffeine under specified intended uses. This does not certify every guayusa extract or this product. The name does not establish caffeine amount, decaffeination, an energy or focus benefit, or individual safety. Existing caffeine and health evidence logic remains unchanged.',source:'https://www.fda.gov/media/137759/download',sourceLabel:'FDA: GRN 883 response for specified aqueous guayusa leaf extract',formUnspecified:true,reviewed:'2026-10-12'}
+];
+var skipped=[];
+batch=batch.filter(function(e){e.names=e.names.filter(function(name){if(api.lookup(name)){skipped.push(name);return false}return true});return e.names.length>0});
+if(batch.length)entries.add(batch);
+window.__olBotanicalGroup5Added=true;
+window.OLBotanicalGroup5Status={version:'20261012-botanical5-1',registered:batch.length,existingMatchesPreserved:skipped,existingTurmeric:!!api.lookup('turmeric extract'),existingRosemary:!!api.lookup('rosemary extract'),browserValidation:'pending'};
+})();
