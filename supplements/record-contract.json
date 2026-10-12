@@ -1,0 +1,18 @@
+{
+  "contractVersion": "0.1.0",
+  "artifactType": "field-contract-not-json-schema",
+  "status": "design-only",
+  "unknownValue": null,
+  "verificationStates": ["source-reported", "photo-extracted-unconfirmed", "user-confirmed", "label-compared", "conflicting", "unknown"],
+  "matchStates": ["candidate", "record-matched-package-unchecked", "label-compared", "conflicting", "not-found", "unavailable"],
+  "productFields": ["id", "brand", "name", "barcodesRaw", "barcodesNormalized", "dosageForm", "market"],
+  "labelFields": ["sourceType", "sourceId", "sourceUrl", "labelDate", "retrievedAt", "historical", "images", "matchState"],
+  "servingFields": ["rawText", "quantity", "unit", "unitsPerServing", "servingsPerContainer", "verification"],
+  "activeIngredientFields": ["id", "rawText", "canonicalIdentity", "formRaw", "formNormalized", "amount", "unit", "quantityBasis", "dailyValuePercent", "dailyValuePopulation", "blendId", "individualDoseDisclosed", "botanicalSpecies", "plantPart", "extractRatio", "standardization", "provenance", "fieldVerification"],
+  "quantityBases": ["declared-nutrient", "compound-mass", "extract-mass", "blend-total", "activity", "DFE", "unknown"],
+  "otherIngredientFields": ["rawText", "canonicalIdentity", "provenance", "verification"],
+  "additionalLabelFields": ["directionsRaw", "warningsRaw", "lotRaw", "expirationRaw"],
+  "provenanceFields": ["sourceId", "sourceType", "sourceUrl", "imageId", "rawValue", "capturedAt", "correctionHistory"],
+  "calculatedIntakeFields": ["selectedUnits", "unit", "amount", "ingredientId", "inputReferences", "calculationVersion", "blockedReasons"],
+  "rules": ["Unknown is not zero", "Preserve exact wording and leading barcode zeros", "No label statement is laboratory verification", "No undisclosed blend dose allocation", "No automatic DFE or IU conversion", "No genetic dose inference", "Keep evidence separate from label facts", "Preference match is not safety clearance"]
+}
