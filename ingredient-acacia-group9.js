@@ -1,0 +1,11 @@
+(function(){'use strict';
+if(window.__olAcaciaGroup9Added)return;
+var api=window.OLIngredients,entries=window.OLIngredientEntries,gums=window.OLGumsStabilizers;
+if(!api||!api.lookup||!entries||!gums||!gums.lookup)throw new Error('Group 9 requires gum and ingredient entry modules');
+var base=gums.lookup('gum arabic');
+if(!base)throw new Error('Group 9 requires existing gum arabic definition');
+var skipped=[],names=['acacia','acacia (gum arabic)','acacia(gum arabic)'].filter(function(name){if(api.lookup(name)){skipped.push(name);return false}return true});
+if(names.length)entries.add([Object.assign({},base,{names:names,sourceLabel:'21 CFR: acacia (gum arabic) identity and food uses'})]);
+window.__olAcaciaGroup9Added=true;
+window.OLAcaciaGroup9Status={version:'20261012-acacia9-1',aliasesRegistered:names,existingMatchesPreserved:skipped,browserValidation:'pending'};
+})();
