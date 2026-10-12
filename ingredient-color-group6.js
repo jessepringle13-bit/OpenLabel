@@ -1,0 +1,11 @@
+(function(){'use strict';
+if(window.__olColorGroup6Added)return;
+var api=window.OLIngredients,entries=window.OLIngredientEntries;
+if(!api||!api.lookup||!entries)throw new Error('Group 6 requires ingredient entry extension');
+var batch=[{names:['paprika extract'],role:'Paprika-derived preparation / form unspecified',use:'Possible color / flavor ingredient',form:'A paprika-derived extract preparation. It is not ground paprika. The generic wording does not independently establish an oleoresin formulation, extraction solvent, carrier ingredients or pigment concentration.',purpose:'May contribute color or flavor. The label alone does not establish the manufacturer actual purpose or amount.',difference:'21 CFR 73.345 describes paprika oleoresin as extracted flavor and color principles from Capsicum annuum. That specification provides context, not verification that every ingredient labeled paprika extract meets it. This entry is not an exact alias for paprika oleoresin. Plant origin or exemption from batch certification is not a health benefit, allergy clearance or product-specific safety verdict. Existing health evidence remains unchanged.',source:'https://www.ecfr.gov/current/title-21/chapter-I/subchapter-A/part-73/subpart-A/section-73.345',sourceLabel:'21 CFR 73.345: paprika oleoresin context, not generic-extract verification',formUnspecified:true,reviewed:'2026-10-12'}];
+var skipped=[];
+batch=batch.filter(function(e){e.names=e.names.filter(function(name){if(api.lookup(name)){skipped.push(name);return false}return true});return e.names.length>0});
+if(batch.length)entries.add(batch);
+window.__olColorGroup6Added=true;
+window.OLColorGroup6Status={version:'20261012-color6-1',registered:batch.length,existingMatchesPreserved:skipped,existingAnnatto:!!api.lookup('annatto extract'),existingBeetPowder:!!api.lookup('beet powder'),browserValidation:'pending'};
+})();
