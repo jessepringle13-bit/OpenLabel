@@ -1,0 +1,58 @@
+name: Apply verified supplement P0 repair
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/apply-supplement-p0.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: apply-supplement-p0
+  cancel-in-progress: false
+jobs:
+  apply:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Verify baseline and install exact uploaded repair
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib,json,re,subprocess,sys
+          p=Path('index.html')
+          b=p.read_bytes()
+          target='99752b5da632b1bbd61c23a3aceddc7d1707f7ff5cb747a0e5401b9c553d555e'
+          if hashlib.sha256(b).hexdigest()==target:
+              sys.exit(0)
+          blob=hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()
+          assert blob=='2c48133eed72ec1a4238fe7f4783816ae147a55d','Main changed: refusing to overwrite'
+          text=b.decode()
+          edits=json.loads(r'''[[23955,23955,"let cameraSession=0,secondaryDetectorPromise=null;"],[24697,24698,"barc"],[24699,24701,"deDigits"],[24720,24722,"==null?"],[24724,24724,":c).trim("],[24735,24735,"["],[24736,24737,"s-]"],[24743,24744,"}\nfunction norm(c){const d=barcodeDigits(c);"],[24746,24746,"turn gtinValid(d)?d."],[24747,24747,"adStart(14,'0'):''}\nfunction barcodeEquiva"],[24748,24748,"ent("],[24749,24749,",b){const x=norm(a),y=norm(b);return !!x&&x===y}\nfunction barcodeCandidates(code){const c=barcodeDigits(code);if(!gtinValid(c))return [];const a=[c];if(c.length===12)a.push('0'+c);if(c.length===13&&c.startsWith('0'))a.push(c.sli"],[24752,24754,"1));if(c.length===14&&c.startsWith('"],[24755,24759,"0"],[24761,24761,")a.push(c.slice(2),c.slice(1));return [...new Set(a)]"],[24909,24909,"!/^\\d+$/.test(s)||"],[28100,28101,"_PROXY=typeof window.OL_FDC_PROXY_URL=="],[28103,28108,"st"],[28109,28112,"ing'?window.O"],[28113,28129,"_FDC_PROX"],[28130,28143,"_URL:'"],[28378,28378,"if(!FDC_PROXY||!gtinValid(barcodeDigits(code)))return null;"],[28386,28386,"norm("],[28390,28390,")"],[28446,28583,""],[28651,28651,"try{const endpoint=new URL(FDC_PROXY,location.href);if(endpoint.origin!==location.origin)throw Error('USDA proxy must be same-origin');endpoint.searchParams.set('barcode',barcodeDigits(code));"],[28671,28711,""],[28712,28746,""],[28748,28783,""],[28785,28787,"i"],[28789,28792,".href"],[28814,28831,""],[28846,28850,""],[28857,28860,"USDA "],[28861,28861,"roxy"],[28862,28862,"unavailable"],[28863,28872,""],[28896,29039,""],[29040,29058,""],[29064,29069,"matches="],[29082,29082,".filter(f=>barcodeEquivalent(f.gtinUpc,code"],[29083,29085,"&&typeo"],[29086,29088," "],[29101,29103,"==='string'&&"],[29117,29121,""],[29122,29131,"r"],[29132,29148,"m"],[29149,29225,""],[29228,29228,"if(mat"],[29229,29231,"he"],[29232,29300,""],[29307,29565,""],[29573,29573,"lists=new Set(matches.map("],[29575,29599,">"],[29612,29612,".trim("],[29613,29613,".replace(/\\s+/g,' ')));if(lists.size!==1)return null;const f=matches[0];out={text:f.ingredients"],[29739,29740,"'compl"],[29741,29742,""],[29743,29749,"e "],[29755,29772,""],[29807,29807,"inally{clearTimeout(tm)}if(out)f"],[35086,35086,"Raw:ingBase.text,ing"],[35120,35120,",ingredientCoverage:ing?'unverified-text':'missing',sourceName:'Open Food Facts',recordVersion:'20261013-p0-v2'"],[35414,35414,"function selectOffResponse(results,code){const matches=results.filter(x=>x.status==='fulfilled').map(x=>x.value).filter(d=>d&&d.product&&typeof d.product==='object'&&barcodeEquivalent(d.product.code,code));matches.sort((a,b)=>Number(!!String(b.product.ingredients_text_en||b.product.ingredients_text||'').trim())-Number(!!String(a.product.ingredients_text_en||a.product.ingredients_text||'').trim()));return matches[0]||null}\n"],[35444,35446,"cons"],[35449,35449,"andidates"],[35450,35451,"barcodeCandida"],[35452,35456,"es"],[35462,35480,""],[35484,35484,"!"],[35485,35485,"andidates"],[35492,35492,")return null;let answered"],[35493,35493,"false,lastError"],[35494,35497,"null;for(const c of candidates"],[35498,35506,"{"],[35543,35545,"cons"],[35547,35550,"res"],[35552,35563,""],[35564,35568,"s"],[35584,35586,"llSettled"],[35721,35723,";answered=answered||results.some(x=>x.st"],[35725,35728,"us==='fulfill"],[35729,35729,"d'"],[35730,35742,";lastE"],[35746,35746,"=re"],[35747,35749,"ults.find(x=>x.status==='r"],[35750,35750,"jected')?"],[35751,35751,"r"],[35752,35752,"ason||lastE"],[35756,35756,";con"],[35757,35760,"t d=selectOffResponse(results,c"],[35761,35781,""],[35787,35794,")c"],[35795,35798,"n"],[35799,35868,"i"],[35870,35872,"e"],[35966,36344,""],[36369,36383,""],[36389,36389,";p.ingNote='USDA FoodData Central ingredient text, matched by complete barcode through a configured server proxy. Not verified against your current package.'"],[36407,36407," FoodData Central"],[36409,36417,""],[36419,36426,""],[36427,36447,""],[36456,36456,"SourceUrl='http"],[36457,36457,"://fdc.nal.usda.gov/food-details/"],[36458,36460,"+u."],[36461,36473,"d+'/nu"],[36474,36484,""],[36485,36487,""],[36493,36504,""],[36505,36510,""],[36602,36602,"p.ingredientCoverage='unver"],[36604,36605,"ied-text';p.sweetener="],[36630,36631,"}}if(!"],[36633,36635,"ingT"],[36636,36637,"xt){p.ingNo"],[36639,36639,"='I"],[36640,36640,"gr"],[36641,36641,"dient info"],[36642,36643,"ma"],[36644,36644,"ion is unavailable f"],[36645,36645,"om the config"],[36646,36646,"r"],[36647,36648,"d sources. Missing data do not mean the product has no ingredients.';p.facts.unshift(['Ingredient availability',p.ingNote])"],[36657,36657,"}if(!answered&&lastError)throw lastError;return null"],[36696,36696,"code=barcodeDigits(code);if(!gtinValid(code)){restartOnClose=!!fromScan;sheet('Check barcode digits',code.length===11?'The entry contains 11 digits. Read all printed digits, including small digits outside the bars. No digit was guessed.':'Enter a complete barcode with a valid check digit. No lookup was performed.','Entered: '+code);return}"],[38431,38431,"window.BarcodeDetector;if(C){const sup=typeof C.getSupportedFormats==='function'?await C.getSupportedFormats():[];const f=FORMATS.filter(x=>sup.includes(x));if(['ean_13','upc_a'].every(x=>f.includes(x))){detector=new C({formats:f});return detector}}}catch(e){detErr='native: '+(e.message||e)}try{const C="],[38526,38530,"fallback"],[38535,38538,""],[38551,38762,""],[39243,39243,",enhance=true"],[39831,39831,"if(!enhance)return c;"],[40213,40213,"cameraSession++;"],[46573,46573,"detected "],[46579,46580,"— label c"],[46581,46591,"v"],[46593,46593,"a"],[46595,46595," u"],[46596,46597,"verified"],[46655,46655," ma"],[46656,46656,"c"],[46657,46660,""],[46668,46668,"available "],[46672,46672,"."],[46673,46674,"A compl"],[46675,46675,"te current label and all trace statements"],[46681,46714,""],[46718,46727,"b"],[46729,46729,"n verified"],[46733,46751,"N"],[46762,46767,""],[46786,46786,"are available "],[46790,46791,"."],[46792,46794,"Read"],[46795,46797,""],[46799,46810,""],[46813,46814,"urr"],[46815,46815,"nt pa"],[46817,46817,"ag"],[46818,46819,""],[49391,49394,"S"],[49395,49404,"m"],[49406,49407,"l"],[49408,49410,"bel"],[49418,49419,"ar"],[49421,49421,"avai"],[49422,49425,"able;"],[49427,49427,"ull current-package c"],[49428,49428,"ve"],[49429,49429,"age has not been verified"],[51662,51662,"function cameraActive(video,session){return scanning&&stream&&view==='scan'&&cameraSession===session&&video.srcObject===stream}\nasync function secondaryDetector(){if(!secondaryDetectorPromise)secondaryDetectorPromise=loadPolyfill().then(C=>C?new C({formats:FORMATS}):null).catch(()=>null);return secondaryDetectorPromise}\n"],[51694,51694,",session"],[51696,51696,"let rounds=0;"],[51702,51703,""],[51705,51707,"meraAct"],[51708,51715,"v"],[51716,51720,"("],[51722,51722,"d"],[51723,51728,"o,"],[51729,51731,"essio"],[51732,51733,")"],[51739,51739,"if(video.readyState<2){await sleep(150);continue}"],[51766,51766,";if(!cameraActive(video,session))return"],[51811,51837,""],[51847,51847,"printed "],[51853,51853,";"],[51854,51855,"ma"],[51856,51856,"ua"],[51857,51857," entr"],[51858,51858," is available"],[51869,51873,"le"],[51906,51906,"!"],[51928,51930,"c"],[51931,51931,"opFrame(v"],[51932,51934,"deo,false);if"],[51935,51935,"c)"],[51940,51941,"=await d.detect(c)}if(!codes.length&&++rounds%12==="],[51942,51943,"){const fallback=await secondaryDetector();if(fallback&&fallback!==d){const c=cropFrame(video,false);codes=await fallback.detect(c||video)}}if(!cameraActive(video,session))return;const hit=codes.map(x=>barcodeDigits(x"],[51952,51956,")"],[51958,51961,"find(gtinVa"],[51962,51974,"id"],[51979,51980,"hit"],[51993,51994,"hit"],[52003,52004,"if(rounds===24)setStatus('Still reading. Keep all bars visible; manual entry is available.')"],[52014,52014,"detErr='decode: '+(e.message||e)"],[52027,52029,"18"],[52062,52062,",session"],[52104,52105,""],[52107,52109,"meraAct"],[52110,52117,"v"],[52118,52122,"("],[52124,52124,"d"],[52125,52130,"o,"],[52131,52133,"essio"],[52134,52135,")"],[52172,52183,"||"],[52184,52185,""],[52187,52187,"meraActive(video,sessio"],[52188,52192,")"],[52259,52259,";if(!cameraActive(video,session))return"],[53251,53251,"const session=++cameraSession;"],[53268,53268,",session"],[53283,53283,",session"],[54034,54042,"[0-9]+"],[54069,54074,""],[54088,54088," only"],[55415,55415,"function migrateUnverifiedIngredients(){Object.values(state.live).forEach(p=>{if(!p||!p.live||p.recordVersion==='20261013-p0-v2')return;p.ingredientCoverage='unverified-text';if(p.ingSource==='USDA'&&!p.ingOver){p.ingText='';p.facts=(p.facts||[]).filter(x=>x[0]!=='Ingredients');p.missing=[...new Set([...(p.missing||[]),'ingredients'])];p.ingNote='An older fallback ingredient list was hidden because its exact-product match cannot be established. Rescan to retrieve current data.';p.ingredientCoverage='missing';p.ingSource='';p.sweetener=false}p.recordVersion='20261013-p0-v2'})}\nmigrateUnverifiedIngredients();persist();"]]''')
+          for start,end,replacement in reversed(edits):
+              text=text[:start]+replacement+text[end:]
+          new=text.encode()
+          assert hashlib.sha256(new).hexdigest()==target,'Candidate hash mismatch'
+          html=new.decode()
+          assert "const FDCK='" not in html,'Hard-coded key remains'
+          scripts=re.findall(r'<script(?:\s[^>]*)?>(.*?)</script>',html,re.S)
+          for code in scripts:
+              subprocess.run(['node','-e',"new(require('node:vm').Script)(require('node:fs').readFileSync(0,'utf8'))"],input=code,text=True,check=True)
+          p.write_bytes(new)
+          print('Verified exact uploaded repair:',target)
+          PY
+      - name: Commit repaired index to main
+        shell: bash
+        run: |
+          if git diff --quiet -- index.html; then
+            echo "Exact repair already installed"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "fix: harden barcode lookup, ingredient identity and camera sessions"
+          git push origin HEAD:main
