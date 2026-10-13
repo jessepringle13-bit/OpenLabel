@@ -1,0 +1,9 @@
+#olPanel .ntab{width:100%;border-collapse:collapse;font-size:14px}
+#olPanel .ntab td{padding-top:9px;padding-bottom:9px}
+#olPanel .ntab td:last-child{text-align:right;font-weight:700}
+#olPanel .ntab .sub td:first-child{padding-left:16px;color:var(--muted);font-weight:500}
+#olPanel .ntab .ne-tap{display:inline-block;min-height:0;height:auto;padding:0;margin:0;border:0;background:transparent;font:inherit;line-height:inherit;color:inherit;text-align:left;vertical-align:baseline}
+#olPanel .mc .ne-tap{display:block;min-height:0;height:auto;width:100%;padding:0;margin:2px 0 0;border:0;background:transparent;font-family:inherit;font-size:12px;font-weight:400;line-height:inherit;color:var(--muted);text-align:center}
+#olPanel .ne-reference{font-size:12px;line-height:1.4;margin:8px 0 0}
+#olPanel .ne-reference .ne-tap{display:inline;min-height:0;height:auto;padding:0;margin:0;border:0;background:transparent;font:inherit;line-height:inherit;color:inherit}
+#olPanel .ntab .ne-tap:focus-visible,#olPanel .mc .ne-tap:focus-visible,#olPanel .ne-reference .ne-tap:focus-visible{outline:3px solid var(--eucalyptus);outline-offset:2px}
