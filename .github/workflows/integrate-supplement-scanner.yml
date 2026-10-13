@@ -1,0 +1,57 @@
+name: Integrate supplement scanner and facts panel
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/integrate-supplement-scanner.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: integrate-supplement-scanner
+  cancel-in-progress: false
+jobs:
+  integrate:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Verify modules and integrate main scanner
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib,json,re,subprocess,sys
+          p=Path('index.html')
+          b=p.read_bytes()
+          target='64b492fa331d7288460e69b0313a56a8262acd687e6d3d381ffae1dbfad35391'
+          if hashlib.sha256(b).hexdigest()==target:
+              sys.exit(0)
+          assert hashlib.sha256(b).hexdigest()=='99752b5da632b1bbd61c23a3aceddc7d1707f7ff5cb747a0e5401b9c553d555e','Index changed: refusing to overwrite'
+          assert hashlib.sha256(Path('supplements/app.js').read_bytes()).hexdigest()=='5224699bfe6a492834909f501f70ab2e56ce9264bdef025940c7985312fdd1e3','Integration module changed'
+          text=b.decode()
+          ops=json.loads(r'''[["<script>\n(()=>","<script src=\"supplements/app.js?v=20261013-integration1\"></script>\n<script>\n(()=>"],["const p=await fetchOff(code);if(my!==lookupToken||view!==lv)return;","let p=null,foodError=null,supplementState='not-requested';try{p=await fetchOff(code)}catch(e){foodError=e}if(my!==lookupToken||view!==lv)return;if(!p||/supplement|vitamin|mineral|magnesium|potassium|electrolyte|thorne|pure encaps/i.test([p.name,p.brand,p.category].join(' '))){setStatus('Checking supplement label data...');const result=window.OLSupplementApp?await window.OLSupplementApp.resolve(code):{state:'source-unavailable'};if(my!==lookupToken||view!==lv)return;supplementState=result.state;const supplement=window.OLSupplementApp&&window.OLSupplementApp.product(result,code);if(supplement){p=supplement;const fx=ingFixes(code);if(fx.length){p.ingText=ingApply(p.ingText,fx);const f=p.facts.find(x=>x[0]==='Ingredients');if(f)f[1]=p.ingText;p.ingOver=true;p.ingNote+=' Local ingredient edits are unverified and do not change the source Supplement Facts.'}}else if(p){p.supplementLookupState=supplementState;p.ingNote=(p.ingNote||'')+' Supplement label lookup: '+supplementState+'. No complete source label was established.'}}if(my!==lookupToken||view!==lv)return;"],["sheet('Not in Open Food Facts yet','This barcode is not in the Open Food Facts database, so there are no label details to show. That says nothing about the product itself.','Scanned: '+code)","sheet('Product label unresolved','No usable exact label was established from the configured sources. Supplement lookup: '+supplementState+'. This does not establish product absence or safety.','Scanned: '+code+(foodError?' · Food lookup unavailable':''))"],["p.live?'Product result · Open Food Facts':'Product result · Sample'","p.live?'Product result · '+(p.sourceName||'Open Food Facts'):'Product result · Sample'"],["p.live?'Community-contributed data · Not verified against the package in your hand.':'Illustrative data · Not verified against a current package.'","p.live?(p.supplement?'Source-reported supplement label · Current package unverified.':'Community-contributed data · Not verified against the package in your hand.'):'Illustrative data · Not verified against a current package.'"],["p.live?' Open Food Facts (openfoodfacts.org), a community database available under the Open Database License. It can be incomplete, outdated or wrong.':' Illustrative sample facts.'","p.live?(p.supplement?' '+p.sourceName+' — '+p.sourceUrl+'. Label data, not independent testing or package verification.':' Open Food Facts (openfoodfacts.org), a community database available under the Open Database License. It can be incomplete, outdated or wrong.'):' Illustrative sample facts.'"],["'Open Food Facts data is contributed by volunteers and can be missing, outdated or wrong, and may not match the package in your hand. '","(p.supplement?'Source-reported supplement label data can be incomplete or outdated and may not match your current package. ':'Open Food Facts data is contributed by volunteers and can be missing, outdated or wrong, and may not match the package in your hand. ')"],["(p.live?'Open Food Facts':'illustrative label')","(p.live?(p.sourceName||'Open Food Facts'):'illustrative label')"],["p.brand+' · '+(p.live?'Open Food Facts':'Sample')","p.brand+' · '+(p.live?(p.sourceName||'Open Food Facts'):'Sample')"]]''')
+          for old,new in ops:
+              assert text.count(old)==1,'Expected unique integration hook'
+              text=text.replace(old,new,1)
+          result=text.encode()
+          assert hashlib.sha256(result).hexdigest()==target,'Integrated file hash mismatch'
+          for script in re.findall(r'<script(?:\s[^>]*)?>(.*?)</script>',text,re.S):
+              subprocess.run(['node','-e',"new(require('node:vm').Script)(require('node:fs').readFileSync(0,'utf8'))"],input=script,text=True,check=True)
+          subprocess.run(['node','--check','supplements/app.js'],check=True)
+          p.write_bytes(result)
+          print('Exact Supplement Facts integration verified:',target)
+          PY
+      - name: Commit scanner integration
+        shell: bash
+        run: |
+          if git diff --quiet -- index.html; then
+            echo "Integration already installed"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "feat: connect supplement lookup and structured Supplement Facts panel"
+          git push origin HEAD:main
