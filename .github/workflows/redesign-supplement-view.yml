@@ -1,0 +1,64 @@
+name: Install compact supplement view
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/redesign-supplement-view.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: redesign-supplement-view
+  cancel-in-progress: false
+jobs:
+  install:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Verify baselines, install view, and run regression checks
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib,json,subprocess
+
+          def blob(b):
+              return hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()
+
+          def replace(text,ops):
+              for old,new in ops:
+                  assert text.count(old)==1,'Expected unique view hook'
+                  text=text.replace(old,new,1)
+              return text
+
+          paths=['supplements/app.js','index.html','result.js','evidence.js']
+          raw={p:Path(p).read_bytes() for p in paths}
+          assert hashlib.sha256(raw['supplements/app.js']).hexdigest()=='5224699bfe6a492834909f501f70ab2e56ce9264bdef025940c7985312fdd1e3','App changed'
+          assert hashlib.sha256(raw['index.html']).hexdigest()=='64b492fa331d7288460e69b0313a56a8262acd687e6d3d381ffae1dbfad35391','Index changed'
+          assert blob(raw['result.js'])=='e4ff8fa500e4ba121fc7255f4c4ac1138e5595e5','Result panel changed'
+          assert blob(raw['evidence.js'])=='bf8549365557af28ad6ab49d314deb591c05c7e5','Loader changed'
+          assert hashlib.sha256(Path('supplements/view.js').read_bytes()).hexdigest()=='f157d35218a24d4be7b1aca1d1e3bc675ba530edcb28554d3900eff86e5708e6','View changed'
+          app_ops=json.loads(r'''[["var frame=0,lastProduct=null,lastHost=null;","load('view.js').then(function(){lastProduct=null;schedule()}).catch(function(){});\nvar frame=0,lastProduct=null,lastHost=null;"],["var p=st.live&&st.live[(st.history||[])[0]];","var p=st.live&&st.live[(st.history||[])[0]];if(root.OLSupplementView)root.OLSupplementView.presentation(res,p);"],["host.prepend(section(p));","host.prepend(root.OLSupplementView?root.OLSupplementView.render(p):section(p));"]]''')
+          result_ops=json.loads(r'''[["Allergy check|No match for your allergens|Cannot check allergens","Allergy check|No match for your allergens|No detected match|Cannot check allergens"],["if(/^No match/.test(h)){c='grey';ch='No match to your list'}","if(/^No (?:match|detected match)/.test(h)){c='grey';ch=/^No detected match/.test(h)?'Coverage unverified':'No match to your list'}"]]''')
+          updates={
+              'supplements/app.js':replace(raw['supplements/app.js'].decode(),app_ops),
+              'result.js':replace(raw['result.js'].decode(),result_ops),
+              'evidence.js':replace(raw['evidence.js'].decode(),[["result.js?v=20261004c","result.js?v=20261013-view2"]]),
+              'index.html':replace(raw['index.html'].decode(),[["supplements/app.js?v=20261013-integration1","supplements/app.js?v=20261013-view2"],["evidence.js?v=20261004c","evidence.js?v=20261013-view2"]])
+          }
+          for path,text in updates.items():
+              Path(path).write_bytes(text.encode())
+          for path in ['supplements/app.js','supplements/view.js','result.js','evidence.js']:
+              subprocess.run(['node','--check',path],check=True)
+          subprocess.run(['node','supplements/view-tests.cjs'],check=True)
+          PY
+      - name: Commit presentation and cache updates
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add supplements/app.js index.html result.js evidence.js
+          git commit -m "feat: present supplements separately with compact facts and honest coverage"
+          git push origin HEAD:main
