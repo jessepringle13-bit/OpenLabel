@@ -1,0 +1,5 @@
+(function(){'use strict';
+var style=document.createElement('style');style.textContent='.learn-dialog > button.learn-close{display:block;margin-left:auto;margin-right:0;position:sticky;top:0;z-index:1;min-width:44px;min-height:44px;padding:4px;font-size:28px;line-height:1;background:var(--ivory);color:var(--ink);border:1px solid var(--line);border-radius:50%;text-align:center}.learn-dialog > button.learn-close:focus-visible{outline:3px solid var(--eucalyptus);outline-offset:2px}';document.head.append(style);
+function sync(){document.querySelectorAll('.learn-dialog > button:first-child').forEach(function(b){if(b.textContent!=='×')b.textContent='×';b.setAttribute('aria-label','Close education');b.setAttribute('title','Close');b.classList.add('learn-close')})}
+var pending=false;new MutationObserver(function(){if(pending)return;pending=true;requestAnimationFrame(function(){pending=false;sync()})}).observe(document.body,{childList:true,subtree:true});sync();
+})();
