@@ -1,3 +1,28 @@
+#olRecallCoverageDialog.rc-clean .rc-item > summary > div:first-child {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 6px;
+  text-align: left;
+}
+#olRecallCoverageDialog.rc-clean .rc-item > summary > div:first-child > .rc-card-title {
+  order: -1;
+  display: block;
+  flex: 0 0 100%;
+  min-width: 0;
+  margin: 0;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+#olRecallCoverageDialog.rc-clean .rc-item > summary > div:first-child > .rc-badge,
+#olRecallCoverageDialog.rc-clean .rc-item > summary > div:first-child > .rc-class-badge,
+#olRecallCoverageDialog.rc-clean .rc-item > summary > div:first-child > .rc-type-badge {
+  flex: 0 1 auto;
+  max-width: 100%;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
 #olRecallCoverageDialog.rc-clean form[role="search"] {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
