@@ -1,0 +1,63 @@
+:root[data-theme="navy"] {
+  color-scheme: dark;
+  --oat: #0b1424;
+  --ivory: #142238;
+  --sage: #203651;
+  --mist: #1b3049;
+  --eucalyptus: #87d7be;
+  --forest: #bdd7ff;
+  --ink: #edf3fc;
+  --muted: #adbed3;
+  --line: #344b68;
+  --hl: #ffd39a;
+  --peach: #ffb598;
+  --accent: #345f92;
+  --accent-ink: #f3f7fd;
+  --orange: #ffad72;
+  --orange-ink: #172235;
+  --shadow: 0 11px 28px #0005;
+}
+:root[data-theme="navy"], :root[data-theme="navy"] #olPanel {
+  --r: #ff9da5; --rb: #442831; --rt: #ff9da5;
+  --o: #ffbb7a; --ob: #44301f; --ot: #ffbb7a;
+  --y: #f1d77a; --yb: #3c351d; --yt: #f1d77a;
+  --g: #8cd8bb; --gb: #203b35; --gt: #8cd8bb;
+  --n: #91a6c0; --nb: #28394d; --nt: #c5d3e3;
+}
+.ol-theme-select {width:100%;min-height:44px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--ivory);color:var(--ink);font:inherit;font-size:16px}
+.ol-theme-choice .hint {margin-top:8px}
+:root[data-theme="navy"] input:not([type="checkbox"]), :root[data-theme="navy"] select, :root[data-theme="navy"] textarea {background:var(--ivory);color:var(--ink);border-color:var(--line)}
+:root[data-theme="navy"] input::placeholder {color:var(--muted);opacity:1}
+:root[data-theme="navy"] a {color:#95c9ff}
+:root[data-theme="navy"] .pf-tabs button[aria-selected="true"], :root[data-theme="navy"] .lb-tabs button[aria-selected="true"] {background:var(--sage);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+:root[data-theme="navy"] .p2 .pl-list .pl-row.on, :root[data-theme="navy"] .pl-row.on {background:var(--ivory)}
+:root[data-theme="navy"] .pl-s, :root[data-theme="navy"] .ol-rs-st {background:var(--nb);color:var(--nt)}
+:root[data-theme="navy"] .olr.c-red {background:var(--ivory)}
+:root[data-theme="navy"] .finding.alert, :root[data-theme="navy"] .badge {background:var(--rb);color:var(--rt)}
+:root[data-theme="navy"] .finding.warn {background:var(--ob)}
+:root[data-theme="navy"] .toast {background:var(--sage);color:var(--ink)}
+:root[data-theme="navy"] .olp-skel {background:var(--line)}
+:root[data-theme="navy"] .olp-img.load, :root[data-theme="navy"] .mc.skel {background:linear-gradient(90deg,#142238,#203651,#142238);background-size:200% 100%}
+:root[data-theme="navy"] .ol-ing-row, :root[data-theme="navy"] .ol-ing-sheet {background:var(--ivory);color:var(--ink);border-color:var(--line)}
+:root[data-theme="navy"] .ol-ing-sheet .ol-ing-culture-names {background:var(--sage);border-color:var(--line)}
+:root[data-theme="navy"] .ol-ing-sheet .ol-ing-culture-names li+li, :root[data-theme="navy"] .ol-ing-raw, :root[data-theme="navy"] .ol-ing-nested {border-color:var(--line)}
+:root[data-theme="navy"] .ol-ing-row-meta, :root[data-theme="navy"] .ol-ing-context, :root[data-theme="navy"] .ol-ing-label, :root[data-theme="navy"] .ol-ing-sheet .ol-ing-culture-names li::marker {color:var(--muted)}
+:root[data-theme="navy"] .ol-ing-more, :root[data-theme="navy"] .ol-ing-raw summary, :root[data-theme="navy"] .ol-ing-sheet .ol-ing-role {color:var(--eucalyptus)}
+:root[data-theme="navy"] .ol-ing-close {background:var(--sage);color:var(--ink)}
+:root[data-theme="navy"] #scan .scanner:not(.camera-on) {background:linear-gradient(160deg,#142238,#1b3049,#203651)}
+:root[data-theme="navy"] #scan .manual {background:var(--ivory)}
+:root[data-theme="navy"] #scan .status {border-color:var(--line)}
+:root[data-theme="navy"] #scan .scanner.camera-on .finder {border-color:#edf3fc}
+:root[data-theme="navy"] .app.cam-on #scan .scanhead h1 {color:#edf3fc}
+:root[data-theme="navy"] #olRecallCoverageDialog .rc-class-i {--rc-class-color:#ff9da5;--rc-class-bg:#442831}
+:root[data-theme="navy"] #olRecallCoverageDialog .rc-class-ii {--rc-class-color:#ffbb7a;--rc-class-bg:#44301f}
+:root[data-theme="navy"] #olRecallCoverageDialog .rc-class-iii {--rc-class-color:#f1d77a;--rc-class-bg:#3c351d}
+:root[data-theme="navy"] #olRecallCoverageDialog .rc-class-unknown {--rc-class-color:#c5d3e3;--rc-class-bg:#28394d}
+:root[data-theme="navy"] #olLab .lab-c.c-red {background:var(--rb);color:var(--rt)}
+:root[data-theme="navy"] #olLab .lab-c.c-orange {background:var(--ob);color:var(--ot)}
+:root[data-theme="navy"] #olLab .lab-c.c-green {background:var(--gb);color:var(--gt)}
+:root[data-theme="navy"] #olLab .lab-c.c-grey {background:var(--nb);color:var(--nt)}
+:root[data-theme="navy"] #olLab .lab-it.c-red {border-left-color:var(--r)}
+:root[data-theme="navy"] #olLab .lab-it.c-orange {border-left-color:var(--o)}
+:root[data-theme="navy"] #olLab .lab-it.c-green {border-left-color:var(--g)}
+:root[data-theme="navy"] #olLab .lab-it.c-grey {border-left-color:var(--n)}
