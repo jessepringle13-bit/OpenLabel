@@ -1,0 +1,51 @@
+#olRecallCoverageDialog.rc-clean .rc-item > summary > div:first-child {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 4px 6px;
+}
+#olRecallCoverageDialog.rc-clean .rc-item > summary > div:first-child > .rc-card-title {
+  order: -1;
+  flex: 1 1 160px;
+  min-width: 0;
+  margin-right: auto;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+#olRecallCoverageDialog.rc-clean .rc-item > summary > div:first-child > .rc-badge,
+#olRecallCoverageDialog.rc-clean .rc-item > summary > div:first-child > .rc-class-badge,
+#olRecallCoverageDialog.rc-clean .rc-item > summary > div:first-child > .rc-type-badge {
+  flex: 0 1 auto;
+  max-width: 100%;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+#olRecallCoverageDialog.rc-clean form[role="search"] {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+#olRecallCoverageDialog.rc-clean form[role="search"] > label:nth-child(2) {
+  grid-column: 1 / -1;
+}
+#olRecallCoverageDialog.rc-clean form[role="search"] select {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  margin-left: 0;
+  padding: 8px;
+  font-size: 16px;
+  min-height: 44px;
+}
+@media (max-width: 480px) {
+  #olRecallCoverageDialog.rc-clean .rc-item > summary > div:first-child > .rc-card-title {
+    flex-basis: 100%;
+  }
+}
+@media (max-width: 380px) {
+  #olRecallCoverageDialog.rc-clean form[role="search"] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #olRecallCoverageDialog.rc-clean form[role="search"] > label {
+    grid-column: 1 / -1;
+  }
+}
