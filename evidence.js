@@ -4,8 +4,9 @@ var CSS=`.ec{margin-top:4px}.ec-status{display:flex;flex-wrap:wrap;gap:8px;align
 var st=document.createElement('style');st.textContent=CSS;document.head.appendChild(st);
 function $(s){return document.querySelector(s)}
 function textKey(s){return ' '+String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()+' '}
-var REG=null;
-var READY=fetch('registry.json').then(function(r){return r.ok?r.json():null}).then(function(j){REG=j}).catch(function(){});
+var REG=null,REG_REQUEST=null;
+function loadRegistry(){if(!REG_REQUEST)REG_REQUEST=Promise.all(['registry.json','lab-batch-1.json'].map(function(url){return fetch(url).then(function(r){if(!r.ok)throw new Error('Test registry HTTP '+r.status);return r.json()})})).then(function(parts){var entries=[],ids=Object.create(null);parts.forEach(function(part){if(!part||!Array.isArray(part.entries))throw new Error('Invalid test registry');part.entries.forEach(function(entry){var e=Object.assign({},part.defaults||{},entry);if(!e.id||ids[e.id])throw new Error('Missing or duplicate test ID');ids[e.id]=true;entries.push(e)})});REG=Object.assign({},parts[0],{updated:parts.map(function(p){return p.updated||''}).sort().pop(),entries:entries});return REG}).catch(function(error){REG_REQUEST=null;throw error});return REG_REQUEST}
+var READY=loadRegistry().catch(function(){});
 var SEED_OIL_WORDS=['sunflower oil','sunflower seed oil','safflower oil','canola oil','rapeseed oil','soybean oil','soya oil','corn oil','cottonseed oil','grapeseed oil','rice bran oil'];
 function el(tag,cls,text){var e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
 function list(items){var u=el('ul');items.forEach(function(x){u.append(el('li',null,x))});return u}
@@ -19,8 +20,8 @@ section(r,'Who tested it',e.ties+' '+e.check+'.');
 var a=el('a',null,e.source.label);a.href=e.source.url;a.target='_blank';a.rel='noopener noreferrer';var p=el('p');p.append(a);section(r,'Source',p);
 $('#sheetExtra').replaceChildren(r);$('#sheetWrap').hidden=false;$('#closeSheet').focus()}
 function matchEntries(p){var out={prod:[],cat:[]};if(!REG||!REG.entries)return out;var t=textKey([p.brand,p.name,p.category].join(' '));
-REG.entries.forEach(function(e){var m=e.match||{};if(e.kind==='product'){if(m.brand&&m.name&&t.indexOf(textKey(m.brand))>=0&&t.indexOf(textKey(m.name))>=0)out.prod.push(e)}else if(m.any&&m.any.some(function(w){return t.indexOf(textKey(w))>=0}))out.cat.push(e)});return out}
-window.OLEvidence={renderGeneral:function(){},api:{ready:READY,matchEntries:matchEntries,openTestSheet:openTestSheet,seedWords:SEED_OIL_WORDS,textKey:textKey}};
+REG.entries.forEach(function(e){var m=e.match||{};if(e.kind==='product'){if(m.brand&&m.name&&t.indexOf(textKey(m.brand))>=0&&t.indexOf(textKey(m.name))>=0&&(!m.all||m.all.every(function(w){return t.indexOf(textKey(w))>=0})))out.prod.push(e)}else if(m.any&&m.any.some(function(w){return t.indexOf(textKey(w))>=0}))out.cat.push(e)});return out}
+window.OLEvidence={renderGeneral:function(){},api:{ready:READY,loadRegistry:loadRegistry,matchEntries:matchEntries,openTestSheet:openTestSheet,seedWords:SEED_OIL_WORDS,textKey:textKey}};
 var lk=document.createElement('link');lk.rel='stylesheet';lk.href='result.css?v=20261004c';document.head.appendChild(lk);
 var sc=document.createElement('script');sc.src='result.js?v=20261013-view2';document.body.appendChild(sc);
 })();

@@ -8,10 +8,10 @@ document.head.appendChild(sty);
 function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
 function cut(s,n){s=String(s||'').trim();return s.length>n?s.slice(0,n-1)+'…':s}
 var items=null,state='idle',filter='all',query='',root,listEl,qEl,chipEl,subEl;
-function stat(e){return TS[e.id]||(e.kind==='category'?['grey','Category-level']:['grey','Test on file'])}
+function stat(e){if(TS[e.id])return TS[e.id];if(e.status&&Object.prototype.hasOwnProperty.call(RK,e.status.color)&&e.status.label)return [e.status.color,e.status.label];return e.kind==='category'?['grey','Category-level']:['grey','Test on file']}
 function catOf(e){if(e.category)return e.category;var id=String(e.id||'');if(id.indexOf('crb-')===0)return 'Baby foods';if(id.indexOf('crp-')===0||id==='clp-protein')return 'Protein powders';return 'Other'}
 function load(){if(state==='loading'||items)return;state='loading';render();
-fetch('registry.json').then(function(r){if(!r.ok)throw new Error('http '+r.status);return r.json()}).then(function(j){items=(j.entries||[]).map(function(e){var s=stat(e);return{e:e,color:s[0],chip:s[1],cat:catOf(e)}}).sort(function(a,b){return RK[b.color]-RK[a.color]||String(a.e.title).localeCompare(String(b.e.title))});state='done';chips();render()}).catch(function(){state='error';render()})}
+var api=window.OLEvidence&&window.OLEvidence.api;(api&&api.loadRegistry?api.loadRegistry():Promise.reject(new Error('Evidence loader unavailable'))).then(function(j){items=(j.entries||[]).map(function(e){var s=stat(e);return{e:e,color:s[0],chip:s[1],cat:catOf(e)}}).sort(function(a,b){return RK[b.color]-RK[a.color]||String(a.e.title).localeCompare(String(b.e.title))});state='done';chips();render()}).catch(function(){state='error';render()})}
 function cats(){var m={},o=[];items.forEach(function(it){if(!m[it.cat]){m[it.cat]=0;o.push(it.cat)}m[it.cat]++});o.sort(function(a,b){return a==='Other'?1:b==='Other'?-1:a.localeCompare(b)});return o.map(function(c){return[c,m[c]]})}
 function chips(){chipEl.replaceChildren();var list=[['all','All',items.length]].concat(cats().map(function(c){return[c[0],c[0],c[1]]}));
 list.forEach(function(c){var b=el('button',c[0]===filter?'on':'',c[1]+' ('+c[2]+')');b.onclick=function(){filter=c[0];chips();render()};chipEl.append(b)})}
@@ -25,7 +25,7 @@ if(state==='error'){listEl.append(el('div','lab-empty','We could not load the te
 var cs=cats();subEl.textContent=items.length+' tests in '+cs.length+' categories. Each one shows who tested, what they found and how they judged it.';
 var all=items.filter(match);if(!all.length)listEl.append(el('div','lab-empty','No tests match your search or filter.'));
 cs.forEach(function(c){var g=all.filter(function(it){return it.cat===c[0]});if(!g.length)return;listEl.append(el('div','lab-h',c[0]+' · '+g.length));g.forEach(function(it){listEl.append(card(it))})});
-listEl.append(el('p','lab-note','This is a small set. Testers are magazines and nonprofits. Each entry describes who funds the tester, using the tester\u2019s own statements and trade press, which is not an independent audit. Results describe the lots tested at the time, not every lot. Colors follow the tester’s own limit: red is above it, orange is elevated, green is not detected, grey is category-level.'))}
+listEl.append(el('p','lab-note','Coverage is a selected, expanding set, not every tested product. Results describe the lots tested at the time, not every lot or formulation. Each entry explains the tester, source and funding information available to us; this is not an independent audit. Status labels describe the tester’s findings and comparison levels, not a universal safety rating. Grey does not mean contaminant-free.'))}
 function build(){root=el('section');root.id='olLab';root.hidden=true;root.setAttribute('role','dialog');root.setAttribute('aria-label','Lab tested products');
 var top=el('div','lab-top'),bk=el('button',null,'‹');bk.setAttribute('aria-label','Close lab tested products');bk.onclick=close;top.append(bk,el('h2',null,'Lab tested'));
 subEl=el('p','lab-sub','Independent test results for contaminants.');
