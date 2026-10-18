@@ -1,0 +1,37 @@
+name: Diagnose live product search
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/diagnose-product-search.yml'
+      - 'tests/live-search-diagnostic.cjs'
+permissions:
+  contents: read
+concurrency:
+  group: live-search-diagnostic
+  cancel-in-progress: false
+jobs:
+  browser-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+      - name: Install isolated browser tools
+        run: |
+          npm install --prefix "$RUNNER_TEMP/openlabel-search-check" --no-save --no-package-lock playwright
+          "$RUNNER_TEMP/openlabel-search-check/node_modules/.bin/playwright" install --with-deps chromium webkit
+      - name: Run live read-only diagnostics
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/openlabel-search-check/node_modules"
+          node tests/live-search-diagnostic.cjs
+      - name: Publish diagnostic files
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-product-search-diagnostics
+          path: diagnostic-output/
+          if-no-files-found: warn
