@@ -1,0 +1,24 @@
+'use strict';
+const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
+const document={createElement:()=>({}),head:{appendChild(){}},body:{appendChild(){}}};
+const context={document,window:{},fetch:()=>new Promise(()=>{})};vm.createContext(context);vm.runInContext(fs.readFileSync('evidence.js','utf8'),context);
+const testMatch=context.window.OLEvidence.api.testMatch;let n=0;
+function check(e,p,expected,level){const r=testMatch(e,p);assert.equal(r.matched,expected);if(level)assert.equal(r.level,level);n++}
+const e={kind:'product',title:'Example Powder (vanilla)',match:{brand:'example',name:'protein powder'}};
+check(e,{brand:'Example',name:'Protein Powder Vanilla'},true,'possible-name-match');
+check(e,{brand:'Other',name:'Example Protein Powder Vanilla'},false);
+check(e,{brand:'Example Protein Powder Vanilla',name:'Drink'},false);
+check(e,{brand:'Example',name:'Protein Powder Chocolate'},false);
+check(e,{brand:'Example',name:'Protein Powder'},false);
+check(e,{brand:'Example',name:'Protein Powder Vanilla'},true);
+check({kind:'product',match:{}},{brand:'Example',name:'Protein Powder Vanilla'},false,'browse-only');
+check({kind:'category',match:{any:['protein powder']}},{brand:'Example',name:'Protein Powder'},true,'category-level');
+check({kind:'category',match:{any:['protein powder']}},{brand:'Example',name:'Rice'},false);
+check({kind:'product',match:{brand:'example',name:'cinnamon',all:['organic'],none:['capsules']}},{brand:'Example',name:'Organic Cinnamon'},true);
+check({kind:'product',match:{brand:'example',name:'cinnamon',all:['organic'],none:['capsules']}},{brand:'Example',name:'Organic Cinnamon Capsules'},false);
+check({kind:'product',match:{brand:'example',name:'cinnamon',all:['organic']}},{brand:'Example',name:'Cinnamon'},false);
+check({kind:'product',match:{brand:'example',name:'cinnamon'}},{brand:'Examples',name:'Cinnamon'},false);
+check({kind:'product',match:{brand:'good gather',name:'mini chocolate chips'}},{brand:'Good & Gather',name:'Mini Chocolate Chips'},true);
+check(e,{},false);
+check(e,{brand:'Example',name:'Protein-Powder Vanilla'},true);
+console.log(n+' historical test matching cases passed');
