@@ -1,19 +1,13 @@
-# OpenLabel search Worker
+# OpenLabel search Worker: source-brand-v1
 
-Target: existing Worker `open-label-0674`. Cloudflare Builds uses `jessepringle13-bit/OpenLabel`, branch `main`, root `/`, no dashboard build command, deploy `npx wrangler deploy`.
+Deployment target remains `open-label-0674`. Cloudflare Builds uses `main`, root `/`, no dashboard build command, deploy `npx wrangler deploy`. The Wrangler build runs the existing 47 regression checks, then preflight runs the additional brand-quality checks before the live milk test.
 
-Root `wrangler.jsonc` deploys only `workers/search/worker.js`. Its custom build runs the policy tests and then the live U.S. milk preflight. A failing step stops deployment. Failure diagnostics inspect the live schema and country queries but never override the preflight. No frontend assets, paid bindings, credentials or billing-plan changes are configured.
+Search makes one upstream request for at most 80 candidates, returns at most 20, and preserves the exact `countries_tags:"en:united-states"` default market filter. Every returned record must have a source-provided, non-placeholder display brand. Normalized brand tags never invent display names. The frontend checks brands again, including cached responses. Apostrophes normalize consistently for Dean's/Deans queries.
 
-Run `node workers/search/worker.test.cjs` for simulated checks. Run `node workers/search/preflight.cjs` for the network preflight. Neither proves deployed-Worker or physical-device success.
+Only broad single-product queries (milk, yogurt, bread, cereal, cheese, eggs, butter, water, coffee, tea, juice, rice, pasta) have a two-per-brand selection cap. Specific multiword and brand-only queries have no per-brand cap, but retain the 20-result bound. All meaningful terms remain required in returned identities/attributes. Broad product queries also require the product word in the name, not just in a brand. Relevance ranks first; source scan counts break ties, not estimate market share. Named smaller/store brands are eligible.
 
-On 2026-10-22, Cloudflare build diagnostics verified `milk countries_tags:"en:united-states"`: all three returned samples were U.S.-listed milk matches, and the provider debug query used an exact country-tag filter. The `countries:` variants and bare `(milk)` failed. The Worker now uses plain candidate text followed by the exact country-tag filter, without generated Boolean groups.
+Worker cache namespace is new. Nonempty quality-checked samples cache for five minutes even when coverage-limited; partial and coverage flags remain intact. Empty, failed and provider-timed-out responses are not cached. The browser does not suggest retrying an unchanged bounded sample for more results. Refresh the app to load its updated frontend and clear its previous in-memory cache.
 
-The upstream text query can return partial-query matches; every meaningful term is therefore enforced by the Worker's unchanged relevance predicate before a result is returned. Sugar-free evidence must come from name/label fields, not brand alone. Only one candidate page is inspected. Country filtering happens before provider pagination; full-query validation happens after retrieval. Coverage of Jell-O and other multiword searches still requires live verification; unit fixtures do not prove live catalog coverage.
+The live milk gate requires nonempty branded U.S. results from at least two brands. After it passes, four informational checks report Dean's, Organic Valley, Prairie Farms and Kemps. `not_found_in_bounded_results` is not proof of catalog absence; a specific-query match does not prove inclusion in a generic milk page. Provider-error audits are reported, not counted as successful coverage. No brand whitelist, fabricated products, paid services, secrets or billing-plan changes are added.
 
-Default market: U.S.-listed source records. Missing/foreign country records are excluded, never silently broadened. `country=all` explicitly selects worldwide records. Neither setting verifies Wisconsin/store stock. Frontend barcode validation still applies.
-
-After deployment success, check `/health` for version `4`, then `/search?q=milk&country=us`, `/search?q=Jello%20sugar%20free&country=us`, and the browser product-opening flow. A successful milk build preflight does not establish success for all queries.
-
-Complete nonempty responses cache for five minutes per query/market/version. Empty, partial and error responses are not cached. The request guard is per instance, not global protection; no latency guarantee is made.
-
-Frontend relevance recheck, market picker and four-mode Explore bar remain separate work.
+Run `node workers/search/worker.test.cjs` and `node workers/search/brand-quality.test.cjs` for simulations. Preflight performs network requests. Unit tests and build-time queries do not prove deployed-Worker execution, real-device rendering, product-opening reliability or Wisconsin store stock. The four-mode bar remains separate work. Runtime HTTP failures and rate limits remain possible; the request guard is per instance, not global protection.
