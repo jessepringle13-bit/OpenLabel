@@ -1,0 +1,9 @@
+{
+  "name": "open-label-0674",
+  "main": "workers/search/worker.js",
+  "compatibility_date": "2026-10-22",
+  "workers_dev": true,
+  "build": {
+    "command": "node workers/search/worker.test.cjs && node workers/search/preflight.cjs"
+  }
+}

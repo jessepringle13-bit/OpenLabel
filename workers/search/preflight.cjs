@@ -1,0 +1,6 @@
+const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
+const source=fs.readFileSync(path.join(__dirname,'worker.js'),'utf8');
+const context={URL,URLSearchParams,Request,Response,Headers,AbortController,fetch:globalThis.fetch.bind(globalThis),setTimeout,clearTimeout,Date,console};
+vm.createContext(context);
+vm.runInContext(source.replace('export default','globalThis.handler='),context);
+(async()=>{const response=await context.handler.fetch(new Request('https://open-label-0674.jessepringle13.workers.dev/search?q=milk&country=us'),{}, {waitUntil(){}});const data=await response.json();if(!response.ok||data.version!=='4'||data.country!=='us'||!Array.isArray(data.products)||!data.products.length||!data.products.every(p=>context.listedInUS(p)&&context.relevant(p,context.queryTerms('milk'))))throw new Error('Live U.S. milk preflight failed; deployment blocked. Response: '+JSON.stringify(data));console.log('Live server-side Worker preflight passed: '+JSON.stringify({version:data.version,country:data.country,count:data.products.length,partial:data.partial,upstream_query:data.upstream_query}));console.log('This is not a deployed-Worker or physical-device test.')})().catch(error=>{console.error(error.message);process.exitCode=1});
