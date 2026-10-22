@@ -57,13 +57,10 @@ function listedInUS(product) {
   });
 }
 function upstreamQuery(terms, country) {
-  const clauses = terms.map(term => {
-    if (term === "jello") return "(jello OR (jell AND o))";
-    if (term === "sugarfree") return "(sugarfree OR (sugar AND free) OR (zero AND sugar))";
-    return term;
-  });
-  const words = "(" + clauses.join(" AND ") + ")";
-  return country === "us" ? 'countries:"en:united-states" AND ' + words : words;
+  // Live-verified syntax: milk countries_tags:"en:united-states".
+  // Plain text retrieves candidates; relevant() enforces every meaningful term.
+  const words = terms.map(term => term === "sugarfree" ? "sugar free" : term).join(" ");
+  return country === "us" ? words + ' countries_tags:"en:united-states"' : words;
 }
 
 export default {
