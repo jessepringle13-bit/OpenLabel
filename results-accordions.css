@@ -6,9 +6,9 @@
 .olui-accordion[open]>summary::after{transform:rotate(225deg)}
 .olui-accordion>summary>.cv{display:none}
 .olui-accordion>summary:focus-visible{outline:3px solid var(--eucalyptus,#287cb8);outline-offset:3px}
-.olui-education{margin:10px 0;border:1px solid var(--line,#dce3e7);border-radius:11px}
-.olui-education>.olui-body{padding:0 12px}
+.olui-education,.learn-dialog details.olui-accordion{margin:10px 0;border:1px solid var(--line,#dce3e7);border-radius:11px}
+.olui-education>.olui-body,.learn-dialog details.olui-accordion>.olui-body{padding:0 12px}
 .olui-body{display:flow-root;overflow:hidden}
-#olPanel .olui-footer,.ol-ing-sheet .olui-footer,.ne-dialog .olui-footer{border-top:1px solid var(--line,#dce3e7);margin-top:20px;padding-top:10px}
-#olPanel .olui-footer p,.ol-ing-sheet .olui-footer p,.ne-dialog .olui-footer p{font-size:12px;line-height:1.5;color:var(--muted,#58626b);opacity:1;margin:6px 0}
+#olPanel .olui-footer,.ol-ing-sheet .olui-footer,.ne-dialog .olui-footer,.learn-dialog .olui-footer{border-top:1px solid var(--line,#dce3e7);margin-top:20px;padding-top:10px}
+#olPanel .olui-footer p,.ol-ing-sheet .olui-footer p,.ne-dialog .olui-footer p,.learn-dialog .olui-footer p{font-size:12px;line-height:1.5;color:var(--muted,#58626b);opacity:1;margin:6px 0}
 @media(prefers-reduced-motion:reduce){.olui-accordion>summary::after{transition:none}}
