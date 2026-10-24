@@ -1,0 +1,115 @@
+{
+  "schema_version": "1.0",
+  "batch_id": "vitamin-d-forms-20261024",
+  "status": "draft; not committed or integrated",
+  "counts": {"records": 5, "ordinary_nutrient_entries": 3, "separate_metabolite_context_entries": 2},
+  "references": {
+    "nih_d": {"title": "NIH ODS: Vitamin D — Health Professional Fact Sheet", "url": "https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/", "citation": "web:269"},
+    "calcifediol_drug": {"title": "MedlinePlus: Calcifediol — extended-release medicinal preparation", "url": "https://medlineplus.gov/druginfo/meds/a616041.html", "citation": "web:551"},
+    "calcitriol_drug": {"title": "MedlinePlus: Calcitriol — oral medicinal context", "url": "https://medlineplus.gov/druginfo/meds/a682335.html", "citation": "web:552"}
+  },
+  "records": [
+    {
+      "id": "vitamin_d_unspecified",
+      "title": "Vitamin D — form unspecified",
+      "kind": "nutrient context",
+      "existing_family_key": "d",
+      "exact_label_terms": ["vitamin d", "calciferol"],
+      "sections": {
+        "what": "A generic vitamin D label does not establish whether D2, D3 or a mixture was used.",
+        "body": "Vitamin D supports calcium absorption, calcium/phosphate balance and normal bone mineralization. It also participates in neuromuscular and immune function. These normal roles do not establish a clinical benefit from adding more vitamin D when status is adequate.",
+        "form": "Do not infer ergocalciferol, cholecalciferol, lanolin, lichen, manufacturing origin or absorbed amount from generic wording.",
+        "research": "Evidence for deficiency treatment, biomarker changes and additional supplementation must remain separate. An unnamed form cannot inherit a D3-specific comparison or a product-specific benefit claim.",
+        "high": "Excess supplemental vitamin D can raise blood calcium and urinary calcium, causing serious harm including kidney injury. Exposure, formulation, duration and individual context matter. No dose is inferred from an ingredient name, and this entry does not diagnose toxicity.",
+        "reference": "For adults age 19 and older, the US total-intake upper limit for ordinary vitamin D is 100 mcg (4,000 IU) per day from foods, beverages and supplements. It is not a recommended dose or a precise personal safe/harm boundary. Younger ages have different limits and medical treatment is separate. Units are quoted from the source, not converted from a product. This reference is not automatically applied to calcifediol or calcitriol.",
+        "debate": "A higher serum 25(OH)D concentration is not the same outcome as fewer fractures, cardiovascular events or other clinical benefits. Guidelines differ in population and purpose, and laboratory assays vary. This app does not select a blood-level target, recommend routine testing or diagnose deficiency from symptoms or ingredient names."
+      },
+      "reference_keys": ["nih_d"],
+      "review": {"date": "2026-10-24", "status": "Draft reference-backed explanation; partial audit; not clinically reviewed", "disclosures": "NIH/MedlinePlus are reference publishers, not necessarily funders of underlying studies. Original-study funding, author conflicts and sponsor roles were not independently audited.", "gaps": "No comprehensive current-trial search, independent standing check, preparation-specific clinical audit or runtime integration is complete."}
+    },
+    {
+      "id": "vitamin_d2",
+      "title": "Vitamin D2 — ergocalciferol",
+      "kind": "nutrient form",
+      "existing_family_key": "d",
+      "exact_label_terms": ["vitamin d2", "vitamin d-2", "ergocalciferol"],
+      "sections": {
+        "what": "Ergocalciferol is vitamin D2, one of the two main forms used in foods and supplements.",
+        "body": "Vitamin D supports calcium absorption, calcium/phosphate balance and normal bone mineralization. It also participates in neuromuscular and immune function. These normal roles do not establish a clinical benefit from adding more vitamin D when status is adequate.",
+        "form": "D2 is commonly produced by UV irradiation of ergosterol in yeast. This general manufacturing description does not verify this product’s source, processing, suitability or formulation. D2 still requires metabolic activation.",
+        "research": "Both D2 and D3 are absorbed and raise serum 25(OH)D. NIH summarizes that D3 generally produces a larger and longer-lasting increase, but that comparison does not mean D2 is ineffective or establish superior outcomes for every D3 product or patient.",
+        "high": "Excess supplemental vitamin D can raise blood calcium and urinary calcium, causing serious harm including kidney injury. Exposure, formulation, duration and individual context matter. No dose is inferred from an ingredient name, and this entry does not diagnose toxicity.",
+        "reference": "For adults age 19 and older, the US total-intake upper limit for ordinary vitamin D is 100 mcg (4,000 IU) per day from foods, beverages and supplements. It is not a recommended dose or a precise personal safe/harm boundary. Younger ages have different limits and medical treatment is separate. Units are quoted from the source, not converted from a product. This reference is not automatically applied to calcifediol or calcitriol.",
+        "debate": "A higher serum 25(OH)D concentration is not the same outcome as fewer fractures, cardiovascular events or other clinical benefits. Guidelines differ in population and purpose, and laboratory assays vary. This app does not select a blood-level target, recommend routine testing or diagnose deficiency from symptoms or ingredient names."
+      },
+      "reference_keys": ["nih_d"],
+      "review": {"date": "2026-10-24", "status": "Draft reference-backed explanation; partial audit; not clinically reviewed", "disclosures": "NIH/MedlinePlus are reference publishers, not necessarily funders of underlying studies. Original-study funding, author conflicts and sponsor roles were not independently audited.", "gaps": "No comprehensive current-trial search, independent standing check, preparation-specific clinical audit or runtime integration is complete."}
+    },
+    {
+      "id": "vitamin_d3",
+      "title": "Vitamin D3 — cholecalciferol",
+      "kind": "nutrient form",
+      "existing_family_key": "d",
+      "exact_label_terms": ["vitamin d3", "vitamin d-3", "cholecalciferol"],
+      "sections": {
+        "what": "Cholecalciferol is vitamin D3. A D3 label does not establish whether it came from lanolin, lichen or another source.",
+        "body": "Vitamin D supports calcium absorption, calcium/phosphate balance and normal bone mineralization. It also participates in neuromuscular and immune function. These normal roles do not establish a clinical benefit from adding more vitamin D when status is adequate.",
+        "form": "D3 is commonly manufactured from lanolin-derived material, while animal-free lichen-derived D3 is also available. These are source distinctions, not different vitamin D3 molecules or proven source-specific efficacy rankings. A declared source is not independent verification or whole-product vegan certification.",
+        "research": "Both D2 and D3 can raise serum 25(OH)D; D3 generally raises it more and maintains it longer in the studies NIH summarizes. This biomarker advantage does not establish universal disease prevention or that everyone needs additional D3.",
+        "high": "Excess supplemental vitamin D can raise blood calcium and urinary calcium, causing serious harm including kidney injury. Exposure, formulation, duration and individual context matter. No dose is inferred from an ingredient name, and this entry does not diagnose toxicity.",
+        "reference": "For adults age 19 and older, the US total-intake upper limit for ordinary vitamin D is 100 mcg (4,000 IU) per day from foods, beverages and supplements. It is not a recommended dose or a precise personal safe/harm boundary. Younger ages have different limits and medical treatment is separate. Units are quoted from the source, not converted from a product. This reference is not automatically applied to calcifediol or calcitriol.",
+        "debate": "A higher serum 25(OH)D concentration is not the same outcome as fewer fractures, cardiovascular events or other clinical benefits. Guidelines differ in population and purpose, and laboratory assays vary. This app does not select a blood-level target, recommend routine testing or diagnose deficiency from symptoms or ingredient names."
+      },
+      "declared_source_qualifiers": ["lanolin-derived", "lichen-derived"],
+      "reference_keys": ["nih_d"],
+      "review": {"date": "2026-10-24", "status": "Draft reference-backed explanation; partial audit; not clinically reviewed", "disclosures": "NIH/MedlinePlus are reference publishers, not necessarily funders of underlying studies. Original-study funding, author conflicts and sponsor roles were not independently audited.", "gaps": "No comprehensive current-trial search, independent standing check, preparation-specific clinical audit or runtime integration is complete."}
+    },
+    {
+      "id": "calcifediol_context",
+      "title": "Calcifediol / calcidiol — 25-hydroxyvitamin D3 context",
+      "kind": "metabolite and medicinal-preparation context; not interchangeable with D3",
+      "existing_family_key": null,
+      "exact_label_terms": ["calcifediol", "calcidiol", "25-hydroxyvitamin d3"],
+      "sections": {
+        "what": "Calcifediol is a 25-hydroxylated vitamin D3 metabolite. It must remain distinct from cholecalciferol and the fully active metabolite calcitriol.",
+        "body": "This form is downstream of the liver hydroxylation step and can undergo further conversion to active vitamin D. A circulating metabolite, a laboratory measurement and a medicinal preparation are different contexts.",
+        "form": "The cited MedlinePlus entry concerns an extended-release preparation used in certain adults with chronic kidney disease and secondary hyperparathyroidism. It does not establish the identity, availability or equivalence of every similarly named preparation. Unqualified 25(OH)D laboratory wording does not identify a specific drug or only the D3-derived fraction.",
+        "research": "A greater rise in serum 25(OH)D per microgram does not establish a universal clinical advantage or a self-directed substitution ratio. Disease-specific medicinal evidence must not become a recommendation for ordinary supplement users.",
+        "high": "Medicinal vitamin D preparations can disturb calcium regulation and require preparation-specific assessment and monitoring. This draft has not completed a product-specific safety, interaction or treatment review.",
+        "reference": "Do not apply the ordinary D2/D3 mcg-to-IU labeling relationship, nutritional upper limit or a study potency ratio as an automatic calcifediol dose conversion. No treatment amount, substitution or personal intake comparison is supplied.",
+        "debate": "This record is an identity boundary and selected medicinal-context explanation, not a recommendation to bypass metabolic steps or an exhaustive current-market or clinical review."
+      },
+      "reference_keys": ["nih_d", "calcifediol_drug"],
+      "review": {"date": "2026-10-24", "status": "Draft reference-backed explanation; partial audit; not clinically reviewed", "disclosures": "NIH/MedlinePlus are reference publishers, not necessarily funders of underlying studies. Original-study funding, author conflicts and sponsor roles were not independently audited.", "gaps": "No comprehensive current-trial search, independent standing check, preparation-specific clinical audit or runtime integration is complete."}
+    },
+    {
+      "id": "calcitriol_context",
+      "title": "Calcitriol — active vitamin D context",
+      "kind": "active metabolite and medicinal context; not interchangeable with D2/D3",
+      "existing_family_key": null,
+      "exact_label_terms": ["calcitriol", "1,25-dihydroxyvitamin d3"],
+      "sections": {
+        "what": "Calcitriol is the physiologically active vitamin D metabolite, distinct from the D2/D3 precursors commonly listed in multivitamins.",
+        "body": "It participates in calcium and phosphate regulation. Vitamin D2 and D3 normally undergo two hydroxylation steps before forming active metabolites; calling calcitriol active does not make it a universally preferable supplement.",
+        "form": "MedlinePlus describes oral calcitriol for specific kidney/parathyroid-related calcium and bone disorders. Topical calcitriol and injected preparations require separate route-specific explanations. None is inferred from a generic vitamin D label.",
+        "research": "Treatment evidence in defined disorders is not proof that healthy users should replace D3 with calcitriol. The 1,25-dihydroxyvitamin D laboratory result is not normally the routine marker used to assess vitamin D stores.",
+        "high": "Calcitriol can cause hypercalcemia and requires clinical oversight and preparation-specific monitoring. This app does not advise starting, stopping, substituting or adjusting it and does not screen individual medicines or kidney function.",
+        "reference": "Do not automatically apply ordinary vitamin D nutritional doses, upper limits or mcg-to-IU labeling conversions to calcitriol. Its amount must not be summed with an ordinary D3 supplement as if they were interchangeable. No treatment dose is supplied.",
+        "debate": "Hormonal activity, nutritional reference values, blood testing and prescribed treatment are separate questions. This record is not a claim that the most activated form is best or safest for everyone."
+      },
+      "reference_keys": ["nih_d", "calcitriol_drug"],
+      "review": {"date": "2026-10-24", "status": "Draft reference-backed explanation; partial audit; not clinically reviewed", "disclosures": "NIH/MedlinePlus are reference publishers, not necessarily funders of underlying studies. Original-study funding, author conflicts and sponsor roles were not independently audited.", "gaps": "No comprehensive current-trial search, independent standing check, preparation-specific clinical audit or runtime integration is complete."}
+    }
+  ],
+  "integration_guards": [
+    "Preserve generic-name uncertainty and declared source qualifiers.",
+    "Reject D2/ergocalciferol versus D3/cholecalciferol contradictions.",
+    "Lanolin-derived and lichen-derived D3 are source distinctions, not separate chemical vitamin forms or an automatic effectiveness ranking.",
+    "Vitamin D activation involves hydroxylation; do not classify D3 as a methylated B-vitamin form.",
+    "Do not turn a vitamin D + K2 combination into D-alone evidence or an assurance against high-intake harm.",
+    "Do not infer serum status, deficiency, a personal target, testing need or a dose from ingredient names.",
+    "Preserve existing Learn/ingredient UI, evidence limitations and footer placement.",
+    "No automatic metabolite dose equivalence, upper-limit inheritance or product-level nutrient-total conversion."
+  ],
+  "browser_tests": "not performed"
+}

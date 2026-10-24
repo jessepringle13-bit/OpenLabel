@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "patch_id": "vitamin-d-label-equivalence-20261024",
+  "target_batch_id": "vitamin-d-forms-20261024",
+  "status": "draft content addendum; not merged into app or committed",
+  "applies_to": ["vitamin_d_unspecified", "vitamin_d2", "vitamin_d3"],
+  "content": {
+    "title": "D2 versus D3: label units and biological response",
+    "explanation": "D2 and D3 use the same mcg-to-IU labeling conversion: 1 mcg equals 40 IU. Equal labeled amounts may produce different blood-level responses; D3 generally produces a larger, longer-lasting increase. No automatic treatment-dose substitution is calculated.",
+    "label_conversion": {
+      "mcg_to_iu_factor": 40,
+      "iu_to_mcg_divisor": 40,
+      "scope": "Ordinary D2/ergocalciferol and D3/cholecalciferol labeling units only. Generic vitamin D wording does not verify the actual product form.",
+      "examples": [{"mcg": 10, "iu": 400}, {"mcg": 25, "iu": 1000}, {"mcg": 50, "iu": 2000}, {"mcg": 100, "iu": 4000}]
+    },
+    "biological_response": "D3 generally raises serum 25(OH)D more and maintains the increase longer than D2 in comparisons summarized by NIH. The size of the difference depends on regimen, population, timing and outcome. This is not a universal clinical-outcome advantage or a personal potency ratio.",
+    "regimen_boundary": "Matching daily and intermittent arithmetic totals does not establish identical clinical response or justify substituting a treatment regimen.",
+    "metabolite_boundary": "Do not apply this ordinary D2/D3 labeling conversion, a presumed potency ratio or nutritional upper limit automatically to calcifediol or calcitriol.",
+    "display_notice": "Examples are unit conversions, not recommended doses, product intake calculations or instructions to switch preparations."
+  },
+  "integration_guards": [
+    "Show label equivalence and biological-response uncertainty as separate concepts.",
+    "Do not infer a named D2 or D3 form from a generic vitamin D label.",
+    "No fixed D2-to-D3 biological potency ratio.",
+    "No automatic treatment substitution, dose recommendation or personal intake total.",
+    "Do not extend the factor to calcifediol, calcitriol, blood-test concentrations or unknown-unit inputs."
+  ],
+  "references": [
+    {"title": "NIH ODS: Vitamin D — Health Professional Fact Sheet", "url": "https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/", "citation": "web:269"},
+    {"title": "Endocrine Society: Vitamin D for the Prevention of Disease guideline resources", "url": "https://www.endocrine.org/clinical-practice-guidelines/vitamin-d-for-prevention-of-disease", "citation": "web:573"}
+  ],
+  "review_status": "Partial reference review; not clinically reviewed. Full study-level funding/conflict review and browser integration remain incomplete."
+}
