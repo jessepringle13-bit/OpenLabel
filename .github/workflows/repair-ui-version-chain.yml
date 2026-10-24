@@ -1,0 +1,96 @@
+name: Repair UI asset version chain
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/repair-ui-version-chain.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+  pages: write
+concurrency:
+  group: repair-ui-version-chain
+  cancel-in-progress: false
+jobs:
+  repair:
+    if: github.repository == 'jessepringle13-bit/OpenLabel' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Guard, patch and check only the five version references
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 <<'PY'
+          from pathlib import Path
+          import re, subprocess, tempfile
+          V = '20261024-ui2'
+          pairs = {
+              'index.html': ('src="evidence.js?v=20261013-view2"', 'src="evidence.js?v='+V+'"'),
+              'evidence.js': ("sc.src='result.js?v=20261013-view2';", "sc.src='result.js?v="+V+"';"),
+              'result.js': ("sc.src=f+'?v=20261004c';", "sc.src=f+'?v='+(f==='ingredient-loader.js'?'"+V+"':'20261004c');"),
+              'ingredient-loader.js': ("var V='20261023-ui1'", "var V='"+V+"'"),
+              'results-accordions.js': ("css.href='results-accordions.css?v=20261023-ui1';", "css.href='results-accordions.css?v="+V+"';")
+          }
+          planned = {}
+          for name, (old, new) in pairs.items():
+              original = Path(name).read_bytes().decode('utf-8')
+              if original.count(old) == 0 and original.count(new) == 1:
+                  planned[name] = original
+              else:
+                  assert original.count(old) == 1 and new not in original, 'Unexpected version reference: '+name
+                  planned[name] = original.replace(old, new, 1)
+              assert planned[name].count(new) == 1
+          assert 'results-accordions.js' in planned['ingredient-loader.js']
+          assert Path('results-accordions.css').is_file()
+          for name, candidate in planned.items():
+              if name.endswith('.js'):
+                  subprocess.run(['node', '--check'], input=candidate, text=True, check=True)
+          inline = [s for s in re.findall(r'<script\b[^>]*>(.*?)</script>', planned['index.html'], re.S) if s.strip()]
+          assert inline, 'Missing inline app script'
+          for script in inline:
+              subprocess.run(['node', '--check'], input=script, text=True, check=True)
+          with tempfile.TemporaryDirectory() as folder:
+              for name, candidate in planned.items():
+                  Path(folder, name).write_bytes(candidate.encode('utf-8'))
+              script = "const assert=require('node:assert/strict'),vm=require('node:vm');const line="+__import__('json').dumps(pairs['result.js'][1])+";for(const f of ['ingredient-loader.js','library.js','profile.js']){const x={f,sc:{}};vm.runInNewContext(line,x);assert.equal(x.sc.src,f+'?v='+(f==='ingredient-loader.js'?'20261024-ui2':'20261004c'))}"
+              subprocess.run(['node', '-e', script], check=True)
+          for name, candidate in planned.items():
+              Path(name).write_bytes(candidate.encode('utf-8'))
+          subprocess.run(['node', 'tests/results-accordions.test.cjs'], check=True)
+          changed = subprocess.check_output(['git','diff','--name-only'], text=True).splitlines()
+          assert set(changed).issubset(pairs), 'Unexpected changed files'
+          print('Version-reference checks and JavaScript syntax passed; browser behavior and live deployment are not verified.')
+          PY
+      - name: Commit the checked version references
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- index.html evidence.js result.js ingredient-loader.js results-accordions.js
+          if ! git diff --cached --quiet; then
+            git diff --cached --stat
+            git commit -m 'Fix complete UI asset version chain to 20261024-ui2'
+            git push origin HEAD:main
+          fi
+          echo "Repair commit: $(git rev-parse HEAD)" >> "$GITHUB_STEP_SUMMARY"
+      - name: Request branch-based Pages rebuild when applicable
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          kind=$(gh api "repos/$GITHUB_REPOSITORY/pages" --jq '.build_type')
+          if [ "$kind" = "legacy" ]; then
+            gh api --method POST "repos/$GITHUB_REPOSITORY/pages/builds"
+            echo 'Pages rebuild requested; completion and rendered UI remain unverified.' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo '::warning::Pages is not branch-based. Deployment must be verified using the existing publishing setup; this workflow has not deployed the site.'
+            echo 'Version repair committed. Deployment remains unverified.' >> "$GITHUB_STEP_SUMMARY"
+          fi
