@@ -1,0 +1,268 @@
+{
+  "schema_version": "1.0",
+  "batch_id": "folate-b12-forms-20261024",
+  "status": "reference-backed drafts; incomplete clinical audits",
+  "counts": {
+    "entries": 8,
+    "explicit_form_entries": 6,
+    "form_unspecified_entries": 2,
+    "reused_nutrient_families": 2
+  },
+  "references": {
+    "folate": [
+      "NIH ODS: Folate",
+      "https://ods.od.nih.gov/factsheets/Folate-HealthProfessional/",
+      "Reference synthesis; underlying-study audit partial"
+    ],
+    "b12": [
+      "NIH ODS: Vitamin B12",
+      "https://ods.od.nih.gov/factsheets/VitaminB12-HealthProfessional/",
+      "Reference synthesis; underlying-study audit partial"
+    ],
+    "mthfr": [
+      "CDC: MTHFR Gene Variant and Folic Acid Facts",
+      "https://www.cdc.gov/folic-acid/data-research/mthfr/index.html",
+      "Common-variant and prevention guidance; not personal genetic advice"
+    ]
+  },
+  "records": [
+    {
+      "id": "folate_unspecified",
+      "title": "Folate — form unspecified",
+      "existing_family_key": "folate",
+      "exact_label_terms": [
+        "folate",
+        "vitamin b9",
+        "vitamin b-9"
+      ],
+      "form_classification": "not determined",
+      "sections": {
+        "what": "Generic folate names the vitamin family, not a verified chemical preparation.",
+        "body": "Folate participates in DNA and RNA synthesis, cell division and amino-acid metabolism, including homocysteine-to-methionine reactions. Those normal functions do not establish a benefit from adding more when intake is already adequate.",
+        "form": "Do not infer folic acid, 5-MTHF, a salt, source or manufacturing process from a generic folate label.",
+        "research": "A family-level physiological explanation is available, but form-specific findings cannot be assigned until the preparation is named.",
+        "high": "Large folate intakes can correct the anemia of B12 deficiency without correcting its neurological injury, potentially delaying recognition. Cancer findings depend on timing, population, baseline status and co-interventions; they do not establish a universal ingredient-level cancer verdict.",
+        "reference": "The US adult upper limit at age 19 and older is 1,000 mcg/day folic acid from supplements and fortified foods, excluding naturally occurring food folate. This folic-acid mass must not be compared directly with mcg DFE or automatically applied to an unverified 5-MTHF preparation. It is not a supplement target. No product conversion or total-intake calculation is performed.",
+        "debate": "NIH describes inconclusive comparative-benefit research in people with the common MTHFR 677C>T variant and notes that some might benefit from 5-MTHF. CDC states that common variants do not prevent folic-acid processing and are not a reason to avoid it. Folate-status or homocysteine results and prevention of neural tube defects are different outcomes; folic-acid prevention evidence must not be transferred automatically to every folate preparation. These statements do not diagnose a variant or choose a personal regimen."
+      },
+      "reference_keys": [
+        "folate",
+        "mthfr"
+      ],
+      "review": {
+        "date": "2026-10-24",
+        "status": "Draft reference-backed explanation; partial audit; not clinically reviewed",
+        "disclosures": "NIH and CDC are reference publishers, not necessarily the funders of every underlying study. Original-study funding, author conflicts and sponsor roles were not independently audited.",
+        "gaps": "No comprehensive current-trial review, independent correction/retraction check, salt-specific identity audit or deployed-site verification is complete."
+      }
+    },
+    {
+      "id": "folic_acid",
+      "title": "Folic acid",
+      "existing_family_key": "folate",
+      "exact_label_terms": [
+        "folic acid"
+      ],
+      "form_classification": "not methylated",
+      "sections": {
+        "what": "Folic acid is the fully oxidized monoglutamate form of folate used in fortified foods and many supplements.",
+        "body": "Folate participates in DNA and RNA synthesis, cell division and amino-acid metabolism, including homocysteine-to-methionine reactions. Those normal functions do not establish a benefit from adding more when intake is already adequate.",
+        "form": "It undergoes metabolic conversion before use in folate pathways. That conversion requirement is not proof that common MTHFR variants make folic acid unusable or inherently harmful.",
+        "research": "Periconceptional folic-acid evidence supports neural-tube-defect prevention. Some other outcomes, including cancer and cardiovascular endpoints, are mixed or population-dependent. No prenatal or genetic dose recommendation is made.",
+        "high": "Large folate intakes can correct the anemia of B12 deficiency without correcting its neurological injury, potentially delaying recognition. Cancer findings depend on timing, population, baseline status and co-interventions; they do not establish a universal ingredient-level cancer verdict.",
+        "reference": "The US adult upper limit at age 19 and older is 1,000 mcg/day folic acid from supplements and fortified foods, excluding naturally occurring food folate. This folic-acid mass must not be compared directly with mcg DFE or automatically applied to an unverified 5-MTHF preparation. It is not a supplement target. No product conversion or total-intake calculation is performed.",
+        "debate": "NIH describes inconclusive comparative-benefit research in people with the common MTHFR 677C>T variant and notes that some might benefit from 5-MTHF. CDC states that common variants do not prevent folic-acid processing and are not a reason to avoid it. Folate-status or homocysteine results and prevention of neural tube defects are different outcomes; folic-acid prevention evidence must not be transferred automatically to every folate preparation. These statements do not diagnose a variant or choose a personal regimen."
+      },
+      "reference_keys": [
+        "folate",
+        "mthfr"
+      ],
+      "review": {
+        "date": "2026-10-24",
+        "status": "Draft reference-backed explanation; partial audit; not clinically reviewed",
+        "disclosures": "NIH and CDC are reference publishers, not necessarily the funders of every underlying study. Original-study funding, author conflicts and sponsor roles were not independently audited.",
+        "gaps": "No comprehensive current-trial review, independent correction/retraction check, salt-specific identity audit or deployed-site verification is complete."
+      }
+    },
+    {
+      "id": "methylfolate",
+      "title": "5-MTHF / methylfolate",
+      "existing_family_key": "folate",
+      "exact_label_terms": [
+        "5-mthf",
+        "l-5-mthf",
+        "5-methylfolate",
+        "5-methyl-folate",
+        "l-methylfolate",
+        "methylfolate",
+        "5-methyltetrahydrofolate",
+        "l-5-methyltetrahydrofolate"
+      ],
+      "form_classification": "methylated folate form",
+      "sections": {
+        "what": "5-MTHF is a methylated folate form and the main folate form in plasma.",
+        "body": "Folate participates in DNA and RNA synthesis, cell division and amino-acid metabolism, including homocysteine-to-methionine reactions. Those normal functions do not establish a benefit from adding more when intake is already adequate.",
+        "form": "Generic methylfolate wording does not establish a calcium or glucosamine salt, stereochemical specification, manufacturing source or absorbed amount. NIH reports similar or greater bioavailability than folic acid, but that is not a universal clinical-outcome ranking.",
+        "research": "Some people with MTHFR 677C>T might benefit, but comparative-benefit research is inconclusive. Biomarker improvements are not proof that 5-MTHF has identical neural-tube-defect prevention evidence or that everyone with a common variant needs it.",
+        "high": "Large folate intakes can correct the anemia of B12 deficiency without correcting its neurological injury, potentially delaying recognition. Cancer findings depend on timing, population, baseline status and co-interventions; they do not establish a universal ingredient-level cancer verdict.",
+        "reference": "The US adult upper limit at age 19 and older is 1,000 mcg/day folic acid from supplements and fortified foods, excluding naturally occurring food folate. This folic-acid mass must not be compared directly with mcg DFE or automatically applied to an unverified 5-MTHF preparation. It is not a supplement target. No product conversion or total-intake calculation is performed.",
+        "debate": "NIH describes inconclusive comparative-benefit research in people with the common MTHFR 677C>T variant and notes that some might benefit from 5-MTHF. CDC states that common variants do not prevent folic-acid processing and are not a reason to avoid it. Folate-status or homocysteine results and prevention of neural tube defects are different outcomes; folic-acid prevention evidence must not be transferred automatically to every folate preparation. These statements do not diagnose a variant or choose a personal regimen."
+      },
+      "reference_keys": [
+        "folate",
+        "mthfr"
+      ],
+      "review": {
+        "date": "2026-10-24",
+        "status": "Draft reference-backed explanation; partial audit; not clinically reviewed",
+        "disclosures": "NIH and CDC are reference publishers, not necessarily the funders of every underlying study. Original-study funding, author conflicts and sponsor roles were not independently audited.",
+        "gaps": "No comprehensive current-trial review, independent correction/retraction check, salt-specific identity audit or deployed-site verification is complete."
+      }
+    },
+    {
+      "id": "b12_unspecified",
+      "title": "Vitamin B12 — form unspecified",
+      "existing_family_key": "b12",
+      "exact_label_terms": [
+        "vitamin b12",
+        "vitamin b-12",
+        "cobalamin"
+      ],
+      "form_classification": "not determined",
+      "sections": {
+        "what": "Generic B12 or cobalamin does not identify the preparation.",
+        "body": "Vitamin B12 supports normal nervous-system development and function, healthy red blood cell formation and DNA synthesis. It participates in methionine synthesis and methylmalonyl-CoA metabolism. Physiological necessity does not establish an energy or performance benefit from extra B12 when status is sufficient.",
+        "form": "Do not infer methylcobalamin, cyanocobalamin, adenosylcobalamin or hydroxocobalamin from the generic vitamin name.",
+        "research": "Deficiency-correction findings are not proof of additional benefit in an adequately nourished person. The name alone does not establish a deficiency or a treatment route.",
+        "high": "The US Food and Nutrition Board has not established a B12 upper limit because of its low toxicity potential. This is not proof of unlimited benefit or suitability for every person. Mixed observational high-B12/cancer associations do not by themselves prove that supplementation caused cancer.",
+        "reference": "No US tolerable upper intake level is established for B12. Absence of a limit is not a dose target. Amount, absorption barriers, deficiency severity and route of administration are separate questions; a compound name alone supplies none of those measurements. No treatment dose or intake total is calculated.",
+        "debate": "NIH reports no evidence that supplement absorption rates differ by B12 form. This is not proof that all routes, doses, formulations and clinical situations are identical. Active-form labels do not establish universal superiority. Sublingual and oral preparations have not shown a general efficacy difference in the studies NIH summarizes, while prescribed injections address different clinical contexts."
+      },
+      "reference_keys": [
+        "b12"
+      ],
+      "review": {
+        "date": "2026-10-24",
+        "status": "Draft reference-backed explanation; partial audit; not clinically reviewed",
+        "disclosures": "NIH and CDC are reference publishers, not necessarily the funders of every underlying study. Original-study funding, author conflicts and sponsor roles were not independently audited.",
+        "gaps": "No comprehensive current-trial review, independent correction/retraction check, salt-specific identity audit or deployed-site verification is complete."
+      }
+    },
+    {
+      "id": "methylcobalamin",
+      "title": "Methylcobalamin",
+      "existing_family_key": "b12",
+      "exact_label_terms": [
+        "methylcobalamin"
+      ],
+      "form_classification": "methylated; metabolically active B12 form",
+      "sections": {
+        "what": "Methylcobalamin is one of the metabolically active B12 forms.",
+        "body": "Vitamin B12 supports normal nervous-system development and function, healthy red blood cell formation and DNA synthesis. It participates in methionine synthesis and methylmalonyl-CoA metabolism. Physiological necessity does not establish an energy or performance benefit from extra B12 when status is sufficient.",
+        "form": "Active and methylated describe aspects of the compound, not a verified absorption advantage, manufacturing origin or personal genetic suitability.",
+        "research": "NIH reports no evidence that B12 supplement absorption rates differ by form. A methylcobalamin label is not proof of better energy, cognition or outcomes than other B12 preparations.",
+        "high": "The US Food and Nutrition Board has not established a B12 upper limit because of its low toxicity potential. This is not proof of unlimited benefit or suitability for every person. Mixed observational high-B12/cancer associations do not by themselves prove that supplementation caused cancer.",
+        "reference": "No US tolerable upper intake level is established for B12. Absence of a limit is not a dose target. Amount, absorption barriers, deficiency severity and route of administration are separate questions; a compound name alone supplies none of those measurements. No treatment dose or intake total is calculated.",
+        "debate": "NIH reports no evidence that supplement absorption rates differ by B12 form. This is not proof that all routes, doses, formulations and clinical situations are identical. Active-form labels do not establish universal superiority. Sublingual and oral preparations have not shown a general efficacy difference in the studies NIH summarizes, while prescribed injections address different clinical contexts."
+      },
+      "reference_keys": [
+        "b12"
+      ],
+      "review": {
+        "date": "2026-10-24",
+        "status": "Draft reference-backed explanation; partial audit; not clinically reviewed",
+        "disclosures": "NIH and CDC are reference publishers, not necessarily the funders of every underlying study. Original-study funding, author conflicts and sponsor roles were not independently audited.",
+        "gaps": "No comprehensive current-trial review, independent correction/retraction check, salt-specific identity audit or deployed-site verification is complete."
+      }
+    },
+    {
+      "id": "adenosylcobalamin",
+      "title": "Adenosylcobalamin",
+      "existing_family_key": "b12",
+      "exact_label_terms": [
+        "adenosylcobalamin",
+        "5-deoxyadenosylcobalamin",
+        "5'-deoxyadenosylcobalamin"
+      ],
+      "form_classification": "adenosyl; metabolically active B12 form, not methylcobalamin",
+      "sections": {
+        "what": "Adenosylcobalamin, also called 5-deoxyadenosylcobalamin, is another metabolically active B12 form.",
+        "body": "Vitamin B12 supports normal nervous-system development and function, healthy red blood cell formation and DNA synthesis. It participates in methionine synthesis and methylmalonyl-CoA metabolism. Physiological necessity does not establish an energy or performance benefit from extra B12 when status is sufficient.",
+        "form": "It must remain distinct from methylcobalamin. Metabolically active does not mean methylated, and the name does not establish superior clinical benefit.",
+        "research": "Adenosylcobalamin’s normal coenzyme role does not prove a special energy or exercise benefit from supplementation. Comparative form absorption evidence does not establish a universal best B12 form.",
+        "high": "The US Food and Nutrition Board has not established a B12 upper limit because of its low toxicity potential. This is not proof of unlimited benefit or suitability for every person. Mixed observational high-B12/cancer associations do not by themselves prove that supplementation caused cancer.",
+        "reference": "No US tolerable upper intake level is established for B12. Absence of a limit is not a dose target. Amount, absorption barriers, deficiency severity and route of administration are separate questions; a compound name alone supplies none of those measurements. No treatment dose or intake total is calculated.",
+        "debate": "NIH reports no evidence that supplement absorption rates differ by B12 form. This is not proof that all routes, doses, formulations and clinical situations are identical. Active-form labels do not establish universal superiority. Sublingual and oral preparations have not shown a general efficacy difference in the studies NIH summarizes, while prescribed injections address different clinical contexts."
+      },
+      "reference_keys": [
+        "b12"
+      ],
+      "review": {
+        "date": "2026-10-24",
+        "status": "Draft reference-backed explanation; partial audit; not clinically reviewed",
+        "disclosures": "NIH and CDC are reference publishers, not necessarily the funders of every underlying study. Original-study funding, author conflicts and sponsor roles were not independently audited.",
+        "gaps": "No comprehensive current-trial review, independent correction/retraction check, salt-specific identity audit or deployed-site verification is complete."
+      }
+    },
+    {
+      "id": "hydroxocobalamin",
+      "title": "Hydroxocobalamin / hydroxycobalamin",
+      "existing_family_key": "b12",
+      "exact_label_terms": [
+        "hydroxocobalamin",
+        "hydroxycobalamin"
+      ],
+      "form_classification": "converted to active B12 forms; not methylcobalamin",
+      "sections": {
+        "what": "Hydroxocobalamin, also called hydroxycobalamin, can be converted to active B12 forms.",
+        "body": "Vitamin B12 supports normal nervous-system development and function, healthy red blood cell formation and DNA synthesis. It participates in methionine synthesis and methylmalonyl-CoA metabolism. Physiological necessity does not establish an energy or performance benefit from extra B12 when status is sufficient.",
+        "form": "The body’s conversion of this compound is not evidence that it is ineffective. Oral supplement labels do not establish prescribed injection use or an equivalent absorbed dose.",
+        "research": "NIH describes prescription parenteral hydroxycobalamin in deficiency care. Route-specific treatment evidence should not become a self-treatment instruction or a benefit claim for an oral product.",
+        "high": "The US Food and Nutrition Board has not established a B12 upper limit because of its low toxicity potential. This is not proof of unlimited benefit or suitability for every person. Mixed observational high-B12/cancer associations do not by themselves prove that supplementation caused cancer.",
+        "reference": "No US tolerable upper intake level is established for B12. Absence of a limit is not a dose target. Amount, absorption barriers, deficiency severity and route of administration are separate questions; a compound name alone supplies none of those measurements. No treatment dose or intake total is calculated.",
+        "debate": "NIH reports no evidence that supplement absorption rates differ by B12 form. This is not proof that all routes, doses, formulations and clinical situations are identical. Active-form labels do not establish universal superiority. Sublingual and oral preparations have not shown a general efficacy difference in the studies NIH summarizes, while prescribed injections address different clinical contexts."
+      },
+      "reference_keys": [
+        "b12"
+      ],
+      "review": {
+        "date": "2026-10-24",
+        "status": "Draft reference-backed explanation; partial audit; not clinically reviewed",
+        "disclosures": "NIH and CDC are reference publishers, not necessarily the funders of every underlying study. Original-study funding, author conflicts and sponsor roles were not independently audited.",
+        "gaps": "No comprehensive current-trial review, independent correction/retraction check, salt-specific identity audit or deployed-site verification is complete."
+      }
+    },
+    {
+      "id": "cyanocobalamin",
+      "title": "Cyanocobalamin",
+      "existing_family_key": "b12",
+      "exact_label_terms": [
+        "cyanocobalamin"
+      ],
+      "form_classification": "converted to active B12 forms; not methylcobalamin",
+      "sections": {
+        "what": "Cyanocobalamin is a common supplemental B12 form that can be converted to active forms.",
+        "body": "Vitamin B12 supports normal nervous-system development and function, healthy red blood cell formation and DNA synthesis. It participates in methionine synthesis and methylmalonyl-CoA metabolism. Physiological necessity does not establish an energy or performance benefit from extra B12 when status is sufficient.",
+        "form": "Do not interpret its name as proof of poor absorption, personal intolerance or a reason that everyone must choose methylcobalamin. Product formulation and clinical context still matter.",
+        "research": "NIH reports no evidence of different supplement absorption rates by B12 form and describes cyanocobalamin in deficiency treatment contexts. That does not establish benefit from extra B12 when status is adequate or prescribe a treatment regimen.",
+        "high": "The US Food and Nutrition Board has not established a B12 upper limit because of its low toxicity potential. This is not proof of unlimited benefit or suitability for every person. Mixed observational high-B12/cancer associations do not by themselves prove that supplementation caused cancer.",
+        "reference": "No US tolerable upper intake level is established for B12. Absence of a limit is not a dose target. Amount, absorption barriers, deficiency severity and route of administration are separate questions; a compound name alone supplies none of those measurements. No treatment dose or intake total is calculated.",
+        "debate": "NIH reports no evidence that supplement absorption rates differ by B12 form. This is not proof that all routes, doses, formulations and clinical situations are identical. Active-form labels do not establish universal superiority. Sublingual and oral preparations have not shown a general efficacy difference in the studies NIH summarizes, while prescribed injections address different clinical contexts."
+      },
+      "reference_keys": [
+        "b12"
+      ],
+      "review": {
+        "date": "2026-10-24",
+        "status": "Draft reference-backed explanation; partial audit; not clinically reviewed",
+        "disclosures": "NIH and CDC are reference publishers, not necessarily the funders of every underlying study. Original-study funding, author conflicts and sponsor roles were not independently audited.",
+        "gaps": "No comprehensive current-trial review, independent correction/retraction check, salt-specific identity audit or deployed-site verification is complete."
+      }
+    }
+  ],
+  "deferred": [
+    "Folinic acid and preparation-specific medicinal contexts",
+    "Named calcium/glucosamine methylfolate salts and branded preparations",
+    "Broader combination-product parsing"
+  ]
+}
