@@ -1,0 +1,118 @@
+name: Integrate folate and B12 form education
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/integrate-folate-b12.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+  pages: write
+concurrency:
+  group: integrate-folate-b12
+  cancel-in-progress: false
+jobs:
+  integrate:
+    if: github.repository == 'jessepringle13-bit/OpenLabel' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Prepare guarded folate and B12 integration
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 <<'PY'
+          from pathlib import Path
+          import re,subprocess
+          V='20261024-bvitamins6'
+          changes={
+          'index.html':[('src="evidence.js?v=20261024-magnesium5"','src="evidence.js?v='+V+'"')],
+          'evidence.js':[("sc.src='result.js?v=20261024-magnesium5';","sc.src='result.js?v="+V+"';")],
+          'result.js':[("f==='ingredient-loader.js'?'20261024-magnesium5'","f==='ingredient-loader.js'?'"+V+"'")],
+          'ingredient-loader.js':[("var V='20261024-magnesium5'","var V='"+V+"'"),('"magnesium-forms.js","learn-search.js"','"magnesium-forms.js","folate-b12-forms.js","learn-search.js"')],
+          'learn-search.js':[('return root.OLMagnesiumForms?root.OLMagnesiumForms.catalog(entries):entries}', 'if(root.OLMagnesiumForms)entries=root.OLMagnesiumForms.catalog(entries);return root.OLBVitaminForms?root.OLBVitaminForms.catalog(entries):entries}')]
+          }
+          assert not Path('folate-b12-forms.js').exists()
+          assert not Path('docs/folate-b12-forms.json').exists()
+          planned={}
+          for name,pairs in changes.items():
+           text=Path(name).read_bytes().decode('utf-8')
+           for old,new in pairs:
+            assert text.count(old)==1, 'Unexpected integration anchor: '+name+' '+old
+            text=text.replace(old,new,1)
+           planned[name]=text
+          planned['folate-b12-forms.js']=r"""(function(root){'use strict';
+          var SOURCES={"folate":["NIH ODS: Folate","https://ods.od.nih.gov/factsheets/Folate-HealthProfessional/","Reference synthesis; underlying-study audit partial"],"b12":["NIH ODS: Vitamin B12","https://ods.od.nih.gov/factsheets/VitaminB12-HealthProfessional/","Reference synthesis; underlying-study audit partial"],"mthfr":["CDC: MTHFR Gene Variant and Folic Acid Facts","https://www.cdc.gov/folic-acid/data-research/mthfr/index.html","Common-variant and prevention guidance; not personal genetic advice"]},COMMON={"folate":{"body":"Folate participates in DNA and RNA synthesis, cell division and amino-acid metabolism, including homocysteine-to-methionine reactions. Those normal functions do not establish a benefit from adding more when intake is already adequate.","high":"Large folate intakes can correct the anemia of B12 deficiency without correcting its neurological injury, potentially delaying recognition. Cancer findings depend on timing, population, baseline status and co-interventions; they do not establish a universal ingredient-level cancer verdict.","reference":"The US adult upper limit at age 19 and older is 1,000 mcg/day folic acid from supplements and fortified foods, excluding naturally occurring food folate. This folic-acid mass must not be compared directly with mcg DFE or automatically applied to an unverified 5-MTHF preparation. It is not a supplement target. No product conversion or total-intake calculation is performed.","debate":"NIH describes inconclusive comparative-benefit research in people with the common MTHFR 677C>T variant and notes that some might benefit from 5-MTHF. CDC states that common variants do not prevent folic-acid processing and are not a reason to avoid it. Folate-status or homocysteine results and prevention of neural tube defects are different outcomes; folic-acid prevention evidence must not be transferred automatically to every folate preparation. These statements do not diagnose a variant or choose a personal regimen."},"b12":{"body":"Vitamin B12 supports normal nervous-system development and function, healthy red blood cell formation and DNA synthesis. It participates in methionine synthesis and methylmalonyl-CoA metabolism. Physiological necessity does not establish an energy or performance benefit from extra B12 when status is sufficient.","high":"The US Food and Nutrition Board has not established a B12 upper limit because of its low toxicity potential. This is not proof of unlimited benefit or suitability for every person. Mixed observational high-B12/cancer associations do not by themselves prove that supplementation caused cancer.","reference":"No US tolerable upper intake level is established for B12. Absence of a limit is not a dose target. Amount, absorption barriers, deficiency severity and route of administration are separate questions; a compound name alone supplies none of those measurements. No treatment dose or intake total is calculated.","debate":"NIH reports no evidence that supplement absorption rates differ by B12 form. This is not proof that all routes, doses, formulations and clinical situations are identical. Active-form labels do not establish universal superiority. Sublingual and oral preparations have not shown a general efficacy difference in the studies NIH summarizes, while prescribed injections address different clinical contexts."}},SPECS=[["folate_unspecified","Folate — form unspecified","folate",["folate","vitamin b9","vitamin b-9"],"not determined","Generic folate names the vitamin family, not a verified chemical preparation.","Do not infer folic acid, 5-MTHF, a salt, source or manufacturing process from a generic folate label.","A family-level physiological explanation is available, but form-specific findings cannot be assigned until the preparation is named."],["folic_acid","Folic acid","folate",["folic acid"],"not methylated","Folic acid is the fully oxidized monoglutamate form of folate used in fortified foods and many supplements.","It undergoes metabolic conversion before use in folate pathways. That conversion requirement is not proof that common MTHFR variants make folic acid unusable or inherently harmful.","Periconceptional folic-acid evidence supports neural-tube-defect prevention. Some other outcomes, including cancer and cardiovascular endpoints, are mixed or population-dependent. No prenatal or genetic dose recommendation is made."],["methylfolate","5-MTHF / methylfolate","folate",["5-mthf","l-5-mthf","5-methylfolate","5-methyl-folate","l-methylfolate","methylfolate","5-methyltetrahydrofolate","l-5-methyltetrahydrofolate"],"methylated folate form","5-MTHF is a methylated folate form and the main folate form in plasma.","Generic methylfolate wording does not establish a calcium or glucosamine salt, stereochemical specification, manufacturing source or absorbed amount. NIH reports similar or greater bioavailability than folic acid, but that is not a universal clinical-outcome ranking.","Some people with MTHFR 677C>T might benefit, but comparative-benefit research is inconclusive. Biomarker improvements are not proof that 5-MTHF has identical neural-tube-defect prevention evidence or that everyone with a common variant needs it."],["b12_unspecified","Vitamin B12 — form unspecified","b12",["vitamin b12","vitamin b-12","cobalamin"],"not determined","Generic B12 or cobalamin does not identify the preparation.","Do not infer methylcobalamin, cyanocobalamin, adenosylcobalamin or hydroxocobalamin from the generic vitamin name.","Deficiency-correction findings are not proof of additional benefit in an adequately nourished person. The name alone does not establish a deficiency or a treatment route."],["methylcobalamin","Methylcobalamin","b12",["methylcobalamin"],"methylated; metabolically active B12 form","Methylcobalamin is one of the metabolically active B12 forms.","Active and methylated describe aspects of the compound, not a verified absorption advantage, manufacturing origin or personal genetic suitability.","NIH reports no evidence that B12 supplement absorption rates differ by form. A methylcobalamin label is not proof of better energy, cognition or outcomes than other B12 preparations."],["adenosylcobalamin","Adenosylcobalamin","b12",["adenosylcobalamin","5-deoxyadenosylcobalamin","5'-deoxyadenosylcobalamin"],"adenosyl; metabolically active B12 form, not methylcobalamin","Adenosylcobalamin, also called 5-deoxyadenosylcobalamin, is another metabolically active B12 form.","It must remain distinct from methylcobalamin. Metabolically active does not mean methylated, and the name does not establish superior clinical benefit.","Adenosylcobalamin’s normal coenzyme role does not prove a special energy or exercise benefit from supplementation. Comparative form absorption evidence does not establish a universal best B12 form."],["hydroxocobalamin","Hydroxocobalamin / hydroxycobalamin","b12",["hydroxocobalamin","hydroxycobalamin"],"converted to active B12 forms; not methylcobalamin","Hydroxocobalamin, also called hydroxycobalamin, can be converted to active B12 forms.","The body’s conversion of this compound is not evidence that it is ineffective. Oral supplement labels do not establish prescribed injection use or an equivalent absorbed dose.","NIH describes prescription parenteral hydroxycobalamin in deficiency care. Route-specific treatment evidence should not become a self-treatment instruction or a benefit claim for an oral product."],["cyanocobalamin","Cyanocobalamin","b12",["cyanocobalamin"],"converted to active B12 forms; not methylcobalamin","Cyanocobalamin is a common supplemental B12 form that can be converted to active forms.","Do not interpret its name as proof of poor absorption, personal intolerance or a reason that everyone must choose methylcobalamin. Product formulation and clinical context still matter.","NIH reports no evidence of different supplement absorption rates by B12 form and describes cyanocobalamin in deficiency treatment contexts. That does not establish benefit from extra B12 when status is adequate or prescribe a treatment regimen."]];
+          var records=SPECS.map(function(r){return {id:r[0],title:r[1],existing_family_key:r[2],exact_label_terms:r[3],form_classification:r[4],sections:{what:r[5],body:COMMON[r[2]].body,form:r[6],research:r[7],high:COMMON[r[2]].high,reference:COMMON[r[2]].reference,debate:COMMON[r[2]].debate},reference_keys:r[2]==='folate'?['folate','mthfr']:['b12'],review:{date:'2026-10-24',status:'Draft reference-backed explanation; partial audit; not clinically reviewed',disclosures:'NIH and CDC are reference publishers, not necessarily the funders of every underlying study. Original-study funding, author conflicts and sponsor roles were not independently audited.',gaps:'No comprehensive current-trial review, independent correction/retraction check, salt-specific identity audit or deployed-site verification is complete.'}}});
+          var batch={schema_version:'1.0',batch_id:'folate-b12-forms-20261024',status:'reference-backed drafts; incomplete clinical audits',counts:{entries:8,explicit_form_entries:6,form_unspecified_entries:2,reused_nutrient_families:2},references:SOURCES,records:records,deferred:['Folinic acid and preparation-specific medicinal contexts','Named calcium/glucosamine methylfolate salts and branded preparations','Broader combination-product parsing']};
+          function norm(v){return String(v==null?'':v).trim().toLowerCase().replace(/[\u2010-\u2015\u2212]/g,'-').replace(/[\u2018\u2019\u2032]/g,"'").replace(/\s+/g,' ')}
+          function direct(v){var n=norm(v);return records.find(function(r){return r.exact_label_terms.indexOf(n)>=0})||null}
+          function create(){function make(r){var record={},key=r.existing_family_key;Object.keys(r.sections).forEach(function(k){record[k]=[r.sections[k],key]});if(key==='folate')record.debate=[r.sections.debate,'mthfr'];record.audit=[r.review.status+'. '+r.review.disclosures+' '+r.review.gaps+' Form classification: '+r.form_classification+'.',key];return {id:'bvit-form-'+r.id,title:r.id==='folate_unspecified'?'Folate (B9)':r.id==='b12_unspecified'?'Vitamin B12':r.title,category:'ingredient',aliases:r.exact_label_terms.concat(['folate b12 forms']),description:'Named vitamin form and evidence context',coverage:'Partial reference review · no personal genetic recommendation',kind:'pilot',record:record,sources:SOURCES,batchRecord:r,sectionTitles:{form:'Form and metabolism',debate:key==='folate'?'MTHFR and evidence boundaries':'Comparative evidence boundaries',audit:'Source disclosures and gaps'}}}
+          function lookup(v){var r=direct(v);if(!r){var m=/^([^()]+)\s*\((?:as\s+)?([^()]+)\)$/.exec(norm(v));if(m){var a=direct(m[1]),b=direct(m[2]);if(a&&b&&a.id.endsWith('_unspecified')&&!b.id.endsWith('_unspecified')&&a.existing_family_key===b.existing_family_key)r=b}}return r?make(r):null}
+          return {version:'20261024-bvitamins6',lookup:lookup,catalog:function(existing){return existing.filter(function(e){return !e.id.startsWith('bvit-form-')&&e.id!=='nutrient-folate'&&e.id!=='nutrient-b12'&&!direct(e.title)}).concat(records.map(make))},status:function(){return {entries:8,explicitForms:6,unspecifiedForms:2,clinicalAuditsComplete:0}},batch:batch}}
+          if(typeof module==='object'&&module.exports){module.exports={create:create,batch:batch};return}if(root.OLBVitaminForms)return;var api=create(),doc=root.document;root.OLBVitaminForms=api;
+          var base=root.OLIngredients;if(base&&base.lookup){var next=Object.assign({},base);next.lookup=function(label){var old=base.lookup(label);if(old)return old;var e=api.lookup(label);return e?{role:'Vitamin form · partial reference review',use:e.batchRecord.existing_family_key==='folate'?'Folate context':'B12 context',purpose:e.record.what[0],form:e.record.form[0],difference:e.coverage,source:e.sources[e.record.what[1]][1],formUnspecified:e.batchRecord.id.endsWith('_unspecified')}:null};root.OLIngredients=next}
+          function el(tag,text,cls){var n=doc.createElement(tag);if(text!=null)n.textContent=text;if(cls)n.className=cls;return n}function link(ref){var a=el('a',ref[0]+' · '+ref[2]);a.href=ref[1];a.target='_blank';a.rel='noopener noreferrer';return a}
+          function sync(){doc.querySelectorAll('.ol-ing-sheet').forEach(function(box){var h=box.querySelector('h3'),e=h&&api.lookup(h.textContent),old=box.querySelector('.bvit-form-context');box.querySelectorAll('.ie-pilot,.thorne-context').forEach(function(p){if(e&&!p.hasAttribute('data-bvit-hidden')){p.dataset.bvitHidden=p.hidden?'hidden':'visible';p.hidden=true}else if(!e&&p.hasAttribute('data-bvit-hidden')){p.hidden=p.dataset.bvitHidden==='hidden';delete p.dataset.bvitHidden}});if(old&&(!e||old.dataset.entry!==e.id)){old.remove();old=null}if(!e||old)return;var s=el('section',null,'bvit-form-context');s.dataset.entry=e.id;s.append(el('h4',e.title+' — form context','ol-ing-label'),el('p',e.coverage),el('p',e.record.what[0]),link(e.sources[e.record.what[1]]));[['body','Body functions'],['form','Form and metabolism'],['research','Research context'],['high','High-intake context'],['reference','Reference limits'],['debate','Evidence boundaries'],['audit','Source disclosures and gaps']].forEach(function(pair){var c=e.record[pair[0]],d=el('details',null,'olui-education');d.append(el('summary',e.sectionTitles[pair[0]]||pair[1]),el('p',c[0]),link(e.sources[c[1]]));s.append(d)});if(!Array.from(box.querySelectorAll('p')).some(function(p){return /^General education/.test(p.textContent)}))s.append(el('p','General education—not an assessment of your intake, genetic suitability or a particular product.'));box.append(s)})}
+          var pending=false;new MutationObserver(function(){if(pending)return;pending=true;root.requestAnimationFrame(function(){pending=false;sync()})}).observe(doc.body,{childList:true,subtree:true});sync();
+          })(typeof window==='object'?window:globalThis);
+          """
+          for name,text in planned.items():
+           if name.endswith('.js'):subprocess.run(['node','--check'],input=text,text=True,check=True)
+          inline=[s for s in re.findall(r'<script\b[^>]*>(.*?)</script>',planned['index.html'],re.S) if s.strip()]
+          assert inline
+          for text in inline:subprocess.run(['node','--check'],input=text,text=True,check=True)
+          for name,text in planned.items():Path(name).write_bytes(text.encode('utf-8'))
+          assert set(subprocess.check_output(['git','diff','--name-only'],text=True).splitlines())==set(changes)
+          PY
+          node <<'JS'
+          const assert=require('node:assert/strict'),m=require('./folate-b12-forms.js'),a=m.create();assert.equal(a.catalog([]).length,8);assert.equal(new Set(a.catalog([]).map(e=>e.id)).size,8);for(const r of m.batch.records){for(const n of r.exact_label_terms)assert.equal(a.lookup(n).batchRecord,r);for(const c of Object.values(a.lookup(r.exact_label_terms[0]).record))assert.ok(m.batch.references[c[1]])}assert.equal(a.lookup('Folate (L-5-MTHF)').batchRecord.id,'methylfolate');assert.equal(a.lookup('Vitamin B12 (as Methylcobalamin)').batchRecord.id,'methylcobalamin');for(const n of ['Folic acid (as L-5-MTHF)','Folate (as Methylcobalamin)','Vitamin B12 (as Folic Acid)','Methylcobalamin (as Cyanocobalamin)','calcium L-5-MTHF','Quatrefolic'])assert.equal(a.lookup(n),null);assert.equal(a.lookup('folate').batchRecord.form_classification,'not determined');assert.equal(a.lookup('vitamin b12').batchRecord.form_classification,'not determined');assert.equal(a.catalog(a.catalog([])).length,8);assert.equal(a.catalog([{id:'thorne-6',title:'Folate (L-5-MTHF)'}]).length,9);console.log('Folate/B12 exact-term, generic uncertainty, source and contradiction checks passed.');
+          require('node:fs').writeFileSync('docs/folate-b12-forms.json',JSON.stringify(require('./folate-b12-forms.js').batch,null,2));
+          JS
+          node tests/results-accordions.test.cjs
+      - name: Browser-check vitamin entries and existing coverage
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PLAYWRIGHT_BROWSERS_PATH="$RUNNER_TEMP/bvit-browsers"
+          npm install --prefix "$RUNNER_TEMP/bvit-test" playwright
+          "$RUNNER_TEMP/bvit-test/node_modules/.bin/playwright" install --with-deps chromium
+          python3 -m http.server 8765 --bind 127.0.0.1 > "$RUNNER_TEMP/bvit-server.log" 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          for i in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:8765/ > /dev/null; then break; fi
+            sleep 1
+          done
+          NODE_PATH="$RUNNER_TEMP/bvit-test/node_modules" node <<'JS'
+          const assert=require('node:assert/strict'),{chromium}=require('playwright');(async()=>{const browser=await chromium.launch({args:['--use-fake-device-for-media-stream','--use-fake-ui-for-media-stream']});try{for(const viewport of [{width:390,height:844},{width:1280,height:900}]){const context=await browser.newContext({viewport,permissions:['camera']});try{const p=await context.newPage();p.setDefaultTimeout(30000);await p.route('**/*',r=>new URL(r.request().url()).origin==='http://127.0.0.1:8765'?r.continue():r.abort());await p.goto('http://127.0.0.1:8765/?v=20261024-bvitamins6',{waitUntil:'domcontentloaded'});if(await p.locator('#closeSheet').isVisible())await p.locator('#closeSheet').click();await p.locator('.nav-pill[data-go="explore"]').click();await p.locator('#ol-explore-tab-learn').waitFor({timeout:60000});await p.locator('#ol-explore-tab-learn').click();await p.locator('#exploreSearch').fill('folate b12 forms');await p.waitForFunction(()=>window.OLBVitaminForms&&document.querySelectorAll('.learn-row').length===8);const rows=await p.evaluate(()=>OLBVitaminForms.catalog([]).map(e=>({title:e.title,label:e.batchRecord.exact_label_terms[0]})));for(const r of rows){await p.locator('.learn-row').getByText(r.title+' ›',{exact:true}).click();const box=p.locator('.ol-inline-detail > .learn-dialog');await box.waitFor({state:'visible'});await p.waitForFunction(()=>{const b=document.querySelector('.ol-inline-detail > .learn-dialog');return b&&b.querySelector('.olui-footer p')&&getComputedStyle(b.querySelector('.olui-footer p')).fontSize==='12px'&&b.querySelectorAll('details.olui-accordion').length>=2});const ds=box.locator('details.olui-accordion');await ds.nth(0).locator(':scope > summary').click();await ds.nth(1).locator(':scope > summary').click();await p.waitForFunction(()=>{const d=document.querySelectorAll('.learn-dialog details.olui-accordion');return !d[0].open&&d[1].open});await p.getByRole('button',{name:/Back to Learn/}).click();await box.waitFor({state:'hidden'})}await p.locator('#exploreSearch').fill('thorne');await p.waitForFunction(()=>document.querySelectorAll('.learn-row').length===29);assert.equal(await p.evaluate(()=>OLMagnesiumForms.catalog([]).length),16);if(viewport.width===390){for(const name of rows.map(r=>r.label).concat(['Folate (L-5-MTHF)','Vitamin B12 (as Methylcobalamin)'])){await p.evaluate(name=>{const n=document.createElement('div');n.id='bvit-test';n.style.paddingBottom='200px';n.append(OLIngredients.render(name));document.body.append(n)},name);await p.locator('#bvit-test .ol-ing-row').first().click();await p.waitForFunction(()=>document.querySelector('.ol-ing-sheet .bvit-form-context')&&document.querySelector('.ol-ing-sheet .olui-footer'));assert.ok(await p.locator('.bvit-form-context a').count());const previous=p.locator('.ol-ing-sheet .thorne-context');if(await previous.count())assert.equal(await previous.isVisible(),false);await p.locator('.ol-ing-close').click();await p.locator('#bvit-test').evaluate(n=>n.remove())}}console.log(JSON.stringify({viewport,vitaminEntries:8,thorneEntries:29,magnesiumEntries:16,status:'passed',scope:'Local Chromium only; not deployed-site or physical-phone verification'}));}finally{await context.close()}}}finally{await browser.close()}})().catch(e=>{console.error(e);process.exitCode=1});
+          JS
+      - name: Commit only after checks pass
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- index.html evidence.js result.js ingredient-loader.js learn-search.js folate-b12-forms.js docs/folate-b12-forms.json
+          git diff --cached --stat
+          git commit -m 'Integrate folate and B12 forms into education views'
+          git push origin HEAD:main
+          echo "Integration commit: $(git rev-parse HEAD)" >> "$GITHUB_STEP_SUMMARY"
+      - name: Request branch-based Pages rebuild when applicable
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          kind=$(gh api "repos/$GITHUB_REPOSITORY/pages" --jq '.build_type')
+          if [ "$kind" = "legacy" ]; then
+            gh api --method POST "repos/$GITHUB_REPOSITORY/pages/builds"
+            echo 'Rebuild requested; deployment and phone verification remain open.' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo '::warning::Integration committed; verify existing Pages deployment separately.'
+          fi
