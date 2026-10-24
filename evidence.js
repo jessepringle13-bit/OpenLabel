@@ -23,5 +23,5 @@ function testMatch(e,p){p=p||{};var m=e.match||{},brand=textKey(p.brand),name=te
 function matchEntries(p){var out={prod:[],cat:[]};if(!REG||!REG.entries)return out;REG.entries.forEach(function(e){var assessment=testMatch(e,p);if(!assessment.matched)return;if(e.kind==='product'){out.prod.push(Object.assign({},e,{matchAssessment:assessment,result:assessment.reason+' '+e.result}))}else out.cat.push(e)});return out}
 window.OLEvidence={renderGeneral:function(){},api:{ready:READY,loadRegistry:loadRegistry,matchEntries:matchEntries,testMatch:testMatch,openTestSheet:openTestSheet,seedWords:SEED_OIL_WORDS,textKey:textKey}};
 var lk=document.createElement('link');lk.rel='stylesheet';lk.href='result.css?v=20261004c';document.head.appendChild(lk);
-var sc=document.createElement('script');sc.src='result.js?v=20261024-learn3';document.body.appendChild(sc);
+var sc=document.createElement('script');sc.src='result.js?v=20261024-thorne4';document.body.appendChild(sc);
 })();
