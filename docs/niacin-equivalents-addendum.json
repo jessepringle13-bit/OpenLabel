@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "patch_id": "niacin-equivalents-20261024",
+  "target_batch_id": "niacin-forms-20261024",
+  "status": "Draft reference content; not clinically reviewed or integrated",
+  "title": "Niacin equivalents: nutritional accounting, not treatment equivalence",
+  "applies_to": ["niacin_unspecified", "nicotinic_acid", "nicotinamide"],
+  "content": {
+    "definition": "The FNB defines 1 mg niacin equivalent (NE) as 1 mg niacin or 60 mg dietary tryptophan. This is a nutritional accounting convention, not a prediction of personal conversion efficiency.",
+    "formula": "For known, compatible dietary inputs: total mg NE = preformed niacin in mg + dietary tryptophan in mg / 60. Do not apply if the source total already includes tryptophan-derived NE.",
+    "illustrative_example": "A hypothetical diet providing 10 mg preformed niacin and 120 mg tryptophan contributes 12 mg NE by the reference convention. This is not a recommended diet, a tryptophan supplement dose or an individualized metabolic calculation.",
+    "named_form_equivalence": "For nutritional accounting, 1 mg nicotinic acid and 1 mg nicotinamide each provide 1 mg NE. This is not a clinical potency or safety equivalence and is not a rule for unknown derivatives, salts, mixtures or release formulations.",
+    "variability": "The body’s conversion of tryptophan to NAD varies between people. Tryptophan is also needed for protein synthesis, and B2, B6 and iron status can affect its conversion. Do not infer conversion efficiency or a need for supplementation from a genotype or ingredient list.",
+    "label_handling": "Preserve an explicitly declared mg NE amount. Do not add a second tryptophan estimate to an amount that already includes it. An ingredient name alone supplies neither a quantity nor confirmation that a database’s niacin value includes tryptophan. The NIH food table lists niacin alone and excludes the tryptophan contribution.",
+    "upper_limit_boundary": "Do not compare total dietary NE including ordinary food niacin and tryptophan against the US adult 35 mg/day added-niacin UL as if they had identical scope. The UL concerns supplemental and fortified niacin. Its scope and flushing-based rationale must remain visible.",
+    "clinical_boundary": "No automatic nicotinic-acid-to-niacinamide treatment conversion, release-form substitution, IU conversion, NAD-boosting potency claim or personal dosing advice."
+  },
+  "references": {
+    "nih_niacin": {
+      "title": "NIH ODS: Niacin — Health Professional Fact Sheet",
+      "url": "https://ods.od.nih.gov/factsheets/Niacin-HealthProfessional/",
+      "source_updated": "2022-11-18",
+      "accessed": "2026-10-24",
+      "scope": "Nutritional identity, niacin equivalents, reference values, form differences and selected clinical evidence; not current-market or current-prescribing verification."
+    }
+  },
+  "review": {
+    "status": "Partial reference-backed draft; not clinically reviewed.",
+    "gaps": "No comprehensive updated trial search, original-study conflict/funding audit, independent standing check or current prescribing review. Reference publisher is not assumed to fund the underlying studies.",
+    "testing": "Structural JSON and internal-reference checks only; no app, browser or phone testing."
+  }
+}

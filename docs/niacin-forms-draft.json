@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "batch_id": "niacin-forms-20261024",
+  "status": "Draft reference content; not clinically reviewed or integrated",
+  "section_inheritance": "Every record includes its own sections plus all shared_sections. Not an installed runtime schema.",
+  "shared_sections": {
+    "body": "Niacin supplies precursors for NAD and NADP, coenzymes used in energy metabolism, biosynthesis and other cellular functions. Their normal roles do not establish that extra niacin improves energy, prevents disease or slows aging in a person with adequate status.",
+    "research": "Keep nutritional adequacy, deficiency treatment, lipid changes and cardiovascular outcomes separate. In major trials summarized by NIH, adding high-dose extended-release nicotinic acid to statin-based treatment did not reduce cardiovascular events despite improved lipid measurements and increased some adverse outcomes. These findings concern specific regimens and populations; they do not prove that every niacin use is ineffective or that niacinamide has the same drug effects.",
+    "high": "Excess supplemental niacin can cause adverse effects, with different profiles for nicotinic acid and nicotinamide. High-dose nicotinic acid can affect the liver, glucose regulation, blood pressure and gastrointestinal tract. High-dose nicotinamide can also cause harm, including liver effects. Absence of flushing is not a guarantee of safety. Do not infer a personal risk threshold from the ingredient name.",
+    "reference": "US FNB adult (19+) RDA: 16 mg NE/day for men and 14 mg NE/day for women; pregnancy 18 mg NE/day and lactation 17 mg NE/day. These are nutritional reference values, not treatment instructions. The adult upper limit is 35 mg/day of added niacin from supplements and fortified foods, not naturally occurring food niacin or dietary tryptophan. It applies to both nicotinic acid and nicotinamide and is based principally on flushing, not a universal organ-toxicity threshold. Children have different values. Clinician-supervised treatment is a separate context and is not governed by this nutritional UL.",
+    "debate": "The same nutritional niacin-equivalent amount does not guarantee the same clinical effects, flushing, release characteristics or safety. More NAD-related activity or a favorable laboratory change does not automatically demonstrate a health benefit. This draft provides no deficiency diagnosis, personal dose, intake total or medication adjustment.",
+    "label_boundary": "Preserve declared nutrient amount, actual supplying compound, units and any release qualifier separately. A generic niacin label does not identify nicotinic acid, and a flush-free claim does not identify niacinamide. Compound mass, nutrient amount and product serving amount are not automatically interchangeable."
+  },
+  "records": [
+    {
+      "id": "niacin_unspecified",
+      "title": "Vitamin B3 / niacin — form unspecified",
+      "candidate_label_terms": ["niacin", "vitamin b3", "vitamin b-3"],
+      "sections": {
+        "what": "Niacin is the vitamin B3 family name. A generic label does not establish the exact compound or release formulation.",
+        "form": "Do not infer nicotinic acid, niacinamide, inositol hexanicotinate or an NAD-related ingredient from generic niacin wording."
+      },
+      "reference_keys": ["nih_niacin"]
+    },
+    {
+      "id": "nicotinic_acid",
+      "title": "Nicotinic acid — named niacin form",
+      "candidate_label_terms": ["nicotinic acid"],
+      "sections": {
+        "what": "Nicotinic acid is one common form supplying vitamin B3. It is distinct from nicotinamide.",
+        "form": "Nicotinic acid can cause flushing. NIH reports that around 30–50 mg or more commonly causes flushing, but this is not an individual threshold or a recommendation. Immediate-, sustained-, extended-, prolonged- or timed-release wording must be retained when declared. Do not infer equivalent release behavior, safety or treatment substitution from an equal milligram amount. This draft does not rank all release technologies or prescribe lipid treatment."
+      },
+      "reference_keys": ["nih_niacin"]
+    },
+    {
+      "id": "nicotinamide",
+      "title": "Nicotinamide / niacinamide — named niacin form",
+      "candidate_label_terms": ["nicotinamide", "niacinamide"],
+      "sections": {
+        "what": "Nicotinamide and niacinamide are two names for the same common vitamin B3 form, not separate ingredients for counting purposes.",
+        "form": "Nicotinamide does not produce the characteristic nicotinic-acid flush, but high intakes can still cause adverse effects. It does not share nicotinic acid’s lipid-lowering drug effect. Do not inherit cholesterol-treatment evidence, dose instructions or a risk-free claim from either its B3 identity or lack of flushing."
+      },
+      "reference_keys": ["nih_niacin"]
+    }
+  ],
+  "references": {
+    "nih_niacin": {
+      "title": "NIH ODS: Niacin — Health Professional Fact Sheet",
+      "url": "https://ods.od.nih.gov/factsheets/Niacin-HealthProfessional/",
+      "source_updated": "2022-11-18",
+      "accessed": "2026-10-24",
+      "scope": "Nutritional identity, niacin equivalents, reference values, form differences and selected clinical evidence; not current-market or current-prescribing verification."
+    }
+  },
+  "integration_guards": [
+    "Three core entries; synonyms do not increase the count.",
+    "Prefer an explicitly named form over a generic family term; conflicting named forms remain unresolved.",
+    "No generic niacin match overriding inositol hexanicotinate, nicotinamide riboside, NMN, NAD or NADP. Those require separate reviews.",
+    "Retain release qualifiers rather than creating unverified chemical-form or safety rankings.",
+    "No automatic treatment substitution, dose recommendation, personal intake summation or product safety verdict.",
+    "Keep nutrient-role evidence separate from drug-use outcomes and NAD-related marketing.",
+    "Preserve current UI and small-print disclosure placement."
+  ],
+  "review": {
+    "status": "Partial reference-backed draft; not clinically reviewed.",
+    "gaps": "No comprehensive updated trial search, original-study conflict/funding audit, independent standing check or current prescribing review. Reference publisher is not assumed to fund the underlying studies.",
+    "testing": "Structural JSON and internal-reference checks only; no app, browser or phone testing."
+  }
+}
