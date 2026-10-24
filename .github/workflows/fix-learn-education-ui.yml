@@ -1,0 +1,113 @@
+name: Correct Learn education UI
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/fix-learn-education-ui.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+  pages: write
+concurrency:
+  group: fix-learn-education-ui
+  cancel-in-progress: false
+jobs:
+  repair:
+    if: github.repository == 'jessepringle13-bit/OpenLabel' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Guard and prepare the Learn correction
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 <<'PY'
+          from pathlib import Path
+          import re, subprocess
+          V='20261024-learn3'
+          changes={
+           'index.html':[('src="evidence.js?v=20261024-ui2"','src="evidence.js?v='+V+'"')],
+           'evidence.js':[("sc.src='result.js?v=20261024-ui2';","sc.src='result.js?v="+V+"';")],
+           'result.js':[("f==='ingredient-loader.js'?'20261024-ui2'","f==='ingredient-loader.js'?'"+V+"'")],
+           'ingredient-loader.js':[("var V='20261024-ui2'","var V='"+V+"'")],
+           'results-accordions.js':[
+            ("version:'0.1.0'","version:'0.2.0'"),
+            ("selector='details.olr,details.ol-ing-raw,details.olui-education'","selector='details.olr,details.ol-ing-raw,details.olui-education,.learn-dialog details'"),
+            ("css.href='results-accordions.css?v=20261024-ui2';","css.href='results-accordions.css?v="+V+"';"),
+            ("d.closest('.ol-ing-sheet,.ne-dialog,#olPanel')","d.closest('.ol-ing-sheet,.ne-dialog,.learn-dialog,#olPanel')"),
+            ("doc.querySelectorAll('#olPanel,.ol-ing-sheet,.ne-dialog')","doc.querySelectorAll('#olPanel,.ol-ing-sheet,.ne-dialog,.learn-dialog')")],
+           'results-accordions.css':[
+            ('.olui-education{','.olui-education,.learn-dialog details.olui-accordion{'),
+            ('.olui-education>.olui-body{','.olui-education>.olui-body,.learn-dialog details.olui-accordion>.olui-body{'),
+            ('#olPanel .olui-footer,.ol-ing-sheet .olui-footer,.ne-dialog .olui-footer{','#olPanel .olui-footer,.ol-ing-sheet .olui-footer,.ne-dialog .olui-footer,.learn-dialog .olui-footer{'),
+            ('#olPanel .olui-footer p,.ol-ing-sheet .olui-footer p,.ne-dialog .olui-footer p{','#olPanel .olui-footer p,.ol-ing-sheet .olui-footer p,.ne-dialog .olui-footer p,.learn-dialog .olui-footer p{')],
+           'learn-search.js':[
+            ("if(intro)dialog.append(el('p',intro[0]));","if(intro){dialog.append(el('p',intro[0]));var introductorySource=entry.sources[intro[1]];if(introductorySource)sourceLink(introductorySource[0],introductorySource[1])}"),
+            ('var c=r[pair[0]];if(!c)return;','var c=r[pair[0]];if(!c||(intro&&c[0]===intro[0]))return;')]
+          }
+          planned={}
+          for name,pairs in changes.items():
+           text=Path(name).read_bytes().decode('utf-8')
+           for old,new in pairs:
+            assert text.count(old)==1, 'Unexpected or already changed anchor: '+name+' '+old
+            text=text.replace(old,new,1)
+           planned[name]=text
+          for name,text in planned.items():
+           if name.endswith('.js'): subprocess.run(['node','--check'],input=text,text=True,check=True)
+          inline=[s for s in re.findall(r'<script\b[^>]*>(.*?)</script>',planned['index.html'],re.S) if s.strip()]
+          assert inline
+          for script in inline: subprocess.run(['node','--check'],input=script,text=True,check=True)
+          for name,text in planned.items(): Path(name).write_bytes(text.encode('utf-8'))
+          subprocess.run(['node','tests/results-accordions.test.cjs'],check=True)
+          changed=subprocess.check_output(['git','diff','--name-only'],text=True).splitlines()
+          assert set(changed)==set(changes), 'Unexpected changed-file set'
+          print('Seven candidate files patched; syntax and controller checks passed. Browser test must pass before commit.')
+          PY
+      - name: Test the actual Learn flow in Chromium before committing
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PLAYWRIGHT_BROWSERS_PATH="$RUNNER_TEMP/openlabel-browsers"
+          npm install --prefix "$RUNNER_TEMP/openlabel-ui-check" playwright
+          "$RUNNER_TEMP/openlabel-ui-check/node_modules/.bin/playwright" install --with-deps chromium
+          python3 -m http.server 8765 --bind 127.0.0.1 > "$RUNNER_TEMP/openlabel-ui-server.log" 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          for i in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:8765/ > /dev/null; then break; fi
+            sleep 1
+          done
+          NODE_PATH="$RUNNER_TEMP/openlabel-ui-check/node_modules" node <<'JS'
+          const assert=require('node:assert/strict');
+          const {chromium}=require('playwright');
+          (async()=>{const browser=await chromium.launch({args:['--use-fake-device-for-media-stream','--use-fake-ui-for-media-stream']});try{for(const viewport of [{width:390,height:844},{width:1280,height:900}]){const context=await browser.newContext({viewport,permissions:['camera'],colorScheme:'dark'});try{const page=await context.newPage(),seen=new Set();page.setDefaultTimeout(30000);page.on('request',r=>seen.add(r.url()));await page.route('**/*',route=>new URL(route.request().url()).origin==='http://127.0.0.1:8765'?route.continue():route.abort());await page.goto('http://127.0.0.1:8765/?v=20261024-learn3',{waitUntil:'domcontentloaded'});const close=page.locator('#closeSheet');if(await close.isVisible())await close.click();await page.locator('.nav-pill[data-go="explore"]').click();await page.locator('#ol-explore-tab-learn').waitFor({timeout:60000});await page.locator('#ol-explore-tab-learn').click();await page.locator('#exploreSearch').fill('folate');await page.locator('.learn-row').filter({hasText:'Folate (B9)'}).first().click();const box=page.locator('.ol-inline-detail > .learn-dialog');await box.waitFor({state:'visible'});await page.waitForFunction(()=>{const b=document.querySelector('.ol-inline-detail > .learn-dialog');return b&&b.lastElementChild.classList.contains('olui-footer')&&b.querySelectorAll('details.olui-accordion').length>=2&&getComputedStyle(b.querySelector('.olui-footer p')).fontSize==='12px'});const info=await box.evaluate(b=>{const intro=Array.from(b.children).find(n=>n.tagName==='P'&&n.textContent.startsWith('Folate supports'));return {footer:b.lastElementChild.className,notice:b.lastElementChild.textContent,duplicates:intro?Array.from(b.querySelectorAll('p')).filter(p=>p.textContent===intro.textContent).length:0,source:!!(intro&&intro.nextElementSibling&&intro.nextElementSibling.tagName==='A'),arrow:getComputedStyle(b.querySelector('summary'),'::after').borderBottomWidth}});assert.equal(info.footer,'olui-footer');assert.ok(info.notice.includes('General education'));assert.equal(info.duplicates,1);assert.equal(info.source,true);assert.equal(info.arrow,'2px');await box.evaluate(b=>{window.learnMaxOpen=0;window.learnOpenObserver=new MutationObserver(()=>{window.learnMaxOpen=Math.max(window.learnMaxOpen,b.querySelectorAll('details[open]').length)});window.learnOpenObserver.observe(b,{subtree:true,attributes:true,attributeFilter:['open']})});const details=box.locator('details.olui-accordion');await details.nth(0).locator(':scope > summary').click();await page.waitForFunction(()=>document.querySelectorAll('.learn-dialog details[open]').length===1);await details.nth(1).locator(':scope > summary').click();await page.waitForFunction(()=>{const ds=document.querySelectorAll('.learn-dialog details.olui-accordion');return !ds[0].open&&ds[1].open});await page.waitForTimeout(250);assert.equal(await page.evaluate(()=>window.learnMaxOpen),1);await box.evaluate(b=>{const ds=b.querySelectorAll('details.olui-accordion');ds[0].querySelector('summary').click();ds[1].querySelector('summary').click();ds[0].querySelector('summary').click()});await page.waitForFunction(()=>{const ds=document.querySelectorAll('.learn-dialog details.olui-accordion');return ds[0].open&&!ds[1].open});await page.waitForTimeout(250);assert.equal(await page.evaluate(()=>window.learnMaxOpen),1);await details.nth(0).locator(':scope > summary').focus();await page.keyboard.press('Enter');await page.waitForFunction(()=>document.querySelectorAll('.learn-dialog details[open]').length===0);await page.emulateMedia({reducedMotion:'reduce'});await details.nth(0).locator(':scope > summary').click();await page.waitForFunction(()=>document.querySelector('.learn-dialog details.olui-accordion').open);assert.equal(await details.nth(0).locator('.olui-body').evaluate(n=>n.getAnimations().length),0);await page.getByRole('button',{name:/Back to Learn/}).click();await box.waitFor({state:'hidden'});assert.equal(await page.locator('#exploreSearch').inputValue(),'folate');await page.locator('.learn-row').filter({hasText:'Folate (B9)'}).first().click();await box.waitFor({state:'visible'});await page.waitForFunction(()=>document.querySelector('.ol-inline-detail > .learn-dialog > .olui-footer'));assert.equal(await box.locator('details[open]').count(),0);for(const name of ['evidence.js','result.js','ingredient-loader.js','learn-search.js','results-accordions.js','results-accordions.css'])assert.ok([...seen].some(url=>url.endsWith('/'+name+'?v=20261024-learn3')),'Missing current-version request: '+name);console.log(JSON.stringify({viewport,status:'passed',scope:'Local full-app Chromium: Learn Folate, footer, duplicate removal, source link, single-open, rapid clicks, keyboard, reduced motion, back/reopen and asset versions. Not deployed-site or physical-iPhone verification.'}));}finally{await context.close()}}}finally{await browser.close()}})().catch(e=>{console.error(e);process.exitCode=1});
+          JS
+      - name: Commit only the checked Learn correction and version chain
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- index.html evidence.js result.js ingredient-loader.js results-accordions.js results-accordions.css learn-search.js
+          git diff --cached --stat
+          git commit -m 'Fix Learn page accordions disclosures and duplicate introduction'
+          git push origin HEAD:main
+          echo "Repair commit: $(git rev-parse HEAD)" >> "$GITHUB_STEP_SUMMARY"
+      - name: Request branch-based Pages rebuild when applicable
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          kind=$(gh api "repos/$GITHUB_REPOSITORY/pages" --jq '.build_type')
+          if [ "$kind" = "legacy" ]; then
+            gh api --method POST "repos/$GITHUB_REPOSITORY/pages/builds"
+            echo 'Pages rebuild requested; live deployment and physical-phone verification remain open.' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo '::warning::Source correction committed, but this workflow has not deployed the site. Verify the existing Pages publishing setup.'
+          fi
