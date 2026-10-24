@@ -1,0 +1,48 @@
+name: Validate committed nutrient drafts
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/validate-nutrient-drafts.yml'
+      - 'docs/vitamin-d-forms-draft.json'
+      - 'docs/vitamin-b6-forms-draft.json'
+      - 'docs/niacin-forms-draft.json'
+      - 'docs/vitamin-d-equivalence-addendum.json'
+      - 'docs/vitamin-b6-p5p-conversion-addendum.json'
+      - 'docs/niacin-equivalents-addendum.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    if: github.repository == 'jessepringle13-bit/OpenLabel'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate actual committed JSON and static examples
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'JS'
+          const fs=require('node:fs'),assert=require('node:assert/strict');
+          const paths=['docs/vitamin-d-forms-draft.json','docs/vitamin-b6-forms-draft.json','docs/niacin-forms-draft.json','docs/vitamin-d-equivalence-addendum.json','docs/vitamin-b6-p5p-conversion-addendum.json','docs/niacin-equivalents-addendum.json'];
+          const all=paths.map(p=>JSON.parse(fs.readFileSync(p,'utf8'))),batches=all.slice(0,3),addenda=all.slice(3),norm=s=>String(s).trim().toLowerCase().replace(/[\u2010-\u2015\u2212]/g,'-').replace(/[\u2018\u2019\u2032]/g,"'").replace(/\s+/g,' ');
+          let checks=0;function check(fn){fn();checks++}
+          function refs(obj){const rows=Array.isArray(obj)?obj:Object.values(obj||{});check(()=>assert(rows.length));for(const r of rows){check(()=>assert.equal(typeof r.title,'string'));check(()=>assert(r.title.length>0));check(()=>assert.equal(new URL(r.url).protocol,'https:'))}}
+          const ids=new Set(),batchIds=new Set(),aliases=new Map();let sameRecordAliases=0;
+          batches.forEach((b,i)=>{check(()=>assert.equal(b.schema_version,'1.0'));check(()=>assert.equal(b.records.length,[5,4,3][i]));check(()=>assert(!batchIds.has(b.batch_id)));batchIds.add(b.batch_id);refs(b.references);for(const r of b.records){check(()=>assert(!ids.has(r.id)));ids.add(r.id);const terms=r.exact_label_terms||r.candidate_label_terms;check(()=>assert(Array.isArray(terms)&&terms.length));for(const term of terms){const key=norm(term);check(()=>assert(key));if(aliases.has(key)){check(()=>assert.equal(aliases.get(key),r.id));sameRecordAliases++}else aliases.set(key,r.id)}const s={...(b.shared_sections||{}),...(r.sections||{})};for(const f of ['what','body','form','research','high','reference','debate'])check(()=>assert.equal(typeof s[f],'string'));check(()=>assert((r.reference_keys||[]).length));for(const k of r.reference_keys)check(()=>assert(b.references[k]));check(()=>assert(r.review||b.review))}});
+          check(()=>assert.equal(ids.size,12));check(()=>assert.equal(batchIds.size,3));const patchIds=new Set();
+          addenda.forEach(a=>{check(()=>assert.equal(a.schema_version,'1.0'));check(()=>assert(!patchIds.has(a.patch_id)));patchIds.add(a.patch_id);const b=batches.find(b=>b.batch_id===a.target_batch_id);check(()=>assert(b));check(()=>assert(Array.isArray(a.applies_to)&&a.applies_to.length));for(const id of a.applies_to)check(()=>assert(b.records.some(r=>r.id===id)));refs(a.references);check(()=>assert(a.review||a.review_status))});
+          check(()=>assert.equal(aliases.get(norm('pyridoxal 5′-phosphate')),'pyridoxal_5_phosphate'));check(()=>assert.equal(aliases.get('niacinamide'),aliases.get('nicotinamide')));check(()=>assert.equal(aliases.get('cholecalciferol'),'vitamin_d3'));check(()=>assert.equal(aliases.get('ergocalciferol'),'vitamin_d2'));
+          const d=addenda[0];check(()=>assert.deepEqual(d.applies_to,['vitamin_d_unspecified','vitamin_d2','vitamin_d3']));const conversion=d.content.label_conversion;check(()=>assert.equal(conversion.mcg_to_iu_factor,40));check(()=>assert.equal(conversion.iu_to_mcg_divisor,40));for(const row of conversion.examples)check(()=>assert.equal(row.iu,row.mcg*40));
+          const p5p=addenda[1];check(()=>assert.equal(p5p.chemical_examples.length,3));for(const row of p5p.chemical_examples){check(()=>assert(Math.abs(row.equimolar_pyridoxine_mass_per_mg_compound-169.18/row.molecular_weight_g_per_mol)<0.000001));check(()=>assert.equal(row.equimolar_pyridoxine_mass_mg,Math.round(row.illustrative_compound_mass_mg*169.18/row.molecular_weight_g_per_mol*100)/100))}
+          const b6=batches[1];for(const r of b6.records){const s={...b6.shared_sections,...r.sections};check(()=>assert(s.symptom_guidance));check(()=>assert(s.amount_boundary))}check(()=>assert.match(addenda[2].content.definition,/60 mg/));check(()=>assert.match(addenda[2].content.illustrative_example,/12 mg NE/));
+          const summary={status:'passed',checks,documents:6,records:ids.size,uniqueNormalizedAliases:aliases.size,sameRecordNormalizedDuplicatesAllowed:sameRecordAliases,scope:'Production JSON structure, identity links, references and static arithmetic only; not adapter execution, browser behavior, clinical correctness, deployment or phone verification.'};
+          console.log(JSON.stringify(summary,null,2));fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,'## Nutrient draft data validation\n\n```json\n'+JSON.stringify(summary,null,2)+'\n```\n');
+          JS
