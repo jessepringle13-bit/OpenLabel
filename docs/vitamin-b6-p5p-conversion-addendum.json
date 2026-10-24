@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "patch_id": "vitamin-b6-p5p-conversion-20261024",
+  "target_batch_id": "vitamin-b6-forms-20261024",
+  "status": "Draft reference content; not clinically reviewed or integrated",
+  "title": "P-5-P conversion: chemical mass versus biological response",
+  "applies_to": ["vitamin_b6_unspecified", "pyridoxine", "pyridoxine_hydrochloride", "pyridoxal_5_phosphate"],
+  "content": {
+    "summary": "Chemical mass equivalence, declared vitamin B6 amount, absorption and clinical dose equivalence are different concepts. No universal P-5-P-to-pyridoxine biological potency ratio or percentage converted to usable B6 is established by this reference review.",
+    "metabolism": "Phosphorylated B6 forms undergo dephosphorylation before intestinal absorption; absorbed forms can be phosphorylated again. Active coenzyme identity does not mean oral P-5-P bypasses all metabolism.",
+    "chemical_calculation": "For educational equimolar comparisons only: compound mass multiplied by pyridoxine molecular weight divided by source-compound molecular weight gives an equimolar pyridoxine mass. This is not an absorption, retained-dose, clinical-effect, safety or universal regulatory labeling conversion.",
+    "chemical_assumptions": "Calculations assume pure, correctly identified compounds and exactly the specified hydration state. Unknown salts, variable hydrates, mixtures, assays or excipients invalidate a simple application. Do not use molecular weight alone to assign a scanned product’s nutrient amount.",
+    "declared_amount": "When a label declares Vitamin B6 X mg (as pyridoxal 5-phosphate), X is the stated nutrient amount; do not automatically discount it again using a compound-mass factor. A separate statement of raw P-5-P compound mass is not the same field. Confirm jurisdiction, label basis, actual chemical form and manufacturer documentation before any reconciliation.",
+    "biological_boundary": "Molar ratios do not establish that a given P-5-P dose produces the same blood concentration, tissue effect, therapeutic benefit or neuropathy risk as a pyridoxine dose. Do not supply a personal switching formula or infer that P-5-P is safer.",
+    "evidence_boundary": "Diet-versus-synthetic B6 availability assumptions and urinary recovery percentages are not P-5-P-to-pyridoxine potency conversion rates. They must not be repurposed into such a calculator.",
+    "dose_notice": "All numerical examples are chemical illustrations, not doses to take, safety thresholds or substitutions."
+  },
+  "chemical_examples": [
+    {"source_compound": "plp_anhydrous", "molecular_weight_g_per_mol": 247.1419, "equimolar_pyridoxine_mass_per_mg_compound": 0.684546, "illustrative_compound_mass_mg": 25, "equimolar_pyridoxine_mass_mg": 17.11},
+    {"source_compound": "plp_monohydrate", "molecular_weight_g_per_mol": 265.16, "equimolar_pyridoxine_mass_per_mg_compound": 0.63803, "illustrative_compound_mass_mg": 25, "equimolar_pyridoxine_mass_mg": 15.95},
+    {"source_compound": "pyridoxine_hydrochloride", "molecular_weight_g_per_mol": 205.64, "equimolar_pyridoxine_mass_per_mg_compound": 0.8227, "illustrative_compound_mass_mg": 25, "equimolar_pyridoxine_mass_mg": 20.57}
+  ],
+  "integration_guards": [
+    "Educational comparisons only; no automatic nutrient-total conversion.",
+    "Do not reinterpret an already declared B6 nutrient amount as raw compound mass.",
+    "Do not apply anhydrous factors to monohydrates, other salts or unknown hydrates.",
+    "Do not infer absorption percentages or clinical potency from molecular weights.",
+    "Keep B6 neuropathy warnings and US/EFSA reference-context distinctions from the main batch."
+  ],
+  "references": [
+    {"title": "Australian/New Zealand Nutrient Reference Values: Vitamin B6", "url": "https://www.eatforhealth.gov.au/nutrient-reference-values/nutrients/vitamin-b6", "scope": "Vitamer molecular units and intestinal hydrolysis."},
+    {"title": "IARC Exposome-Explorer: Pyridoxal 5-phosphate", "url": "https://exposome-explorer.iarc.fr/compounds/189", "scope": "Anhydrous PLP molecular weight 247.1419."},
+    {"title": "PubChem: Pyridoxine", "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Pyridoxine", "scope": "Pyridoxine molecular weight 169.18."},
+    {"title": "PubChem: Pyridoxine hydrochloride", "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Pyridoxine%20hydrochloride", "scope": "Hydrochloride molecular weight 205.64."},
+    {"title": "Sigma-Aldrich: Pyridoxal 5-phosphate monohydrate", "url": "https://www.sigmaaldrich.com/CA/en/product/sigma/82870", "scope": "Monohydrate identity and molecular weight 265.16 only; commercial reagent source is not evidence of clinical efficacy or safety."},
+    {"title": "National Academies DRI chapter: Vitamin B6", "url": "https://www.ncbi.nlm.nih.gov/books/NBK114313/", "scope": "Absorption, metabolism, dietary equivalence and urinary recovery distinctions."}
+  ],
+  "review": {
+    "date": "2026-10-24",
+    "status": "Partial reference-backed draft; no clinical or jurisdiction-specific labeling sign-off.",
+    "disclosures": "Underlying-study funding and conflicts were not independently audited. Commercial chemical specifications are used only for compound identity and molecular weight.",
+    "checks": "Arithmetic and draft JSON checks only; no app, browser or phone tests."
+  }
+}

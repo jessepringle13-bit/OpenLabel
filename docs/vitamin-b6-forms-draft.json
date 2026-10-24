@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0",
+  "batch_id": "vitamin-b6-forms-20261024",
+  "status": "Draft reference content; not clinically reviewed or integrated",
+  "section_inheritance": "Every record includes its own sections plus all shared_sections. Shared wording is stored once; this is not an installed runtime schema.",
+  "shared_sections": {
+    "body": "Vitamin B6 coenzymes support amino-acid metabolism, neurotransmitter synthesis, hemoglobin formation and other normal functions. These roles do not establish a benefit from extra supplementation when intake and status are adequate.",
+    "research": "Separate normal nutrient function, deficiency treatment, biomarkers and clinical outcomes. NIH finds little evidence that additional B6 prevents cardiovascular disease and insufficient evidence for cognitive benefits. Combination trials do not isolate a B6-specific effect. No universal efficacy or safety ranking of supplement forms is established by this reference review.",
+    "high": "Supplemental vitamin B6 can cause peripheral neuropathy, including tingling, burning or numbness, usually in the hands or feet. TGA reports include intakes below 50 mg/day and overlapping products; no minimum risk-free dose or duration was identified in its reviewed reports. Reporting signals do not establish equal risk for every form or the incidence at a given dose. Do not exempt P-5-P from safety discussion or diagnose neuropathy from a label.",
+    "reference": "NIH reports the US FNB adult (19+) total-intake upper limit as 100 mg/day. EFSA’s 2023 adult total-intake limit is 12 mg/day, including pregnancy and lactation. These reflect different assessments and are not recommended doses or individual safety guarantees. Children have different values. Medical treatment requires separate clinical oversight. Do not confuse these reference values with Australian product rules.",
+    "debate": "Water-soluble does not mean harmless at high intakes. Active coenzyme identity does not prove greater absorption, universal benefit or lower neuropathy risk. NIH states that absorption does not differ substantially among supplement forms. The app does not select a personal dose, diagnose deficiency or neuropathy, or recommend treatment.",
+    "symptom_guidance": "TGA advises stopping a vitamin B6-containing supplement and seeking medical advice if tingling, burning or numbness develops. Prescribed treatment requires prompt contact with the prescriber; this app does not adjust medicines.",
+    "amount_boundary": "Keep the declared vitamin B6 nutrient amount separate from the mass of its source compound. Do not infer nutrient-equivalent milligrams from a compound name or automatically convert pyridoxine hydrochloride, PLP or a hydrate into a B6 amount. No IU conversion or treatment-dose substitution is supplied."
+  },
+  "records": [
+    {
+      "id": "vitamin_b6_unspecified",
+      "title": "Vitamin B6 — form unspecified",
+      "candidate_label_terms": ["vitamin b6", "vitamin b-6"],
+      "sections": {
+        "what": "Vitamin B6 is a family of related compounds with B6 activity. A generic label does not establish which compound or mixture is present.",
+        "form": "Preserve uncertainty; do not infer pyridoxine hydrochloride or PLP from a generic B6 name."
+      },
+      "reference_keys": ["nih_b6", "tga_safety", "tga_update"]
+    },
+    {
+      "id": "pyridoxine",
+      "title": "Pyridoxine — named form",
+      "candidate_label_terms": ["pyridoxine"],
+      "sections": {
+        "what": "Pyridoxine is one vitamin B6 vitamer and a precursor to active coenzyme forms.",
+        "form": "A pyridoxine label does not by itself establish a hydrochloride salt, product amount, manufacturing source or absorbed dose."
+      },
+      "reference_keys": ["nih_b6", "tga_safety", "tga_update"]
+    },
+    {
+      "id": "pyridoxine_hydrochloride",
+      "title": "Pyridoxine hydrochloride — named salt",
+      "candidate_label_terms": ["pyridoxine hydrochloride", "pyridoxine hcl"],
+      "sections": {
+        "what": "Pyridoxine hydrochloride is a common supplemental salt supplying pyridoxine.",
+        "form": "Keep the named salt distinct from generic pyridoxine wording. The compound mass and the declared B6 nutrient amount are not automatically interchangeable."
+      },
+      "reference_keys": ["nih_b6", "tga_safety", "tga_update"]
+    },
+    {
+      "id": "pyridoxal_5_phosphate",
+      "title": "Pyridoxal 5′-phosphate — PLP / P-5-P",
+      "candidate_label_terms": ["pyridoxal 5-phosphate", "pyridoxal 5'-phosphate", "pyridoxal 5′-phosphate", "pyridoxal-5-phosphate", "pyridoxal-5-phosphate monohydrate", "pyridoxal 5-phosphate monohydrate", "p-5-p", "p5p"],
+      "sections": {
+        "what": "PLP is an active coenzyme form of vitamin B6; pyridoxamine phosphate is another active coenzyme. This batch is not an exhaustive inventory of all B6 vitamers.",
+        "form": "Phosphorylated B6 forms are dephosphorylated before intestinal absorption. Active does not mean a swallowed PLP molecule simply bypasses all digestion and metabolic steps. Preserve a declared monohydrate qualifier without creating a separate efficacy claim. A standalone PLP abbreviation requires B6 context before matching."
+      },
+      "reference_keys": ["nih_b6", "tga_safety", "tga_update"]
+    }
+  ],
+  "references": {
+    "nih_b6": {"title": "NIH ODS: Vitamin B6 — Health Professional Fact Sheet", "url": "https://ods.od.nih.gov/factsheets/VitaminB6-HealthProfessional/", "reviewed": "2026-10-24"},
+    "tga_safety": {"title": "TGA: Health supplements containing vitamin B6 can cause peripheral neuropathy", "url": "https://www.tga.gov.au/safety/safety-monitoring-and-information/safety-alerts/health-supplements-containing-vitamin-b6-can-cause-peripheral-neuropathy", "reviewed": "2026-10-24"},
+    "tga_update": {"title": "TGA: Medicines containing vitamin B6 (pyridoxine, pyridoxal or pyridoxamine)", "url": "https://www.tga.gov.au/news/safety-updates/medicines-containing-vitamin-b6-pyridoxine-pyridoxal-or-pyridoxamine", "reviewed": "2026-10-24"}
+  },
+  "integration_guards": [
+    "Four explanation entries, not four exhaustive chemical vitamers.",
+    "Candidate aliases are not an installed matcher; generic names must not override a more specific form.",
+    "Retain monohydrate qualifier and uncertainty for unspecified names.",
+    "Do not claim P-5-P is methylated or automatically more bioavailable, clinically superior or free of neuropathy risk.",
+    "No personal intake summation, dose recommendation or product safety verdict from names alone.",
+    "Preserve current UI and small-print educational disclosure placement."
+  ],
+  "review": {
+    "scope": "Reference-backed draft; no comprehensive trial search or independent clinical sign-off.",
+    "disclosures": "Reference publishers are not assumed to fund underlying studies. Study-level funding, conflicts, sponsor roles and independent standing checks remain unaudited.",
+    "testing": "Draft structural checks only; no app, browser or phone tests."
+  }
+}
