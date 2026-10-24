@@ -1,0 +1,501 @@
+{
+  "schema_version": "1.0",
+  "batch_id": "magnesium-forms-expansion-20261024",
+  "status": "reference-backed drafts; incomplete clinical audits",
+  "scope": {
+    "named_nutrient_or_medicine_labels": 15,
+    "technical_ingredient_entries": 1,
+    "total_records": 16,
+    "completeness": "Agreed named forms, not every magnesium compound. Glycinate/bisglycinate labels remain separate without asserting they always identify different chemical entities."
+  },
+  "references": {
+    "nih": [
+      "NIH ODS: Magnesium",
+      "https://ods.od.nih.gov/factsheets/Magnesium-HealthProfessional/",
+      "Reference synthesis; underlying-study audit partial"
+    ],
+    "citrate": [
+      "MedlinePlus: Magnesium Citrate",
+      "https://medlineplus.gov/druginfo/meds/a619019.html",
+      "Medicinal-use reference, not a supplement regimen"
+    ],
+    "oxide": [
+      "MedlinePlus: Magnesium Oxide",
+      "https://medlineplus.gov/druginfo/meds/a601074.html",
+      "Medicinal-use reference"
+    ],
+    "hydroxide": [
+      "MedlinePlus: Magnesium Hydroxide",
+      "https://medlineplus.gov/druginfo/meds/a601073.html",
+      "Medicinal-use reference"
+    ],
+    "bis": [
+      "Bisglycinate poor-sleep trial, 2025",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC12412596/",
+      "Selected human-trial context; financial audit incomplete"
+    ],
+    "lt": [
+      "L-threonate cognition/sleep trial, 2026",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC12832366/",
+      "Selected human-trial context; sponsor relationships incompletely audited"
+    ],
+    "orotate": [
+      "Magnesium orotate in severe heart failure (MACH), 2009",
+      "https://pubmed.ncbi.nlm.nih.gov/19367681/",
+      "Abstract only; disease-specific adjunctive treatment"
+    ],
+    "animal": [
+      "Magnesium taurate in cadmium-exposed rats, 2018",
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC6435948/",
+      "Animal study, not human efficacy evidence"
+    ],
+    "scope": [
+      "21 CFR 172.863: salts of fatty acids",
+      "https://www.ecfr.gov/current/title-21/chapter-I/subchapter-B/part-172/subpart-I/section-172.863",
+      "Class-level context only; not a completed magnesium-stearate review"
+    ]
+  },
+  "records": [
+    {
+      "id": "magnesium_citrate",
+      "title": "Magnesium citrate",
+      "source_label_terms": [
+        "magnesium citrate"
+      ],
+      "category": "named nutrient/medicine form label",
+      "existing_family_key": "mg",
+      "sections": {
+        "body": "Magnesium supports normal enzyme activity, nerve and muscle function, bone structure and energy metabolism. A normal physiological role is not proof of added benefit from a particular supplement.",
+        "form_and_absorption": "NIH summarizes small studies with greater absorption than oxide or sulfate. This does not establish a universal best form.",
+        "research_and_use": "Some medicinal citrate preparations are saline laxatives used for short-term occasional constipation. Do not transfer a laxative regimen to every citrate supplement.",
+        "high": "Supplemental or medicinal magnesium can cause diarrhea, nausea and abdominal cramping; very large exposures can cause serious toxicity. Impaired kidney function increases risk because magnesium removal is reduced. No personal risk or medication assessment is made.",
+        "reference": "The US adult upper limit at age 19 and older is 350 mg/day elemental magnesium from supplements and medications, excluding magnesium naturally present in foods and beverages. It is not a target or a total-diet ceiling. Children have age-specific references; medically supervised treatment is separate. No product dose is converted or compared.",
+        "limits": "Solubility and absorption measurements do not establish superior clinical outcomes. Whole-compound mass is not elemental magnesium. Route, formulation, amount, duration and population matter. Exact aliases below are draft label terms, not a verified product-formulation identity."
+      },
+      "reference_keys": [
+        "nih",
+        "citrate"
+      ],
+      "review": {
+        "date": "2026-10-24",
+        "status": "reference-backed comparison and medicinal-use context",
+        "clinical_review": "not completed",
+        "runtime_matching": "not verified on deployed site",
+        "funding_and_conflicts": "Underlying-study funding, conflicts, sponsor roles and independent correction/retraction checks are not comprehensively audited."
+      }
+    },
+    {
+      "id": "magnesium_oxide",
+      "title": "Magnesium oxide",
+      "source_label_terms": [
+        "magnesium oxide"
+      ],
+      "category": "named nutrient/medicine form label",
+      "existing_family_key": "mg",
+      "sections": {
+        "body": "Magnesium supports normal enzyme activity, nerve and muscle function, bone structure and energy metabolism. A normal physiological role is not proof of added benefit from a particular supplement.",
+        "form_and_absorption": "NIH summarizes lower absorption than aspartate, citrate, lactate or chloride in small comparisons. Lower absorption does not mean every oxide preparation is useless.",
+        "research_and_use": "Oxide can be used as a supplement, antacid or laxative, depending on the product. Intended use and amount cannot be inferred from the name alone.",
+        "high": "Supplemental or medicinal magnesium can cause diarrhea, nausea and abdominal cramping; very large exposures can cause serious toxicity. Impaired kidney function increases risk because magnesium removal is reduced. No personal risk or medication assessment is made.",
+        "reference": "The US adult upper limit at age 19 and older is 350 mg/day elemental magnesium from supplements and medications, excluding magnesium naturally present in foods and beverages. It is not a target or a total-diet ceiling. Children have age-specific references; medically supervised treatment is separate. No product dose is converted or compared.",
+        "limits": "Solubility and absorption measurements do not establish superior clinical outcomes. Whole-compound mass is not elemental magnesium. Route, formulation, amount, duration and population matter. Exact aliases below are draft label terms, not a verified product-formulation identity."
+      },
+      "reference_keys": [
+        "nih",
+        "oxide"
+      ],
+      "review": {
+        "date": "2026-10-24",
+        "status": "reference-backed comparison and medicinal-use context",
+        "clinical_review": "not completed",
+        "runtime_matching": "not verified on deployed site",
+        "funding_and_conflicts": "Underlying-study funding, conflicts, sponsor roles and independent correction/retraction checks are not comprehensively audited."
+      }
+    },
+    {
+      "id": "magnesium_hydroxide",
+      "title": "Magnesium hydroxide",
+      "source_label_terms": [
+        "magnesium hydroxide"
+      ],
+      "category": "named nutrient/medicine form label",
+      "existing_family_key": "mg",
+      "sections": {
+        "body": "Magnesium supports normal enzyme activity, nerve and muscle function, bone structure and energy metabolism. A normal physiological role is not proof of added benefit from a particular supplement.",
+        "form_and_absorption": "An absorption ranking against all other forms has not been completed in this draft.",
+        "research_and_use": "Medicinal magnesium hydroxide is used for short-term occasional constipation. Antacid combinations and laxative preparations have different use contexts.",
+        "high": "Supplemental or medicinal magnesium can cause diarrhea, nausea and abdominal cramping; very large exposures can cause serious toxicity. Impaired kidney function increases risk because magnesium removal is reduced. No personal risk or medication assessment is made.",
+        "reference": "The US adult upper limit at age 19 and older is 350 mg/day elemental magnesium from supplements and medications, excluding magnesium naturally present in foods and beverages. It is not a target or a total-diet ceiling. Children have age-specific references; medically supervised treatment is separate. No product dose is converted or compared.",
+        "limits": "Solubility and absorption measurements do not establish superior clinical outcomes. Whole-compound mass is not elemental magnesium. Route, formulation, amount, duration and population matter. Exact aliases below are draft label terms, not a verified product-formulation identity."
+      },
+      "reference_keys": [
+        "nih",
+        "hydroxide"
+      ],
+      "review": {
+        "date": "2026-10-24",
+        "status": "medicinal-use context; form-comparison audit incomplete",
+        "clinical_review": "not completed",
+        "runtime_matching": "not verified on deployed site",
+        "funding_and_conflicts": "Underlying-study funding, conflicts, sponsor roles and independent correction/retraction checks are not comprehensively audited."
+      }
+    },
+    {
+      "id": "magnesium_glycinate",
+      "title": "Magnesium glycinate",
+      "source_label_terms": [
+        "magnesium glycinate"
+      ],
+      "category": "named nutrient/medicine form label",
+      "existing_family_key": "mg",
+      "sections": {
+        "body": "Magnesium supports normal enzyme activity, nerve and muscle function, bone structure and energy metabolism. A normal physiological role is not proof of added benefit from a particular supplement.",
+        "form_and_absorption": "No universal absorption or gastrointestinal-tolerability advantage is established by this draft. Keep unspecified glycinate formulations distinguishable from a characterized bisglycinate product.",
+        "research_and_use": "Glycinate wording alone does not establish the composition of the 2025 bisglycinate study preparation. Do not assign that study’s sleep findings automatically to every glycinate label.",
+        "high": "Supplemental or medicinal magnesium can cause diarrhea, nausea and abdominal cramping; very large exposures can cause serious toxicity. Impaired kidney function increases risk because magnesium removal is reduced. No personal risk or medication assessment is made.",
+        "reference": "The US adult upper limit at age 19 and older is 350 mg/day elemental magnesium from supplements and medications, excluding magnesium naturally present in foods and beverages. It is not a target or a total-diet ceiling. Children have age-specific references; medically supervised treatment is separate. No product dose is converted or compared.",
+        "limits": "Solubility and absorption measurements do not establish superior clinical outcomes. Whole-compound mass is not elemental magnesium. Route, formulation, amount, duration and population matter. Exact aliases below are draft label terms, not a verified product-formulation identity."
+      },
+      "reference_keys": [
+        "nih",
+        "bis"
+      ],
+      "review": {
+        "date": "2026-10-24",
+        "status": "label/form context; preparation identity and comparative review incomplete",
+        "clinical_review": "not completed",
+        "runtime_matching": "not verified on deployed site",
+        "funding_and_conflicts": "Underlying-study funding, conflicts, sponsor roles and independent correction/retraction checks are not comprehensively audited."
+      }
+    },
+    {
+      "id": "magnesium_bisglycinate",
+      "title": "Magnesium bisglycinate",
+      "source_label_terms": [
+        "magnesium bisglycinate",
+        "magnesium bisglycinate chelate"
+      ],
+      "category": "named nutrient/medicine form label",
+      "existing_family_key": "mg",
+      "sections": {
+        "body": "Magnesium supports normal enzyme activity, nerve and muscle function, bone structure and energy metabolism. A normal physiological role is not proof of added benefit from a particular supplement.",
+        "form_and_absorption": "The named chelate does not establish universally superior absorption or freedom from gastrointestinal effects.",
+        "research_and_use": "A 2025 four-week placebo-controlled trial randomized 155 adults reporting poor sleep. The primary analysis included 153 participants and found a small advantage on the self-reported Insomnia Severity Index (Cohen’s d 0.20); other psychological outcomes did not differ significantly. This is not a head-to-head demonstration that bisglycinate is the best form or a validated treatment for diagnosed insomnia.",
+        "high": "Supplemental or medicinal magnesium can cause diarrhea, nausea and abdominal cramping; very large exposures can cause serious toxicity. Impaired kidney function increases risk because magnesium removal is reduced. No personal risk or medication assessment is made.",
+        "reference": "The US adult upper limit at age 19 and older is 350 mg/day elemental magnesium from supplements and medications, excluding magnesium naturally present in foods and beverages. It is not a target or a total-diet ceiling. Children have age-specific references; medically supervised treatment is separate. No product dose is converted or compared.",
+        "limits": "Solubility and absorption measurements do not establish superior clinical outcomes. Whole-compound mass is not elemental magnesium. Route, formulation, amount, duration and population matter. Exact aliases below are draft label terms, not a verified product-formulation identity."
+      },
+      "reference_keys": [
+        "nih",
+        "bis"
+      ],
+      "review": {
+        "date": "2026-10-24",
+        "status": "selected human-trial context; audit partial",
+        "clinical_review": "not completed",
+        "runtime_matching": "not verified on deployed site",
+        "funding_and_conflicts": "Methods identify Biogena as the study-supplement manufacturer. This is not proof that Biogena funded the trial. Funding and conflict sections were not captured in the available excerpt; independent financial review remains incomplete."
+      }
+    },
+    {
+      "id": "magnesium_chloride",
+      "title": "Magnesium chloride",
+      "source_label_terms": [
+        "magnesium chloride"
+      ],
+      "category": "named nutrient/medicine form label",
+      "existing_family_key": "mg",
+      "sections": {
+        "body": "Magnesium supports normal enzyme activity, nerve and muscle function, bone structure and energy metabolism. A normal physiological role is not proof of added benefit from a particular supplement.",
+        "form_and_absorption": "NIH summarizes greater absorption than oxide or sulfate in small comparisons. Oral findings do not establish absorption through the skin.",
+        "research_and_use": "NIH also lists chloride among forms commonly reported to cause diarrhea. Better absorption does not mean universally gentle gastrointestinal effects.",
+        "high": "Supplemental or medicinal magnesium can cause diarrhea, nausea and abdominal cramping; very large exposures can cause serious toxicity. Impaired kidney function increases risk because magnesium removal is reduced. No personal risk or medication assessment is made.",
+        "reference": "The US adult upper limit at age 19 and older is 350 mg/day elemental magnesium from supplements and medications, excluding magnesium naturally present in foods and beverages. It is not a target or a total-diet ceiling. Children have age-specific references; medically supervised treatment is separate. No product dose is converted or compared.",
+        "limits": "Solubility and absorption measurements do not establish superior clinical outcomes. Whole-compound mass is not elemental magnesium. Route, formulation, amount, duration and population matter. Exact aliases below are draft label terms, not a verified product-formulation identity."
+      },
+      "reference_keys": [
+        "nih"
+      ],
+      "review": {
+        "date": "2026-10-24",
+        "status": "reference-backed comparison and tolerability context",
+        "clinical_review": "not completed",
+        "runtime_matching": "not verified on deployed site",
+        "funding_and_conflicts": "Underlying-study funding, conflicts, sponsor roles and independent correction/retraction checks are not comprehensively audited."
+      }
+    },
+    {
+      "id": "magnesium_lactate",
+      "title": "Magnesium lactate",
+      "source_label_terms": [
+        "magnesium lactate"
+      ],
+      "category": "named nutrient/medicine form label",
+      "existing_family_key": "mg",
+      "sections": {
+        "body": "Magnesium supports normal enzyme activity, nerve and muscle function, bone structure and energy metabolism. A normal physiological role is not proof of added benefit from a particular supplement.",
+        "form_and_absorption": "NIH summarizes greater absorption than oxide or sulfate in small comparisons. Preparation and study methods still matter.",
+        "research_and_use": "Do not infer better sleep, stress relief or muscle outcomes solely from absorption comparisons.",
+        "high": "Supplemental or medicinal magnesium can cause diarrhea, nausea and abdominal cramping; very large exposures can cause serious toxicity. Impaired kidney function increases risk because magnesium removal is reduced. No personal risk or medication assessment is made.",
+        "reference": "The US adult upper limit at age 19 and older is 350 mg/day elemental magnesium from supplements and medications, excluding magnesium naturally present in foods and beverages. It is not a target or a total-diet ceiling. Children have age-specific references; medically supervised treatment is separate. No product dose is converted or compared.",
+        "limits": "Solubility and absorption measurements do not establish superior clinical outcomes. Whole-compound mass is not elemental magnesium. Route, formulation, amount, duration and population matter. Exact aliases below are draft label terms, not a verified product-formulation identity."
+      },
+      "reference_keys": [
+        "nih"
+      ],
+      "review": {
+        "date": "2026-10-24",
+        "status": "reference-backed comparison; outcome-specific review incomplete",
+        "clinical_review": "not completed",
+        "runtime_matching": "not verified on deployed site",
+        "funding_and_conflicts": "Underlying-study funding, conflicts, sponsor roles and independent correction/retraction checks are not comprehensively audited."
+      }
+    },
+    {
+      "id": "magnesium_aspartate",
+      "title": "Magnesium aspartate",
+      "source_label_terms": [
+        "magnesium aspartate"
+      ],
+      "category": "named nutrient/medicine form label",
+      "existing_family_key": "mg",
+      "sections": {
+        "body": "Magnesium supports normal enzyme activity, nerve and muscle function, bone structure and energy metabolism. A normal physiological role is not proof of added benefit from a particular supplement.",
+        "form_and_absorption": "NIH summarizes greater absorption than oxide or sulfate in small comparisons. This is not a clinical-outcome ranking.",
+        "research_and_use": "Magnesium L-aspartate hydrochloride and mixed potassium/magnesium preparations require their own identity reconciliation; they are not silently added as aliases here.",
+        "high": "Supplemental or medicinal magnesium can cause diarrhea, nausea and abdominal cramping; very large exposures can cause serious toxicity. Impaired kidney function increases risk because magnesium removal is reduced. No personal risk or medication assessment is made.",
+        "reference": "The US adult upper limit at age 19 and older is 350 mg/day elemental magnesium from supplements and medications, excluding magnesium naturally present in foods and beverages. It is not a target or a total-diet ceiling. Children have age-specific references; medically supervised treatment is separate. No product dose is converted or compared.",
+        "limits": "Solubility and absorption measurements do not establish superior clinical outcomes. Whole-compound mass is not elemental magnesium. Route, formulation, amount, duration and population matter. Exact aliases below are draft label terms, not a verified product-formulation identity."
+      },
+      "reference_keys": [
+        "nih"
+      ],
+      "review": {
+        "date": "2026-10-24",
+        "status": "reference-backed comparison; additional preparations deferred",
+        "clinical_review": "not completed",
+        "runtime_matching": "not verified on deployed site",
+        "funding_and_conflicts": "Underlying-study funding, conflicts, sponsor roles and independent correction/retraction checks are not comprehensively audited."
+      }
+    },
+    {
+      "id": "magnesium_sulfate",
+      "title": "Magnesium sulfate",
+      "source_label_terms": [
+        "magnesium sulfate",
+        "magnesium sulphate"
+      ],
+      "category": "named nutrient/medicine form label",
+      "existing_family_key": "mg",
+      "sections": {
+        "body": "Magnesium supports normal enzyme activity, nerve and muscle function, bone structure and energy metabolism. A normal physiological role is not proof of added benefit from a particular supplement.",
+        "form_and_absorption": "NIH summarizes lower oral absorption than several more soluble preparations in small studies. Hydration state and preparation remain unspecified.",
+        "research_and_use": "Oral supplements, medicinal preparations, bath products and intravenous magnesium sulfate are different exposures. Evidence for one route must not become an oral or topical benefit claim.",
+        "high": "Supplemental or medicinal magnesium can cause diarrhea, nausea and abdominal cramping; very large exposures can cause serious toxicity. Impaired kidney function increases risk because magnesium removal is reduced. No personal risk or medication assessment is made.",
+        "reference": "The US adult upper limit at age 19 and older is 350 mg/day elemental magnesium from supplements and medications, excluding magnesium naturally present in foods and beverages. It is not a target or a total-diet ceiling. Children have age-specific references; medically supervised treatment is separate. No product dose is converted or compared.",
+        "limits": "Solubility and absorption measurements do not establish superior clinical outcomes. Whole-compound mass is not elemental magnesium. Route, formulation, amount, duration and population matter. Exact aliases below are draft label terms, not a verified product-formulation identity."
+      },
+      "reference_keys": [
+        "nih"
+      ],
+      "review": {
+        "date": "2026-10-24",
+        "status": "reference-backed oral comparison; route-specific clinical review incomplete",
+        "clinical_review": "not completed",
+        "runtime_matching": "not verified on deployed site",
+        "funding_and_conflicts": "Underlying-study funding, conflicts, sponsor roles and independent correction/retraction checks are not comprehensively audited."
+      }
+    },
+    {
+      "id": "magnesium_malate",
+      "title": "Magnesium malate",
+      "source_label_terms": [
+        "magnesium malate"
+      ],
+      "category": "named nutrient/medicine form label",
+      "existing_family_key": "mg",
+      "sections": {
+        "body": "Magnesium supports normal enzyme activity, nerve and muscle function, bone structure and energy metabolism. A normal physiological role is not proof of added benefit from a particular supplement.",
+        "form_and_absorption": "Form-specific comparative absorption has not been independently evaluated in this draft.",
+        "research_and_use": "A biochemical role for malate or magnesium is not proof of fatigue, fibromyalgia or exercise-recovery benefit. A preparation-specific human-study review remains pending.",
+        "high": "Supplemental or medicinal magnesium can cause diarrhea, nausea and abdominal cramping; very large exposures can cause serious toxicity. Impaired kidney function increases risk because magnesium removal is reduced. No personal risk or medication assessment is made.",
+        "reference": "The US adult upper limit at age 19 and older is 350 mg/day elemental magnesium from supplements and medications, excluding magnesium naturally present in foods and beverages. It is not a target or a total-diet ceiling. Children have age-specific references; medically supervised treatment is separate. No product dose is converted or compared.",
+        "limits": "Solubility and absorption measurements do not establish superior clinical outcomes. Whole-compound mass is not elemental magnesium. Route, formulation, amount, duration and population matter. Exact aliases below are draft label terms, not a verified product-formulation identity."
+      },
+      "reference_keys": [
+        "nih"
+      ],
+      "review": {
+        "date": "2026-10-24",
+        "status": "review target; form-specific evidence not yet evaluated",
+        "clinical_review": "not completed",
+        "runtime_matching": "not verified on deployed site",
+        "funding_and_conflicts": "Underlying-study funding, conflicts, sponsor roles and independent correction/retraction checks are not comprehensively audited."
+      }
+    },
+    {
+      "id": "magnesium_taurate",
+      "title": "Magnesium taurate",
+      "source_label_terms": [
+        "magnesium taurate"
+      ],
+      "category": "named nutrient/medicine form label",
+      "existing_family_key": "mg",
+      "sections": {
+        "body": "Magnesium supports normal enzyme activity, nerve and muscle function, bone structure and energy metabolism. A normal physiological role is not proof of added benefit from a particular supplement.",
+        "form_and_absorption": "Form-specific comparative human absorption has not been evaluated in this draft.",
+        "research_and_use": "The identified magnesium-taurate study used cadmium-exposed rats. It does not establish a human blood-pressure or heart-health benefit. Human trials of taurine alone are not trials of magnesium taurate. This is not a completed search establishing that no human studies exist.",
+        "high": "Supplemental or medicinal magnesium can cause diarrhea, nausea and abdominal cramping; very large exposures can cause serious toxicity. Impaired kidney function increases risk because magnesium removal is reduced. No personal risk or medication assessment is made.",
+        "reference": "The US adult upper limit at age 19 and older is 350 mg/day elemental magnesium from supplements and medications, excluding magnesium naturally present in foods and beverages. It is not a target or a total-diet ceiling. Children have age-specific references; medically supervised treatment is separate. No product dose is converted or compared.",
+        "limits": "Solubility and absorption measurements do not establish superior clinical outcomes. Whole-compound mass is not elemental magnesium. Route, formulation, amount, duration and population matter. Exact aliases below are draft label terms, not a verified product-formulation identity."
+      },
+      "reference_keys": [
+        "nih",
+        "animal"
+      ],
+      "review": {
+        "date": "2026-10-24",
+        "status": "animal-evidence boundary; human evidence review incomplete",
+        "clinical_review": "not completed",
+        "runtime_matching": "not verified on deployed site",
+        "funding_and_conflicts": "Underlying-study funding, conflicts, sponsor roles and independent correction/retraction checks are not comprehensively audited."
+      }
+    },
+    {
+      "id": "magnesium_l_threonate",
+      "title": "Magnesium L-threonate",
+      "source_label_terms": [
+        "magnesium l-threonate",
+        "magnesium l threonate"
+      ],
+      "category": "named nutrient/medicine form label",
+      "existing_family_key": "mg",
+      "sections": {
+        "body": "Magnesium supports normal enzyme activity, nerve and muscle function, bone structure and energy metabolism. A normal physiological role is not proof of added benefit from a particular supplement.",
+        "form_and_absorption": "Human cognitive test results do not establish that a commercial product delivers more magnesium to the human brain than all other forms.",
+        "research_and_use": "A six-week 2026 trial randomized 100 adults aged 18–45 with dissatisfied sleep to a specific branded L-threonate preparation or placebo. Some cognitive outcomes improved, while Raven’s testing and wearable-measured sleep outcomes did not differ. An estimated cognitive-age score is not proof of reversed biological aging or dementia prevention. The study used one-tailed outcome significance tests and numerous outcomes; interpretation and independent replication matter.",
+        "high": "Supplemental or medicinal magnesium can cause diarrhea, nausea and abdominal cramping; very large exposures can cause serious toxicity. Impaired kidney function increases risk because magnesium removal is reduced. No personal risk or medication assessment is made.",
+        "reference": "The US adult upper limit at age 19 and older is 350 mg/day elemental magnesium from supplements and medications, excluding magnesium naturally present in foods and beverages. It is not a target or a total-diet ceiling. Children have age-specific references; medically supervised treatment is separate. No product dose is converted or compared.",
+        "limits": "Solubility and absorption measurements do not establish superior clinical outcomes. Whole-compound mass is not elemental magnesium. Route, formulation, amount, duration and population matter. Exact aliases below are draft label terms, not a verified product-formulation identity."
+      },
+      "reference_keys": [
+        "nih",
+        "lt"
+      ],
+      "review": {
+        "date": "2026-10-24",
+        "status": "selected human-trial context; independent replication and broader audit incomplete",
+        "clinical_review": "not completed",
+        "runtime_matching": "not verified on deployed site",
+        "funding_and_conflicts": "The publication reports Threotech Inc. funding. Methods describe sponsor-held capsule codes. Full sponsor influence, author financial relationships and independent standing checks remain incompletely audited."
+      }
+    },
+    {
+      "id": "magnesium_gluconate",
+      "title": "Magnesium gluconate",
+      "source_label_terms": [
+        "magnesium gluconate"
+      ],
+      "category": "named nutrient/medicine form label",
+      "existing_family_key": "mg",
+      "sections": {
+        "body": "Magnesium supports normal enzyme activity, nerve and muscle function, bone structure and energy metabolism. A normal physiological role is not proof of added benefit from a particular supplement.",
+        "form_and_absorption": "No universal absorption or clinical-benefit ranking is established in this draft.",
+        "research_and_use": "NIH lists gluconate among forms commonly reported to cause diarrhea. Do not describe it as universally gentle without preparation-specific evidence.",
+        "high": "Supplemental or medicinal magnesium can cause diarrhea, nausea and abdominal cramping; very large exposures can cause serious toxicity. Impaired kidney function increases risk because magnesium removal is reduced. No personal risk or medication assessment is made.",
+        "reference": "The US adult upper limit at age 19 and older is 350 mg/day elemental magnesium from supplements and medications, excluding magnesium naturally present in foods and beverages. It is not a target or a total-diet ceiling. Children have age-specific references; medically supervised treatment is separate. No product dose is converted or compared.",
+        "limits": "Solubility and absorption measurements do not establish superior clinical outcomes. Whole-compound mass is not elemental magnesium. Route, formulation, amount, duration and population matter. Exact aliases below are draft label terms, not a verified product-formulation identity."
+      },
+      "reference_keys": [
+        "nih"
+      ],
+      "review": {
+        "date": "2026-10-24",
+        "status": "tolerability reference; form-specific efficacy review incomplete",
+        "clinical_review": "not completed",
+        "runtime_matching": "not verified on deployed site",
+        "funding_and_conflicts": "Underlying-study funding, conflicts, sponsor roles and independent correction/retraction checks are not comprehensively audited."
+      }
+    },
+    {
+      "id": "magnesium_carbonate",
+      "title": "Magnesium carbonate",
+      "source_label_terms": [
+        "magnesium carbonate"
+      ],
+      "category": "named nutrient/medicine form label",
+      "existing_family_key": "mg",
+      "sections": {
+        "body": "Magnesium supports normal enzyme activity, nerve and muscle function, bone structure and energy metabolism. A normal physiological role is not proof of added benefit from a particular supplement.",
+        "form_and_absorption": "Preparation-specific absorption comparisons have not been independently evaluated in this draft.",
+        "research_and_use": "NIH lists carbonate among forms commonly reported to cause diarrhea. Technical food uses, supplements and medicinal preparations should not be treated as interchangeable doses.",
+        "high": "Supplemental or medicinal magnesium can cause diarrhea, nausea and abdominal cramping; very large exposures can cause serious toxicity. Impaired kidney function increases risk because magnesium removal is reduced. No personal risk or medication assessment is made.",
+        "reference": "The US adult upper limit at age 19 and older is 350 mg/day elemental magnesium from supplements and medications, excluding magnesium naturally present in foods and beverages. It is not a target or a total-diet ceiling. Children have age-specific references; medically supervised treatment is separate. No product dose is converted or compared.",
+        "limits": "Solubility and absorption measurements do not establish superior clinical outcomes. Whole-compound mass is not elemental magnesium. Route, formulation, amount, duration and population matter. Exact aliases below are draft label terms, not a verified product-formulation identity."
+      },
+      "reference_keys": [
+        "nih"
+      ],
+      "review": {
+        "date": "2026-10-24",
+        "status": "tolerability reference; preparation-specific uses need review",
+        "clinical_review": "not completed",
+        "runtime_matching": "not verified on deployed site",
+        "funding_and_conflicts": "Underlying-study funding, conflicts, sponsor roles and independent correction/retraction checks are not comprehensively audited."
+      }
+    },
+    {
+      "id": "magnesium_orotate",
+      "title": "Magnesium orotate",
+      "source_label_terms": [
+        "magnesium orotate"
+      ],
+      "category": "named nutrient/medicine form label",
+      "existing_family_key": "mg",
+      "sections": {
+        "body": "Magnesium supports normal enzyme activity, nerve and muscle function, bone structure and energy metabolism. A normal physiological role is not proof of added benefit from a particular supplement.",
+        "form_and_absorption": "A universal absorption or heart-health superiority claim is not established in this draft.",
+        "research_and_use": "A small 2009 single-center randomized trial in 79 patients with severe heart failure studied magnesium orotate as an adjunct to existing cardiovascular treatment. Its findings cannot be assigned to healthy supplement users or used as treatment advice. The abstract is not an independent full-trial or replication audit.",
+        "high": "Supplemental or medicinal magnesium can cause diarrhea, nausea and abdominal cramping; very large exposures can cause serious toxicity. Impaired kidney function increases risk because magnesium removal is reduced. No personal risk or medication assessment is made.",
+        "reference": "The US adult upper limit at age 19 and older is 350 mg/day elemental magnesium from supplements and medications, excluding magnesium naturally present in foods and beverages. It is not a target or a total-diet ceiling. Children have age-specific references; medically supervised treatment is separate. No product dose is converted or compared.",
+        "limits": "Solubility and absorption measurements do not establish superior clinical outcomes. Whole-compound mass is not elemental magnesium. Route, formulation, amount, duration and population matter. Exact aliases below are draft label terms, not a verified product-formulation identity."
+      },
+      "reference_keys": [
+        "nih",
+        "orotate"
+      ],
+      "review": {
+        "date": "2026-10-24",
+        "status": "selected disease-specific abstract; broader clinical audit incomplete",
+        "clinical_review": "not completed",
+        "runtime_matching": "not verified on deployed site",
+        "funding_and_conflicts": "Underlying-study funding, conflicts, sponsor roles and independent correction/retraction checks are not comprehensively audited."
+      }
+    },
+    {
+      "id": "magnesium_stearate_technical",
+      "title": "Magnesium stearate",
+      "source_label_terms": [
+        "magnesium stearate"
+      ],
+      "category": "manufacturing ingredient; separate review track",
+      "existing_family_key": null,
+      "sections": {
+        "identity": "Keep magnesium stearate on a separate manufacturing-ingredient review track. Its presence must not be interpreted as a verified magnesium supplementation dose.",
+        "limits": "A complete identity/use, exposure and clinical review is still pending. Do not infer absorbed magnesium, laxative use or mineral-deficiency benefit from the name."
+      },
+      "reference_keys": [],
+      "review": {
+        "date": "2026-10-24",
+        "status": "scope guard only; ingredient-specific sources still required",
+        "clinical_review": "not completed",
+        "runtime_matching": "not verified on deployed site"
+      }
+    }
+  ],
+  "product_queue": [
+    "Thorne Creatine, unflavored — exact label/version audit pending",
+    "Thorne Magnesium Bisglycinate powder — complete-label audit pending",
+    "Thorne Super EPA — complete-label audit pending"
+  ]
+}
