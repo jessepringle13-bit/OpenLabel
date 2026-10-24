@@ -1,0 +1,127 @@
+name: Connect Thorne batch to education views
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/connect-thorne-batch.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+  pages: write
+concurrency:
+  group: connect-thorne-batch
+  cancel-in-progress: false
+jobs:
+  integrate:
+    if: github.repository == 'jessepringle13-bit/OpenLabel' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Prepare guarded integration
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 <<'PY'
+          from pathlib import Path
+          import re,subprocess
+          V='20261024-thorne4'
+          changes={
+          'index.html':[('src="evidence.js?v=20261024-learn3"','src="evidence.js?v='+V+'"')],
+          'evidence.js':[("sc.src='result.js?v=20261024-learn3';","sc.src='result.js?v="+V+"';")],
+          'result.js':[("f==='ingredient-loader.js'?'20261024-learn3'","f==='ingredient-loader.js'?'"+V+"'")],
+          'ingredient-loader.js':[("var V='20261024-learn3'","var V='"+V+"'"),('"inulin-education.js","learn-search.js"','"inulin-education.js","thorne-batch.js","thorne-integration.js","learn-search.js"')],
+          'learn-search.js':[
+          ('});return entries}', '});return root.OLThorneBridge?root.OLThorneBridge.catalog(entries):entries}'),
+          ("['reference','Understanding amounts']]","['reference','Understanding amounts'],['form','Form and source'],['debate','Evidence limitations'],['audit','Source review and limitations']]"),
+          ('section(pair[1],c[0],s[1],s[0])','section((entry.sectionTitles&&entry.sectionTitles[pair[0]])||pair[1],c[0],s[1],s[0])')]
+          }
+          assert not Path('thorne-integration.js').exists()
+          planned={}
+          for name,pairs in changes.items():
+           text=Path(name).read_bytes().decode('utf-8')
+           for old,new in pairs:
+            assert text.count(old)==1, 'Unexpected integration anchor: '+name+' '+old
+            text=text.replace(old,new,1)
+           planned[name]=text
+          planned['thorne-integration.js']=r"""(function(root){'use strict';
+          function create(batch,education){
+          if(!batch||!Array.isArray(batch.records)||batch.records.length!==29||!education||!education.entries)throw Error('Thorne integration dependencies unavailable');
+          function norm(v){return String(v==null?'':v).trim().toLowerCase().replace(/[\u2010-\u2015\u2212]/g,'-').replace(/[\u2018\u2019\u2032]/g,"'").replace(/\s+/g,' ')}
+          function make(r){var family=r.existing_family_key&&education.entries[r.existing_family_key],technical=!!r.sections,brief=!technical&&!family,ref=r.sources&&r.sources[0],url=ref?ref.url:r.supplemental_reference||'https://www.thorne.com/products/dp/basic-nutrients-2-day',sources=Object.assign({},education.sources),record={},review=technical?r.review:education.reviews&&education.reviews[r.existing_family_key];sources['thorne-context']=[ref?ref.title:'Label/form context',url,'Source identity and scope remain unverified'];if(r.sources&&r.sources.length>1)sources['thorne-extra']=[r.sources[1].title,r.sources[1].url,'Additional identity/use reference'];
+          if(technical){var s=r.sections;record.what=[s.identity,'thorne-context'];record.body=[s.common_use,'thorne-context'];record.research=[s.evidence_limits,'thorne-context'];record.reference=[s.amount_context,'thorne-context'];record.form=[r.form_context+' '+s.source_and_form,'thorne-context'];record.debate=[s.uncertainty,'thorne-context']}else{if(family)Object.keys(family).forEach(function(k){record[k]=family[k]});record.what=[r.form_context,'thorne-context'];if(brief){record.research=['This committed batch contains a brief form-context note, not the separately drafted full research explanation. Deeper body-function, clinical-evidence and high-intake review remain pending.','thorne-context'];record.reference=['No verified product dose, intake conversion or personalized suitability assessment is supplied by this entry.','thorne-context']}}
+          record.audit=[(review?Object.values(review).join(' '):'Reference review is partial; funding/conflicts and a comprehensive competing-evidence search are incomplete. Not clinically reviewed.')+' Source form: '+r.form_identity_status+'. Amount: '+r.amount_status+'.','thorne-extra' in sources?'thorne-extra':'thorne-context'];
+          return {id:'thorne-'+r.inventory_entry_id,title:r.source_name,category:'ingredient',aliases:['Thorne','Basic Nutrients 2/Day',r.source_name],description:technical?'Thorne formulation-component context':'Thorne named-label context',coverage:brief?'Brief form context only · deeper education pending':'Reference context · identity unverified · audit partial',kind:'pilot',record:record,sources:sources,batchRecord:r,sectionTitles:technical?{body:'Common formulation uses',reference:'Amount context',form:'Material and preparation',debate:'What remains unknown',audit:'Source review and limitations'}:{audit:'Source review and limitations'}}}
+          function lookup(label){var n=norm(label),r=batch.records.find(function(r){return norm(r.source_name)===n});return r?make(r):null}
+          return {version:'20261024-thorne4',lookup:lookup,catalog:function(existing){var ids=new Set(existing.map(function(e){return e.id}));return existing.concat(batch.records.map(make).filter(function(e){return !ids.has(e.id)}))},status:function(){return {total:29,briefOnly:batch.records.filter(function(r){return !r.sections&&!r.existing_family_key}).length,missingFamilies:batch.records.filter(function(r){return r.existing_family_key&&!r.sections&&!education.entries[r.existing_family_key]}).map(function(r){return r.inventory_entry_id})}}}
+          }
+          if(typeof module==='object'&&module.exports){module.exports={create:create};return}if(root.OLThorneBridge)return;var api=create(root.OLThorneBatch,root.OLIngredientEducation),doc=root.document;root.OLThorneBridge=api;
+          var base=root.OLIngredients;if(base&&base.lookup){var next=Object.assign({},base);next.lookup=function(label){var old=base.lookup(label);if(old)return old;var e=api.lookup(label);return e?{role:'Source label context · review partial',use:e.batchRecord.sections?'Formulation component':'Supplement component',purpose:e.batchRecord.form_context,form:e.batchRecord.form_context,difference:e.coverage,source:e.sources['thorne-context'][1],formUnspecified:true}:null};root.OLIngredients=next}
+          function el(tag,text,cls){var n=doc.createElement(tag);if(text!=null)n.textContent=text;if(cls)n.className=cls;return n}
+          function link(ref){var a=el('a',ref[0]);a.href=ref[1];a.target='_blank';a.rel='noopener noreferrer';return a}
+          function sync(){doc.querySelectorAll('.ol-ing-sheet').forEach(function(box){var h=box.querySelector('h3'),e=h&&api.lookup(h.textContent),old=box.querySelector('.thorne-context'),pilot=box.querySelector('.ie-pilot');if(pilot){if(e){if(!pilot.hasAttribute('data-thorne-hidden')){pilot.dataset.thorneHidden=pilot.hidden?'hidden':'visible';pilot.hidden=true}}else if(pilot.hasAttribute('data-thorne-hidden')){pilot.hidden=pilot.dataset.thorneHidden==='hidden';delete pilot.dataset.thorneHidden}}if(old&&(!e||old.dataset.entry!==e.id)){old.remove();old=null}if(!e||old)return;var section=el('section',null,'thorne-context');section.dataset.entry=e.id;section.append(el('h4','Thorne label context','ol-ing-label'),el('p',e.coverage),el('p',e.record.what[0]),link(e.sources[e.record.what[1]]));[['body','Body functions'],['research','Research context'],['high','High-intake context'],['reference','Amount context'],['form','Form and source'],['debate','Evidence limitations'],['audit','Source review and limitations']].forEach(function(pair){var c=e.record[pair[0]];if(!c||c[0]===e.record.what[0])return;var d=el('details',null,'olui-education');d.append(el('summary',e.sectionTitles[pair[0]]||pair[1]),el('p',c[0]),link(e.sources[c[1]]));section.append(d)});section.append(el('p','General education—not a verified current-product assessment, dose recommendation or safety verdict.'));box.append(section);var role=box.querySelector('.ol-ing-role');if(role&&/^(Not yet reviewed|Research review pending)/i.test(role.textContent))role.textContent='Source label context · review partial';box.querySelectorAll('h4.ol-ing-label').forEach(function(label){var p=label.nextElementSibling;if(label.textContent.trim()==='What we know'&&p&&p.textContent.startsWith('We have not reviewed this exact ingredient')){p.remove();label.remove()}})})}
+          var pending=false;new MutationObserver(function(){if(pending)return;pending=true;root.requestAnimationFrame(function(){pending=false;sync()})}).observe(doc.body,{childList:true,subtree:true});sync();
+          })(typeof window==='object'?window:globalThis);
+          """
+          for name,text in planned.items():
+           if name.endswith('.js'):subprocess.run(['node','--check'],input=text,text=True,check=True)
+          inline=[s for s in re.findall(r'<script\b[^>]*>(.*?)</script>',planned['index.html'],re.S) if s.strip()]
+          assert inline
+          for text in inline:subprocess.run(['node','--check'],input=text,text=True,check=True)
+          for name,text in planned.items():Path(name).write_bytes(text.encode('utf-8'))
+          assert set(subprocess.check_output(['git','diff','--name-only'],text=True).splitlines())==set(changes)
+          PY
+          node <<'JS'
+          const assert=require('node:assert/strict'),batch=require('./thorne-batch.js'),education=require('./ingredient-education.js');
+          for(const file of ['nutrient-batch-1.js','nutrient-batch-aek.js','nutrient-batch-scc.js','nutrient-batch-b.js','nutrient-batch-trace.js','nutrient-batch-electrolytes.js'])require('./'+file).install(education);
+          const before=JSON.stringify(education),api=require('./thorne-integration.js').create(batch,education),entries=api.catalog([]);assert.equal(entries.length,29);assert.equal(new Set(entries.map(e=>e.id)).size,29);assert.equal(api.status().briefOnly,3);assert.deepEqual(api.status().missingFamilies,[]);
+          for(const r of batch.records){const e=api.lookup(r.source_name);assert.equal(e.batchRecord,r);assert.equal(e.title,r.source_name);for(const c of Object.values(e.record)){assert.ok(e.sources[c[1]]);assert.ok(e.sources[c[1]][1].startsWith('https://'))}assert.equal(api.lookup('contains '+r.source_name),null)}
+          assert.equal(api.catalog(entries).length,29);assert.equal(api.lookup('Vitamin B1 (Thiamin HCl)'),null);assert.equal(api.lookup('palmitate'),null);assert.equal(api.lookup('Vitamin D (as Cholecalciferol) (D2)'),null);assert.equal(api.lookup('Vitamin K2 (as Menaquinone-7) (MK-4)'),null);assert.equal(api.lookup('Dicalcium Phosphate').record.body[0],batch.lookup('Dicalcium Phosphate').sections.common_use);assert.equal(JSON.stringify(education),before);console.log('Thorne 29-entry mapping, reference, identity-boundary and non-mutation checks passed.');
+          JS
+          node tests/results-accordions.test.cjs
+      - name: Browser-check all 29 labels
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PLAYWRIGHT_BROWSERS_PATH="$RUNNER_TEMP/ol-browsers"
+          npm install --prefix "$RUNNER_TEMP/ol-browser-test" playwright
+          "$RUNNER_TEMP/ol-browser-test/node_modules/.bin/playwright" install --with-deps chromium
+          python3 -m http.server 8765 --bind 127.0.0.1 > "$RUNNER_TEMP/ol-server.log" 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          for i in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:8765/ > /dev/null; then break; fi
+            sleep 1
+          done
+          NODE_PATH="$RUNNER_TEMP/ol-browser-test/node_modules" node <<'JS'
+          const assert=require('node:assert/strict'),{chromium}=require('playwright');
+          (async()=>{const browser=await chromium.launch({args:['--use-fake-device-for-media-stream','--use-fake-ui-for-media-stream']});try{for(const viewport of [{width:390,height:844},{width:1280,height:900}]){const context=await browser.newContext({viewport,permissions:['camera']});try{const page=await context.newPage();page.setDefaultTimeout(30000);await page.route('**/*',r=>new URL(r.request().url()).origin==='http://127.0.0.1:8765'?r.continue():r.abort());await page.goto('http://127.0.0.1:8765/?v=20261024-thorne4',{waitUntil:'domcontentloaded'});if(await page.locator('#closeSheet').isVisible())await page.locator('#closeSheet').click();await page.locator('.nav-pill[data-go="explore"]').click();await page.locator('#ol-explore-tab-learn').waitFor({timeout:60000});await page.locator('#ol-explore-tab-learn').click();await page.locator('#exploreSearch').fill('thorne');await page.waitForFunction(()=>document.querySelectorAll('.learn-row').length===29);const names=await page.evaluate(()=>OLThorneBatch.records.map(r=>r.source_name));assert.equal(names.length,29);for(const name of names){await page.locator('.learn-row').getByText(name+' ›',{exact:true}).click();const b=page.locator('.ol-inline-detail > .learn-dialog');await b.waitFor({state:'visible'});await page.waitForFunction(()=>{const b=document.querySelector('.ol-inline-detail > .learn-dialog');return b&&b.querySelector('.olui-footer p')&&getComputedStyle(b.querySelector('.olui-footer p')).fontSize==='12px'&&b.querySelectorAll('details.olui-accordion').length>=2});assert.equal(await b.locator('h3').textContent(),name);assert.ok(await b.locator('a').count());const ds=b.locator('details.olui-accordion');await ds.nth(0).locator(':scope > summary').click();await ds.nth(1).locator(':scope > summary').click();await page.waitForFunction(()=>{const ds=document.querySelectorAll('.learn-dialog details.olui-accordion');return !ds[0].open&&ds[1].open});await page.getByRole('button',{name:/Back to Learn/}).click();await b.waitFor({state:'hidden'})}assert.equal(await page.locator('#exploreSearch').inputValue(),'thorne');if(viewport.width===390){for(const name of names){await page.evaluate(name=>{const mount=document.createElement('div');mount.id='thorne-test-mount';mount.style.paddingBottom='200px';mount.append(OLIngredients.render(name));document.body.append(mount)},name);await page.locator('#thorne-test-mount .ol-ing-row').first().click();await page.waitForFunction(()=>{const b=document.querySelector('.ol-ing-sheet');return b&&b.querySelector('.thorne-context')&&b.querySelector('.olui-footer')});const sheet=page.locator('.ol-ing-sheet');assert.equal(await sheet.locator('h3').textContent(),name);assert.ok(await sheet.locator('.thorne-context a').count());const pilot=sheet.locator('.ie-pilot');if(await pilot.count())assert.equal(await pilot.isVisible(),false);await sheet.locator('.ol-ing-close').click();await page.locator('#thorne-test-mount').evaluate(n=>n.remove())}await page.evaluate(()=>{const mount=document.createElement('div');mount.id='thorne-test-mount';mount.style.paddingBottom='200px';mount.append(OLIngredients.render('Unlisted mystery ingredient'));document.body.append(mount)});await page.locator('#thorne-test-mount .ol-ing-row').first().click();assert.equal(await page.locator('.ol-ing-sheet .thorne-context').count(),0);await page.locator('.ol-ing-close').click();await page.locator('#thorne-test-mount').evaluate(n=>n.remove())}assert.equal(await page.evaluate(()=>OLThorneBridge.status().briefOnly),3);assert.equal(await page.evaluate(()=>OLThorneBridge.status().missingFamilies.length),0);console.log(JSON.stringify({viewport,learnEntries:29,ingredientLabels:viewport.width===390?29:0,status:'passed',scope:'Local full-app Chromium only; not live-site or physical-phone verification'}));}finally{await context.close()}}}finally{await browser.close()}})().catch(e=>{console.error(e);process.exitCode=1});
+          JS
+      - name: Commit only after checks pass
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- index.html evidence.js result.js ingredient-loader.js learn-search.js thorne-integration.js
+          git diff --cached --stat
+          git commit -m 'Connect Thorne batch to Learn and ingredient results'
+          git push origin HEAD:main
+          echo "Integration commit: $(git rev-parse HEAD)" >> "$GITHUB_STEP_SUMMARY"
+      - name: Request branch-based Pages rebuild when applicable
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          kind=$(gh api "repos/$GITHUB_REPOSITORY/pages" --jq '.build_type')
+          if [ "$kind" = "legacy" ]; then
+            gh api --method POST "repos/$GITHUB_REPOSITORY/pages/builds"
+            echo 'Pages rebuild requested; deployment and phone verification remain open.' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo '::warning::Integration committed; verify the existing Pages publishing workflow separately.'
+          fi
