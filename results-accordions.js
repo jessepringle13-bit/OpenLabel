@@ -3,7 +3,7 @@ function controller(ops){var desired=null,running=null;async function drain(){tr
 function general(text){return /^(?:General education(?:\s|[.:—-]|$)|This ingredient name does not establish its amount, total daily intake|The original named-form explanation stays separate\.|This product alone does not establish your total intake, absorption|Amounts are displayed source data, not a verified current-package label\.|Reference-backed education pilot · assembled)/.test(text.trim())}
 if(typeof module==='object'&&module.exports){module.exports={controller:controller,general:general};return}if(root.OLResultsAccordions)return;root.OLResultsAccordions={version:'0.1.0'};
 var doc=root.document,selector='details.olr,details.ol-ing-raw,details.olui-education',scopes=new WeakMap(),uid=0;
-var css=doc.createElement('link');css.rel='stylesheet';css.href='results-accordions.css?v=20261023-ui1';doc.head.append(css);
+var css=doc.createElement('link');css.rel='stylesheet';css.href='results-accordions.css?v=20261024-ui2';doc.head.append(css);
 function summary(d){return Array.from(d.children).find(function(n){return n.tagName==='SUMMARY'})}
 function expanded(d){var s=summary(d);if(s)s.setAttribute('aria-expanded',String(d.open))}
 function inside(d,scope){return scope.contains(d)&&d.closest('.ol-ing-sheet,.ne-dialog,#olPanel')===scope}
