@@ -1,0 +1,65 @@
+name: Connect result summary after browser checks
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/connect-result-summary.yml', 'result-summary.js']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: connect-result-summary
+  cancel-in-progress: false
+jobs:
+  connect:
+    if: github.repository == 'jessepringle13-bit/OpenLabel' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check module and prepare page connection
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check result-summary.js
+          node <<'JS'
+          const assert=require('node:assert/strict'),m=require('./result-summary.js').model;assert.equal(m({}).rows.length,3);assert.match(m({}).ingredients,/unavailable/);assert.match(m({type:'Supplements'}).category,/Supplement/);assert.match(m({hint:'illustrative demo'}).identity,/Illustrative/);assert.match(m({ingredients:true}).ingredients,/completeness unverified/);assert.match(m({priorityCount:5}).rows[1].text,/5 existing/);assert.match(m({serving:'30 g'}).rows[0].text,/30 g/);console.log('Seven result-summary model assertions passed.');
+          JS
+          python3 <<'PY'
+          from pathlib import Path
+          import hashlib
+          p=Path('index.html');b=p.read_bytes()
+          assert hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()=='d45d78391ee67196e9ccf254153115cece1678c6','Page changed; review integration rather than overwriting it'
+          s=b.decode();assert s.count('</body>')==1 and 'result-summary.js' not in s
+          p.write_bytes(s.replace('</body>','<script src="result-summary.js?v=20261025-ui1"></script></body>',1).encode())
+          fixture='<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"></head><body><div id="resultName">Example</div><div id="resultType">Food</div><div id="resultHint">Illustrative demo</div><div id="labelFacts"><div class="source"><strong>Serving size</strong><span>30 g</span></div></div><div id="olPanel" class="full"><div class="olp-id"><h2>Example</h2></div><div class="olp-body"><div class="ingcard"><div class="ing">Example ingredients</div></div>'+''.join('<details class="olr pin"><summary>Priority '+str(i)+'</summary><p>Existing finding</p></details>' for i in range(5))+'</div></div><script src="result-summary.js"></script></body></html>'
+          Path('__result-summary-probe.html').write_text(fixture)
+          PY
+      - name: Check browser rendering and existing navigation
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PLAYWRIGHT_BROWSERS_PATH="$RUNNER_TEMP/result-summary-browsers"
+          npm install --prefix "$RUNNER_TEMP/result-summary-test" playwright
+          "$RUNNER_TEMP/result-summary-test/node_modules/.bin/playwright" install --with-deps chromium
+          python3 -m http.server 8765 --bind 127.0.0.1 > "$RUNNER_TEMP/result-summary-server.log" 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          for i in {1..30}; do if curl --fail --silent http://127.0.0.1:8765/ > /dev/null; then break; fi; sleep 1; done
+          NODE_PATH="$RUNNER_TEMP/result-summary-test/node_modules" node <<'JS'
+          const assert=require('node:assert/strict'),{chromium}=require('playwright');(async()=>{const browser=await chromium.launch();try{for(const viewport of [{width:390,height:844},{width:1280,height:900}]){const context=await browser.newContext({viewport});try{const p=await context.newPage();await p.route('**/*',r=>new URL(r.request().url()).origin==='http://127.0.0.1:8765'?r.continue():r.abort());await p.goto('http://127.0.0.1:8765/__result-summary-probe.html');await p.locator('.ols-summary').waitFor();assert.equal(await p.locator('.ols-summary li').count(),3);assert.equal(await p.locator('details.olr.pin').count(),5);assert.match(await p.locator('.ols-summary').innerText(),/5 existing/);assert.match(await p.locator('.ols-summary').innerText(),/30 g/);await p.locator('.ols-summary button').click();assert.equal(await p.evaluate(()=>document.activeElement.textContent),'Priority 0');await p.evaluate(()=>{document.getElementById('resultType').textContent='Supplements';document.getElementById('labelFacts').replaceChildren();document.querySelector('.ingcard').remove()});await p.waitForFunction(()=>document.querySelector('.ols-summary').textContent.includes('Supplement:'));assert.match(await p.locator('.ols-summary').innerText(),/Serving information is unavailable/);assert.match(await p.locator('.ols-summary').innerText(),/Ingredient text unavailable/);assert.equal(await p.locator('.ols-summary').count(),1);assert.equal(await p.locator('details.olr.pin').count(),5);await p.goto('http://127.0.0.1:8765/',{waitUntil:'domcontentloaded'});await p.waitForFunction(()=>window.OLResultSummary&&window.OLExploreTabs,{timeout:60000});for(const id of ['recalls','labs','products','learn'])assert.equal(await p.locator('#ol-explore-tab-'+id).count(),1);console.log(JSON.stringify({viewport,resultSummaryFixture:'passed',existingTopicTabs:'present',scope:'Local Chromium; not live scanning, deployed site or physical phone verification'}))}finally{await context.close()}}}finally{await browser.close()}})().catch(e=>{console.error(e);process.exitCode=1});
+          JS
+      - name: Commit page connection only after checks pass
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- index.html
+          git commit -m 'Connect result summary without replacing existing findings'
+          git push origin HEAD:main
+          echo "Page connection: $(git rev-parse HEAD). Browser fixture checks passed; real-product result, deployed-site and phone verification remain pending." >> "$GITHUB_STEP_SUMMARY"
