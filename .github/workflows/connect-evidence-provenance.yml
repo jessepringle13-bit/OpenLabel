@@ -1,0 +1,64 @@
+name: Connect evidence provenance after browser checks
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/connect-evidence-provenance.yml', 'evidence-provenance.js']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: connect-evidence-provenance
+  cancel-in-progress: false
+jobs:
+  connect:
+    if: github.repository == 'jessepringle13-bit/OpenLabel' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check scope model and prepare page connection
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check evidence-provenance.js
+          node <<'JS'
+          const a=require('node:assert/strict'),m=require('./evidence-provenance.js');a.equal(m.scope({kind:'product'}).label,'Historical product report');a.equal(m.scope({kind:'product',matchAssessment:{level:'possible-name-match'}}).label,'Possible historical match');a.equal(m.scope({kind:'category'}).label,'Category-level evidence');a.equal(m.scope({}).label,'Evidence scope unresolved');a.equal(m.scope({kind:'other'}).label,'Evidence scope unresolved');a(!/verified product|verified lot/i.test(m.scope({kind:'product',matchAssessment:{level:'verified-product-lot'}}).label));a.equal(m.fields({tester:'Example'}).find(x=>x[0]==='Tester')[1],'Example');a.equal(m.fields({}).find(x=>x[0]==='Published')[1],'Not recorded');a.match(m.fields({}).find(x=>x[0].startsWith('Funding'))[1],/no no-conflicts/);console.log('Nine scope/metadata assertions passed.');
+          JS
+          node tests/lab-match-scope.test.cjs
+          python3 <<'PY'
+          from pathlib import Path
+          p=Path('index.html');s=p.read_text();anchor='<script src="result-summary.js?v=20261025-ui1"></script>'
+          assert s.count(anchor)==1 and 'evidence-provenance.js' not in s,'Page connection changed; review before modifying'
+          p.write_text(s.replace(anchor,anchor+'<script src="evidence-provenance.js?v=20261025-provenance1"></script>',1))
+          fixture='''<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"></head><body><div id="sheetExtra"></div><button class="lab-it c-orange"><span class="lab-t">Example report</span></button><button class="lab-it"><span class="lab-t">Category example</span></button><button class="lab-it"><span class="lab-t">Ambiguous</span></button><script>window.fixtureRecords=[{id:'p',kind:'product',title:'Example report',tester:'Example tester',published:'Example date',result:'Example result',source:{url:'https://example.org/report',label:'Example source'}},{id:'c',kind:'category',title:'Category example'},{id:'a1',kind:'product',title:'Ambiguous'},{id:'a2',kind:'category',title:'Ambiguous'}];window.OLEvidence={api:{loadRegistry:()=>Promise.resolve({entries:fixtureRecords}),openTestSheet:e=>document.getElementById('sheetExtra').replaceChildren()}};</script><script src="evidence-provenance.js"></script></body></html>'''
+          Path('__provenance-probe.html').write_text(fixture)
+          PY
+      - name: Browser-check labels, metadata and real report-opening path
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PLAYWRIGHT_BROWSERS_PATH="$RUNNER_TEMP/provenance-browsers"
+          npm install --prefix "$RUNNER_TEMP/provenance-test" playwright
+          "$RUNNER_TEMP/provenance-test/node_modules/.bin/playwright" install --with-deps chromium
+          python3 -m http.server 8765 --bind 127.0.0.1 > "$RUNNER_TEMP/provenance-server.log" 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          for i in {1..30}; do if curl --fail --silent http://127.0.0.1:8765/ > /dev/null; then break; fi; sleep 1; done
+          NODE_PATH="$RUNNER_TEMP/provenance-test/node_modules" node <<'JS'
+          const assert=require('node:assert/strict'),{chromium}=require('playwright');(async()=>{const browser=await chromium.launch();try{for(const viewport of [{width:390,height:844},{width:1280,height:900}]){const context=await browser.newContext({viewport});try{const p=await context.newPage();await p.route('**/*',r=>new URL(r.request().url()).origin==='http://127.0.0.1:8765'?r.continue():r.abort());await p.goto('http://127.0.0.1:8765/__provenance-probe.html');await p.waitForFunction(()=>document.querySelectorAll('.ol-provenance-badge').length===3);assert.deepEqual(await p.locator('.ol-provenance-badge').allTextContents(),['Historical product report','Category-level evidence','Evidence scope unresolved']);assert.equal(await p.locator('.lab-it.c-orange').count(),1);await p.evaluate(()=>OLEvidence.api.openTestSheet({...fixtureRecords[0],matchAssessment:{level:'possible-name-match'}}));await p.locator('.ol-provenance-context').waitFor();assert.match(await p.locator('.ol-provenance-context').textContent(),/Possible historical match/);assert.match(await p.locator('.ol-provenance-context').textContent(),/Example tester/);assert.equal(await p.locator('.ol-provenance-context a').getAttribute('href'),'https://example.org/report');await p.evaluate(()=>OLEvidence.api.openTestSheet({kind:'category',title:'<img src=x onerror=alert(1)>',source:{url:'javascript:alert(1)'}}));assert.equal(await p.locator('.ol-provenance-context').count(),1);assert.equal(await p.locator('.ol-provenance-context img').count(),0);assert.equal(await p.locator('.ol-provenance-context a').count(),0);assert.match(await p.locator('.ol-provenance-context').textContent(),/Not recorded/);await p.goto('http://127.0.0.1:8765/',{waitUntil:'domcontentloaded'});await p.waitForFunction(()=>window.OLEvidenceProvenance&&window.OLExploreTabs&&window.OLResultSummary,{timeout:60000});await p.evaluate(async()=>{const reg=await OLEvidence.api.loadRegistry();const e=reg.entries.find(e=>e.kind==='product');if(!e)throw Error('No production report available for integration check');OLEvidence.api.openTestSheet(e)});await p.locator('.ol-provenance-context').waitFor({state:'attached'});assert.match(await p.locator('.ol-provenance-context').textContent(),/Historical product report/);assert.match(await p.locator('.ol-provenance-context').textContent(),/current scanned package or lot/);console.log(JSON.stringify({viewport,scopeLabels:'passed',sourceMetadata:'passed',productionReportPath:'passed',scope:'Local Chromium; not current-package, clinical, deployed-site or phone verification'}))}finally{await context.close()}}}finally{await browser.close()}})().catch(e=>{console.error(e);process.exitCode=1});
+          JS
+      - name: Commit page connection only after checks pass
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- index.html
+          git commit -m 'Connect evidence provenance without changing lab results or matching'
+          git push origin HEAD:main
+          echo "Page connection: $(git rev-parse HEAD). Local model and browser checks passed. Deployment and physical-phone verification remain pending." >> "$GITHUB_STEP_SUMMARY"
