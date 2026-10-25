@@ -1,0 +1,88 @@
+name: Activate comparison button after source and browser checks
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/activate-food-comparison.yml', 'comparison-source.js']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: activate-food-comparison
+  cancel-in-progress: false
+jobs:
+  activate:
+    if: github.repository == 'jessepringle13-bit/OpenLabel' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Prepare guarded source-button connection
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 <<'PY'
+          from pathlib import Path
+          import hashlib,re,subprocess
+          p=Path('saved-food-comparison.js');b=p.read_bytes()
+          assert hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()=='8364e8e0f2440e22a93063fa919f70f5758e8105','Saved picker changed; review before activation'
+          s=b.decode()
+          def replace(old,new):
+           global s
+           assert s.count(old)==1,'Activation anchor changed'
+           s=s.replace(old,new,1)
+          replace('signature=JSON.stringify(rows);','signature=JSON.stringify([rows,!!root.OLComparisonSource]);')
+          old='controller=ui.mount(holder,{candidates:rows,engine:engine});'
+          new="var client=root.OLComparisonSource&&root.OLComparisonSource.create(root.fetch.bind(root),engine,function(id){var current;try{current=JSON.parse(root.localStorage.getItem(KEY)||'{}')}catch(e){return null}var eligible=savedCandidates(current,engine.gtin).find(function(r){return r.id===String(id)}),p=eligible&&current.live[id];return p&&typeof p.code==='string'?{id:String(id),barcode:p.code}:null});controller=ui.mount(holder,{candidates:rows,engine:engine,loadRecord:client?client.loadRecord:null});"
+          replace(old,new)
+          replace('Selection does not verify a current package.', 'Selection does not verify a current package. Clicking Compare sends the two selected barcodes to Open Food Facts; no saved preferences are sent. Many source records may be unavailable in this early comparison release.')
+          subprocess.run(['node','--check'],input=s,text=True,check=True);p.write_text(s)
+          p=Path('index.html');s=p.read_text();source='<script src="comparison-source.js?v=20261025-comparesource1"></script>'
+          assert 'src="comparison-source.js' not in s,'Source already connected; review versions'
+          matches=re.findall(r'<script src="saved-food-comparison\.js\?v=[^"]+"></script>',s)
+          if matches:
+           assert len(matches)==1 and s.count('src="product-comparison.js')==1 and s.count('src="comparison-ui.js')==1
+           s=s.replace(matches[0],source+'<script src="saved-food-comparison.js?v=20261025-savedcompare2"></script>',1)
+          else:
+           anchor='<script src="evidence-provenance.js?v=20261025-provenance1"></script>'
+           assert s.count(anchor)==1 and 'src="product-comparison.js' not in s and 'src="comparison-ui.js' not in s
+           scripts='<script src="product-comparison.js?v=20261025-compare1"></script><script src="comparison-ui.js?v=20261025-compare1"></script>'+source+'<script src="saved-food-comparison.js?v=20261025-savedcompare2"></script>'
+           s=s.replace(anchor,anchor+scripts,1)
+          p.write_text(s)
+          fixture='''<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"></head><body><section id="library"><div id="savedArea"></div></section><script>window.fixtureState={saved:['a','b'],history:[],live:{a:{id:'a',code:'012345678905',live:true,name:'Fictional A',brand:'Fixture A',category:'Food'},b:{id:'b',code:'036000291452',live:true,name:'Fictional B',brand:'Fixture B',category:'Food'}}};localStorage.setItem('openlabel-calm-dock-v1',JSON.stringify(fixtureState));window.fixtureSnapshot=localStorage.getItem('openlabel-calm-dock-v1');</script><script src="product-comparison.js"></script><script src="comparison-ui.js"></script><script src="comparison-source.js"></script><script src="saved-food-comparison.js"></script></body></html>'''
+          Path('__comparison-button-probe.html').write_text(fixture)
+          PY
+          node --check comparison-source.js
+          node tests/product-comparison.test.cjs
+          node tests/saved-food-comparison.test.cjs
+          node <<'JS'
+          const assert=require('node:assert/strict'),m=require('./comparison-source.js'),engine=require('./product-comparison.js'),candidate={id:'a',barcode:'012345678905'},at='2026-10-25T00:00:00Z';const raw=()=>({status:'success',product:{code:candidate.barcode,product_type:'food',categories_tags:['en:breads'],nutrition:{input_sets:[{source:'packaging',preparation:'as_sold',per:'100g',nutrients:{sodium:{value:0,unit:'mg'}}}]}}});const normalize=x=>m.normalize(x,candidate,engine,at);assert.equal(normalize(raw()).sodium.per100g.amount,0);let x=raw();delete x.product.nutrition;assert.deepEqual(normalize(x).sodium,{});x=raw();x.product.nutrition.input_sets[0].preparation='prepared';assert.equal(normalize(x).preparation,'unknown');x=raw();x.product.code='036000291452';assert.throws(()=>normalize(x));x=raw();x.product.nutrition.input_sets[0].nutrients.sodium.modifier='<';assert.deepEqual(normalize(x).sodium,{});x=raw();x.product.nutrition.input_sets[0].per='100ml';assert(normalize(x).sodium.per100ml);x=raw();x.product.nutrition.input_sets[0].nutrients.sodium={value_computed:120,unit:'mg'};assert.deepEqual(normalize(x).sodium,{});x=raw();let extra=structuredClone(x.product.nutrition.input_sets[0]);extra.nutrients.sodium.value=3;x.product.nutrition.input_sets.push(extra);assert.deepEqual(normalize(x).sodium,{});(async()=>{const client=m.create(async()=>({ok:true,json:async()=>raw()}),engine,()=>candidate,{now:()=>at});assert.equal((await client.loadRecord('a')).id,'a');const fail=m.create(async()=>({ok:false,status:503}),engine,()=>candidate);await assert.rejects(fail.loadRecord('a'));const stalled=m.create(()=>new Promise(()=>{}),engine,()=>candidate,{timeoutMs:5});await assert.rejects(stalled.loadRecord('a'));const ctl=new AbortController();ctl.abort();await assert.rejects(client.loadRecord('a',{signal:ctl.signal}));console.log('Actual-engine source normalization and mocked transport checks passed; no live source verification.');})().catch(e=>{console.error(e);process.exitCode=1});
+          JS
+      - name: Browser-check comparison, failure and selection-change paths
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PLAYWRIGHT_BROWSERS_PATH="$RUNNER_TEMP/comparison-button-browsers"
+          npm install --prefix "$RUNNER_TEMP/comparison-button-test" playwright
+          "$RUNNER_TEMP/comparison-button-test/node_modules/.bin/playwright" install --with-deps chromium
+          python3 -m http.server 8765 --bind 127.0.0.1 > "$RUNNER_TEMP/comparison-button-server.log" 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          for i in {1..30}; do if curl --fail --silent http://127.0.0.1:8765/ > /dev/null; then break; fi; sleep 1; done
+          NODE_PATH="$RUNNER_TEMP/comparison-button-test/node_modules" node <<'JS'
+          const assert=require('node:assert/strict'),{chromium}=require('playwright');(async()=>{const browser=await chromium.launch();try{for(const viewport of [{width:390,height:844},{width:1280,height:900}]){let mode='ok',calls=0;const context=await browser.newContext({viewport});try{const p=await context.newPage();await p.route('**/*',async route=>{const url=new URL(route.request().url());if(url.origin==='http://127.0.0.1:8765')return route.continue();if(url.origin!=='https://world.openfoodfacts.org'||!url.pathname.startsWith('/api/v3/product/'))return route.abort();calls++;const selected=mode;if(selected==='slow')await new Promise(r=>setTimeout(r,500));try{if(selected==='fail')return await route.fulfill({status:503,body:'unavailable'});const code=decodeURIComponent(url.pathname.split('/').pop()),value=code==='012345678905'?200:120;const product={code,product_type:'food',product_name:code==='012345678905'?'Fictional A':'Fictional B',brands:'Fixture brand',categories_tags:['en:breads'],nutrition:{input_sets:[{source:'packaging',preparation:'as_sold',per:'100g',nutrients:selected==='missing'?{}:{sodium:{value,unit:'mg'}}}]}};await route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({status:'success',product})})}catch(e){}});await p.goto('http://127.0.0.1:8765/__comparison-button-probe.html');await p.locator('#olSavedFoodComparison > summary').click();const selects=p.locator('.ol-comparison-picker select'),button=p.locator('.ol-comparison-picker button'),status=p.locator('.ol-comparison-picker [role=status]');assert.equal(calls,0);await selects.nth(0).selectOption('a');await selects.nth(1).selectOption('b');assert.equal(await button.isEnabled(),true);await button.click();await p.waitForFunction(()=>document.querySelector('.ol-product-comparison table'));assert.match(await p.locator('.ol-product-comparison').textContent(),/80 mg/);assert.equal(calls,2);assert.equal(await p.evaluate(()=>localStorage.getItem('openlabel-calm-dock-v1')===fixtureSnapshot),true);await selects.nth(2).selectOption('per100ml');assert.equal(await p.locator('.ol-product-comparison').count(),0);await button.click();await p.waitForFunction(()=>document.querySelector('.ol-product-comparison')?.textContent.includes('Comparison unavailable'));assert.equal(await p.locator('.ol-product-comparison table').count(),0);await selects.nth(2).selectOption('per100g');mode='fail';await button.click();await p.waitForFunction(()=>document.querySelector('.ol-comparison-picker [role=status]').textContent.includes('Could not establish'));assert.equal(await p.locator('.ol-product-comparison table').count(),0);assert.equal(await button.isEnabled(),true);mode='slow';await button.click();await selects.nth(1).selectOption('a');await p.waitForTimeout(700);assert.equal(await p.locator('.ol-product-comparison').count(),0);assert.equal(await button.isDisabled(),true);mode='missing';await selects.nth(1).selectOption('b');await button.click();await p.waitForFunction(()=>document.querySelector('.ol-product-comparison')?.textContent.includes('Comparison unavailable'));assert.equal(await p.locator('.ol-product-comparison table').count(),0);await p.evaluate(()=>localStorage.clear());await p.goto('http://127.0.0.1:8765/',{waitUntil:'domcontentloaded'});await p.waitForFunction(()=>window.OLComparisonSource&&window.OLSavedFoodComparison&&window.OLComparisonUI&&window.OLExploreTabs,{timeout:60000});console.log(JSON.stringify({viewport,comparisonButton:'passed',failureAndStaleSelection:'passed',sourceRequests:'mocked',scope:'Not live API/CORS, current-label, deployed-site or physical-phone verification'}))}finally{await context.close()}}}finally{await browser.close()}})().catch(e=>{console.error(e);process.exitCode=1});
+          JS
+      - name: Commit activation only after checks pass
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- index.html saved-food-comparison.js
+          git commit -m 'Wire saved-food comparison button to explicit source data'
+          git push origin HEAD:main
+          echo "Activation commit: $(git rev-parse HEAD). Tests used synthetic source responses. Live API compatibility, data coverage, deployment and phone checks remain pending." >> "$GITHUB_STEP_SUMMARY"
