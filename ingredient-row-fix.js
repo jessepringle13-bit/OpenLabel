@@ -1,31 +1,15 @@
-(function(){'use strict';
-var rules=[
-[/^(?:cyanocobalamin|methylcobalamin|hydroxycobalamin|hydroxocobalamin|adenosylcobalamin|vitamin b12|cobalamin)$/i,'Vitamin B12'],
-[/^(?:vitamin d|vitamin d2|vitamin d3|ergocalciferol|cholecalciferol)$/i,'Vitamin D'],
-[/^(?:folic acid|folate|vitamin b9|(?:l-)?(?:5-)?methylfolate|5-mthf|l-5-mthf|levomefolate(?: calcium)?)$/i,'Folate'],
-[/^magnesium(?: (?:oxide|citrate|chloride|lactate|aspartate|sulfate))?$/i,'Magnesium'],
-[/^(?:vitamin e|mixed tocopherols|(?:d-|dl-)?alpha[- ]tocopher(?:ol|yl acetate|yl succinate))$/i,'Vitamin E'],
-[/^(?:citric acid|lactic acid)$/i,'Acidity control'],
-[/^(?:ascorbic acid|vitamin c)$/i,'Vitamin C / antioxidant'],
-[/^(?:sodium benzoate|potassium sorbate|calcium propionate|sodium nitrite)$/i,'Preservative'],
-[/^(?:soy lecithin|sunflower lecithin|lecithin|lecithins|mono- and diglycerides(?: of fatty acids)?|polysorbate ?80)$/i,'Emulsifier'],
-[/^(?:xanthan gum|guar gum|carrageenan|pectin|gelatin)$/i,'Texture'],
-[/^(?:sodium bicarbonate|baking soda|monocalcium phosphate)$/i,'Leavening'],
-[/^(?:silicon dioxide|calcium silicate)$/i,'Anti-caking'],
-[/^(?:natural flavou?r(?:s|ing)?|artificial flavou?r(?:s|ing)?|spices)$/i,'Flavoring'],
-[/^(?:sugar|sucrose|glucose|fructose|corn syrup|high fructose corn syrup|honey|maple syrup)$/i,'Sweetening'],
-[/^(?:sucralose|aspartame|acesulfame(?: potassium| k)?|saccharin|stevia|steviol glycosides|sorbitol|xylitol|erythritol|maltitol)$/i,'Sweetener'],
-[/^(?:caramel colou?r|annatto(?: extract)?|beta[- ]carotene|red 40|yellow 5|blue 1)$/i,'Color'],
-[/^(?:modified (?:food )?starch|corn starch|tapioca starch)$/i,'Starch'],
-[/^(?:sunflower oil|safflower oil|canola oil|rapeseed oil|soybean oil|soya oil|corn oil|olive oil|coconut oil|palm oil|vegetable oil)$/i,'Oil'],
-[/^(?:salt|sea salt|sodium chloride)$/i,'Salt'],
-[/^(?:water|filtered water)$/i,'Liquid base']
-];
-var unspecific=[/^(?:vitamin b12|cobalamin|vitamin d|folate|vitamin b9|magnesium|vitamin e|mixed tocopherols|vegetable oil)$/i];
+(function(root){'use strict';
 function clean(s){return String(s||'').trim().replace(/^[.\s]+|[.\s]+$/g,'').replace(/^ingredients?\s*:\s*/i,'').replace(/^contains?\s+2%\s+or\s+less\s+of\s*:\s*/i,'').trim()}
-function info(s){var t=clean(s),detail=window.OLIngredients&&window.OLIngredients.lookup?window.OLIngredients.lookup(t):null;if(detail&&detail.purpose)return detail.use+(detail.formUnspecified?' · form/source unspecified':'');for(var i=0;i<rules.length;i++)if(rules[i][0].test(t))return rules[i][1]+(unspecific[0].test(t)?' · form/source unspecified':'');var ph=window.OLPurpose&&window.OLPurpose.lookup(t);if(ph&&ph.use)return ph.use;return 'Purpose not yet verified'}
-function applyRow(row){if(row.dataset.olRowFixed)return;var name=row.querySelector('.ol-ing-row-name'),meta=row.querySelector('.ol-ing-row-meta');if(!name||!meta)return;var inf=info(name.textContent),txt=(inf==='Purpose not yet verified'?'':inf+'  ')+'›';row.dataset.olBaseMeta=txt;if(!row.dataset.evidence&&!row.dataset.watchWord)meta.textContent=txt;row.dataset.olRowFixed='1';row.classList.add('ol-ing-neutral')}
-function applySheet(box){if(box.dataset.olColorFixed)return;box.dataset.olColorFixed='1';var name=box.querySelector('h3'),role=box.querySelector('.ol-ing-role');if(!name||!role)return;var rt=role.textContent.trim();if(rt==='Not yet reviewed'||rt==='Common use identified')role.textContent=info(name.textContent).replace(/^Purpose not yet verified$/,'Research review pending');if(!/research review pending/i.test(role.textContent))role.textContent=role.textContent.trim()+' · research review pending';var note=document.createElement('p');note.className='ol-ing-evidence-note';note.textContent='Color is not a verdict. A colored finding requires a source, a stated scope (person, amount or use), and a reason you can inspect. No ingredient gets green or red just because its name or general purpose is known.';box.append(note)}
-var pending=false;function scan(){pending=false;document.querySelectorAll('.ol-ing-row').forEach(applyRow);document.querySelectorAll('.ol-ing-sheet').forEach(applySheet)}
-new MutationObserver(function(){if(!pending){pending=true;requestAnimationFrame(scan)}}).observe(document.body,{childList:true,subtree:true});scan();
-})();
+function describe(label,env){env=env||root;var text=clean(label),api=env.OLIngredients,purpose=env.OLPurpose,detail=api&&api.lookup?api.lookup(text):null,hit=detail&&detail.purpose?detail:(purpose&&purpose.lookup?purpose.lookup(text):null),known=!!(hit&&typeof hit.purpose==='string'&&hit.purpose.trim()),use=known&&typeof hit.use==='string'&&hit.use.trim()?hit.use.trim():null,education=env.OLIngredientEducation,key=education&&education.resolve?education.resolve(text):null,review=key&&education.reviews?education.reviews[key]:null;
+return {known:known,use:use,role:known?((detail&&detail.role)||use||'Common use explained'):'Purpose not yet verified',formUnspecified:!!(detail&&detail.formUnspecified),research:review&&review.status?review.status:(key?'Research coverage incomplete':'Research review pending')};}
+function rowText(d){return (d.use|| (d.known?'Common use explained':'Purpose not yet verified'))+(d.formUnspecified?' · form unspecified':'')+'  ›'}
+function reviewText(d){return (d.known?'Common use explained. ':'Purpose not yet verified. ')+d.research+'. Identity and common-use information are separate from a health assessment of this product.'}
+var api={describe:describe,rowText:rowText,reviewText:reviewText,version:'20261025-status1'};
+if(typeof module==='object'&&module.exports){module.exports=api;return}root.OLIngredientStatus=api;
+var doc=root.document;
+function setText(node,text){if(node.textContent!==text)node.textContent=text}
+function applyRow(row){var name=row.querySelector('.ol-ing-row-name'),meta=row.querySelector('.ol-ing-row-meta');if(!name||!meta)return;var d=describe(name.textContent),text=rowText(d);row.dataset.olBaseMeta=text;if(!row.dataset.evidence&&!row.dataset.watchWord)setText(meta,text);row.dataset.olRowFixed='1';row.classList.add('ol-ing-neutral')}
+function applySheet(box){var name=box.querySelector('h3'),role=box.querySelector('.ol-ing-role');if(!name||!role)return;var d=describe(name.textContent);setText(role,d.role);var status=box.querySelector('.ol-ing-review-status');if(!status){status=doc.createElement('p');status.className='ol-ing-review-status';box.append(status)}setText(status,reviewText(d));var note=box.querySelector('.ol-ing-evidence-note');if(!note){note=doc.createElement('p');note.className='ol-ing-evidence-note';box.append(note)}setText(note,'Color is not a verdict. A colored finding requires a source, a stated scope (person, amount or use), and a reason you can inspect. No ingredient gets green or red just because its name or general purpose is known.');box.dataset.olColorFixed='1'}
+var pending=false;function scan(){pending=false;doc.querySelectorAll('.ol-ing-row').forEach(applyRow);doc.querySelectorAll('.ol-ing-sheet').forEach(applySheet)}
+api.refresh=scan;new MutationObserver(function(){if(!pending){pending=true;root.requestAnimationFrame(scan)}}).observe(doc.body,{childList:true,subtree:true});scan();
+})(typeof window==='object'?window:globalThis);

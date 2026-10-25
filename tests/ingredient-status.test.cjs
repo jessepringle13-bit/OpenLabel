@@ -1,0 +1,31 @@
+'use strict';
+const assert=require('node:assert/strict'),vm=require('node:vm'),fs=require('node:fs'),path=require('node:path');
+const source=fs.readFileSync(path.join(__dirname,'../ingredient-row-fix.js'),'utf8');
+const mod={exports:{}};vm.runInNewContext(source,{module:mod});const api=mod.exports;
+const env={OLIngredients:{lookup:n=>n==='magnesium'?{purpose:'Existing mineral education',use:'Magnesium source',role:'Magnesium · form not specified',formUnspecified:true}:n==='named compound'?{purpose:'Existing named-form explanation',use:'Nutrient source',role:'Named form',formUnspecified:false}:null},OLPurpose:{lookup:n=>n==='salt'?{purpose:'Existing salt explanation',use:'Salt'}:null},OLIngredientEducation:{resolve:n=>n==='magnesium'?'mg':n==='named compound'?'other':null,reviews:{mg:{status:'Partial source review; not clinically reviewed'}}}};
+let checks=0;function check(fn){fn();checks++}
+check(()=>assert.equal(api.describe(' Ingredients: magnesium. ',env).use,'Magnesium source'));
+check(()=>assert.match(api.rowText(api.describe('magnesium',env)),/form unspecified/));
+check(()=>assert.equal(api.describe('magnesium',env).research,'Partial source review; not clinically reviewed'));
+check(()=>assert.doesNotMatch(api.reviewText(api.describe('magnesium',env)),/review pending/));
+check(()=>assert.equal(api.describe('named compound',env).research,'Research coverage incomplete'));
+check(()=>assert.equal(api.describe('salt',env).use,'Salt'));
+check(()=>assert.equal(api.describe('unmatched',env).role,'Purpose not yet verified'));
+check(()=>assert.doesNotMatch(api.rowText(api.describe('unmatched',env)),/undefined/));
+check(()=>assert.equal(api.describe('unmatched',{}).known,false));
+const rows=[],sheets=[],queue=[];let writes=0;
+function text(value){return {get textContent(){return value},set textContent(v){value=v;writes++}}}
+const meta=text('Saved allergy match · check label  ›'),name=text('magnesium');const row={dataset:{evidence:'red'},classList:{add(){}},querySelector:s=>s==='.ol-ing-row-name'?name:meta};rows.push(row);
+const role=text('Not yet reviewed'),title=text('magnesium'),children=[];const box={dataset:{},querySelector:s=>s==='h3'?title:s==='.ol-ing-role'?role:children.find(n=>'.'+n.className===s)||null,append:n=>{children.push(n);writes++}};sheets.push(box);
+const browser={...env,document:{body:{},querySelectorAll:s=>s==='.ol-ing-row'?rows:sheets,createElement:()=>text('')},requestAnimationFrame:fn=>queue.push(fn)};
+vm.runInNewContext(source,{window:browser,MutationObserver:function(){this.observe=()=>{}}});
+check(()=>assert.equal(meta.textContent,'Saved allergy match · check label  ›'));
+check(()=>assert.match(row.dataset.olBaseMeta,/Magnesium source/));
+check(()=>assert.equal(role.textContent,'Magnesium · form not specified'));
+check(()=>assert.equal(children.filter(n=>n.className==='ol-ing-review-status').length,1));
+const before=writes;browser.OLIngredientStatus.refresh();check(()=>assert.equal(writes,before));
+delete row.dataset.evidence;row.dataset.watchWord='1';meta.textContent='Your trigger word · check label  ›';browser.OLIngredientStatus.refresh();check(()=>assert.equal(meta.textContent,'Your trigger word · check label  ›'));
+delete row.dataset.watchWord;browser.OLIngredientStatus.refresh();check(()=>assert.equal(meta.textContent,row.dataset.olBaseMeta));
+name.textContent='unmatched';title.textContent='unmatched';browser.OLIngredientStatus.refresh();check(()=>assert.equal(role.textContent,'Purpose not yet verified'));
+check(()=>assert.equal(children.length,2));
+console.log(JSON.stringify({checksPassed:checks,scope:'Isolated resolver and minimal-DOM formatter tests; not a full browser or device test'}));
