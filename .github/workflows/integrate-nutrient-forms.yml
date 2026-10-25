@@ -1,0 +1,73 @@
+name: Integrate nutrient form drafts after browser checks
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/integrate-nutrient-forms.yml', 'nutrient-form-drafts.js']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: integrate-nutrient-forms
+  cancel-in-progress: false
+jobs:
+  integrate:
+    if: github.repository == 'jessepringle13-bit/OpenLabel' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Prepare guarded loader and Learn changes
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          import hashlib,subprocess
+          hashes={'ingredient-loader.js':'2a8f235973d270940bb35cce9fceb4162aa257e0','learn-search.js':'17b28e1eeca0b8edd2a684ea972aa26a98d4ddbf','index.html':'d45d78391ee67196e9ccf254153115cece1678c6','evidence.js':'efaf4034a8c9a5222e067578d6194298d3cab2de','result.js':'988c22115707886ca4e64116dc97cc6584834b0e'}
+          planned={}
+          for name,expected in hashes.items():
+           b=Path(name).read_bytes()
+           assert hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()==expected,'Source changed: '+name
+           planned[name]=b.decode()
+          def replace(name,old,new):
+           assert planned[name].count(old)==1,'Anchor changed: '+name
+           planned[name]=planned[name].replace(old,new,1)
+          replace('ingredient-loader.js','"folate-b12-forms.js","learn-search.js"','"folate-b12-forms.js","nutrient-form-drafts.js","learn-search.js"')
+          replace('learn-search.js','return root.OLBVitaminForms?root.OLBVitaminForms.catalog(entries):entries}',"if(root.OLBVitaminForms)entries=root.OLBVitaminForms.catalog(entries);return root.OLNutrientFormDrafts?root.OLNutrientFormDrafts.catalog(entries):entries}")
+          replace('learn-search.js','mode(false);var attempts=0',"root.addEventListener('ol-nutrient-form-drafts-ready',function(){if(!panel.hidden)render()});mode(false);var attempts=0")
+          replace('learn-search.js','incomplete=!root.OLNutritionEducation||!root.OLIngredientEducation||!root.OLIngredients;', 'incomplete=!root.OLNutritionEducation||!root.OLIngredientEducation||!root.OLIngredients||!root.OLNutrientFormDrafts||!root.OLNutrientFormDrafts.ready;')
+          for name,text in planned.items():
+           text=text.replace('20261024-bvitamins6','20261024-nutrientforms2')
+           if name.endswith('.js'):subprocess.run(['node','--check'],input=text,text=True,check=True)
+           Path(name).write_bytes(text.encode())
+          PY
+          node --check nutrient-form-drafts.js
+          node <<'JS'
+          const fs=require('node:fs'),assert=require('node:assert/strict'),m=require('./nutrient-form-drafts.js'),all=m.files.map(p=>JSON.parse(fs.readFileSync(p,'utf8'))),a=m.create(all.slice(0,3),all.slice(3));assert.equal(a.entries.length,12);assert.equal(a.lookup('pyridoxal 5′-phosphate').batchRecord.id,'pyridoxal_5_phosphate');assert.equal(a.lookup('Vitamin D2 (as cholecalciferol)'),null);assert.equal(a.lookup('Vitamin D (as calcitriol)'),null);assert.equal(a.lookup('Vitamin D (as cholecalciferol)').batchRecord.id,'vitamin_d3');assert.equal(a.lookup('niacinamide'),a.lookup('nicotinamide'));assert.equal(a.catalog(a.catalog([])).length,12);assert(a.catalog([{id:'inositol',title:'Inositol hexanicotinate'}]).some(e=>e.id==='inositol'));assert.match(a.lookup('p-5-p').record.form[0],/17.11/);assert.match(a.lookup('p-5-p').record.high[0],/tingling/);for(const e of a.entries)for(const c of Object.values(e.record))assert(e.sources[c[1]]);console.log('Production JSON adapter checks passed; not clinical review.');
+          JS
+          node tests/results-accordions.test.cjs
+      - name: Browser-check local mobile and desktop app
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PLAYWRIGHT_BROWSERS_PATH="$RUNNER_TEMP/nutrient-browsers"
+          npm install --prefix "$RUNNER_TEMP/nutrient-test" playwright
+          "$RUNNER_TEMP/nutrient-test/node_modules/.bin/playwright" install --with-deps chromium
+          python3 -m http.server 8765 --bind 127.0.0.1 > "$RUNNER_TEMP/nutrient-server.log" 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          NODE_PATH="$RUNNER_TEMP/nutrient-test/node_modules" node <<'JS'
+          const assert=require('node:assert/strict'),{chromium}=require('playwright');(async()=>{const browser=await chromium.launch();try{for(const viewport of [{width:390,height:844},{width:1280,height:900}]){const context=await browser.newContext({viewport});try{const p=await context.newPage();p.setDefaultTimeout(30000);await p.route('**/*',r=>new URL(r.request().url()).origin==='http://127.0.0.1:8765'?r.continue():r.abort());await p.goto('http://127.0.0.1:8765/',{waitUntil:'domcontentloaded'});await p.waitForFunction(()=>window.OLNutrientFormDrafts&&OLNutrientFormDrafts.ready&&window.OLLearn,{timeout:60000});assert.equal(await p.evaluate(()=>OLNutrientFormDrafts.adapter.entries.length),12);assert.equal(await p.evaluate(()=>OLMagnesiumForms.catalog([]).length),16);assert.equal(await p.evaluate(()=>OLBVitaminForms.catalog([]).length),8);if(await p.locator('#closeSheet').isVisible())await p.locator('#closeSheet').click();await p.locator('.nav-pill[data-go="explore"]').click();await p.locator('#ol-explore-tab-learn').click();const entries=await p.evaluate(()=>OLNutrientFormDrafts.adapter.entries.map(e=>({title:e.title,term:e.aliases[0]})));for(const e of entries){await p.locator('#exploreSearch').fill(e.title);await p.locator('.learn-row').getByText(e.title+' ›',{exact:true}).click();const dialog=p.locator('.ol-inline-detail > .learn-dialog');await dialog.waitFor({state:'visible'});await dialog.locator('.nutrient-form-references').waitFor();assert(await dialog.locator('a').count()>0);await p.getByRole('button',{name:/Back to Learn/}).click();await dialog.waitFor({state:'hidden'})}for(const e of entries){await p.evaluate(term=>{const n=document.createElement('div');n.id='nf-probe';n.append(OLIngredients.render(term));document.body.append(n)},e.term);const row=p.locator('#nf-probe .ol-ing-row').first();if(await row.count()){await row.click();await p.locator('.ol-ing-sheet .nutrient-form-context').waitFor();assert(await p.locator('.nutrient-form-context .nutrient-form-disclosure').count());await p.locator('.ol-ing-close').click()}else throw Error('Scanned row unavailable: '+e.term);await p.locator('#nf-probe').evaluate(n=>n.remove())}console.log(JSON.stringify({viewport,entries:12,status:'passed',scope:'Local Chromium; not physical phone or deployed site'}))}finally{await context.close()}}}finally{await browser.close()}})().catch(e=>{console.error(e);process.exitCode=1});
+          JS
+      - name: Commit integration only after checks pass
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- index.html evidence.js result.js ingredient-loader.js learn-search.js
+          git commit -m 'Connect nutrient form drafts to Learn and ingredient sheets'
+          git push origin HEAD:main
+          echo "Integration commit: $(git rev-parse HEAD). Browser checks were local Chromium only. Deployment and physical-phone verification remain pending." >> "$GITHUB_STEP_SUMMARY"
