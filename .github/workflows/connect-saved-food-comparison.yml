@@ -2,7 +2,7 @@ name: Connect saved food comparison candidates after browser checks
 on:
   push:
     branches: [main]
-    paths: ['.github/workflows/connect-saved-food-comparison.yml', 'saved-food-comparison.js', 'tests/saved-food-comparison.test.cjs']
+    paths: ['.github/workflows/connect-saved-food-comparison.yml', '.github/scripts/comparison_wiring.py', 'tests/comparison_wiring_test.py', 'saved-food-comparison.js', 'tests/saved-food-comparison.test.cjs']
   workflow_dispatch:
 permissions:
   contents: write
@@ -30,12 +30,10 @@ jobs:
           node --check saved-food-comparison.js
           node tests/product-comparison.test.cjs
           node tests/saved-food-comparison.test.cjs
+          python3 tests/comparison_wiring_test.py
+          python3 .github/scripts/comparison_wiring.py
           python3 <<'PY'
           from pathlib import Path
-          p=Path('index.html');s=p.read_text();anchor='<script src="evidence-provenance.js?v=20261025-provenance1"></script>'
-          assert s.count(anchor)==1 and 'saved-food-comparison.js' not in s and 'src="product-comparison.js' not in s and 'src="comparison-ui.js' not in s,'Comparison bootstrap changed; review before editing'
-          scripts='<script src="product-comparison.js?v=20261025-compare1"></script><script src="comparison-ui.js?v=20261025-compare1"></script><script src="saved-food-comparison.js?v=20261025-savedcompare1"></script>'
-          p.write_text(s.replace(anchor,anchor+scripts,1))
           fixture='''<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"></head><body><section id="library"><h2>Saved</h2><div id="savedArea"></div></section><script>window.fixtureState={saved:['a','b','supplement'],history:[],live:{a:{id:'a',code:'012345678905',live:true,name:'Fictional food A',brand:'Example A',category:'Food'},b:{id:'b',code:'036000291452',live:true,name:'Fictional food B',brand:'Example B',category:'Food'},supplement:{id:'supplement',code:'012345678905',live:true,name:'Fictional supplement',brand:'Example S',category:'Supplements'}}};localStorage.setItem('openlabel-calm-dock-v1',JSON.stringify(fixtureState));window.fixtureSavedSnapshot=localStorage.getItem('openlabel-calm-dock-v1');</script><script src="product-comparison.js"></script><script src="comparison-ui.js"></script><script src="saved-food-comparison.js"></script></body></html>'''
           Path('__saved-food-comparison-probe.html').write_text(fixture)
           PY
@@ -60,6 +58,10 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -- index.html
-          git commit -m 'Wire saved food candidates into the comparison picker'
-          git push origin HEAD:main
-          echo "Saved-picker connection: $(git rev-parse HEAD). Nutrition comparison remains disabled pending its source adapter. Deployment and phone checks remain pending." >> "$GITHUB_STEP_SUMMARY"
+          if git diff --cached --quiet -- index.html; then
+            echo "Comparison page wiring already present; no commit needed. Browser checks passed in this run; deployment and phone checks remain pending." >> "$GITHUB_STEP_SUMMARY"
+          else
+            git commit -m 'Wire saved food candidates into the comparison picker'
+            git push origin HEAD:main
+            echo "Saved-picker connection: $(git rev-parse HEAD). Browser checks passed in this run; live nutrition, deployment and phone checks remain separate." >> "$GITHUB_STEP_SUMMARY"
+          fi
