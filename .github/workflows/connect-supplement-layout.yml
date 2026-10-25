@@ -1,0 +1,84 @@
+name: Connect supplement layout after transition checks
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/connect-supplement-layout.yml', 'supplements/layout.js']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: connect-supplement-layout
+  cancel-in-progress: false
+jobs:
+  connect:
+    if: github.repository == 'jessepringle13-bit/OpenLabel' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Prepare guarded view changes and run supplement tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check supplements/layout.js
+          python3 <<'PY'
+          from pathlib import Path
+          import hashlib,re,subprocess
+          expected={'supplements/view.js':'3afd01e6c9c6fba4879d21b4bfe08f2d276fcff4','supplements/app.js':'b829c663292568d0ad5cbb57dbfa75f2ee37797b'}
+          planned={}
+          for name,sha in expected.items():
+           b=Path(name).read_bytes();assert hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()==sha,'Source changed: '+name
+           planned[name]=b.decode()
+          def change(name,old,new):
+           assert planned[name].count(old)==1,'Anchor changed: '+name
+           planned[name]=planned[name].replace(old,new,1)
+          change('supplements/view.js','render:render,presentation:presentation', 'render:function(p){return root.OLSupplementLayout?root.OLSupplementLayout.render(p,render):render(p)},presentation:presentation')
+          change('supplements/view.js',"&&(q.consistent===true||q.operator==='=');if(!readable)","&&(q.consistent===true||q.operator==='=')&&(!q.operator||q.operator==='=');if(!readable)")
+          change('supplements/view.js',"basis:q.consistent?'Per '+text(q.servingQuantity)+' '+text(q.servingUnit):'Serving basis needs confirmation'", "basis:q.consistent===true&&Number.isFinite(q.servingQuantity)&&q.servingQuantity>0&&typeof q.servingUnit==='string'&&q.servingUnit.trim()?'Per '+text(q.servingQuantity)+' '+text(q.servingUnit):'Serving basis needs confirmation'")
+          change('supplements/view.js','declared:!!q.consistent',"declared:q.consistent===true&&Number.isFinite(q.servingQuantity)&&q.servingQuantity>0&&typeof q.servingUnit==='string'&&!!q.servingUnit.trim()")
+          change('supplements/app.js','?v=20261013-integration1','?v=20261025-supplementlayout1')
+          s=Path('index.html').read_text();anchors=re.findall(r'<script src="supplements/app\.js\?v=[^"]+"></script>',s)
+          assert len(anchors)==1 and 'supplements/layout.js' not in s,'Supplement bootstrap changed'
+          replacement='<script src="supplements/layout.js?v=20261025-supplementlayout1"></script>'+re.sub(r'\?v=[^"]+','?v=20261025-supplementlayout1',anchors[0])
+          planned['index.html']=s.replace(anchors[0],replacement,1)
+          for name,text in planned.items():
+           if name.endswith('.js'):subprocess.run(['node','--check'],input=text,text=True,check=True)
+          for name,text in planned.items():Path(name).write_text(text)
+          fixture='''<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"></head><body><div id="res"></div><div id="olPanel"><div class="olp-body"><div id="macro"><div class="mac">Food macros</div></div><details class="olr"><summary class="t">Recalls</summary></details><div id="fixtureHost"></div></div></div><script src="supplements/layout.js"></script><script src="supplements/view.js"></script><script>window.fixtureProduct={id:'fixture-only',name:'Fictional capsules',brand:'Example brand',category:'Supplements',sourceUrl:'https://example.org/label',supplement:{source:'Fictional test fixture',labelId:'fixture-only',version:'example',retrievedAt:'not a real retrieval',servings:[{minQuantity:2,maxQuantity:2,unit:'capsules'}],servingsPerContainer:30,active:[{name:'Example nutrient (form: Example compound)',depth:0,quantities:[{amount:120,unit:'mg',operator:'=',consistent:true,servingQuantity:2,servingUnit:'capsules'}]}],other:'Example other ingredient',otherVerbatim:true,issues:[]}};window.showFixture=function(p){OLSupplementView.presentation(document.getElementById('res'),p);const host=document.getElementById('fixtureHost');host.replaceChildren();if(OLSupplementView.isSupplement(p))host.append(OLSupplementView.render(p));else host.textContent='Food result';};</script></body></html>'''
+          Path('__supplement-layout-probe.html').write_text(fixture)
+          PY
+          node supplements/view-tests.cjs
+          node supplements/lookup-tests.cjs
+          node tests/supplement-parser.test.js
+          node <<'JS'
+          const a=require('node:assert/strict'),m=require('./supplements/layout.js');a.match(m.serving(null),/not confirmed/);a.match(m.serving({servings:[{minQuantity:1,maxQuantity:4,unit:'capsules'}]}),/range/);a.match(m.serving({servings:[{minQuantity:2,maxQuantity:2,unit:'capsules'}]}),/2 capsules/);a.match(m.serving({servings:[{},{}]}),/Multiple/);a.equal(m.amount(null)[0],'Amount not confirmed');a.equal(m.amount({amount:0,unit:'mg',operator:'='})[0],'0 mg (source-reported)');a.match(m.amount({amount:120,unit:'mg',consistent:true})[1],/needs confirmation/);a.equal(m.amount({amount:120,unit:'mg',consistent:true,servingQuantity:2,servingUnit:'capsules'})[1],'Per 2 capsules');a.equal(m.amount({amount:3,unit:'mg',operator:'<',consistent:true})[0],'Amount not confirmed');a.equal(m.amount({amount:NaN,unit:'mg',operator:'='})[0],'Amount not confirmed');a.equal(m.amount({amount:1,unit:'unknown',operator:'='})[0],'Amount not confirmed');console.log('Eleven serving/amount assertions passed.');
+          JS
+      - name: Browser-check food, supplement and missing-label transitions
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PLAYWRIGHT_BROWSERS_PATH="$RUNNER_TEMP/supplement-layout-browsers"
+          npm install --prefix "$RUNNER_TEMP/supplement-layout-test" playwright
+          "$RUNNER_TEMP/supplement-layout-test/node_modules/.bin/playwright" install --with-deps chromium
+          python3 -m http.server 8765 --bind 127.0.0.1 > "$RUNNER_TEMP/supplement-layout-server.log" 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          for i in {1..30}; do if curl --fail --silent http://127.0.0.1:8765/ > /dev/null; then break; fi; sleep 1; done
+          NODE_PATH="$RUNNER_TEMP/supplement-layout-test/node_modules" node <<'JS'
+          const assert=require('node:assert/strict'),{chromium}=require('playwright');(async()=>{const browser=await chromium.launch();try{for(const viewport of [{width:390,height:844},{width:1280,height:900}]){const context=await browser.newContext({viewport});try{const p=await context.newPage();await p.route('**/*',r=>new URL(r.request().url()).origin==='http://127.0.0.1:8765'?r.continue():r.abort());await p.goto('http://127.0.0.1:8765/__supplement-layout-probe.html');await p.evaluate(()=>showFixture({category:'Food'}));assert.equal(await p.locator('#macro').isVisible(),true);await p.evaluate(()=>showFixture(fixtureProduct));assert.equal(await p.locator('#macro').isVisible(),false);assert.equal(await p.locator('details.olr').isVisible(),true);assert.match(await p.locator('.ol-supplement-overview').innerText(),/120 mg/);assert.match(await p.locator('.ol-supplement-overview').innerText(),/Per 2 capsules/);assert.match(await p.locator('.ol-supplement-overview').innerText(),/Named form: Example compound/);assert.equal(await p.locator('#olSupplementFacts').count(),1);await p.evaluate(()=>showFixture({category:'Supplements',supplementLookupState:'source-unavailable'}));assert.match(await p.locator('.ol-supplement-overview').innerText(),/Complete label unavailable/);assert(!/120 mg|Example compound/.test(await p.locator('#olSupplementFacts').innerText()));await p.evaluate(()=>{const x=structuredClone(fixtureProduct);x.supplement.servings=[{minQuantity:1,maxQuantity:4,unit:'capsules'}];x.supplement.active[0].quantities=[{amount:0,unit:'mg',operator:'=',consistent:false}];showFixture(x)});assert.match(await p.locator('.ol-supplement-overview').innerText(),/range or unresolved/);assert.match(await p.locator('.ol-supplement-overview').innerText(),/0 mg/);assert.match(await p.locator('.ol-supplement-overview').innerText(),/Serving basis needs confirmation/);await p.evaluate(()=>showFixture({category:'Food'}));assert.equal(await p.locator('#macro').isVisible(),true);assert.equal(await p.locator('#olSupplementFacts').count(),0);await p.evaluate(()=>{document.getElementById('macro').hidden=true;showFixture(fixtureProduct);showFixture({category:'Food'})});assert.equal(await p.locator('#macro').isVisible(),false);await p.goto('http://127.0.0.1:8765/',{waitUntil:'domcontentloaded'});await p.waitForFunction(()=>window.OLSupplementLayout&&window.OLSupplementView&&window.OLExploreTabs&&window.OLEvidenceProvenance,{timeout:60000});assert.equal(await p.evaluate(()=>OLSupplementView.quantity({amount:1,unit:'mg',consistent:true}).basis),'Serving basis needs confirmation');for(const id of ['recalls','labs','products','learn'])assert.equal(await p.locator('#ol-explore-tab-'+id).count(),1);console.log(JSON.stringify({viewport,supplementRendererTransitions:'passed',sourceBootstrap:'passed',scope:'Local Chromium fixture and app module availability; not live label lookup, actual scan, clinical or physical-phone verification'}))}finally{await context.close()}}}finally{await browser.close()}})().catch(e=>{console.error(e);process.exitCode=1});
+          JS
+      - name: Commit integration only after checks pass
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- index.html supplements/app.js supplements/view.js
+          git commit -m 'Connect supplement-specific layout and guarded serving display'
+          git push origin HEAD:main
+          echo "Integration commit: $(git rev-parse HEAD). Renderer transition/browser checks passed; live product, deployment and physical-phone checks remain pending." >> "$GITHUB_STEP_SUMMARY"
