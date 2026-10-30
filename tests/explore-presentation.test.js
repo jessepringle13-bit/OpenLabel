@@ -1,7 +1,18 @@
 const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),assert=require('node:assert/strict');
-let count=0;function check(v,m){count++;assert.ok(v,m)}function node(text='',type='button'){const classes=new Set();return {textContent:text,type,dataset:{},classList:{add:v=>classes.add(v),contains:v=>classes.has(v)},onclick:()=>{},classes}}
-const primary=node('Search','submit'),clear=node('Clear'),cancel=node('Cancel'),retry=node('Retry'),buttons=[primary,cancel,clear],handlers=buttons.map(b=>b.onclick),form=node(),input=node(),sample=node(),wrap=node(),heading=node('Sample products — illustrative, not live matches'),styles=[],callbacks=[];
-form.querySelectorAll=()=>buttons;input.closest=()=>form;sample.parentElement=wrap;wrap.querySelector=s=>s==='h2'?heading:null;
-const explore={dataset:{},contains:n=>n===form,querySelector:()=>null,querySelectorAll:()=>[...buttons,retry]},document={getElementById:id=>({explore,exploreSearch:input,exploreResults:sample})[id]||null,createElement:()=>({textContent:''}),head:{appendChild:s=>styles.push(s)}};
-const context={document,MutationObserver:class{constructor(f){callbacks.push(f)}observe(){}},requestAnimationFrame:f=>f()};vm.createContext(context);const source=fs.readFileSync(path.join(__dirname,'..','explore-layout.js'),'utf8');vm.runInContext(source,context);
-check(form.classList.contains('ol-product-search'),'Scoped product form');check(primary.classList.contains('ol-search-primary'),'Primary action identified');check(clear.classList.contains('ol-search-clear'),'Clear action identified');check(cancel.classList.contains('ol-search-cancel'),'Cancel action identified');check(retry.classList.contains('ol-search-retry'),'Retry remains conditional control');check(wrap.dataset.olSamples==='true','Sample wrapper excluded from view');check(buttons.every((b,i)=>b.onclick===handlers[i]),'Existing handlers untouched');check(!/\bfetch\s*\(|\.search\s*\(|addEventListener\(['"]input/.test(source),'No search or automatic request behavior added');const css=styles[0].textContent;check(css.includes('grid-template-columns:repeat(2,minmax(0,1fr))'),'Equal width columns');check(css.includes('grid-column:1/-1;grid-row:1'),'Full width field');check(css.includes('grid-row:2;grid-column:1')&&css.includes('grid-row:2;grid-column:2'),'Actions share a row');check(css.includes('grid-row:3;grid-column:1/-1'),'Cancel spans separate row');check(css.includes('[hidden]{display:none!important}'),'Hidden states preserved');check(css.includes('#categoryChips{display:none!important}'),'Sample category controls excluded');callbacks.forEach(f=>f());check(styles.length===1,'No duplicated style on sync');check(buttons.every((b,i)=>b.onclick===handlers[i]),'Rerender preserves actions');console.log(count+' presentation assertions passed');
+let count=0;function check(v,m){count++;assert.ok(v,m)}
+function node(text=''){const classes=new Set();return {textContent:text,dataset:{},classList:{add:v=>classes.add(v),contains:v=>classes.has(v)},classes}}
+const clear=node('Clear'),form=node(),input=node(),sample=node(),wrap=node(),heading=node('Sample products — illustrative, not live matches'),styles=[],handlers={},timers=[],searches=[];
+input.id='exploreSearch';input.value='';input.closest=()=>form;form.querySelectorAll=()=>[clear];sample.parentElement=wrap;wrap.querySelector=s=>s==='h2'?heading:null;
+const explore={hidden:false,dataset:{},addEventListener:(type,fn)=>{handlers[type]=fn},contains:n=>n===form};
+const document={getElementById:id=>({explore,exploreSearch:input,exploreResults:sample})[id]||null,createElement:()=>({textContent:''}),head:{appendChild:s=>styles.push(s)}};
+const context={document,MutationObserver:class{observe(){}},requestAnimationFrame:f=>f(),setTimeout:(f,ms)=>{timers.push({f,ms});return timers.length},clearTimeout:()=>{},Event:class{}};
+context.window=context;context.OLExploreSearch={search:v=>searches.push(v),cancel(){}};
+vm.createContext(context);vm.runInContext(fs.readFileSync(path.join(__dirname,'..','explore-layout.js'),'utf8'),context);
+check(form.classList.contains('ol-product-search'),'Scoped product form');
+check(wrap.dataset.olSamples==='true','Sample wrapper marked');
+check(styles[0].textContent.includes('.ol-product-search>button{display:none!important}'),'Search buttons hidden');
+input.value='jell-o';handlers.input({target:input});
+check(searches.length===0&&timers.length===1&&timers[0].ms===900,'Typing waits 900 ms before searching products');
+timers[0].f();check(searches.length===1&&searches[0]==='jell-o','Search runs once after the pause');
+input.value='j';handlers.input({target:input});timers[1].f();check(searches.length===1,'One-character text does not search');
+console.log(count+' Explore presentation and debounce assertions passed');
