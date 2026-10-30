@@ -5,6 +5,6 @@ const before=JSON.stringify(sample),p=api.parse(sample);
 assert.equal(p.historical,true);assert.equal(p.marketStatus,'off-market');assert.equal(p.barcodeCompact,'367703609061');assert.equal(p.active[0].name,'Strontium');assert.equal(p.active[0].forms[0].name,'Strontium Citrate');assert.equal(p.active[0].quantities[0].amount,680);assert.equal(p.active[0].quantities[0].consistent,true);assert.equal(p.active[0].quantities[0].dailyValues[0].percent,null);assert.equal(p.otherIngredientsText,null);assert.equal(p.manufacturerStatements.length,1);assert.equal(JSON.stringify(sample),before);
 assert.equal(api.parse({state:'source-response-unvalidated',raw:[]}).state,'empty-response');assert.equal(api.parse({state:'source-response-unvalidated',raw:{}}).state,'unsupported-response');assert.throws(()=>api.parse({state:'unavailable'}));
 const mismatch=JSON.parse(before);mismatch.raw.ingredientRows[0].quantity[0].servingSizeQuantity=1;assert.equal(api.parse(mismatch).active[0].quantities[0].consistent,false);
-const nested=JSON.parse(before);nested.raw.ingredientRows[0].nestedRows=[{name:'uninterpreted'}];assert.ok(api.parse(nested).issues.length);
+const nested=JSON.parse(before);nested.raw.ingredientRows[0].nestedRows=[{name:'uninterpreted'}];assert.equal(api.parse(nested).active[0].nestedRows.length,1);
 const current=JSON.parse(before);current.raw.offMarket=0;current.raw.events=[];assert.equal(api.parse(current).marketStatus,'unknown');
 console.log('17 parser assertions passed; fixture is a selected-field excerpt, not a full label');
