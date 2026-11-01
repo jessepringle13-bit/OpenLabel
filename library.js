@@ -7,10 +7,10 @@
    it does not say whether the package in your hand changed. */
 var KEY='openlabel-calm-dock-v1',SK='openlabel-library-v1',MAXP=60,MAXCHECK=10;
 var API='https://world.openfoodfacts.org/api/v2/product/',FIELDS='code,product_name,product_name_en,brands,ingredients_text,ingredients_text_en,allergens_tags,traces_tags,additives_tags,quantity,serving_size';
-var lib=document.getElementById('library'),saved=document.getElementById('savedArea'),hist=document.getElementById('historyArea'),result=document.getElementById('result');
+var lib=document.getElementById('library'),saved=document.getElementById('savedArea'),hist=document.getElementById('historyArea'),home=document.getElementById('recentArea'),result=document.getElementById('result');
 if(!lib||!saved||!hist)return;
 var sty=document.createElement('style');
-sty.textContent='.lb-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}.lb-tag{display:inline-block;font-size:11px;font-weight:760;line-height:1.2;padding:4px 8px;border-radius:99px;background:var(--sage);color:var(--forest)}.lb-tag.grey{background:#ECEDEA;color:#4C5753}.lb-tag.orange{background:#FBE3D6;color:#7A3A1B}.lb-changes{display:grid;gap:8px}.lb-change{background:#FFF7F2;border:1px solid #F1C9B3;border-radius:16px;padding:12px 14px}.lb-change strong{display:block;color:var(--ink)}.lb-change p{margin:4px 0 0;font-size:13px;color:var(--muted)}.lb-change ul{margin:6px 0 0;padding-left:18px;font-size:13px;color:var(--ink)}.lb-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.lb-actions button{min-height:44px;border-radius:12px;padding:0 14px;background:var(--eucalyptus);color:var(--ivory);font-weight:750}.lb-actions button[disabled]{opacity:.6}.lb-open{margin-top:8px;min-height:44px;border-radius:12px;padding:0 14px;background:var(--eucalyptus);color:var(--ivory);font-weight:750}.lb-change li{margin-bottom:6px}.lb-change li div{font-size:12.5px;color:var(--muted);word-break:break-word}.lb-status{font-size:13px;color:var(--muted);margin:0}';
+sty.textContent='.lb-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}.lb-tag{display:inline-block;font-size:11px;font-weight:760;line-height:1.2;padding:4px 8px;border-radius:99px;background:var(--sage);color:var(--forest)}.lb-tag.grey{background:#ECEDEA;color:#4C5753}.lb-tag.orange{background:#FBE3D6;color:#7A3A1B}.lb-tag.red{background:var(--rb,#FCE9E4);color:var(--rt,#8F2E1E)}.lb-changes{display:grid;gap:8px}.lb-change{background:#FFF7F2;border:1px solid #F1C9B3;border-radius:16px;padding:12px 14px}.lb-change strong{display:block;color:var(--ink)}.lb-change p{margin:4px 0 0;font-size:13px;color:var(--muted)}.lb-change ul{margin:6px 0 0;padding-left:18px;font-size:13px;color:var(--ink)}.lb-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.lb-actions button{min-height:44px;border-radius:12px;padding:0 14px;background:var(--eucalyptus);color:var(--ivory);font-weight:750}.lb-actions button[disabled]{opacity:.6}.lb-open{margin-top:8px;min-height:44px;border-radius:12px;padding:0 14px;background:var(--eucalyptus);color:var(--ivory);font-weight:750}.lb-change li{margin-bottom:6px}.lb-change li div{font-size:12.5px;color:var(--muted);word-break:break-word}.lb-status{font-size:13px;color:var(--muted);margin:0}';
 document.head.appendChild(sty);
 
 function st(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return {}}}
@@ -45,13 +45,14 @@ function onResult(){var id=currentId();if(!id)return;var s=st(),p=(s.live||{})[i
 
 /* Card decoration. index.html builds cards in the same order as state.saved/state.history, skipping ids it cannot resolve. */
 function resolvable(s,id){return !!((s.live||{})[id])||!/^(off-)?\d+$/.test(id)}
-function idsFor(area,s){var src=area===saved?(s.saved||[]):(s.history||[]);return src.filter(function(id){return resolvable(s,id)})}
+function idsFor(area,s){var src=area===saved?(s.saved||[]):area===home?(s.history||[]).slice(0,6):(s.history||[]);return src.filter(function(id){return resolvable(s,id)})}
 function decorate(area){var s=st(),o=ld(),ids=idsFor(area,s),cards=area.querySelectorAll('button.card');
   if(cards.length!==ids.length)return;
   cards.forEach(function(c,i){var id=ids[i],e=o[id],live=!!(s.live||{})[id],box=c.querySelector('.grow');if(!box)return;var oldm=box.querySelector('.lb-meta');if(oldm)oldm.remove();
     var m=el('span','lb-meta');if(e&&e.lastSeen)m.append(el('span','lb-tag grey','Seen '+ago(e.lastSeen)));
     var last=e&&e.changes&&e.changes[0];
     if(last&&!last.dismissed&&(Date.now()-last.at)<30*864e5)m.append(el('span','lb-tag orange','Database record changed '+ago(last.at)));
+    var ac=window.OLAllergyChips&&window.OLAllergyChips(id);if(ac)ac.forEach(function(x){m.append(el('span','lb-tag '+x.c,x.t))});
     box.append(m)})}
 
 var changesHead,changesArea,actions,btn,status;
@@ -85,9 +86,9 @@ async function checkSaved(){if(busy)return;var s=st(),ids=(s.saved||[]).filter(f
   status.textContent='Checked '+(ids.length-failed)+' of '+ids.length+'. '+(changed?changed+' changed.':'No changes found.')+(failed?' '+failed+' could not be reached.':'')+' Scan a changed product to see its current details.';
   refresh()}
 
-function refresh(){if(!changesArea)build();renderChanges();decorate(saved);decorate(hist)}
+function refresh(){if(!changesArea)build();renderChanges();decorate(saved);decorate(hist);if(home)decorate(home)}
 new MutationObserver(function(){if(!lib.hidden)refresh()}).observe(lib,{attributes:true,attributeFilter:['hidden']});
-[saved,hist].forEach(function(a){new MutationObserver(function(){decorate(a)}).observe(a,{childList:true})});
+[saved,hist,home].forEach(function(a){if(a)new MutationObserver(function(){decorate(a)}).observe(a,{childList:true})});
 if(result)new MutationObserver(function(){if(!result.hidden)onResult()}).observe(result,{attributes:true,attributeFilter:['hidden']});
 if(result&&!result.hidden)onResult();
 refresh();

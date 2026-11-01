@@ -93,6 +93,13 @@ A food transparency app: scan a product, see what the label actually says, and s
 
 ## Changelog
 
+### 2026-11-02 (Home, Recent list)
+- Home's Recent list now shows what the Library lists already showed, in the same way: when you last looked at the product, and an orange "Database record changed" tag when its Open Food Facts record changed.
+- Once you have chosen allergies or watch words in Profile, each Recent and Library card also gets an allergy chip with the same wording as the product panel: red "Contains: Milk", orange "May contain: Milk" or "Your watch words: ...", and grey "No detected match \u00b7 unverified", "Cannot check allergens" or "Scan again to check allergens". A grey chip is shown instead of nothing so a missing chip is never read as safe. Until you choose allergies or watch words, no allergy chips appear.
+- Card text stays centered, matching the rest of the app.
+- New test: tests/home-chips.test.cjs (14 checks, no extra packages). Version string moved to 20261102-home1 (library.js now uses it too, instead of a fixed 20261004c).
+- Tested: Node tests, and headless Chrome with seeded products, allergies and library history on the old and new code: Home and Library both showed the expected tags and chips, with no page errors. Not tested: a real iPhone, real saved products, swipe-to-remove on the Library cards with the new tags, dark mode.
+
 ### 2026-11-01 (scanner)
 - The backup digit reader no longer starts 1.8 seconds after the camera opens. It now waits until the barcode reader is ready and has had about 8 seconds without a read (or starts at once if the barcode reader cannot load). Before, a session where the barcode took more than about 2 seconds to read also downloaded several MB for the digit reader (about 2.9 MB of language data plus about 3.9 MB of engine) and ran it alongside the barcode reader.
 - Short UPC-E barcodes: an 8-digit UPC-E typed by hand, or returned by a browser's built-in reader, is now expanded to the 12-digit UPC-A form that product databases use. The ZXing reader already returned the expanded form, so scanning with it was not affected. Not tested with a native reader or on a phone.
