@@ -94,6 +94,8 @@ A food transparency app: scan a product, see what the label actually says, and s
 ## Changelog
 
 ### 2026-11-01
+- Third-party scripts pinned: barcode reader to barcode-detector 3.2.3 and the backup digit reader to tesseract.js 5.1.1 (both were floating @3 and @5), plus Tesseract's English data to an exact package version. The two script loads now carry integrity (SRI) hashes. Details, limits and how to update: docs/CDN_PINS.md. New test: tests/cdn-pins.test.cjs.
+- Limits: the hashes come from the published npm packages and were confirmed to match the files jsDelivr serves (checked from a Windows PC with certutil). The ES-module fallback for the barcode reader has no integrity check. Not tested on a real iPhone: scanning must be checked on the phone.
 - Allergen matching audit. Of 53 realistic ingredient phrases, the main "For you" check missed 29 (for example buttermilk, cheeses, halibut, mixed nuts, enriched flour, tamari). No look-alike false positives were found.
 - Main check now also matches plurals ("cheeses", "basses") and about 60 more common words per allergen group. The ingredient-row cue now reads the same shared list (window.OLAllergens) so the two cannot drift apart.
 - New test: tests/allergen-words.test.cjs (75 checks, no extra packages). Cache-busting version moved to 20261101-allergen1 in index.html, evidence.js, result.js and ingredient-loader.js.
