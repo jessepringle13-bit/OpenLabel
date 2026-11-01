@@ -93,6 +93,13 @@ A food transparency app: scan a product, see what the label actually says, and s
 
 ## Changelog
 
+### 2026-11-01 (scanner)
+- The backup digit reader no longer starts 1.8 seconds after the camera opens. It now waits until the barcode reader is ready and has had about 8 seconds without a read (or starts at once if the barcode reader cannot load). Before, a session where the barcode took more than about 2 seconds to read also downloaded several MB for the digit reader (about 2.9 MB of language data plus about 3.9 MB of engine) and ran it alongside the barcode reader.
+- Short UPC-E barcodes: an 8-digit UPC-E typed by hand, or returned by a browser's built-in reader, is now expanded to the 12-digit UPC-A form that product databases use. The ZXing reader already returned the expanded form, so scanning with it was not affected. Not tested with a native reader or on a phone.
+- The status line now shows "Found <digits>. Looking up product..." and, after about 5 to 10 seconds without a read, a short tip about distance, glare and keeping every bar in frame.
+- New test: tests/scanner-barcodes.test.cjs (154 checks: valid and broken barcodes of each length, equivalent forms, UPC-E expansion against an independent check-digit calculation, and noisy digit-reader text).
+- Tested end to end in headless Chrome with a fake camera playing real EAN-13, UPC-A, EAN-8 and UPC-E barcodes: all four were read and looked up correctly, and with no barcode in view the digit reader was requested at about 7.6 seconds (was 1.4 seconds before). Not tested: a real iPhone camera, real packaging, glare, curved or damaged barcodes, and read speed (the fake feed reads in well under a second, so speed was not measured).
+
 ### 2026-11-01
 - Third-party scripts pinned: barcode reader to barcode-detector 3.2.3 and the backup digit reader to tesseract.js 5.1.1 (both were floating @3 and @5), plus Tesseract's English data to an exact package version. The two script loads now carry integrity (SRI) hashes. Details, limits and how to update: docs/CDN_PINS.md. New test: tests/cdn-pins.test.cjs.
 - Limits: the hashes come from the published npm packages and were confirmed to match the files jsDelivr serves (checked from a Windows PC with certutil). The ES-module fallback for the barcode reader has no integrity check. Not tested on a real iPhone: scanning must be checked on the phone.
