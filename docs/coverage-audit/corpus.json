@@ -1,0 +1,155 @@
+{
+ "food": {
+  "Cereal": "Whole grain oats, sugar, corn starch, honey, brown sugar syrup, salt, tripotassium phosphate, canola oil, natural almond flavor, vitamin E (mixed tocopherols) added to preserve freshness",
+  "Frosted cereal": "Corn, sugar, wheat flour, whole grain oat flour, salt, soluble corn fiber, artificial flavor, red 40, blue 1, yellow 6, BHT for freshness, niacinamide, reduced iron, zinc oxide, vitamin B6, thiamin mononitrate, folic acid, vitamin B12",
+  "Whole wheat bread": "Whole wheat flour, water, sugar, yeast, wheat gluten, soybean oil, salt, calcium propionate, monoglycerides, datem, calcium sulfate, vinegar, soy lecithin",
+  "White bread": "Enriched wheat flour (wheat flour, niacin, reduced iron, thiamine mononitrate, riboflavin, folic acid), water, high fructose corn syrup, yeast, soybean oil, salt, wheat gluten, calcium sulfate, monoglycerides, ammonium sulfate, dough conditioners (ascorbic acid, azodicarbonamide), calcium propionate, sorbic acid",
+  "Cola": "Carbonated water, high fructose corn syrup, caramel color, phosphoric acid, natural flavors, caffeine",
+  "Diet cola": "Carbonated water, caramel color, aspartame, phosphoric acid, potassium benzoate, natural flavors, citric acid, caffeine, potassium citrate, acesulfame potassium",
+  "Energy drink": "Carbonated water, sucrose, glucose, citric acid, taurine, sodium bicarbonate, magnesium carbonate, caffeine, niacinamide, calcium pantothenate, pyridoxine hcl, vitamin B12, natural and artificial flavors, colors, sucralose, acesulfame potassium, inositol, guarana seed extract, l-carnitine",
+  "Potato chips": "Potatoes, vegetable oil (sunflower, corn, and/or canola oil), salt",
+  "Cheese chips": "Corn, vegetable oil (corn, canola, and/or sunflower oil), maltodextrin, salt, cheddar cheese (milk, cheese cultures, salt, enzymes), whey, monosodium glutamate, buttermilk, romano cheese, onion powder, corn flour, natural and artificial flavor, dextrose, tomato powder, lactose, spice, artificial color (yellow 6, yellow 5, red 40), lactic acid, citric acid, sugar, garlic powder, skim milk, disodium inosinate, disodium guanylate",
+  "Fruit yogurt": "Cultured grade A low fat milk, sugar, modified corn starch, kosher gelatin, tricalcium phosphate, natural flavor, vitamin A acetate, vitamin D3, potassium sorbate",
+  "Plain yogurt": "Cultured pasteurized grade A milk, live active cultures (S. thermophilus, L. bulgaricus, L. acidophilus, bifidus, L. casei)",
+  "Protein bar": "Protein blend (milk protein isolate, whey protein isolate), soluble corn fiber, almonds, glycerin, erythritol, water, palm kernel oil, natural flavors, sea salt, sunflower lecithin, sucralose, stevia leaf extract, monk fruit extract",
+  "Granola bar": "Whole grain rolled oats, sugar, canola oil, rice flour, honey, salt, brown sugar syrup, baking soda, soy lecithin, natural flavor",
+  "Ranch dressing": "Soybean oil, water, distilled vinegar, sugar, egg yolk, salt, mustard flour, spices, xanthan gum, garlic, onion, lemon juice concentrate, calcium disodium edta, natural flavor, sorbic acid, paprika oleoresin",
+  "Pasta sauce": "Tomato puree (water, tomato paste), diced tomatoes in tomato juice, sugar, salt, soybean oil, spices, dehydrated onions, dehydrated garlic, citric acid, natural flavor, basil",
+  "Fruit candy": "Sugar, corn syrup, modified food starch, citric acid, malic acid, artificial flavors, red 40, yellow 5, blue 1, carnauba wax, titanium dioxide",
+  "Milk chocolate": "Sugar, chocolate, cocoa butter, skim milk, milkfat, lactose, soy lecithin, vanillin",
+  "Oat milk": "Oat base (water, oats), rapeseed oil, dipotassium phosphate, calcium carbonate, calcium phosphates, sea salt, vitamin D2, riboflavin, vitamin B12, gellan gum",
+  "Almond milk": "Almondmilk (filtered water, almonds), cane sugar, sea salt, locust bean gum, sunflower lecithin, gellan gum, natural flavor, d-alpha-tocopheryl acetate (vitamin e), calcium carbonate, vitamin A palmitate, vitamin D2",
+  "Frozen pizza": "Enriched flour (wheat flour, niacin, reduced iron, thiamin mononitrate, riboflavin, folic acid), water, tomato paste, mozzarella cheese (pasteurized part-skim milk, cheese cultures, salt, enzymes), soybean oil, pepperoni (pork, beef, salt, spices, dextrose, lactic acid starter culture, flavorings, sodium nitrite, bha, bht, citric acid), yeast, sugar, modified food starch, sodium stearoyl lactylate, calcium propionate",
+  "Hot dogs": "Mechanically separated chicken, pork, water, corn syrup, salt, potassium lactate, sodium phosphates, sodium diacetate, sodium erythorbate, sodium nitrite, flavorings, paprika",
+  "Instant noodles": "Wheat flour, palm oil, salt, tbhq, potassium carbonate, sodium carbonate, soy sauce powder, monosodium glutamate, hydrolyzed soy protein, disodium inosinate, yeast extract, caramel color, maltodextrin, onion powder, garlic powder, spices",
+  "Ketchup": "Tomato concentrate from red ripe tomatoes, distilled vinegar, high fructose corn syrup, corn syrup, salt, spice, onion powder, natural flavoring",
+  "Peanut butter": "Roasted peanuts, sugar, hydrogenated vegetable oil (cottonseed, soybean and rapeseed oil), salt, molasses",
+  "Ice cream": "Cream, skim milk, liquid sugar (sugar, water), water, egg yolks, brown sugar, milkfat, peanuts, vanilla extract, guar gum, carob bean gum, carrageenan, mono and diglycerides, polysorbate 80",
+  "Baby food": "Organic sweet potatoes, organic apples, water, ascorbic acid (vitamin c)",
+  "Sports drink": "Water, sugar, dextrose, citric acid, salt, sodium citrate, monopotassium phosphate, gum arabic, natural flavor, glycerol ester of rosin, blue 1",
+  "Vitamin water": "Reverse osmosis water, crystalline fructose, citric acid, vitamin c (ascorbic acid), natural flavor, magnesium lactate, calcium lactate, niacinamide, vitamin e acetate, vitamin b6, vitamin b12, stevia",
+  "Plant burger": "Water, pea protein, expeller-pressed canola oil, refined coconut oil, rice protein, natural flavors, cocoa butter, mung bean protein, methylcellulose, potato starch, apple extract, pomegranate fruit powder, salt, potassium chloride, vinegar, lemon juice concentrate, sunflower lecithin, beet juice extract (color)",
+  "Cheese slices": "Milk, water, cream, sodium citrate, salt, sorbic acid, lactic acid, annatto, apocarotenal (color), cheese culture, enzymes, soy lecithin",
+  "Green tea": "Green tea, natural flavors, citric acid, ascorbic acid",
+  "Hummus": "Cooked chickpeas, tahini (ground sesame), soybean oil, water, lemon juice, salt, garlic, potassium sorbate, citric acid",
+  "Pickles": "Cucumbers, water, vinegar, salt, calcium chloride, alum, natural flavorings, polysorbate 80, turmeric (color)",
+  "Whole milk": "Organic whole milk",
+  "Eggs": "Eggs",
+  "Coffee creamer": "Water, sugar, vegetable oil (palm, soybean and/or cottonseed), sodium caseinate, dipotassium phosphate, mono and diglycerides, natural and artificial flavor, carrageenan, cellulose gum",
+  "Kombucha": "Kombucha (water, black tea, green tea, kombucha culture), organic cane sugar, organic ginger juice, organic lemon juice",
+  "Pancake syrup": "Corn syrup, high fructose corn syrup, water, cellulose gum, caramel color, salt, natural and artificial flavors, sodium benzoate, sorbic acid, sodium hexametaphosphate",
+  "Mac and cheese": "Enriched macaroni product (wheat flour, niacin, ferrous sulfate, thiamin mononitrate, riboflavin, folic acid), whey, milkfat, milk protein concentrate, salt, sodium tripolyphosphate, citric acid, lactic acid, sodium phosphate, calcium phosphate, yellow 5, yellow 6, enzymes, cheese culture",
+  "Chewing gum": "Sorbitol, gum base, glycerol, xylitol, mannitol, natural and artificial flavors, aspartame, acesulfame k, soy lecithin, blue 1 lake, bht",
+  "Beef jerky": "Beef, water, brown sugar, soy sauce (water, wheat, soybeans, salt), salt, sodium erythorbate, sodium nitrite, natural hickory smoke flavor, garlic powder, onion powder, spices",
+  "Tortillas": "Enriched wheat flour, water, vegetable shortening, contains 2% or less of: salt, baking powder, fumaric acid, calcium propionate, sodium metabisulfite, dextrose, mono and diglycerides",
+  "Sparkling water": "Carbonated water, natural flavor",
+  "Rice cakes": "Whole grain brown rice, salt",
+  "Canned soup": "Water, chicken stock, carrots, celery, enriched egg noodles, modified food starch, chicken fat, salt, yeast extract, sugar, dextrose, spice, soy protein isolate, flavoring, beta carotene (color)"
+ },
+ "supp": {
+  "Multivitamin": {
+   "active": "Vitamin A (as beta-carotene), Vitamin C (as ascorbic acid), Vitamin D3 (as cholecalciferol), Vitamin E (as d-alpha tocopheryl succinate), Vitamin K (as phytonadione), Thiamin (as thiamin mononitrate), Riboflavin, Niacin (as niacinamide), Vitamin B6 (as pyridoxine hydrochloride), Folate (as folic acid), Vitamin B12 (as cyanocobalamin), Biotin, Pantothenic acid (as calcium pantothenate), Calcium (as calcium carbonate), Iron (as ferrous fumarate), Iodine (as potassium iodide), Magnesium (as magnesium oxide), Zinc (as zinc oxide), Selenium (as sodium selenate), Copper (as cupric oxide), Manganese (as manganese sulfate), Chromium (as chromium chloride), Molybdenum (as sodium molybdate)",
+   "other": "microcrystalline cellulose, croscarmellose sodium, stearic acid, magnesium stearate, silicon dioxide, hypromellose, titanium dioxide, polyethylene glycol, FD&C blue 2 lake"
+  },
+  "Magnesium": {
+   "active": "Magnesium (as magnesium glycinate), Magnesium (as magnesium citrate), Magnesium (as magnesium malate), Magnesium (as magnesium threonate)",
+   "other": "vegetable cellulose capsule, rice flour, leucine"
+  },
+  "Fish oil": {
+   "active": "Omega-3 fatty acids, EPA (eicosapentaenoic acid), DHA (docosahexaenoic acid), Fish oil concentrate, Vitamin E (mixed tocopherols)",
+   "other": "gelatin, glycerin, water, natural lemon flavor, rosemary extract"
+  },
+  "Probiotic": {
+   "active": "Lactobacillus acidophilus, Lactobacillus rhamnosus GG, Bifidobacterium lactis, Bifidobacterium longum, Saccharomyces boulardii, inulin, fructooligosaccharides",
+   "other": "hypromellose capsule, maltodextrin, magnesium stearate"
+  },
+  "Ashwagandha": {
+   "active": "Ashwagandha (Withania somnifera) root extract (KSM-66), black pepper extract (piperine)",
+   "other": "vegetable capsule, rice flour, magnesium stearate"
+  },
+  "Turmeric": {
+   "active": "Turmeric root extract (curcuminoids 95%), turmeric root powder, piperine",
+   "other": "gelatin capsule, silicon dioxide"
+  },
+  "Creatine": {
+   "active": "Creatine monohydrate",
+   "other": ""
+  },
+  "Pre-workout": {
+   "active": "L-citrulline, beta-alanine, caffeine anhydrous, betaine anhydrous, L-tyrosine, taurine, theanine, creatine HCl, sodium chloride",
+   "other": "citric acid, malic acid, natural and artificial flavors, sucralose, acesulfame potassium, silicon dioxide, red 40 lake"
+  },
+  "Sleep aid": {
+   "active": "Melatonin, L-theanine, GABA, magnesium glycinate, chamomile extract, passionflower extract, lemon balm extract, valerian root extract, 5-HTP",
+   "other": "vegetable capsule, rice flour"
+  },
+  "Vitamin D3": {
+   "active": "Vitamin D3 (cholecalciferol)",
+   "other": "organic extra virgin olive oil, softgel capsule (bovine gelatin, glycerin, water)"
+  },
+  "Collagen": {
+   "active": "Collagen peptides (bovine), vitamin C (ascorbic acid), hyaluronic acid, biotin",
+   "other": ""
+  },
+  "Greens powder": {
+   "active": "spirulina, chlorella, wheatgrass juice powder, barley grass juice powder, alfalfa, spinach, kale, broccoli, amylase, protease, lipase, cellulase",
+   "other": "stevia leaf extract, natural flavors, malic acid, xanthan gum"
+  },
+  "B-complex": {
+   "active": "Vitamin B12 (as methylcobalamin), Folate (as L-methylfolate calcium), Vitamin B6 (as pyridoxal-5-phosphate), Riboflavin-5-phosphate, Thiamine HCl, Niacin (as niacinamide)",
+   "other": "vegetable capsule, cellulose"
+  },
+  "Zinc": {
+   "active": "Zinc (as zinc picolinate), zinc bisglycinate, copper (as copper bisglycinate)",
+   "other": "vegetable capsule, rice flour"
+  },
+  "Iron": {
+   "active": "Iron (as ferrous bisglycinate), ferrous sulfate, vitamin C",
+   "other": "microcrystalline cellulose"
+  },
+  "Calcium + D + K2": {
+   "active": "Calcium (as calcium carbonate), calcium citrate, vitamin D3, vitamin K2 (as menaquinone-7), magnesium",
+   "other": "stearic acid, magnesium stearate"
+  },
+  "Elderberry gummy": {
+   "active": "Elderberry (Sambucus nigra) extract, vitamin C, zinc (as zinc gluconate)",
+   "other": "glucose syrup, sugar, pectin, citric acid, natural flavors, sodium citrate, coconut oil, carnauba wax, turmeric"
+  },
+  "Protein powder": {
+   "active": "Whey protein isolate, whey protein concentrate, protease, lactase",
+   "other": "cocoa powder, natural and artificial flavors, soy lecithin, xanthan gum, sucralose, acesulfame potassium, cellulose gum, salt"
+  },
+  "CoQ10": {
+   "active": "Coenzyme Q10 (ubiquinone)",
+   "other": "soybean oil, gelatin, glycerin"
+  },
+  "NAC + ALA": {
+   "active": "N-acetyl cysteine, alpha lipoic acid, glutathione",
+   "other": "vegetable capsule"
+  },
+  "Brain support": {
+   "active": "Ginkgo biloba leaf extract, Panax ginseng root extract, bacopa monnieri extract, huperzine A, alpha-GPC, phosphatidylserine, lion's mane mushroom",
+   "other": "vegetable capsule, rice flour"
+  },
+  "Electrolytes": {
+   "active": "Sodium (as sodium chloride), potassium (as potassium citrate), magnesium (as magnesium glycinate), chloride",
+   "other": "sodium bicarbonate, citric acid, stevia"
+  },
+  "Weight support": {
+   "active": "Green tea extract (EGCG), garcinia cambogia extract (hydroxycitric acid), caffeine, chromium picolinate, cayenne pepper extract, glucomannan",
+   "other": "gelatin capsule, magnesium stearate"
+  },
+  "Prenatal": {
+   "active": "Folate (as quatrefolic), iron, choline bitartrate, DHA (from algal oil), iodine (potassium iodide), vitamin B12 (methylcobalamin)",
+   "other": "softgel capsule, glycerin"
+  },
+  "Vitamin C": {
+   "active": "Vitamin C (as ascorbic acid), rose hips, bioflavonoids",
+   "other": "stearic acid, silica"
+  },
+  "Melatonin gummy": {
+   "active": "Melatonin",
+   "other": "gelatin, sugar, glucose syrup, citric acid, natural flavors, pectin, carnauba wax"
+  }
+ }
+}

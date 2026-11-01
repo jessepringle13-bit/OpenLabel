@@ -93,6 +93,9 @@ A food transparency app: scan a product, see what the label actually says, and s
 
 ## Changelog
 
+### 2026-11-03 (coverage audit tool and handoff)
+- Added docs/coverage-audit (corpus of 71 typical labels, a headless-Chrome script and a README) so coverage can be re-measured after every batch, and docs/COVERAGE_HANDOFF.md describing the next work: sourced entries for additives, mineral salts and supplement actives, written only from source text that has actually been read. No app code changed.
+
 ### 2026-11-03 (ingredient coverage: plain foods)
 - Coverage audit (read-only): 673 ingredient names from 45 typical US food labels and 26 typical supplement labels, written from general knowledge, not scanned products, were run through the app's real ingredient lookup. 61% had a sourced "common use explained" status (food 64%, supplement actives 42%, supplement other ingredients 72%). Fully covered labels (every ingredient explained or identified): food 1 of 45 before this change and 9 of 45 after; supplements 0 of 26 before and after. Average ingredients per product still not verified: food 3.6 before, 2.4 after; supplements 3.9 before, 3.8 after.
 - New status "Plain food ingredient" for ingredients whose name simply identifies a food (an apple, rolled oats, garlic powder, skim milk). It is identification only: variety, amount, farming and processing are not stated, no health assessment is made, and research review stays shown as pending. It comes from a short curated list (ingredient-plain-foods.js), not from the food-word vocabulary, which contains generic words like "extract" and "sodium" and would have mislabeled caffeine, creatine and stearic acid. Oils, sugars, salt, extracts, isolates, concentrates, flavors, colors, additives, cultures, anything with a bracketed sub-list, and anything with a reviewed entry are never treated as plain foods.
