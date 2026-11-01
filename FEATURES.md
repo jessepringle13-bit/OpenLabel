@@ -93,17 +93,24 @@ A food transparency app: scan a product, see what the label actually says, and s
 
 ## Changelog
 
-### 2026-11-03 (coverage audit tool and handoff)
+### 2026-11-01 (coverage audit tool and handoff)
 - Added docs/coverage-audit (corpus of 71 typical labels, a headless-Chrome script and a README) so coverage can be re-measured after every batch, and docs/COVERAGE_HANDOFF.md describing the next work: sourced entries for additives, mineral salts and supplement actives, written only from source text that has actually been read. No app code changed.
 
-### 2026-11-03 (ingredient coverage: plain foods)
+### 2026-11-01 (ingredient coverage: plain foods)
 - Coverage audit (read-only): 673 ingredient names from 45 typical US food labels and 26 typical supplement labels, written from general knowledge, not scanned products, were run through the app's real ingredient lookup. 61% had a sourced "common use explained" status (food 64%, supplement actives 42%, supplement other ingredients 72%). Fully covered labels (every ingredient explained or identified): food 1 of 45 before this change and 9 of 45 after; supplements 0 of 26 before and after. Average ingredients per product still not verified: food 3.6 before, 2.4 after; supplements 3.9 before, 3.8 after.
 - New status "Plain food ingredient" for ingredients whose name simply identifies a food (an apple, rolled oats, garlic powder, skim milk). It is identification only: variety, amount, farming and processing are not stated, no health assessment is made, and research review stays shown as pending. It comes from a short curated list (ingredient-plain-foods.js), not from the food-word vocabulary, which contains generic words like "extract" and "sodium" and would have mislabeled caffeine, creatine and stearic acid. Oils, sugars, salt, extracts, isolates, concentrates, flavors, colors, additives, cultures, anything with a bracketed sub-list, and anything with a reviewed entry are never treated as plain foods.
 - On the audit set this identified 60 more ingredients as plain foods (9%), raising "explained or identified" from 61% to 70%. The sourced "explained" count did not change. About 30% are still "Purpose not yet verified", mostly supplement actives (56% of them), additives and capsule ingredients.
 - New test: tests/plain-foods.test.cjs (106 checks). Version string moved to 20261103-plain2.
 - Not tested: a real iPhone, real scanned products, dark mode. The audit set is representative, not a measure of real-world coverage.
 
-### 2026-11-02 (Home, Recent list)
+### 2026-11-01 (ingredient coverage: regulated additives, batch 1)
+- 16 new sourced ingredient entries covering 24 label names: calcium sulfate, calcium chloride, potassium chloride, calcium lactate, potassium lactate, sodium carbonate, potassium carbonate, stearic acid, carnauba wax, inositol (myo-inositol), elemental iron (reduced, carbonyl, electrolytic), calcium phosphate (also tricalcium and monocalcium), sodium phosphate, dipotassium phosphate, sodium tripolyphosphate and sodium hexametaphosphate.
+- Every entry restates only what the US food-additive regulation says (21 CFR Part 182 or 184, read from the official eCFR data service, Title 21 current as of 2026-10-29): what the substance is, which uses the listing names, and the limits it states. The sheet says plainly that a regulatory listing is not a finding about the product and does not say which listed use applies. No health verdict is assigned. Part 182 listings that name no functions say so and quote FDA's definition of "sequestrant"; the FDA phrase "generally recognized as safe" appears only in quotes and is described as a regulatory listing.
+- Checked against a snapshot of the regulation text (tests/fixtures/ecfr-title21-2026-10-29.json): tests/regulated-additives-1.test.js confirms the listed uses of each entry are exactly the regulation's, the quoted definition is verbatim, and the limits stated appear in the text. Skipped on purpose: sodium bicarbonate (its listing names no functions) and names the app already explained.
+- Coverage audit on the same 673 names: explained (sourced) 61% to 64%; food labels fully covered 9 to 11 of 45, supplements 0 to 1 of 26; still not verified 27%. Version string moved to 20261101-reg1.
+- Not tested: a real iPhone, dark mode. The eCFR links follow the standard https://www.ecfr.gov/current/title-21/section-N format but could not be opened from the build environment, so please open one on a phone.
+
+### 2026-11-01 (Home, Recent list)
 - Home's Recent list now shows what the Library lists already showed, in the same way: when you last looked at the product, and an orange "Database record changed" tag when its Open Food Facts record changed.
 - Once you have chosen allergies or watch words in Profile, each Recent and Library card also gets an allergy chip with the same wording as the product panel: red "Contains: Milk", orange "May contain: Milk" or "Your watch words: ...", and grey "No detected match \u00b7 unverified", "Cannot check allergens" or "Scan again to check allergens". A grey chip is shown instead of nothing so a missing chip is never read as safe. Until you choose allergies or watch words, no allergy chips appear.
 - Card text stays centered, matching the rest of the app.

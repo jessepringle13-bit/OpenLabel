@@ -1,4 +1,4 @@
-# Ingredient coverage: handoff for the next session (written 2026-11-03)
+# Ingredient coverage: handoff for the next session (written 2026-11-01)
 
 Start here. Read `CLAUDE.md`, `AGENTS.md` and `PRINCIPLES.md` first (they load automatically in a Claude Code session on this repo). The owner is not an expert developer: plain language, one decision at a time, show the diff and get approval before any push to `main`.
 
@@ -17,10 +17,25 @@ Measured on a fixed set of 673 ingredient names from 45 typical US food labels a
 
 Food labels fully covered: 9 of 45. Supplement labels fully covered: 0 of 26.
 
-Done so far on this topic: a curated "Plain food ingredient" status (`ingredient-plain-foods.js`, `tests/plain-foods.test.cjs`). It is identification only and never overrides a reviewed entry.
+Done so far on this topic: batch 1 of regulated additives (see Update below), and a curated "Plain food ingredient" status (`ingredient-plain-foods.js`, `tests/plain-foods.test.cjs`). It is identification only and never overrides a reviewed entry.
 
-## What is blocked, and why this handoff exists
-The previous session could not read source pages (its network allow-list did not include them), so it wrote **no** new sourced entries. Regulation section numbers and functions must never be written from memory. This session should have these domains allowed: `law.cornell.edu`, `www.ecfr.gov`, `ods.od.nih.gov`, `www.nccih.nih.gov`, `www.fda.gov`, `www.efsa.europa.eu`. First step: confirm you can fetch one page (for example https://www.law.cornell.edu/cfr/text/21/184.1230). If you cannot, stop and tell the owner. Do not work around it.
+## Update (same day, later): source access and batch 1
+After the owner allowed more domains, these work from the build environment: the **eCFR data service** (official regulation text), `www.fda.gov`, `www.nccih.nih.gov`, `www.efsa.europa.eu`. Not working: `www.law.cornell.edu` (blocked; the bare domain redirects to www), `ods.od.nih.gov` (answers 403 to plain requests; do not disguise requests to get past it, ask the owner or use an allowed source instead). Always read a page's real text before writing a claim.
+
+How to read an eCFR section (official, current):
+
+    curl -sSL --compressed https://www.ecfr.gov/api/versioner/v1/titles.json      # find up_to_date_as_of for title 21
+    curl -sSL --compressed "https://www.ecfr.gov/api/versioner/v1/structure/<date>/title-21.json?part=184"   # section titles
+    curl -sSL --compressed "https://www.ecfr.gov/api/versioner/v1/full/<date>/title-21.xml?part=184&section=184.1230"
+
+(`--compressed` is required; the service answers 406 without it.) Strip the XML tags and read the text; function definitions are in 21 CFR 170.3(o).
+
+**Batch 1 is done** (`ingredient-regulated-additives-1.js`, 16 entries / 24 names, test `tests/regulated-additives-1.test.js`, fixture `tests/fixtures/ecfr-title21-2026-10-29.json`): the pattern to copy for the next batches. Each entry's listed uses are generated from a data array and the test compares them with the regulation text, in both directions.
+
+Not done, and why: sodium bicarbonate (its listing names no functions; do not write an empty explanation), `sodium caseinate` and others whose listing only says GRAS under good manufacturing practice (only add if you can say something true and useful, as was done for the sequestrant phosphates), croscarmellose sodium and gelatin (no matching section found in Parts 172, 182 or 184; look in the FDA inventory), tripotassium phosphate and monopotassium phosphate (no matching section titles found).
+
+## What remains blocked
+Supplement actives (melatonin, taurine, L-carnitine, omega-3/EPA/DHA, CoQ10, creatine, probiotics...) need NIH fact sheets. NCCIH pages are reachable (for example melatonin), ODS pages are not from the build environment. Read what is reachable; leave anything you cannot read.
 
 ## The job: sourced entry batches (about 10 entries each)
 Pattern to copy: `ingredient-starches-fibers.js` and `tests/starches-fibers.test.js`.
