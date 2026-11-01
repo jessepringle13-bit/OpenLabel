@@ -93,6 +93,13 @@ A food transparency app: scan a product, see what the label actually says, and s
 
 ## Changelog
 
+### 2026-11-03 (ingredient coverage: plain foods)
+- Coverage audit (read-only): 673 ingredient names from 45 typical US food labels and 26 typical supplement labels, written from general knowledge, not scanned products, were run through the app's real ingredient lookup. 61% had a sourced "common use explained" status (food 64%, supplement actives 42%, supplement other ingredients 72%). Fully covered labels (every ingredient explained or identified): food 1 of 45 before this change and 9 of 45 after; supplements 0 of 26 before and after. Average ingredients per product still not verified: food 3.6 before, 2.4 after; supplements 3.9 before, 3.8 after.
+- New status "Plain food ingredient" for ingredients whose name simply identifies a food (an apple, rolled oats, garlic powder, skim milk). It is identification only: variety, amount, farming and processing are not stated, no health assessment is made, and research review stays shown as pending. It comes from a short curated list (ingredient-plain-foods.js), not from the food-word vocabulary, which contains generic words like "extract" and "sodium" and would have mislabeled caffeine, creatine and stearic acid. Oils, sugars, salt, extracts, isolates, concentrates, flavors, colors, additives, cultures, anything with a bracketed sub-list, and anything with a reviewed entry are never treated as plain foods.
+- On the audit set this identified 60 more ingredients as plain foods (9%), raising "explained or identified" from 61% to 70%. The sourced "explained" count did not change. About 30% are still "Purpose not yet verified", mostly supplement actives (56% of them), additives and capsule ingredients.
+- New test: tests/plain-foods.test.cjs (106 checks). Version string moved to 20261103-plain2.
+- Not tested: a real iPhone, real scanned products, dark mode. The audit set is representative, not a measure of real-world coverage.
+
 ### 2026-11-02 (Home, Recent list)
 - Home's Recent list now shows what the Library lists already showed, in the same way: when you last looked at the product, and an orange "Database record changed" tag when its Open Food Facts record changed.
 - Once you have chosen allergies or watch words in Profile, each Recent and Library card also gets an allergy chip with the same wording as the product panel: red "Contains: Milk", orange "May contain: Milk" or "Your watch words: ...", and grey "No detected match \u00b7 unverified", "Cannot check allergens" or "Scan again to check allergens". A grey chip is shown instead of nothing so a missing chip is never read as safe. Until you choose allergies or watch words, no allergy chips appear.

@@ -1,9 +1,10 @@
 (function(root){'use strict';
 function clean(s){return String(s||'').trim().replace(/^[.\s]+|[.\s]+$/g,'').replace(/^ingredients?\s*:\s*/i,'').replace(/^contains?\s+2%\s+or\s+less\s+of\s*:\s*/i,'').trim()}
 function describe(label,env){env=env||root;var text=clean(label),api=env.OLIngredients,purpose=env.OLPurpose,detail=api&&api.lookup?api.lookup(text):null,hit=detail&&detail.purpose?detail:(purpose&&purpose.lookup?purpose.lookup(text):null),known=!!(hit&&typeof hit.purpose==='string'&&hit.purpose.trim()),use=known&&typeof hit.use==='string'&&hit.use.trim()?hit.use.trim():null,education=env.OLIngredientEducation,key=education&&education.resolve?education.resolve(text):null,review=key&&education.reviews?education.reviews[key]:null;
-return {known:known,use:use,role:known?((detail&&detail.role)||use||'Common use explained'):'Purpose not yet verified',formUnspecified:!!(detail&&detail.formUnspecified),research:review&&review.status?review.status:(key?'Research coverage incomplete':'Research review pending')};}
-function rowText(d){return (d.use|| (d.known?'Common use explained':'Purpose not yet verified'))+(d.formUnspecified?' · form unspecified':'')+'  ›'}
-function reviewText(d){return (d.known?'Common use explained. ':'Purpose not yet verified. ')+d.research+'. Identity and common-use information are separate from a health assessment of this product.'}
+var plain=!known&&!!(env.OLPlainFoods&&env.OLPlainFoods.has&&env.OLPlainFoods.has(text));
+return {known:known,plain:plain,use:use,role:known?((detail&&detail.role)||use||'Common use explained'):plain?'Plain food ingredient':'Purpose not yet verified',formUnspecified:!!(detail&&detail.formUnspecified),research:review&&review.status?review.status:(key?'Research coverage incomplete':'Research review pending')};}
+function rowText(d){return (d.use|| (d.known?'Common use explained':d.plain?'Plain food ingredient':'Purpose not yet verified'))+(d.formUnspecified?' · form unspecified':'')+'  ›'}
+function reviewText(d){if(d.plain)return 'Plain food ingredient. '+d.research+'. This identifies the ingredient only and is not a health assessment.';return (d.known?'Common use explained. ':'Purpose not yet verified. ')+d.research+'. Identity and common-use information are separate from a health assessment of this product.'}
 var api={describe:describe,rowText:rowText,reviewText:reviewText,version:'20261025-status1'};
 if(typeof module==='object'&&module.exports){module.exports=api;return}root.OLIngredientStatus=api;
 var doc=root.document;
