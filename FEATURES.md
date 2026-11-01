@@ -2,7 +2,7 @@
 
 A living log of what OpenLabel can do, what it can't do yet, and what we're building next. Updated whenever something is added or changed.
 
-**Last updated:** 2026-09-29
+**Last updated:** 2026-11-01 (this log was last brought up to date on 2026-09-29, so entries between then and 2026-10-30 live in docs/ROADMAP.md and docs/TESTING.md)
 
 ## What OpenLabel is
 
@@ -41,7 +41,7 @@ A food transparency app: scan a product, see what the label actually says, and s
 - If a product has no ingredient or allergen data, the app says it cannot check. If nothing matches, it says so and states that no match never means safe.
 - Wheat matches the database's gluten tag, with a note that the source may be rye or barley.
 - Products saved before this feature ask you to scan them again.
-- Limits: the database can be missing ingredients or traces; the word lists are a starting set, not exhaustive; it is not medical advice.
+- Limits: the database can be missing ingredients or traces; the word lists are a starting set, not exhaustive (known gaps: generic "dairy" and "bran", which are too ambiguous to match); it is not medical advice.
 
 ### Result page
 - "For you": findings matched to your profile.
@@ -76,7 +76,7 @@ A food transparency app: scan a product, see what the label actually says, and s
 ## Known limits and open items
 
 - Camera behavior inside the full-screen Home Screen app is not yet verified on iPhone (reports say cameras can fail in installed web apps).
-- Icon fallback in Safari/Firefox: likely needs a clean file name such as apple-touch-icon.png (not yet tried).
+- Icon fallback in Safari/Firefox: an apple-touch-icon link (icon-180.png) is now in index.html. Not re-checked on an iPhone.
 - Open Food Facts data is volunteer-contributed and can be missing, outdated or wrong.
 - The lookup API is rate limited (about 15 lookups per minute per user for reads); browsers can't send the custom User-Agent the API asks for.
 - Explore tab searches the three sample products only.
@@ -92,6 +92,12 @@ A food transparency app: scan a product, see what the label actually says, and s
 5. Deeper personalization: genome, medications and health context, after privacy design and medical-grade sources are settled.
 
 ## Changelog
+
+### 2026-11-01
+- Allergen matching audit. Of 53 realistic ingredient phrases, the main "For you" check missed 29 (for example buttermilk, cheeses, halibut, mixed nuts, enriched flour, tamari). No look-alike false positives were found.
+- Main check now also matches plurals ("cheeses", "basses") and about 60 more common words per allergen group. The ingredient-row cue now reads the same shared list (window.OLAllergens) so the two cannot drift apart.
+- New test: tests/allergen-words.test.cjs (75 checks, no extra packages). Cache-busting version moved to 20261101-allergen1 in index.html, evidence.js, result.js and ingredient-loader.js.
+- Tested: Node tests, and the page loaded in headless Chrome with all outside network blocked (no errors). NOT tested: a real iPhone, or real products from the live database.
 
 ### 2026-09-29
 - Built scanner-first app shell with calm green-and-blue design and circular navigation dock.
