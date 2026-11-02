@@ -38,6 +38,8 @@ How to read an eCFR section (official, current):
 
 Still open from the supplement list: taurine, L-carnitine, creatine (NIH Office of Dietary Supplements pages answered 403 to plain requests; do not disguise requests; an agent that only reports what it read cannot give word-for-word text, so these need the owner to paste page text or another reachable source), L-theanine, collagen peptides, hyaluronic acid.
 
+**Bracket decision made (2026-11-02):** prefix lookup is on for entries flagged `bracketOk` only (the 12 supplement actives); see `ingredient-entry-extension.js` `find()` and `tests/bracket-lookup.test.cjs`. To extend it, flag more supplement entries one by one. The paragraph below is the earlier analysis.
+
 The audit shows supplement actives written with brackets (about 40 names in the audit set, 17 of which would be explained by the part before the bracket) are the main remaining blocker for supplement coverage. That is a design decision for the owner (item 3 below), because the bracket can change the meaning ("turmeric (color)").
 
 Not done, and why: sodium bicarbonate (its listing names no functions; do not write an empty explanation), `sodium caseinate` and others whose listing only says GRAS under good manufacturing practice (only add if you can say something true and useful, as was done for the sequestrant phosphates), croscarmellose sodium and gelatin (no matching section found in Parts 172, 182 or 184; look in the FDA inventory), tripotassium phosphate and monopotassium phosphate (no matching section titles found).

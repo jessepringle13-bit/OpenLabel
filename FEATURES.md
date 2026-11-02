@@ -103,6 +103,12 @@ A food transparency app: scan a product, see what the label actually says, and s
 - New test: tests/plain-foods.test.cjs (106 checks). Version string moved to 20261103-plain2.
 - Not tested: a real iPhone, real scanned products, dark mode. The audit set is representative, not a measure of real-world coverage.
 
+### 2026-11-02 (bracketed supplement labels)
+- A label like "Coenzyme Q10 (ubiquinone)" or "Ashwagandha (Withania somnifera) root extract (KSM-66)" is now explained by the entry for the name before the first bracket, but only for the 12 supplement-active entries from the NIH NCCIH batch (flagged `bracketOk`). Every other ingredient still needs the whole text to match, so "Turmeric (color)" or "Calcium chloride (firming agent)" are unchanged.
+- The ingredient sheet says: "The label’s bracketed wording was not checked separately; this explains the name before the bracket."
+- tests/bracket-lookup.test.cjs checks the rule (flagged names match, unflagged names and odd shapes do not); removing the flag check makes it fail. Coverage audit on the same 673 names: explained 66% to 67% (6 more rows), not verified 24%. Version string moved to 20261102-brk1.
+- Not done: existing entries such as green tea extract are not flagged, so "Green tea extract (EGCG)" stays unexplained until someone decides it is safe to flag them. Food brackets are untouched on purpose.
+
 ### 2026-11-02 (ingredient coverage: more regulated food additives)
 - 7 new entries covering 16 label names, each restating one section of the US food-additive regulation (21 CFR, read from the eCFR data service, Title 21 current as of 2026-10-29): wheat gluten / vital wheat gluten (§ 184.1322); whey and its sweet, acid, dry, dried and concentrated forms (§ 184.1979); whey protein concentrate (§ 184.1979c); DATEM / diacetyl tartaric acid esters of mono- and diglycerides (§ 184.1101); ammonium sulfate (§ 184.1143); glycerol ester of rosin (§ 172.735); polyethylene glycol (§ 172.820).
 - Wording: what the regulation lists and under what limits, nothing more. Whey and whey protein concentrate are listed only "in accordance with good manufacturing practice", so those entries say the listing does not itemize functions. Wheat gluten and whey entries say they are not an allergen declaration. The regulation covers permitted uses only, so these entries carry no evidence side beyond "existing health-evidence findings are unchanged".

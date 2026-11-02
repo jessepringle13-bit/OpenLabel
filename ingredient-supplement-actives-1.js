@@ -343,7 +343,7 @@ var data=[
 var records=data.map(function(r){var p=PAGES[r[2]];
   return {names:r[0],role:r[1],use:r[1],form:NCCIH_SHORT+quoted(r[3])+FORM_TAIL,purpose:NCCIH+quoted(r[4]),
     difference:NCCIH_SHORT+quoted(r[5])+' The NCCIH page used here ('+p[1]+') was last updated in '+p[2]+'.'+TAIL,
-    source:p[0],sourceLabel:'NIH NCCIH: '+p[1],formUnspecified:r[6],reviewed:'2026-11-01'}});
+    source:p[0],sourceLabel:'NIH NCCIH: '+p[1],formUnspecified:r[6],bracketOk:true,reviewed:'2026-11-01'}});
 window.OLIngredientEntries.add(records);
 window.__olSupplementActives1Added=true;
 })();
