@@ -103,6 +103,13 @@ A food transparency app: scan a product, see what the label actually says, and s
 - New test: tests/plain-foods.test.cjs (106 checks). Version string moved to 20261103-plain2.
 - Not tested: a real iPhone, real scanned products, dark mode. The audit set is representative, not a measure of real-world coverage.
 
+### 2026-11-02 (supplement actives, batch 2: carnitine)
+- One new sourced entry covering carnitine, L-carnitine, acetyl-L-carnitine and propionyl-L-carnitine. It quotes the NIH Office of Dietary Supplements (ODS) health-professional fact sheet word for word, attributed, and adds no health claim of its own: what carnitine is, its role in energy production, that healthy people do not need it from food or supplements, how little of a supplement is absorbed, that no upper intake level is set, the side effects listed at about 3 g/day, that the evidence for athletic performance is mixed, and that medications can interact.
+- The page text came from the owner pasting it into the chat on 2026-11-02 (the ODS site answers 403 to the build environment), so tests/fixtures/ods-carnitine-2026-11-02.json holds the pasted paragraphs the entry quotes, not a download. tests/supplement-actives-2.test.js checks all 8 quotations against them; two deliberate changes to a quotation were both caught.
+- Works for bracketed labels too ("L-Carnitine (as tartrate)"). Version string moved to 20261102-supp2.
+- Not done: creatine and taurine (no readable NIH page found; MedlinePlus has none for supplements), L-theanine, collagen peptides, hyaluronic acid.
+- Not tested: a real iPhone. Phone check: open "L-Carnitine" in an ingredient list and tap the NIH ODS source link.
+
 ### 2026-11-02 (bracketed supplement labels)
 - A label like "Coenzyme Q10 (ubiquinone)" or "Ashwagandha (Withania somnifera) root extract (KSM-66)" is now explained by the entry for the name before the first bracket, but only for the 12 supplement-active entries from the NIH NCCIH batch (flagged `bracketOk`). Every other ingredient still needs the whole text to match, so "Turmeric (color)" or "Calcium chloride (firming agent)" are unchanged.
 - The ingredient sheet says: "The label’s bracketed wording was not checked separately; this explains the name before the bracket."

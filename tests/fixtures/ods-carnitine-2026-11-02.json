@@ -1,0 +1,9 @@
+{
+ "_note": "Excerpts (whole paragraphs, reference numbers kept) of the NIH Office of Dietary Supplements Carnitine health-professional fact sheet, as pasted by the repository owner on 2026-11-02. Not fetched by a script: the site answered 403 to the build environment.",
+ "pages": {
+  "https://ods.od.nih.gov/factsheets/Carnitine-HealthProfessional/": {
+   "title": "Carnitine: Fact Sheet for Health Professionals",
+   "text": "Carnitine, derived from an amino acid, is the generic term for several compounds, including L-carnitine, acetyl-L-carnitine, and propionyl-L-carnitine [1].\nCarnitine plays a critical role in energy production. It is an essential cofactor that helps transport long-chain fatty acids into the mitochondria so that they can be oxidized to produce energy in the form of adenosine triphosphate (ATP) [4].\nHealthy children and adults do not need to consume carnitine from food or supplements because the liver and kidneys synthesize sufficient amounts to meet daily needs [10,11,12].\nThe two main forms of carnitine in dietary supplements are L-carnitine and acetyl-L-carnitine, and amounts range from about 3 mg to 5,000 mg [17].\nAbsorption of supplemental L-carnitine is about 14% to 18%, much less than that of dietary L-carnitine [1].\nOverall, the evidence on supplemental carnitine’s effectiveness for performance enhancement is mixed, and additional investigations are needed.\nCarnitine does not have an established tolerable upper intake level. However, doses of approximately 3 g/day of carnitine supplements can cause nausea, vomiting, abdominal cramps, diarrhea, and a fishy body odor [10,11].\nSeveral types of medications have the potential to interact with carnitine supplements.\nUpdated: April 17, 2023"
+  }
+ }
+}
