@@ -103,9 +103,9 @@ A food transparency app: scan a product, see what the label actually says, and s
 - New test: tests/plain-foods.test.cjs (106 checks). Version string moved to 20261103-plain2.
 - Not tested: a real iPhone, real scanned products, dark mode. The audit set is representative, not a measure of real-world coverage.
 
-### 2026-11-02 (result page: "At a glance" card moved to the end)
-- The "At a glance" card (data-source caveat, serving basis, reminders about recalls and testing) used to sit above every product result and pushed the real findings down. It now sits after them, and it moves back to the end if a later section finishes loading. Its wording now says "above" instead of "below", and the "Go to existing findings" button is gone because the findings now come first. Nothing in the card was removed except that button.
-- tests/result-summary.test.cjs checks the order and the wording in headless Chromium; three deliberate breakages were each caught. Not tested: a real phone with a real scanned product. Phone check: scan any product and confirm the findings come first and the card is last. Version string for this file: 20261102-sum1.
+### 2026-11-02 (result page: "At a glance" card removed)
+- The "At a glance" card (data-source caveat, serving basis, reminders about recalls and testing) is gone. It was an extra block pinned above every result that pushed the collapsible finding sections down; the original design is those collapsible sections first, so people open what interests them. `result-summary.js` and its test are deleted (they stay in git history). Earlier today it was moved to the end of the result; this replaces that.
+- Nothing else loaded that file. Phone check: scan any product and confirm the result opens straight to the collapsible sections with no "At a glance" box.
 
 ### 2026-11-02 (supplement actives, batch 3: creatine)
 - One new sourced entry covering creatine and creatine monohydrate. It quotes the Operation Supplement Safety (OPSS, a US Department of Defense supplement education program) page on creatine monohydrate word for word, attributed, and adds no health claim of its own: where creatine is found and stored, that sports with short high-intensity effort have shown benefits, no benefit for aerobic performance, that research on other forms marketed as better is limited, that there isn't enough evidence for cognitive performance in healthy adults, the minor side effects listed, that supplements are not medicines, and advice to talk to a healthcare provider or performance dietitian.
