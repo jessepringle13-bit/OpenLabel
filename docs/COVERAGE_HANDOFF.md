@@ -32,6 +32,12 @@ How to read an eCFR section (official, current):
 
 **Batch 1 is done** (`ingredient-regulated-additives-1.js`, 16 entries / 24 names, test `tests/regulated-additives-1.test.js`, fixture `tests/fixtures/ecfr-title21-2026-10-29.json`): the pattern to copy for the next batches. Each entry's listed uses are generated from a data array and the test compares them with the regulation text, in both directions.
 
+**Batch 2 is done** (`ingredient-supplement-actives-1.js`, 12 entries / 29 names; test `tests/supplement-actives-1.test.js`; fixture `tests/fixtures/nccih-2026-11-01.json`; builder `docs/coverage-audit/build-nccih-batch.py`). Method for health-agency content: quote sentences from one page word for word, attributed, add no claim of our own, and let the test prove each quotation is on the saved page. Reachable NCCIH pages checked: melatonin, omega-3, probiotics, coenzyme Q10, ginkgo, turmeric, ashwagandha, green tea (green tea extract already existed in the app). NCCIH pages exist for other herbs and supplements; read them the same way.
+
+Still open from the supplement list: taurine, L-carnitine, creatine (NIH Office of Dietary Supplements pages answered 403 to plain requests; do not disguise requests; an agent that only reports what it read cannot give word-for-word text, so these need the owner to paste page text or another reachable source), L-theanine, collagen peptides, hyaluronic acid.
+
+The audit shows supplement actives written with brackets (about 40 names in the audit set, 17 of which would be explained by the part before the bracket) are the main remaining blocker for supplement coverage. That is a design decision for the owner (item 3 below), because the bracket can change the meaning ("turmeric (color)").
+
 Not done, and why: sodium bicarbonate (its listing names no functions; do not write an empty explanation), `sodium caseinate` and others whose listing only says GRAS under good manufacturing practice (only add if you can say something true and useful, as was done for the sequestrant phosphates), croscarmellose sodium and gelatin (no matching section found in Parts 172, 182 or 184; look in the FDA inventory), tripotassium phosphate and monopotassium phosphate (no matching section titles found).
 
 ## What remains blocked
