@@ -1,0 +1,13 @@
+.ol-dj-picker,.ol-dj-panel{margin:12px 0;padding:12px 14px;border-radius:12px;border:1px solid rgba(148,163,184,0.28);background:rgba(15,23,42,0.04)}
+body.navy-theme .ol-dj-picker,body.navy-theme .ol-dj-panel,[data-theme="navy"] .ol-dj-picker,[data-theme="navy"] .ol-dj-panel{background:rgba(255,255,255,0.06);border-color:rgba(148,163,184,0.25)}
+.ol-dj-label{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:8px;font-size:0.86rem}
+.ol-dj-label small{opacity:0.78;font-size:0.74rem}
+.ol-dj-chips{display:flex;flex-wrap:wrap;gap:6px}
+.ol-dj-chip{padding:5px 10px;border-radius:999px;border:1px solid rgba(148,163,184,0.4);background:transparent;color:inherit;font-size:0.76rem;cursor:pointer}
+.ol-dj-chip:active{background:#0ea5e9;border-color:#0ea5e9;color:#fff}
+.ol-dj-status{margin-top:6px;font-size:0.76rem;color:#16a34a}
+body.navy-theme .ol-dj-status,[data-theme="navy"] .ol-dj-status{color:#4ade80}
+.ol-dj-panel summary{cursor:pointer;font-weight:700;font-size:0.9rem}
+.ol-dj-list{margin:8px 0 0;padding-left:18px;font-size:0.82rem;line-height:1.45}
+.ol-dj-list li{margin:4px 0}
+.ol-dj-empty{margin:8px 0 0;font-size:0.8rem;opacity:0.8}
