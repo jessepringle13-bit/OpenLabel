@@ -1,0 +1,8 @@
+.ol-ec-card{margin:10px 0 12px;padding:12px 14px;border-radius:12px;border:1px solid rgba(148,163,184,0.28);background:rgba(15,23,42,0.04)}
+body.navy-theme .ol-ec-card,[data-theme="navy"] .ol-ec-card{background:rgba(255,255,255,0.06);border-color:rgba(148,163,184,0.25)}
+.ol-ec-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.ol-ec-title{font-weight:700;font-size:0.9rem;letter-spacing:0.01em}
+.ol-ec-note{font-size:0.75rem;opacity:0.78}
+.ol-ec-bar{height:8px;border-radius:999px;background:rgba(148,163,184,0.24);overflow:hidden;margin-bottom:8px}
+.ol-ec-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,#38bdf8,#22c55e);transition:width 220ms ease}
+.ol-ec-metrics{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:0.78rem;line-height:1.35;opacity:0.92}
