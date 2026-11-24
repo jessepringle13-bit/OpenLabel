@@ -1,0 +1,9 @@
+.ol-det-card{margin:14px 0;padding:14px 16px;border-radius:14px;border:1px solid rgba(148,163,184,0.28);background:rgba(15,23,42,0.04)}
+body.navy-theme .ol-det-card,[data-theme="navy"] .ol-det-card{background:rgba(255,255,255,0.06);border-color:rgba(148,163,184,0.25)}
+.ol-det-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.ol-det-badge{font-weight:700;font-size:0.88rem;letter-spacing:0.01em}
+.ol-det-count{font-size:0.78rem;opacity:0.82}
+.ol-det-bar{height:7px;border-radius:999px;background:rgba(148,163,184,0.24);overflow:hidden;margin-bottom:10px}
+.ol-det-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,#6366f1,#38bdf8);transition:width 220ms ease}
+.ol-det-myth summary{cursor:pointer;font-size:0.84rem;line-height:1.4}
+.ol-det-myth p{margin:8px 0 0;font-size:0.82rem;line-height:1.45;opacity:0.9}
