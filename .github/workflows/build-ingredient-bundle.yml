@@ -1,0 +1,49 @@
+name: Build ingredient bundle
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'ingredient-loader.js'
+      - 'ingredient-*.js'
+      - 'nutrient-*.js'
+      - 'inulin-education.js'
+      - 'thorne-*.js'
+      - 'magnesium-forms.js'
+      - 'folate-b12-forms.js'
+      - 'learn-search.js'
+      - 'results-accordions.js'
+      - 'scripts/build-ingredient-bundle.cjs'
+      - '.github/workflows/build-ingredient-bundle.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: build-ingredient-bundle
+  cancel-in-progress: false
+jobs:
+  build:
+    if: github.repository == 'jessepringle13-bit/OpenLabel' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build and verify ingredient bundle
+        run: |
+          node --check ingredient-loader.js
+          node --check scripts/build-ingredient-bundle.cjs
+          node scripts/build-ingredient-bundle.cjs
+      - name: Commit updated bundle if changed
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- dist/ingredients-bundle.js
+          if git diff --cached --quiet -- dist/ingredients-bundle.js; then
+            echo "Ingredient bundle already up to date."
+          else
+            git commit -m 'Build dist/ingredients-bundle.js from ingredient-loader modules'
+            git push origin HEAD:main
+          fi
