@@ -1,0 +1,134 @@
+/* OpenLabel UI Polish — Apple Health / Oura-inspired calm depth & hierarchy */
+.ol-ec-card,
+.ol-det-card,
+.ol-aisle-bar,
+.ol-cr-card,
+.ol-cr-panel,
+.ol-stack-panel,
+.ol-dj-picker,
+.ol-dj-panel {
+  border-radius: 16px;
+  padding: 15px 16px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(248, 250, 252, 0.88));
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05), 0 1px 2px rgba(15, 23, 42, 0.04);
+  transition: transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 180ms ease;
+}
+
+body.navy-theme .ol-ec-card,
+body.navy-theme .ol-det-card,
+body.navy-theme .ol-aisle-bar,
+body.navy-theme .ol-cr-card,
+body.navy-theme .ol-cr-panel,
+body.navy-theme .ol-stack-panel,
+body.navy-theme .ol-dj-picker,
+body.navy-theme .ol-dj-panel,
+[data-theme="navy"] .ol-ec-card,
+[data-theme="navy"] .ol-det-card,
+[data-theme="navy"] .ol-aisle-bar,
+[data-theme="navy"] .ol-cr-card,
+[data-theme="navy"] .ol-cr-panel,
+[data-theme="navy"] .ol-stack-panel,
+[data-theme="navy"] .ol-dj-picker,
+[data-theme="navy"] .ol-dj-panel {
+  background: linear-gradient(180deg, rgba(30, 41, 59, 0.78), rgba(15, 23, 42, 0.82));
+  border-color: rgba(148, 163, 184, 0.2);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 6px 18px rgba(2, 6, 23, 0.32);
+}
+
+/* Purposeful left-edge signature accents */
+.ol-ec-card { border-left: 3px solid #10b981; }
+.ol-aisle-bar { border-left: 3px solid #0ea5e9; }
+.ol-det-card { border-left: 3px solid #6366f1; }
+.ol-cr-card, .ol-cr-panel { border-left: 3px solid #8b5cf6; }
+.ol-stack-panel { border-left: 3px solid #f59e0b; }
+.ol-dj-picker, .ol-dj-panel { border-left: 3px solid #14b8a6; }
+
+/* Stronger typography & readable contrast */
+.ol-ec-title,
+.ol-det-badge,
+.ol-aisle-title,
+.ol-cr-card summary,
+.ol-cr-panel summary,
+.ol-stack-panel summary,
+.ol-dj-panel summary {
+  font-size: 0.94rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.ol-ec-note,
+.ol-det-count,
+.ol-aisle-sub,
+.ol-cr-card summary small {
+  font-size: 0.76rem;
+  opacity: 0.8;
+}
+
+/* Tactile iOS-friendly chips & buttons */
+.ol-aisle-chip,
+.ol-cr-chip,
+.ol-dj-chip,
+.ol-share-btn {
+  min-height: 36px;
+  padding: 7px 13px;
+  border-radius: 999px;
+  font-weight: 500;
+  transition: transform 140ms ease, background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ol-aisle-chip:active,
+.ol-cr-chip:active,
+.ol-dj-chip:active,
+.ol-share-btn:active {
+  transform: scale(0.96);
+}
+
+.ol-aisle-chip.is-on {
+  background: linear-gradient(135deg, #0284c7, #0ea5e9);
+  border-color: transparent;
+  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.35);
+}
+
+.ol-cr-chip.is-on {
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  border-color: transparent;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.35);
+}
+
+.ol-share-btn {
+  margin-top: 12px;
+  width: 100%;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.14), rgba(16, 185, 129, 0.14));
+  border: 1px solid rgba(56, 189, 248, 0.45);
+}
+
+/* Smoother progress bars */
+.ol-ec-bar,
+.ol-det-bar {
+  height: 9px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.22);
+}
+
+.ol-ec-fill {
+  background: linear-gradient(90deg, #0ea5e9, #10b981);
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.35);
+}
+
+.ol-det-fill {
+  background: linear-gradient(90deg, #6366f1, #38bdf8);
+  box-shadow: 0 0 8px rgba(99, 102, 241, 0.35);
+}
+
+/* Clean disclosure spacing */
+.ol-det-myth summary,
+.ol-cr-card summary,
+.ol-cr-panel summary,
+.ol-stack-panel summary,
+.ol-dj-panel summary {
+  padding: 2px 0;
+  list-style-position: outside;
+}
