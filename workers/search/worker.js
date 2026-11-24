@@ -1,6 +1,6 @@
 const APP_ORIGIN="https://jessepringle13-bit.github.io";
 const UPSTREAM="https://search.openfoodfacts.org/search";
-const VERSION="4", BRAND_POLICY="source-brand-v1";
+const VERSION="4", BRAND_POLICY="source-brand-v1", KV_TTL_SECONDS=21600;
 let recentRequests=[];
 function reply(data,status=200,extra={}){return new Response(JSON.stringify(data),{status,headers:{"Content-Type":"application/json; charset=utf-8","Access-Control-Allow-Origin":APP_ORIGIN,"Access-Control-Allow-Methods":"GET, OPTIONS","Access-Control-Allow-Headers":"Content-Type","Access-Control-Expose-Headers":"Retry-After, X-OpenLabel-Cache","Vary":"Origin","Cache-Control":"no-store","X-Content-Type-Options":"nosniff",...extra}})}
 function text(v){if(typeof v==="string")return v;if(Array.isArray(v))return v.map(text).filter(Boolean).join(", ");if(v&&typeof v.en==="string")return v.en;return ""}
@@ -19,15 +19,18 @@ export default {async fetch(request,env,ctx){
   if(origin&&origin!==APP_ORIGIN&&origin!==url.origin)return reply({error:"Origin not permitted."},403);
   if(request.method==="OPTIONS")return reply({});
   if(request.method!=="GET")return reply({error:"Use GET."},405);
-  if((url.pathname==="/"||url.pathname==="/health")&&!url.searchParams.has("q"))return reply({ok:true,service:"OpenLabel search helper",version:VERSION,brand_policy:BRAND_POLICY,default_country:"us",matching:"all-meaningful-terms",test:"/search?q=milk",note:"Worker health only; upstream searches require separate live verification."});
+  const kv=env&&env.OPENLABEL_CACHE&&typeof env.OPENLABEL_CACHE.get==="function"?env.OPENLABEL_CACHE:null;
+  if((url.pathname==="/"||url.pathname==="/health")&&!url.searchParams.has("q"))return reply({ok:true,service:"OpenLabel search helper",version:VERSION,brand_policy:BRAND_POLICY,default_country:"us",matching:"all-meaningful-terms",kv_bound:Boolean(kv),test:"/search?q=milk",note:"Worker health only; upstream searches require separate live verification."});
   if(url.pathname!=="/search"&&url.pathname!=="/")return reply({error:"Use /search?q=product-name"},404);
   const raw=(url.searchParams.get("q")||"").trim(),country=(url.searchParams.get("country")||"us").toLowerCase();
   if(!["us","all"].includes(country))return reply({error:"Supported country selections: us or all."},400);
   if(raw.length<2||raw.length>100)return reply({error:"Enter a product name between 2 and 100 characters."},400);
   const terms=queryTerms(raw);
   if(!terms.length||terms.length>12||terms.join(" ").length<2)return reply({error:"Use a short product name, brand or flavor."},400);
-  const cacheUrl=new URL(url.origin+"/__cache/search-v4-brand-v1");cacheUrl.searchParams.set("q",terms.slice().sort().join(" "));cacheUrl.searchParams.set("country",country);const key=new Request(cacheUrl.toString());let cache=null;
+  const sortedTerms=terms.slice().sort().join(" ");
+  const cacheUrl=new URL(url.origin+"/__cache/search-v4-brand-v1");cacheUrl.searchParams.set("q",sortedTerms);cacheUrl.searchParams.set("country",country);const key=new Request(cacheUrl.toString());const kvKey="search-v4-brand-v1:"+country+":"+sortedTerms;let cache=null;
   try{cache=caches.default;const hit=await cache.match(key);if(hit){const data=await hit.json();data.query=raw;return reply(data,200,{"X-OpenLabel-Cache":"hit"})}}catch{cache=null}
+  if(kv){try{const kvHit=await kv.get(kvKey,"json");if(kvHit&&Array.isArray(kvHit.products)){kvHit.query=raw;const res=reply(kvHit,200,{"X-OpenLabel-Cache":"kv-hit"});if(cache&&ctx&&typeof ctx.waitUntil==="function"){const stored=res.clone();stored.headers.set("Cache-Control","public, max-age=300");ctx.waitUntil(cache.put(key,stored).catch(()=>{}))}return res}}catch{}}
   const now=Date.now();recentRequests=recentRequests.filter(t=>now-t<61000);
   if(recentRequests.length>=9)return reply({error:"Search is busy. Please try again shortly."},429,{"Retry-After":"61"});recentRequests.push(now);
   const query=upstreamQuery(terms,country),upstream=new URL(UPSTREAM);upstream.searchParams.set("q",query);upstream.searchParams.set("page_size","80");upstream.searchParams.set("langs","en");
@@ -52,9 +55,13 @@ export default {async fetch(request,env,ctx){
     const products=selectProducts(eligible,terms);
     if(data.timed_out&&!products.length)return reply({error:"Product search did not finish. Please try again."},504);
     const more=(typeof data.count==="number"&&data.count>Math.min(data.hits.length,80))||data.hits.length>80,partial=data.timed_out===true||(Object.values(rejected).some(n=>n>0)&&more)||eligible.length>products.length;
-    const result=reply({version:VERSION,brand_policy:BRAND_POLICY,query:raw,country,location_scope:country==="us"?"U.S.-listed in source data; Wisconsin store availability is not verified.":"Worldwide source records.",upstream_query:query,source:"Open Food Facts Search-a-licious",candidate_limit:80,candidate_count:Math.min(data.hits.length,80),eligible_count:eligible.length,distinct_brands:new Set(products.map(p=>canonical(brandNames(p)[0]))).size,brand_cap:broadQuery(terms)?2:null,count:products.length,upstream_total:typeof data.count==="number"?data.count:null,upstream_total_exact:data.is_count_exact===true,partial,coverage_limited:more||eligible.length>products.length,match_scope:"Bounded source sample after market, brand and full-query checks; not an exhaustive catalog search.",rejected,products});
+    const payload={version:VERSION,brand_policy:BRAND_POLICY,query:raw,country,location_scope:country==="us"?"U.S.-listed in source data; Wisconsin store availability is not verified.":"Worldwide source records.",upstream_query:query,source:"Open Food Facts Search-a-licious",candidate_limit:80,candidate_count:Math.min(data.hits.length,80),eligible_count:eligible.length,distinct_brands:new Set(products.map(p=>canonical(brandNames(p)[0]))).size,brand_cap:broadQuery(terms)?2:null,count:products.length,upstream_total:typeof data.count==="number"?data.count:null,upstream_total_exact:data.is_count_exact===true,partial,coverage_limited:more||eligible.length>products.length,match_scope:"Bounded source sample after market, brand and full-query checks; not an exhaustive catalog search.",rejected,products};
+    const result=reply(payload);
     result.headers.set("X-OpenLabel-Cache","miss");
-    if(cache&&!data.timed_out&&products.length){const stored=result.clone();stored.headers.set("Cache-Control","public, max-age=300");ctx.waitUntil(cache.put(key,stored).catch(()=>{}))}
+    if(!data.timed_out&&products.length){
+      if(cache&&ctx&&typeof ctx.waitUntil==="function"){const stored=result.clone();stored.headers.set("Cache-Control","public, max-age=300");ctx.waitUntil(cache.put(key,stored).catch(()=>{}))}
+      if(kv&&typeof kv.put==="function"&&ctx&&typeof ctx.waitUntil==="function"){ctx.waitUntil(kv.put(kvKey,JSON.stringify(payload),{expirationTtl:KV_TTL_SECONDS}).catch(()=>{}))}
+    }
     return result;
   }catch(error){console.error("OpenLabel upstream search failed:",error instanceof Error?error.message:String(error));return reply({error:controller.signal.aborted?"Product search did not respond. Please try again.":"Could not reach the product data service."},controller.signal.aborted?504:502)}finally{clearTimeout(timer)}
 }};
