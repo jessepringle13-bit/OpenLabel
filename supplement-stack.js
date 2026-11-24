@@ -23,7 +23,7 @@ function ensureCss(){
   var l=document.createElement('link');
   l.id=STYLE_ID;
   l.rel='stylesheet';
-  l.href='supplement-stack.css?v=20261124-st1';
+  l.href='supplement-stack.css?v=20261124-st2';
   document.head.appendChild(l);
 }
 
@@ -85,16 +85,17 @@ function escapeHtml(s){
   });
 }
 
-function renderPanel(){
-  var items=getSavedSupplements();
-  var selected=readStackIds().filter(function(id){
-    return items.some(function(it){return it.id===id});
-  });
+function makeSig(items,selected){
+  return items.map(function(it){return it.id}).join(',')+'|'+selected.join(',');
+}
+
+function renderPanel(items,selected,sig){
   var analysis=analyzeOverlaps(items,selected);
 
   var el=document.createElement('details');
   el.id=PANEL_ID;
   el.className='ol-stack-panel';
+  el.dataset.sig=sig;
 
   var summaryText='Supplement Stack Overlap ('+selected.length+' selected)';
   var body='';
@@ -142,17 +143,27 @@ function sync(keepOpen){
   frame=0;
   var savedArea=document.getElementById('savedArea')||document.getElementById('library');
   if(!savedArea)return;
-  ensureCss();
+  var items=getSavedSupplements();
+  var selected=readStackIds().filter(function(id){
+    return items.some(function(it){return it.id===id});
+  });
+  var sig=makeSig(items,selected);
   var existing=document.getElementById(PANEL_ID);
+  if(existing&&existing.parentNode===savedArea&&existing.dataset.sig===sig)return;
+  ensureCss();
   var wasOpen=keepOpen||(existing&&existing.open);
-  var fresh=renderPanel();
+  var fresh=renderPanel(items,selected,sig);
   if(wasOpen)fresh.open=true;
   if(existing){existing.replaceWith(fresh)}
   else{savedArea.appendChild(fresh)}
 }
 
 function schedule(){if(!frame)frame=requestAnimationFrame(function(){sync(false)})}
-new MutationObserver(schedule).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['data-tab','hidden']});
+var lib=document.getElementById('library');
+if(lib){
+  new MutationObserver(schedule).observe(lib,{attributes:true,attributeFilter:['data-tab','hidden']});
+}
+window.addEventListener('storage',schedule);
 if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',schedule)}
 else{schedule()}
 
