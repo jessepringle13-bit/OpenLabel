@@ -1,0 +1,3 @@
+.ol-share-btn{margin-top:10px;padding:7px 12px;border-radius:9px;border:1px solid rgba(56,189,248,0.45);background:rgba(56,189,248,0.12);color:inherit;font-size:0.8rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.ol-share-btn:active{transform:scale(0.98)}
+body.navy-theme .ol-share-btn,[data-theme="navy"] .ol-share-btn{background:rgba(56,189,248,0.18);border-color:rgba(56,189,248,0.55)}
