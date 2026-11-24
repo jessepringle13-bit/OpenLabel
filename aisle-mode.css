@@ -1,0 +1,11 @@
+.ol-aisle-bar{margin:12px 0;padding:12px 14px;border-radius:14px;border:1px solid rgba(148,163,184,0.28);background:rgba(15,23,42,0.04)}
+body.navy-theme .ol-aisle-bar,[data-theme="navy"] .ol-aisle-bar{background:rgba(255,255,255,0.06);border-color:rgba(148,163,184,0.25)}
+.ol-aisle-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.ol-aisle-title{font-weight:700;font-size:0.88rem}
+.ol-aisle-sub{font-size:0.74rem;opacity:0.78}
+.ol-aisle-chips{display:flex;flex-wrap:wrap;gap:6px}
+.ol-aisle-chip{padding:6px 10px;border-radius:999px;border:1px solid rgba(148,163,184,0.4);background:transparent;color:inherit;font-size:0.78rem;cursor:pointer}
+.ol-aisle-chip.is-on{background:#0ea5e9;border-color:#0ea5e9;color:#fff;font-weight:600}
+.ol-aisle-banner{margin:10px 0;padding:9px 12px;border-radius:10px;font-size:0.82rem;line-height:1.4}
+.ol-aisle-banner.is-hit{border:1px solid rgba(245,158,11,0.5);background:rgba(245,158,11,0.12)}
+.ol-aisle-banner.is-clear{border:1px solid rgba(34,197,94,0.45);background:rgba(34,197,94,0.1)}
